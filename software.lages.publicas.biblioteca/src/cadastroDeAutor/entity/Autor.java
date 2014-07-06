@@ -6,7 +6,7 @@
 
 package cadastroDeAutor.entity;
 
-import biblioteca.entity.exceptions.NameException;
+import cadastroDeAutor.entity.exceptions.NameException;
 import java.sql.Date;
 
 /**

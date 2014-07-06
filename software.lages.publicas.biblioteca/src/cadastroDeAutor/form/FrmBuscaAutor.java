@@ -6,9 +6,9 @@
 
 package cadastroDeAutor.form;
 
-import CadastroDeObra.table.AutorTableModel;
-import biblioteca.controller.AutorController;
-import biblioteca.entity.Autor;
+import cadastroDeAutor.table.AutorTableModel;
+import cadastroDeAutor.controller.AutorController;
+import cadastroDeAutor.entity.Autor;
 import cadastroDeAutor.table.AutorCellRenderer;
 import java.util.List;
 import javax.swing.JOptionPane;

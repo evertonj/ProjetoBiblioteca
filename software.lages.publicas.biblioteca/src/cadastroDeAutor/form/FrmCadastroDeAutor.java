@@ -5,19 +5,13 @@
  */
 package cadastroDeAutor.form;
 
-import biblioteca.controller.AutorController;
-import biblioteca.dao.DBConnection;
-import biblioteca.entity.Autor;
-import biblioteca.entity.exceptions.NameException;
-import biblioteca.table.AutorCellRenderer;
-import biblioteca.table.AutorTableModel;
-import com.mysql.jdbc.Util;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-import java.sql.Date;
+import cadastroDeAutor.controller.AutorController;
+import cadastroDeAutor.dao.DBConnection;
+import cadastroDeAutor.entity.Autor;
+import cadastroDeAutor.entity.exceptions.NameException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *

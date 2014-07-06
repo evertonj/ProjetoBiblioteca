@@ -5,9 +5,9 @@
  */
 package cadastroDeAutor.facade;
 
-import biblioteca.dao.IAutorDAO;
-import biblioteca.dao.AutorDAO;
-import biblioteca.entity.Autor;
+import cadastroDeAutor.dao.IAutorDAO;
+import cadastroDeAutor.dao.AutorDAO;
+import cadastroDeAutor.entity.Autor;
 import java.util.List;
 
 /**

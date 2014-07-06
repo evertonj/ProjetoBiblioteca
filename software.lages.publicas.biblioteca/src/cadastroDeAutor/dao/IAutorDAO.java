@@ -6,7 +6,7 @@
 
 package cadastroDeAutor.dao;
 
-import biblioteca.entity.Autor;
+import cadastroDeAutor.entity.Autor;
 import java.util.List;
 
 /**

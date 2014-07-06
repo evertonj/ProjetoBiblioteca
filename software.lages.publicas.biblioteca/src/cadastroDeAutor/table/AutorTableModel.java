@@ -5,7 +5,7 @@
  */
 package cadastroDeAutor.table;
 
-import biblioteca.entity.Autor;
+import cadastroDeAutor.entity.Autor;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;

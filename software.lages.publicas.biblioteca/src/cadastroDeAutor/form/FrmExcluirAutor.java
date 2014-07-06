@@ -6,13 +6,12 @@
 
 package cadastroDeAutor.form;
 
-import biblioteca.controller.AutorController;
-import biblioteca.entity.Autor;
-import biblioteca.table.AutorCellRenderer;
-import biblioteca.table.AutorTableModel;
+import cadastroDeAutor.controller.AutorController;
+import cadastroDeAutor.entity.Autor;
+import cadastroDeAutor.table.AutorCellRenderer;
+import cadastroDeAutor.table.AutorTableModel;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 
 /**
  *

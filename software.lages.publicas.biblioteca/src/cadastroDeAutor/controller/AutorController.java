@@ -6,8 +6,8 @@
 
 package cadastroDeAutor.controller;
 
-import biblioteca.entity.Autor;
-import biblioteca.facade.AutorFacade;
+import cadastroDeAutor.entity.Autor;
+import cadastroDeAutor.facade.AutorFacade;
 import java.util.List;
 
 /**

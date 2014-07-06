@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 package cadastroDeAutor.dao;
-
-import biblioteca.entity.Autor;
-import biblioteca.entity.exceptions.NameException;
+import cadastroDeAutor.entity.Autor;
+import cadastroDeAutor.entity.exceptions.NameException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -126,16 +125,11 @@ public class AutorDAO implements IAutorDAO {
              
             // pega todos os atributos da pessoa  
              Autor autor;
-               try {
-                   autor = new Autor( rs.getLong("ID"),
-                           rs.getString("NOME"),
-                           rs.getString("SOBRENOME"),
-                            rs.getDate("DATANASCIMENTO"));
-                          
-                   return autor;
-               } catch (NameException ex) {
-                   Logger.getLogger(AutorDAO.class.getName()).log(Level.SEVERE, null, ex);
-               }
+             autor = new Autor( rs.getLong("ID"),
+                     rs.getString("NOME"),
+                     rs.getString("SOBRENOME"),
+                     rs.getDate("DATANASCIMENTO"));
+               return autor;
                   
              
          }  
@@ -143,7 +137,9 @@ public class AutorDAO implements IAutorDAO {
       } catch (SQLException e) {  
           
          return null;  
-      }  
+      } catch (NameException ex) {  
+            Logger.getLogger(AutorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }  
       return null;
      }
     @Override
@@ -159,30 +155,15 @@ public class AutorDAO implements IAutorDAO {
 
             rs = pstm.executeQuery();
 
-            while (rs.next()) {
-                
-                
+            while (rs.next()) {                       
               
                 Autor autor;
-                try {
-                    autor = new Autor( rs.getLong("ID"),
-                            rs.getString("NOME"),
-                            rs.getString("SOBRENOME"),
-                            rs.getDate("DATANASCIMENTO")
-                           );
-                    autors.add(autor);
-                } catch (NameException ex) {
-                    Logger.getLogger(AutorDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                   
-              
-                
-               
-                
-                
-              
-               
-                
+                autor = new Autor( rs.getLong("ID"),
+                        rs.getString("NOME"),
+                        rs.getString("SOBRENOME"),
+                        rs.getDate("DATANASCIMENTO")
+                );
+                autors.add(autor);    
                
             }
 
@@ -199,8 +180,11 @@ public class AutorDAO implements IAutorDAO {
                 DBConnection.close(conn, pstm, null);
             }
             e.printStackTrace();
+        } catch (NameException ex) {
+            Logger.getLogger(AutorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return autors;
     }
+
 
 }
