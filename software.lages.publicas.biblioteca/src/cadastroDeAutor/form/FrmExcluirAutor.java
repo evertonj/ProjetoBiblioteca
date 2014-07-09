@@ -23,7 +23,6 @@ public class FrmExcluirAutor extends javax.swing.JFrame {
      * Creates new form FrmBuscaAutor
      */
     public FrmExcluirAutor(java.awt.Frame parent, boolean modal) {
-        
         initComponents();
         refreshTable();
     }

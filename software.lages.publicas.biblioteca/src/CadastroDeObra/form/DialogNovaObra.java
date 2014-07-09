@@ -10,7 +10,13 @@ import CadastroDeEditora.entity.Editora;
 import CadastroDeObra.dao.ObraDAO;
 import CadastroDeObra.model.Obra;
 import CadastroDeObra.table.AutorTableModel;
+import cadastroDeAutor.entity.Autor;
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -28,17 +34,16 @@ public class DialogNovaObra extends javax.swing.JDialog {
             cbEditora.addItem(editora);
         }
     }
-    public static List<String> listaAutores = new ArrayList<>();
+    public static List<Autor> listaAutores = new ArrayList<>();
     DefaultTableModel dtm;
     private ImageIcon icon;
     private String endImage;
     long i = 0;
-    private Obra obra;
-    File foto;
     TableColumn tc;
     ObraDAO dao = new ObraDAO();
-
-    
+    private Obra obra;
+    private ImageIcon fotoEspecie;
+    byte[] foto;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -416,9 +421,59 @@ public class DialogNovaObra extends javax.swing.JDialog {
         return valores;
     }
 
-    private void salvarImage() {
-       
+    private void getDados() {
+        obra.setTitulo(tfTitulo.getText());
+        obra.setAutores(listaAutores);
+        obra.setEdicao(tfEdicao.getText());
+        obra.setAno(Short.parseShort(tfAno.getText()));
+        obra.setEditora((Editora) cbEditora.getSelectedItem());
+        obra.setIsbn(tfISBN.getText());
+        obra.setAssunto((String) cbAssunto.getSelectedItem());
+        obra.setFoto(foto);
+        dao.save(obra);
     }
+
+    private void setDados() {
+        tfTitulo.setText(obra.getTitulo());
+        listaAutores = dao.listaDeAutores();
+        tbAutores.setModel(new AutorTableModel(listaAutores));
+        tfEdicao.setText(obra.getEdicao());
+        tfAno.setText(String.valueOf(obra.getAno()));
+        cbEditora.setSelectedItem(obra.getEditora());
+        tfISBN.setText(obra.getIsbn());
+        cbAssunto.setSelectedItem(obra.getAssunto());
+        byte[] imgBytes = obra.getFoto();
+        try {
+            FileOutputStream fos = new FileOutputStream("Foto " + tfTitulo.getText() + ".jpg");
+            fos.write(imgBytes);
+            FileDescriptor fd = fos.getFD();
+            fos.flush();
+            fd.sync();
+            fos.close();
+            icon = new ImageIcon("Foto " + tfTitulo.getText() + ".jpg");
+            lbFoto.setIcon(redimensionaImageIcon(icon));
+        } catch (Exception e) {
+            String erro = e.toString();
+        }
+
+    }
+
+    public byte[] getBytes(File file) {
+        int len = (int) file.length();
+        byte[] sendBuf = new byte[len];
+        FileInputStream inFile = null;
+        try {
+            inFile = new FileInputStream(file);
+            inFile.read(sendBuf, 0, len);
+
+        } catch (FileNotFoundException fnfex) {
+
+        } catch (IOException ioex) {
+
+        }
+        return sendBuf;
+    }
+
 
     private void btAdicionarComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarComboBoxActionPerformed
         DialogAdicionarAutor adicionarAutor = new DialogAdicionarAutor(new javax.swing.JFrame(), true);
@@ -434,14 +489,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
     }//GEN-LAST:event_btRemoverActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        Obra obra = new Obra();
-        obra.setTitulo(tfTitulo.getText());
-        obra.setAutores(listaAutores);
-        obra.setEdicao(tfEdicao.getText());
-        //obra.setEditora((Editora)cbEditora.getSelectedItem());
-        obra.setIsbn(tfISBN.getText());
-        obra.setFoto(foto);
-        dao.save(obra);
+        //??????????????
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
@@ -458,10 +506,9 @@ public class DialogNovaObra extends javax.swing.JDialog {
         try {
             JFileChooser fc = new JFileChooser("C:\\Users\\Alex\\Desktop");
             fc.showDialog(this, "Adicionar");
-            File arquivo = fc.getSelectedFile();
-            icon = new ImageIcon(arquivo.getAbsolutePath());
+            foto = getBytes(fc.getSelectedFile());
+            icon = new ImageIcon(fc.getSelectedFile().getAbsolutePath());
             lbFoto.setIcon(redimensionaImageIcon(icon));
-            foto = arquivo;
         } catch (NullPointerException n) {
             return;
         }

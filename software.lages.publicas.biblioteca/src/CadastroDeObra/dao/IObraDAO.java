@@ -7,6 +7,8 @@
 package CadastroDeObra.dao;
 
 import CadastroDeObra.model.Obra;
+import cadastroDeAutor.entity.exceptions.NameException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public interface IObraDAO {
     
     int remove(int id);
     
-    List<Obra> findAll();
+    List<Obra> findAll() throws SQLException, NameException;
     
     List<Obra> consulta(String titulo);
     

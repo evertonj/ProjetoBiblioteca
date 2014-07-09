@@ -6,7 +6,8 @@
 package CadastroDeObra.form;
 
 import CadastroDeObra.table.AutorTableModel;
-import java.util.ArrayList;
+import cadastroDeAutor.controller.AutorController;
+import cadastroDeAutor.entity.Autor;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,11 +23,13 @@ public class DialogAdicionarAutor extends javax.swing.JDialog {
     public DialogAdicionarAutor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        for (int i = 0; i < 10; i++) {
-            cbAutor.addItem("teste" + i);
+        List<Autor> listaDeAutores = new AutorController().finAll();
+        if (!listaDeAutores.isEmpty()) {
+            for (Autor object : listaDeAutores) {
+                cbAutor.addItem(object);
+            }
         }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -154,7 +157,7 @@ public class DialogAdicionarAutor extends javax.swing.JDialog {
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
-        String autor = (String) cbAutor.getSelectedItem();
+        Autor autor = (Autor) cbAutor.getSelectedItem();
         DialogNovaObra.listaAutores.add(autor);
         if (!DialogNovaObra.listaAutores.isEmpty()) {
             DialogNovaObra.tbAutores.setModel(new AutorTableModel(DialogNovaObra.listaAutores));

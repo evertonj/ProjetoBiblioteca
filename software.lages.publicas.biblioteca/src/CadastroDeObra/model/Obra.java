@@ -6,8 +6,9 @@
 package CadastroDeObra.model;
 
 import CadastroDeEditora.entity.Editora;
-import java.io.File;
+import cadastroDeAutor.entity.Autor;
 import java.util.List;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,15 +18,28 @@ public class Obra {
 
     private int id;
     private String titulo;
-    private List<String> autores;
+    private List<Autor> autores;
     private String Edicao;
     private short Ano;
     private Editora editora;
     private String isbn;
     private String assunto;
-    private File foto;
+    private ImageIcon fotoIcon;
+    private byte[] foto; 
 
     private List<Exemplar> exemplar;
+    
+    
+      public ImageIcon getFotoAsImageIcon() {
+
+        this.fotoIcon = new ImageIcon();
+
+        if (this.getFoto() != null) {
+            this.fotoIcon = new ImageIcon(this.getFoto());
+        }
+
+        return this.fotoIcon;
+    }
 
     /**
      * @return the id
@@ -55,19 +69,7 @@ public class Obra {
         this.titulo = titulo;
     }
 
-    /**
-     * @return the autores
-     */
-    public List<String> getAutores() {
-        return autores;
-    }
-
-    /**
-     * @param autores the autores to set
-     */
-    public void setAutores(List<String> autores) {
-        this.autores = autores;
-    }
+   
 
     /**
      * @return the Edicao
@@ -147,18 +149,39 @@ public class Obra {
         this.exemplar = exemplar;
     }
 
+   
+    public List<Autor> getAutores() {
+        return autores;
+    }
+
+    public void setAutores(List<Autor> autores) {
+        this.autores = autores;
+    }
+
+   
     /**
-     * @return the foto
+     * @return the fotoIcon
      */
-    public File getFoto() {
-        return foto;
+    public ImageIcon getFotoIcon() {
+        return fotoIcon;
+    }
+
+    /**
+     * @param fotoIcon the fotoIcon to set
+     */
+    public void setFotoIcon(ImageIcon fotoIcon) {
+        this.fotoIcon = fotoIcon;
     }
 
     /**
      * @param foto the foto to set
      */
-    public void setFoto(File foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
+    }
+
+    public byte[] getFoto() {
+        return foto;
     }
 
    

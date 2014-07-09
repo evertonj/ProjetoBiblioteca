@@ -5,6 +5,7 @@
  */
 package CadastroDeObra.table;
 
+import cadastroDeAutor.entity.Autor;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -14,9 +15,9 @@ import javax.swing.table.AbstractTableModel;
  */
 public class AutorTableModel extends AbstractTableModel {
 
-    private List<String> valores;
+    private List<Autor> valores;
 
-    public AutorTableModel(List<String> valores) {
+    public AutorTableModel(List<Autor> valores) {
         this.valores = valores;
     }
 
@@ -32,7 +33,7 @@ public class AutorTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        String Autor = valores.get(rowIndex);
+        Autor Autor = valores.get(rowIndex);
         switch (columnIndex) {
             case 0:
                 return Autor;
@@ -59,7 +60,7 @@ public class AutorTableModel extends AbstractTableModel {
         return null;
     }
 
-    public String get(int row) {
+    public Autor get(int row) {
         return valores.get(row);
     }
 }

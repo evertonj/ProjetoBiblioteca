@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/cadastroDeAutor/dao/IAutorDAO.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/CadastroDeObra/model/Obra.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/CadastroDeObra/form/DialogExemplar.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/CadastroDeObra/table/AutorTableModel.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/CadastroDeObra/form/DialogNovaObra.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/cadastroDeAutor/dao/AutorDAO.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/cadastroDeAutor/form/FrmCadastroDeAutor.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/CadastroDeObra/dao/ObraDAO.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/CadastroDeObra/form/DialogAdicionarAutor.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/biblioteca/dao/UsuarioDAO.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/cadastroDeAutor/form/FrmBuscaAutor.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/CadastroDeEditora/dao/EditoraDAO.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/cadastroDeAutor/form/FrmAtualizarAutor.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/cadastroDeAutor/entity/Autor.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/cadastroDeAutor/controller/AutorController.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/cadastroDeAutor/facade/AutorFacade.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/cadastroDeAutor/form/FrmExcluirAutor.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/cadastroDeAutor/table/AutorTableModel.java</file>
+            <file>file:/C:/Users/Beatriz/Documents/GitHub/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/CadastroDeObra/dao/IObraDAO.java</file>
+        </group>
+    </open-files>
+</project-private>
