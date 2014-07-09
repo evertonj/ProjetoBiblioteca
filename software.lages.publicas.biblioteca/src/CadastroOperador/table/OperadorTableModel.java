@@ -28,7 +28,7 @@ public class OperadorTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 2;
     }
 
     @Override
@@ -36,6 +36,8 @@ public class OperadorTableModel extends AbstractTableModel {
         Operador operador = valores.get(rowIndex);
         switch (columnIndex) {
             case 0:
+                return operador.getId();
+            case 1:
                 return operador.getNome();
         }
         return null;
@@ -46,7 +48,9 @@ public class OperadorTableModel extends AbstractTableModel {
         String coluna = "";
         switch (column) {
             case 0:
-                return coluna = "Nome";
+                return coluna = "ID";
+            case 1:
+                return coluna = "nome";
         }
         return null;
     }
@@ -55,6 +59,8 @@ public class OperadorTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
             case 0:
+                return String.class;
+            case 1:
                 return String.class;
         }
         return null;

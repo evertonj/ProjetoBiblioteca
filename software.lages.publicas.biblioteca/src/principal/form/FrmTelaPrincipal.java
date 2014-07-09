@@ -5,7 +5,10 @@
  */
 package principal.form;
 
+import CadastroDeEditora.form.DialogGerenciadorEditora;
 import CadastroDeObra.form.DialogGerenciadorObra;
+import CadastroOperador.form.FrmGerenciadorOperador;
+import CadastroUsuario.form.FrmGerenciadorUsuario;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -19,6 +22,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 /**
@@ -188,7 +192,13 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
         btSair.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/principal/icon/1402424334_exit.png"))); // NOI18N
         btSair.setText("Sair");
+        btSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -214,22 +224,47 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
 
         menuItemUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuItemUsuario.setText("Gerenciamento De Usuario");
+        menuItemUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemUsuarioActionPerformed(evt);
+            }
+        });
         menuGerenciamento.add(menuItemUsuario);
 
         menuItemObra.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuItemObra.setText("Gerenciamento De Obra");
+        menuItemObra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemObraActionPerformed(evt);
+            }
+        });
         menuGerenciamento.add(menuItemObra);
 
         menuItemEditora.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuItemEditora.setText("Gerenciamento De Editora");
+        menuItemEditora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemEditoraActionPerformed(evt);
+            }
+        });
         menuGerenciamento.add(menuItemEditora);
 
         menuItemAutor.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuItemAutor.setText("Gerenciamento De Autor");
+        menuItemAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAutorActionPerformed(evt);
+            }
+        });
         menuGerenciamento.add(menuItemAutor);
 
         menuItemOperador.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuItemOperador.setText("Gerenciamento De Operador");
+        menuItemOperador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemOperadorActionPerformed(evt);
+            }
+        });
         menuGerenciamento.add(menuItemOperador);
 
         jMenuBar1.add(menuGerenciamento);
@@ -259,6 +294,11 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
 
         menuSobre.setText("Sobre");
         menuSobre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuSobre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuSobreMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(menuSobre);
 
         menuSair.setText("Sair");
@@ -307,12 +347,48 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }// </editor-fold>//GEN-END:initComponents
 
     private void btGerenciarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarUsuarioActionPerformed
-
+        FrmGerenciadorUsuario telaUsuario = new FrmGerenciadorUsuario();
+        telaUsuario.setVisible(true);
     }//GEN-LAST:event_btGerenciarUsuarioActionPerformed
 
     private void btGerenciarObraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarObraActionPerformed
-        
+        DialogGerenciadorObra telaObra = new DialogGerenciadorObra(new javax.swing.JFrame(), true);
+        telaObra.setVisible(true);
     }//GEN-LAST:event_btGerenciarObraActionPerformed
+
+    private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btSairActionPerformed
+
+    private void menuItemUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemUsuarioActionPerformed
+        FrmGerenciadorUsuario telaUsuario = new FrmGerenciadorUsuario();
+        telaUsuario.setVisible(true);
+    }//GEN-LAST:event_menuItemUsuarioActionPerformed
+
+    private void menuItemObraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemObraActionPerformed
+        DialogGerenciadorObra telaObra = new DialogGerenciadorObra(new javax.swing.JFrame(), true);
+        telaObra.setVisible(true);
+    }//GEN-LAST:event_menuItemObraActionPerformed
+
+    private void menuItemEditoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEditoraActionPerformed
+        DialogGerenciadorEditora telaEditora = new DialogGerenciadorEditora(new javax.swing.JFrame(), true);
+        telaEditora.setVisible(true);
+    }//GEN-LAST:event_menuItemEditoraActionPerformed
+
+    private void menuItemAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAutorActionPerformed
+        DialogGerenciadorAutor telaAutor = new DialogGerenciadorAutor(new javax.swing.JFrame, true);
+        telaAutor.setVisible(true);
+    }//GEN-LAST:event_menuItemAutorActionPerformed
+
+    private void menuItemOperadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemOperadorActionPerformed
+        FrmGerenciadorOperador telaOperador = new FrmGerenciadorOperador();
+        telaOperador.setVisible(true);
+    }//GEN-LAST:event_menuItemOperadorActionPerformed
+
+    private void menuSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSobreMouseClicked
+        JOptionPane.showMessageDialog(null, "Este software faz parte do projeto de extensão Bibliteca nas escolas"
+                + "\n" + "municipais. Ele foi desenvolvido no Instituto Federal De Santa Catarina");
+    }//GEN-LAST:event_menuSobreMouseClicked
 
     /**
      * @param args the command line arguments
