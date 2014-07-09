@@ -25,7 +25,7 @@ public class FrmBuscaEditora extends javax.swing.JDialog {
     public FrmBuscaEditora(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //refreshTable();
+        refreshTable();
     }
 
     /**
@@ -77,6 +77,7 @@ public class FrmBuscaEditora extends javax.swing.JDialog {
 
         jLabel1.setText("Nome");
 
+        btBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroDeObra/icons/search.png"))); // NOI18N
         btBuscar.setText("Buscar");
         btBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,6 +98,7 @@ public class FrmBuscaEditora extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbEditora);
 
+        btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroDeObra/icons/back.png"))); // NOI18N
         btVoltar.setText("Voltar");
         btVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
