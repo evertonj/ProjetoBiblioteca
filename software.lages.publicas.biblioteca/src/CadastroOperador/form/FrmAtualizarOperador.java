@@ -47,6 +47,7 @@ public class FrmAtualizarOperador extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroOperador/icon/search.png"))); // NOI18N
         jButton1.setText("Buscar");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
@@ -98,9 +99,11 @@ public class FrmAtualizarOperador extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
         jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroOperador/icon/update.png"))); // NOI18N
         jButton2.setText("Atualizar");
 
         btVoltar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroOperador/icon/back.png"))); // NOI18N
         btVoltar.setText("Voltar");
         btVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -8,22 +8,19 @@ package principal.form;
 import CadastroDeEditora.form.DialogGerenciadorEditora;
 import CadastroDeObra.form.DialogGerenciadorObra;
 import CadastroOperador.form.FrmGerenciadorOperador;
-import CadastroUsuario.form.FrmGerenciadorUsuario;
-import java.awt.BorderLayout;
+import CadastroUsuario.form.DialogGerenciadorUsuario;
+import cadastroDeAutor.form.DialogGerenciadorAutor;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 
 /**
  *
@@ -43,6 +40,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         timer = new Timer(500, this);
         timer.setRepeats(true);
         timer.start();
+        UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Dialog", Font.PLAIN, 18)));
         initComponents();
     }
 
@@ -192,7 +190,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
         btSair.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/principal/icon/1402424334_exit.png"))); // NOI18N
+        btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/principal/icon/1404967476_Exit.png"))); // NOI18N
         btSair.setText("Sair");
         btSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +216,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         );
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/principal/icon/Capturar.PNG"))); // NOI18N
+        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
         menuGerenciamento.setText("Gerenciamento");
         menuGerenciamento.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -347,7 +346,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }// </editor-fold>//GEN-END:initComponents
 
     private void btGerenciarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarUsuarioActionPerformed
-        FrmGerenciadorUsuario telaUsuario = new FrmGerenciadorUsuario();
+        DialogGerenciadorUsuario telaUsuario = new DialogGerenciadorUsuario(null, true);
         telaUsuario.setVisible(true);
     }//GEN-LAST:event_btGerenciarUsuarioActionPerformed
 
@@ -361,7 +360,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_btSairActionPerformed
 
     private void menuItemUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemUsuarioActionPerformed
-        FrmGerenciadorUsuario telaUsuario = new FrmGerenciadorUsuario();
+        DialogGerenciadorUsuario telaUsuario = new DialogGerenciadorUsuario(null, true);
         telaUsuario.setVisible(true);
     }//GEN-LAST:event_menuItemUsuarioActionPerformed
 
@@ -376,7 +375,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_menuItemEditoraActionPerformed
 
     private void menuItemAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAutorActionPerformed
-        DialogGerenciadorAutor telaAutor = new DialogGerenciadorAutor(new javax.swing.JFrame, true);
+        DialogGerenciadorAutor telaAutor = new DialogGerenciadorAutor(new javax.swing.JFrame(), true);
         telaAutor.setVisible(true);
     }//GEN-LAST:event_menuItemAutorActionPerformed
 
@@ -386,14 +385,16 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_menuItemOperadorActionPerformed
 
     private void menuSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSobreMouseClicked
-        JOptionPane.showMessageDialog(null, "Este software faz parte do projeto de extensão Bibliteca nas escolas"
-                + "\n" + "municipais. Ele foi desenvolvido no Instituto Federal De Santa Catarina");
+        JOptionPane.showMessageDialog(null, "Este software faz parte do projeto de extensão Biblioteca das escolas municipais em transformação"
+                + "\n" + "Ele foi desenvolvido no Institudo Federal de Santa Catarina e têm como principal objetivo "
+                + "\n" + "auxiliar nas atividades básicas realizadas em uma biblioteca educacional!");
     }//GEN-LAST:event_menuSobreMouseClicked
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

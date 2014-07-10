@@ -68,7 +68,7 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
         });
 
         btFechar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/login/icon/1402424334_exit.png"))); // NOI18N
+        btFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/login/icon/1404967476_Exit.png"))); // NOI18N
         btFechar.setText("Fechar");
         btFechar.setToolTipText("");
         btFechar.addActionListener(new java.awt.event.ActionListener() {

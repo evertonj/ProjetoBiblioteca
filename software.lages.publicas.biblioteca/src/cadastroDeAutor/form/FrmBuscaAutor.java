@@ -75,6 +75,7 @@ public class FrmBuscaAutor extends javax.swing.JFrame {
 
         jLabel1.setText("Nome");
 
+        btBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cadastroDeAutor/icon/search.png"))); // NOI18N
         btBuscar.setText("Buscar");
         btBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,6 +96,7 @@ public class FrmBuscaAutor extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbAutor);
 
+        btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cadastroDeAutor/icon/back.png"))); // NOI18N
         btVoltar.setText("Voltar");
         btVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

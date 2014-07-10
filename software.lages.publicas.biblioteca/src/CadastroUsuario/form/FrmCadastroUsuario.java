@@ -111,6 +111,7 @@ public class FrmCadastroUsuario extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
         btSalvar.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroUsuario/icon/insert.png"))); // NOI18N
         btSalvar.setText("Salvar");
         btSalvar.setPreferredSize(new java.awt.Dimension(95, 30));
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +121,7 @@ public class FrmCadastroUsuario extends javax.swing.JFrame {
         });
 
         btVoltar.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
+        btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroUsuario/icon/back.png"))); // NOI18N
         btVoltar.setText("Voltar");
         btVoltar.setPreferredSize(new java.awt.Dimension(95, 30));
         btVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -178,6 +180,7 @@ public class FrmCadastroUsuario extends javax.swing.JFrame {
         );
 
         btEscolherFoto.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btEscolherFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroUsuario/icon/newPicture.png"))); // NOI18N
         btEscolherFoto.setText("Escolher");
 
         tfNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -187,15 +190,19 @@ public class FrmCadastroUsuario extends javax.swing.JFrame {
         jScrollPane3.setViewportView(listEmail);
 
         btAddEmail.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btAddEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroUsuario/icon/1404973899_email_add.png"))); // NOI18N
         btAddEmail.setText("Adicionar Email");
 
         btRemoveEmail.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btRemoveEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroUsuario/icon/1404973906_email_deny.png"))); // NOI18N
         btRemoveEmail.setText("Remover Email");
 
         btAddTelefone.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btAddTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroUsuario/icon/1404973979_Dial.png"))); // NOI18N
         btAddTelefone.setText("Adicionar Telefone");
 
         btRemoverTelefone.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btRemoverTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroUsuario/icon/1404973983_Hungup.png"))); // NOI18N
         btRemoverTelefone.setText("Remover Telefone");
 
         tfTelefone.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -357,10 +364,9 @@ public class FrmCadastroUsuario extends javax.swing.JFrame {
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         onCancelar();
-        FrmGerenciadorUsuario gerenciador = new FrmGerenciadorUsuario();
+        DialogGerenciadorUsuario gerenciador = new DialogGerenciadorUsuario(null, true);
         gerenciador.setVisible(true);
         this.dispose();
-//        UsuarioSelected();
     }//GEN-LAST:event_btVoltarActionPerformed
 
     /**

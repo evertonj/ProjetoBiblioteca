@@ -171,6 +171,7 @@ public class FrmBuscaUsuario extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroUsuario/icon/search.png"))); // NOI18N
         jButton1.setText("Busca");
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -179,6 +180,7 @@ public class FrmBuscaUsuario extends javax.swing.JFrame {
         jTextField2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroUsuario/icon/search.png"))); // NOI18N
         jButton2.setText("Busca");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -219,6 +221,7 @@ public class FrmBuscaUsuario extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
         jButton4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroUsuario/icon/back.png"))); // NOI18N
         jButton4.setText("Voltar");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
