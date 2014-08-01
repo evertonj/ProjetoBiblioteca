@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author Alex
+ * @author Everton Spindola
  */
 public class AutorController{
     private AutorFacade facade;
