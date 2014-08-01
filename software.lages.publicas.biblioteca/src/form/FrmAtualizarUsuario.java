@@ -10,12 +10,13 @@ package form;
  *
  * @author Alex
  */
-public class FrmAtualizarUsuario extends javax.swing.JFrame {
+public class FrmAtualizarUsuario extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmCadastroUsuario
      */
-    public FrmAtualizarUsuario() {
+    public FrmAtualizarUsuario(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -221,6 +222,11 @@ public class FrmAtualizarUsuario extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
         jButton4.setText("Voltar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -276,6 +282,10 @@ public class FrmAtualizarUsuario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arg uments
      */
@@ -306,7 +316,14 @@ public class FrmAtualizarUsuario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmAtualizarUsuario().setVisible(true);
+                 FrmAtualizarUsuario dialog = new FrmAtualizarUsuario(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

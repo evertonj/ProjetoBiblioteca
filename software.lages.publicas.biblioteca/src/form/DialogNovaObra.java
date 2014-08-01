@@ -23,6 +23,8 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -517,6 +519,8 @@ public class DialogNovaObra extends javax.swing.JDialog {
     private void btEscolherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEscolherActionPerformed
         try {
             JFileChooser fc = new JFileChooser("C:\\Users\\Alex\\Desktop");
+            fc.addChoosableFileFilter(new FileNameExtensionFilter("Arquivos de Imagem", "jpg", "png", "gif", "icon", "bmp", "tif"));
+            fc.setAcceptAllFileFilterUsed(false);
             fc.showDialog(this, "Adicionar");
             foto = getBytes(fc.getSelectedFile());
             icon = new ImageIcon(fc.getSelectedFile().getAbsolutePath());

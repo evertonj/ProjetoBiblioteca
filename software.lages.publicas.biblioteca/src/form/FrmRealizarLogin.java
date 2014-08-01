@@ -7,7 +7,6 @@ package form;
 
 import javax.swing.JOptionPane;
 
-
 public class FrmRealizarLogin extends javax.swing.JFrame {
 
     /**
@@ -51,6 +50,11 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
         tfLogin.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         tpsSenha.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tpsSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tpsSenhaKeyReleased(evt);
+            }
+        });
 
         btLogin.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/1402424302_clean_2.png"))); // NOI18N
@@ -128,7 +132,7 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
             FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal();
             telaPrincipal.setVisible(true);
             dispose();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
         }
     }//GEN-LAST:event_btLoginActionPerformed
@@ -136,6 +140,20 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
     private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
         this.dispose();
     }//GEN-LAST:event_btFecharActionPerformed
+
+    private void tpsSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tpsSenhaKeyReleased
+        if (evt.getKeyCode() == 10) {
+            boolean result;
+            result = (tfLogin.getText().equalsIgnoreCase("admin") && String.copyValueOf(tpsSenha.getPassword()).equalsIgnoreCase("admin"));
+            if (result) {
+                FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal();
+                telaPrincipal.setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
+            }
+        }
+    }//GEN-LAST:event_tpsSenhaKeyReleased
 
     /**
      * @param args the command line arguments

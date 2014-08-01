@@ -20,7 +20,7 @@ public class DBConnection {
     private static final String URL_MYSQL = "jdbc:mysql://localhost/biblioteca";
     private static final String DRIVER_CLASS_MYSQL = "com.mysql.jdbc.Driver";
     private static final String USER = "root";
-    private static final String PASS = "";//Sempre trocar de acordo com a senha do MySql
+    private static final String PASS = "root";//Sempre trocar de acordo com a senha do MySql
 
     public static Connection getConnection() {
         try {

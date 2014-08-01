@@ -5,11 +5,6 @@
  */
 package form;
 
-import form.FrmAtualizarUsuario;
-import form.FrmBuscaUsuario;
-import form.FrmCadastroUsuario;
-import form.FrmExcluirUsuario;
-
 /**
  *
  * @author Alex
@@ -151,28 +146,23 @@ public class DialogGerenciadorUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btNovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovaActionPerformed
-        FrmCadastroUsuario cadastrar = new FrmCadastroUsuario();
+        FrmCadastroUsuario cadastrar = new FrmCadastroUsuario(new javax.swing.JFrame(), true);
         cadastrar.setVisible(true);
-        this.dispose();
-
     }//GEN-LAST:event_btNovaActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        FrmExcluirUsuario excluir = new FrmExcluirUsuario();
+        FrmExcluirUsuario excluir = new FrmExcluirUsuario(new javax.swing.JFrame(), true);
         excluir.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        FrmBuscaUsuario consultar = new FrmBuscaUsuario();
+        FrmBuscaUsuario consultar = new FrmBuscaUsuario(new javax.swing.JFrame(), true);
         consultar.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        FrmAtualizarUsuario atualizar = new FrmAtualizarUsuario();
+        FrmAtualizarUsuario atualizar = new FrmAtualizarUsuario(new javax.swing.JFrame(), true);
         atualizar.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btConsultarActionPerformed
 
     /**

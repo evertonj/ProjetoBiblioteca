@@ -15,12 +15,13 @@ import javax.swing.JOptionPane;
  *
  * @author Alex
  */
-public class FrmCadastroUsuario extends javax.swing.JFrame {
+public class FrmCadastroUsuario extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmCadastroUsuario
      */
-    public FrmCadastroUsuario() {
+    public FrmCadastroUsuario(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
 //        enableFields(false);
 //        refreshTable();
@@ -362,8 +363,6 @@ public class FrmCadastroUsuario extends javax.swing.JFrame {
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         onCancelar();
-        DialogGerenciadorUsuario gerenciador = new DialogGerenciadorUsuario(null, true);
-        gerenciador.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
@@ -397,7 +396,14 @@ public class FrmCadastroUsuario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmCadastroUsuario().setVisible(true);
+                FrmCadastroUsuario dialog = new FrmCadastroUsuario(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
