@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+
+//Cadastro de Autor
 package entity;
 
 import entity.exceptions.NameException;
