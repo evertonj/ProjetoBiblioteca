@@ -11,6 +11,7 @@ import table.OperadorCellRenderer;
 import table.OperadorTableModel;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -23,7 +24,7 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
      */
     public FrmExcluirOperador() {
         initComponents();
-//        refreshTable();
+        refreshTable();
     }
 
     List<Operador> operadorList;
@@ -82,7 +83,7 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
         tfNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         btBuscar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
+        btBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroOperador/icon/search.png"))); // NOI18N
         btBuscar.setText("Buscar");
         btBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,10 +94,13 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
         tbLogin.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tbLogin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-
+                "Nome"
             }
         ));
         tbLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -105,7 +109,7 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
         btExcluir.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
+        btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroOperador/icon/delete.png"))); // NOI18N
         btExcluir.setText("Excluir");
         btExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,7 +118,7 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
         });
 
         btVoltar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
+        btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroOperador/icon/back.png"))); // NOI18N
         btVoltar.setText("Voltar");
         btVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,23 +134,18 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btExcluir, btVoltar});
-
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btExcluir, btVoltar});
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -203,8 +202,8 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
-        FrmGerenciadorOperador gerenciadorOperador = new FrmGerenciadorOperador();
-        gerenciadorOperador.setVisible(true);
+        DialogGerenciadorOperador telaOperador = new DialogGerenciadorOperador(new javax.swing.JFrame(), true);
+        telaOperador.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
@@ -229,7 +228,11 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-
+        if (new OperadorController().buscarOperador(tfNome.getText()) != null) {
+            JOptionPane.showMessageDialog(this, "Nome encontrado");
+        } else {
+            JOptionPane.showMessageDialog(this, "Nome nao encontrado");
+        }
     }//GEN-LAST:event_btBuscarActionPerformed
 
     /**
