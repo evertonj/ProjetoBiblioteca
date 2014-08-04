@@ -1,4 +1,4 @@
-create table editora (
+create table if not exists editora (
 id int not null auto_increment primary key,
 nome varchar(80),
 telefone varchar(80),

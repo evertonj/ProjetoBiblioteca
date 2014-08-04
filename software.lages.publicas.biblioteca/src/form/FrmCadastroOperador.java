@@ -23,7 +23,6 @@ public class FrmCadastroOperador extends javax.swing.JFrame {
      * Creates new form FrmCadastroDeObra
      */
     public FrmCadastroOperador() {
-        //DBConnection.createTable();
         initComponents();
     }
 
@@ -64,7 +63,7 @@ public class FrmCadastroOperador extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
         btSalvar.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroOperador/icon/insert.png"))); // NOI18N
+        btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/insert.png"))); // NOI18N
         btSalvar.setText("Salvar");
         btSalvar.setMaximumSize(new java.awt.Dimension(70, 20));
         btSalvar.setMinimumSize(new java.awt.Dimension(70, 20));
@@ -76,7 +75,7 @@ public class FrmCadastroOperador extends javax.swing.JFrame {
         });
 
         btVoltar.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroOperador/icon/back.png"))); // NOI18N
+        btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
         btVoltar.setText("Voltar");
         btVoltar.setMaximumSize(new java.awt.Dimension(70, 20));
         btVoltar.setMinimumSize(new java.awt.Dimension(70, 20));
@@ -180,9 +179,7 @@ public class FrmCadastroOperador extends javax.swing.JFrame {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
-        DialogGerenciadorOperador telaOperador = new DialogGerenciadorOperador(new javax.swing.JFrame(), true);
-        telaOperador.setVisible(true);
-        this.dispose();
+       this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
     /**
