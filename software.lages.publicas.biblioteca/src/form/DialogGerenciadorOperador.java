@@ -6,10 +6,7 @@
 
 package form;
 
-import form.FrmBuscaAutor;
-import form.FrmAtualizarAutor;
-import form.FrmCadastroDeAutor;
-import form.FrmExcluirAutor;
+
 
 /**
  *
@@ -43,14 +40,14 @@ public class DialogGerenciadorOperador extends javax.swing.JDialog {
         btConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gerenciador de Editora");
+        setTitle("Gerenciador de Operador");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
         jPanel2.setLayout(new java.awt.CardLayout());
 
         btVoltar.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
+        btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroDeObra/icons/back.png"))); // NOI18N
         btVoltar.setText("VOLTAR");
         btVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,7 +59,7 @@ public class DialogGerenciadorOperador extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
 
         btNova.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNova.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/insert.png"))); // NOI18N
+        btNova.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroDeObra/icons/insert.png"))); // NOI18N
         btNova.setText("NOVA");
         btNova.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,7 +68,7 @@ public class DialogGerenciadorOperador extends javax.swing.JDialog {
         });
 
         btExcluir.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
+        btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroDeObra/icons/delete.png"))); // NOI18N
         btExcluir.setText("EXCLUIR");
         btExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,7 +77,7 @@ public class DialogGerenciadorOperador extends javax.swing.JDialog {
         });
 
         btAtualizar.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
+        btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroDeObra/icons/edit.png"))); // NOI18N
         btAtualizar.setText("ATUALIZAR");
         btAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,7 +86,7 @@ public class DialogGerenciadorOperador extends javax.swing.JDialog {
         });
 
         btConsultar.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
+        btConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/CadastroDeObra/icons/search.png"))); // NOI18N
         btConsultar.setText("CONSULTAR");
         btConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,28 +145,34 @@ public class DialogGerenciadorOperador extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
-        dispose();
+        FrmTelaPrincipal principal = new FrmTelaPrincipal();
+        principal.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btNovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovaActionPerformed
-         FrmCadastroDeAutor cadastroDeAutor = new FrmCadastroDeAutor(new javax.swing.JFrame(), true);
-        cadastroDeAutor.setVisible(true);
+         FrmCadastroOperador cadastroLogin = new FrmCadastroOperador();
+        cadastroLogin.setVisible(true);
+        this.dispose();
                 
     }//GEN-LAST:event_btNovaActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        FrmExcluirAutor excluirAutor = new FrmExcluirAutor(new javax.swing.JFrame(), true);
-       excluirAutor.setVisible(true);
+        FrmExcluirOperador excluirLogin = new FrmExcluirOperador();
+       excluirLogin.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        FrmAtualizarAutor atualizarAutor = new FrmAtualizarAutor(new javax.swing.JFrame(), true);
-       atualizarAutor.setVisible(true);
+         FrmAtualizarOperador atualizarOperador = new FrmAtualizarOperador();
+        atualizarOperador.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        FrmBuscaAutor buscaAutor = new FrmBuscaAutor(new javax.swing.JFrame(), true);
-       buscaAutor.setVisible(true);
+       FrmBuscaOperador buscaLogin = new FrmBuscaOperador();
+       buscaLogin.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_btConsultarActionPerformed
 
     /**

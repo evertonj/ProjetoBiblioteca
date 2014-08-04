@@ -369,7 +369,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_menuItemAutorActionPerformed
 
     private void menuItemOperadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemOperadorActionPerformed
-        FrmGerenciadorOperador telaOperador = new FrmGerenciadorOperador();
+        DialogGerenciadorOperador telaOperador = new DialogGerenciadorOperador(this, true);
         telaOperador.setVisible(true);
     }//GEN-LAST:event_menuItemOperadorActionPerformed
 

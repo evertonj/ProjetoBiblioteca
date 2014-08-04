@@ -5,7 +5,6 @@
  */
 package controller;
 
-
 import entity.Operador;
 import facade.OperadorFacade;
 import java.util.List;
