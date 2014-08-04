@@ -7,6 +7,10 @@ nome varchar(80),
 sobrenome varchar(80),
 datanascimento date
 );
+create table assunto(
+id int not null auto_increment primary key,
+nome varchar(80));
+
 create table editora (
 id int not null auto_increment primary key,
 nome varchar(80),
@@ -26,6 +30,8 @@ id_editora int not null,
 isbn varchar(60),
 assunto varchar(60),
 foto longblob,
+idAssunto int not null;
+foreign key (idAssunto) references assunto(id);
 primary key(id),
 constraint 
 foreign key (id_editora)
@@ -45,3 +51,4 @@ idautor int not null,
 constraint foreign key (idobra) references obra(id),
 constraint foreign key (idautor) references autor(id)
 );
+
