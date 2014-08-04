@@ -30,8 +30,8 @@ id_editora int not null,
 isbn varchar(60),
 assunto varchar(60),
 foto longblob,
-idAssunto int not null;
-foreign key (idAssunto) references assunto(id);
+idAssunto int not null,
+foreign key (idAssunto) references assunto(id),
 primary key(id),
 constraint 
 foreign key (id_editora)

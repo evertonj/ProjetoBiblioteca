@@ -5,8 +5,8 @@
  */
 package form;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-
 public class FrmRealizarLogin extends javax.swing.JFrame {
 
     /**
@@ -142,7 +142,8 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btFecharActionPerformed
 
     private void tpsSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tpsSenhaKeyReleased
-        if (evt.getKeyCode() == 10) {
+        int key = evt.getKeyCode();        
+        if (key == KeyEvent.VK_ENTER) {
             boolean result;
             result = (tfLogin.getText().equalsIgnoreCase("admin") && String.copyValueOf(tpsSenha.getPassword()).equalsIgnoreCase("admin"));
             if (result) {

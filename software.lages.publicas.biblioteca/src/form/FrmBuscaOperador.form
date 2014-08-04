@@ -140,7 +140,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/CadastroOperador/icon/search.png"/>
+              <Image iconType="3" name="/icon/search.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Buscar"/>
           </Properties>
@@ -207,7 +207,7 @@
                   <Font name="Dialog" size="14" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/CadastroOperador/icon/back.png"/>
+                  <Image iconType="3" name="/icon/back.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Voltar"/>
               </Properties>

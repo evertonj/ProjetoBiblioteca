@@ -1,4 +1,4 @@
-create table obra_autor(
+create table if not exists obra_autor(
 id int not null auto_increment primary key,
 idobra int not null,
 idautor int not null,
