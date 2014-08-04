@@ -26,17 +26,17 @@ public class AssuntoDAO implements IAssuntoDAO {
     private static final String SQL_UPDATE = "update ASSUNTO set NOME = ? WHERE ID = ?;";
     private static final String SQL_REMOVE = "delete from ASSUNTO where ID = ?;";
     private static final String SQL_FIND_ALL = "select * from ASSUNTO;";
-    private static final String SQL_ORDER_TABLE = "select * from autor order by nome;";
+    private static final String SQL_ORDER_TABLE = "select * from assunto order by nome;";
 
     @Override
-    public int save(Assunto autor) {
+    public int save(Assunto assunto) {
         Connection conn = DBConnection.getConnection();
         PreparedStatement pstm = null;
         int result = 0;
         try {
             pstm = conn.prepareStatement(SQL_INSERT);
           
-            pstm.setString(1, autor.getNome());
+            pstm.setString(1, assunto.getNome());
             
        
             result = pstm.executeUpdate();
@@ -57,16 +57,16 @@ public class AssuntoDAO implements IAssuntoDAO {
     }
 
     @Override
-    public int update(Assunto autor) {
+    public int update(Assunto assunto) {
         Connection conn = DBConnection.getConnection();
         PreparedStatement pstm = null;
         int result = 0;
         try {
             pstm = conn.prepareStatement(SQL_UPDATE);
-           pstm.setString(1, autor.getNome());
+           pstm.setString(1, assunto.getNome());
            
            
-            pstm.setLong(4, autor.getId());
+            pstm.setLong(4, assunto.getId());
            
             
             result = pstm.executeUpdate();
@@ -140,7 +140,7 @@ public class AssuntoDAO implements IAssuntoDAO {
         
         Connection conn = DBConnection.getConnection();
         PreparedStatement pstm = null;
-        List<Assunto> autors = new ArrayList<>();
+        List<Assunto> assuntos = new ArrayList<>();
         ResultSet rs = null;
 
         try {
@@ -154,7 +154,7 @@ public class AssuntoDAO implements IAssuntoDAO {
             assunto.setNome(rs.getString("Nome"));
             assunto.setId(rs.getInt("id"));
                 
-                autors.add(assunto);    
+                assuntos.add(assunto);    
                
             }
 
@@ -172,7 +172,7 @@ public class AssuntoDAO implements IAssuntoDAO {
             }
             e.printStackTrace();
         } 
-        return autors;
+        return assuntos;
     }
 
 
