@@ -149,22 +149,22 @@ public class DialogGerenciadorOperador extends javax.swing.JDialog {
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btNovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovaActionPerformed
-         FrmCadastroOperador cadastroLogin = new FrmCadastroOperador();
+         FrmCadastroOperador cadastroLogin = new FrmCadastroOperador(new javax.swing.JFrame(), true);
         cadastroLogin.setVisible(true);      
     }//GEN-LAST:event_btNovaActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        FrmExcluirOperador excluirLogin = new FrmExcluirOperador();
+        FrmExcluirOperador excluirLogin = new FrmExcluirOperador(new javax.swing.JFrame(), true);
        excluirLogin.setVisible(true);
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-         FrmAtualizarOperador atualizarOperador = new FrmAtualizarOperador();
+         FrmAtualizarOperador atualizarOperador = new FrmAtualizarOperador(new javax.swing.JFrame(), true);
         atualizarOperador.setVisible(true);
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-       FrmBuscaOperador buscaLogin = new FrmBuscaOperador();
+       FrmBuscaOperador buscaLogin = new FrmBuscaOperador(new javax.swing.JFrame(), true);
        buscaLogin.setVisible(true);
     }//GEN-LAST:event_btConsultarActionPerformed
 

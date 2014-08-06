@@ -17,12 +17,13 @@ import javax.swing.JOptionPane;
  *
  * @author Alex
  */
-public class FrmCadastroDeAutor extends javax.swing.JFrame {
+public class FrmCadastroDeAutor extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmCadastroDeObra
      */
     public FrmCadastroDeAutor(java.awt.Frame parent, boolean modal) {
+      super(parent,modal);
         initComponents();
         this.enableFields(true);
     }
@@ -326,6 +327,14 @@ private  java.sql.Date getCurrentDate() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                 FrmCadastroDeAutor dialog = new FrmCadastroDeAutor(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
               
             }
         });
