@@ -8,8 +8,6 @@ package form;
 
 import controller.AssuntoController;
 import entity.Assunto;
-import entity.exceptions.NameException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.JOptionPane;
 
@@ -191,8 +189,7 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
 
         int result;
         try {
-            {
-                
+            {             
               
                 Assunto assunto = new Assunto();
                 assunto.setNome(tfNome.getText());
