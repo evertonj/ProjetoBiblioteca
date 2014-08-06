@@ -235,8 +235,7 @@ public class FrmCadastroDeAutor extends javax.swing.JFrame {
 
         int result;
         try {
-            {
-                
+            {             
               
                 Autor autor = new Autor(tfNome.getText(),tfSobreNome.getText(),getCurrentDate());
                
