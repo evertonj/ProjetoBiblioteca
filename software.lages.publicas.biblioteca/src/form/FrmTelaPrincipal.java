@@ -21,7 +21,7 @@ import javax.swing.plaf.FontUIResource;
  *
  * @author Bya
  */
-public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListener {
+public class FrmTelaPrincipal extends javax.swing.JDialog implements ActionListener {
 
     /**
      * Creates new form FrmTelaPrincipal
@@ -31,7 +31,8 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
             + "HH:mm");
     Timer timer;
 
-    public FrmTelaPrincipal() {
+    public FrmTelaPrincipal(java.awt.Frame parent, boolean modal) {
+        super(parent , true);
         timer = new Timer(500, this);
         timer.setRepeats(true);
         timer.start();
@@ -387,7 +388,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_menuItemAutorActionPerformed
 
     private void menuItemOperadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemOperadorActionPerformed
-        DialogGerenciadorOperador telaOperador = new DialogGerenciadorOperador(this, true);
+        DialogGerenciadorOperador telaOperador = new DialogGerenciadorOperador(new javax.swing.JFrame(), true);
         telaOperador.setVisible(true);
     }//GEN-LAST:event_menuItemOperadorActionPerformed
 
@@ -398,7 +399,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_menuSobreMouseClicked
 
     private void menuItemGerenciamentoAssuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGerenciamentoAssuntoActionPerformed
-        DialogGerenciadorAssunto telaAssunto = new DialogGerenciadorAssunto(this, true);
+        DialogGerenciadorAssunto telaAssunto = new DialogGerenciadorAssunto(new javax.swing.JFrame(), true);
         telaAssunto.setVisible(true);
     }//GEN-LAST:event_menuItemGerenciamentoAssuntoActionPerformed
 
@@ -442,7 +443,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmTelaPrincipal().setVisible(true);
+                new FrmTelaPrincipal(new javax.swing.JFrame(), true).setVisible(true);
             }
         });
     }
