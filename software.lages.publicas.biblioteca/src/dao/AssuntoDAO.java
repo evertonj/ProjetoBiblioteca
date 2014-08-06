@@ -22,10 +22,10 @@ import java.util.logging.Logger;
  */
 public class AssuntoDAO implements IAssuntoDAO {
 
-    private static final String SQL_INSERT = "insert into ASSUNTO (NOME) VALUES (?);";
-    private static final String SQL_UPDATE = "update ASSUNTO set NOME = ? WHERE ID = ?;";
-    private static final String SQL_REMOVE = "delete from ASSUNTO where ID = ?;";
-    private static final String SQL_FIND_ALL = "select * from ASSUNTO;";
+    private static final String SQL_INSERT = "insert into assunto (NOME) VALUES (?);";
+    private static final String SQL_UPDATE = "update assunto set NOME = ? WHERE ID = ?;";
+    private static final String SQL_REMOVE = "delete from assunto where ID = ?;";
+    private static final String SQL_FIND_ALL = "select * from assunto;";
     private static final String SQL_ORDER_TABLE = "select * from assunto order by nome;";
 
     @Override
@@ -117,16 +117,16 @@ public class AssuntoDAO implements IAssuntoDAO {
       
       ResultSet rs=null;  
       try {  
-           PreparedStatement comando = conn.prepareStatement("SELECT * FROM Assunto WHERE Nome LIKE '%"+nome+"%';" );
+          PreparedStatement comando = conn.prepareStatement("SELECT * FROM assunto WHERE Nome = '"+nome+"';" );
        
          rs = comando.executeQuery();
-         while (rs.next()) {  
+         if (rs.next()) {  
              
             // pega todos os atributos da pessoa  
             Assunto  assunto = new Assunto();
             assunto.setNome(rs.getString("Nome"));
             assunto.setId(rs.getInt("id"));
-             
+             return assunto;
          }  
          
       } catch (SQLException e) {  
