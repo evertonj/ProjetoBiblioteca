@@ -16,12 +16,13 @@ import javax.swing.JOptionPane;
  *
  * @author Thiago
  */
-public class FrmBuscaOperador extends javax.swing.JFrame {
+public class FrmBuscaOperador extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmBuscaEditora
      */
-    public FrmBuscaOperador() {
+    public FrmBuscaOperador(java.awt.Frame parent, boolean modal) {
+       super(parent,modal);
         initComponents();
         refreshTable();
     }
@@ -230,7 +231,14 @@ public class FrmBuscaOperador extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmBuscaOperador().setVisible(true);
+                FrmBuscaOperador dialog = new FrmBuscaOperador(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

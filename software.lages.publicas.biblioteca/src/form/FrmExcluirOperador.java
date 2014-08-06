@@ -17,12 +17,13 @@ import javax.swing.ListSelectionModel;
  *
  * @author Thiago
  */
-public class FrmExcluirOperador extends javax.swing.JFrame {
+public class FrmExcluirOperador extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmBuscaEditora
      */
-    public FrmExcluirOperador() {
+    public FrmExcluirOperador(java.awt.Frame parent, boolean modal) {
+        super(parent,modal);
         initComponents();
         refreshTable();
     }
@@ -263,7 +264,14 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmExcluirOperador().setVisible(true);
+                 FrmExcluirOperador dialog = new FrmExcluirOperador(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

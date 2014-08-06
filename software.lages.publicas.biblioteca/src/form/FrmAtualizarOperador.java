@@ -16,12 +16,13 @@ import javax.swing.JOptionPane;
  *
  * @author Familia
  */
-public class FrmAtualizarOperador extends javax.swing.JFrame {
+public class FrmAtualizarOperador extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmAtualizarOperador
      */
-    public FrmAtualizarOperador() {
+    public FrmAtualizarOperador(java.awt.Frame parent, boolean modal) {
+        super(parent,modal);
         initComponents();
     }
     List<Operador> operadorList;
@@ -269,8 +270,14 @@ public class FrmAtualizarOperador extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmAtualizarOperador().setVisible(true);
-            }
+               FrmAtualizarOperador dialog = new FrmAtualizarOperador(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);}
         });
     }
 

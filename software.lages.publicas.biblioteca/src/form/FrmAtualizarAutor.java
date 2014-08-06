@@ -16,13 +16,13 @@ import javax.swing.JOptionPane;
  *
  * @author Alex
  */
-public class FrmAtualizarAutor extends javax.swing.JFrame {
+public class FrmAtualizarAutor extends javax.swing.JDialog{
 
     /**
      * Creates new form FrmCadastroDeObra
      */
     public FrmAtualizarAutor(java.awt.Frame parent, boolean modal) {
-        
+        super(parent,modal);
         initComponents();
        
         this.enableFields(false);
@@ -362,6 +362,14 @@ this.dispose();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                  FrmAtualizarAutor dialog = new FrmAtualizarAutor(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
               
             }
         });
