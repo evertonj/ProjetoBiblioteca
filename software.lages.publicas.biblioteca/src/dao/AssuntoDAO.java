@@ -66,7 +66,7 @@ public class AssuntoDAO implements IAssuntoDAO {
            pstm.setString(1, assunto.getNome());
            
            
-            pstm.setLong(4, assunto.getId());
+            pstm.setLong(2, assunto.getId());
            
             
             result = pstm.executeUpdate();
@@ -125,7 +125,7 @@ public class AssuntoDAO implements IAssuntoDAO {
             // pega todos os atributos da pessoa  
             Assunto  assunto = new Assunto();
             assunto.setNome(rs.getString("Nome"));
-            assunto.setId(rs.getInt("id"));
+            assunto.setId(rs.getLong("id"));
              return assunto;
          }  
          
@@ -152,7 +152,7 @@ public class AssuntoDAO implements IAssuntoDAO {
               
                  Assunto  assunto = new Assunto();
             assunto.setNome(rs.getString("Nome"));
-            assunto.setId(rs.getInt("id"));
+            assunto.setId(rs.getLong("id"));
                 
                 assuntos.add(assunto);    
                

@@ -162,8 +162,8 @@ public class DialogGerenciadorAssunto extends javax.swing.JDialog {
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        FrmBuscaAssunto novoAssunto = new FrmBuscaAssunto (new javax.swing.JFrame(), true);
-        novoAssunto.setVisible(true);
+       // FrmBuscaAssunto novoAssunto = new FrmBuscaAssunto (new javax.swing.JFrame(), true);
+        //novoAssunto.setVisible(true);
     }//GEN-LAST:event_btConsultarActionPerformed
 
     /**
