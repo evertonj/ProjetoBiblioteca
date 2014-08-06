@@ -129,7 +129,7 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
         boolean result;
         result = (tfLogin.getText().equalsIgnoreCase("admin") && String.copyValueOf(tpsSenha.getPassword()).equalsIgnoreCase("admin"));
         if (result) {
-            FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal();
+            FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal(new javax.swing.JFrame(), true);
             telaPrincipal.setVisible(true);
             dispose();
         } else {
@@ -147,7 +147,7 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
             boolean result;
             result = (tfLogin.getText().equalsIgnoreCase("admin") && String.copyValueOf(tpsSenha.getPassword()).equalsIgnoreCase("admin"));
             if (result) {
-                FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal();
+                FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal(new javax.swing.JFrame(), true);
                 telaPrincipal.setVisible(true);
                 dispose();
             } else {

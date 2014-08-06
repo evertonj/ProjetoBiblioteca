@@ -11,7 +11,6 @@ import table.OperadorCellRenderer;
 import table.OperadorTableModel;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 
 /**
  *

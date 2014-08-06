@@ -17,12 +17,13 @@ import javax.swing.JOptionPane;
  *
  * @author Thiago
  */
-public class FrmExcluirAutor extends javax.swing.JFrame {
+public class FrmExcluirAutor extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmBuscaAutor
      */
     public FrmExcluirAutor(java.awt.Frame parent, boolean modal) {
+        super(parent, true);
         initComponents();
         refreshTable();
     }
