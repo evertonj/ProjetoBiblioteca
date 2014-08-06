@@ -79,6 +79,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         menuItemEditora = new javax.swing.JMenuItem();
         menuItemAutor = new javax.swing.JMenuItem();
         menuItemOperador = new javax.swing.JMenuItem();
+        menuItemGerenciamentoAssunto = new javax.swing.JMenuItem();
         menuEmprestimo = new javax.swing.JMenu();
         menuDevolução = new javax.swing.JMenu();
         menuRelatorio = new javax.swing.JMenu();
@@ -259,6 +260,15 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuGerenciamento.add(menuItemOperador);
 
+        menuItemGerenciamentoAssunto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuItemGerenciamentoAssunto.setText("Gerenciamento De Assunto");
+        menuItemGerenciamentoAssunto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemGerenciamentoAssuntoActionPerformed(evt);
+            }
+        });
+        menuGerenciamento.add(menuItemGerenciamentoAssunto);
+
         jMenuBar1.add(menuGerenciamento);
 
         menuEmprestimo.setText("Realizar Empréstimo");
@@ -379,6 +389,11 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
                 + "\n" + "auxiliar nas atividades básicas realizadas em uma biblioteca educacional!");
     }//GEN-LAST:event_menuSobreMouseClicked
 
+    private void menuItemGerenciamentoAssuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGerenciamentoAssuntoActionPerformed
+        DialogGerenciadorAssunto telaAssunto = new DialogGerenciadorAssunto(this, true);
+        telaAssunto.setVisible(true);
+    }//GEN-LAST:event_menuItemGerenciamentoAssuntoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -443,6 +458,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JMenu menuGerenciamento;
     private javax.swing.JMenuItem menuItemAutor;
     private javax.swing.JMenuItem menuItemEditora;
+    private javax.swing.JMenuItem menuItemGerenciamentoAssunto;
     private javax.swing.JMenuItem menuItemObra;
     private javax.swing.JMenuItem menuItemOperador;
     private javax.swing.JMenuItem menuItemUsuario;
