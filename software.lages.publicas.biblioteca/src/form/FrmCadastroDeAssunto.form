@@ -34,14 +34,6 @@
         <Property name="text" type="java.lang.String" value="jLabel10"/>
       </Properties>
     </Component>
-    <Component class="com.toedter.calendar.JYearChooser" name="jYearChooser1">
-    </Component>
-    <Component class="com.toedter.components.JLocaleChooser" name="jLocaleChooser1">
-    </Component>
-    <Component class="com.toedter.calendar.JMonthChooser" name="jMonthChooser1">
-    </Component>
-    <Component class="com.toedter.calendar.JDayChooser" name="jDayChooser1">
-    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
