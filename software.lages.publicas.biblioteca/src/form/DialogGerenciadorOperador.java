@@ -145,8 +145,7 @@ public class DialogGerenciadorOperador extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
-        FrmTelaPrincipal principal = new FrmTelaPrincipal();
-        principal.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btNovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovaActionPerformed

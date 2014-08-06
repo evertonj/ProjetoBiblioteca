@@ -208,17 +208,17 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         int rowIndex = tbLogin.getSelectedRow();
         if (rowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione o usuario que deseja remover!!!");
+            JOptionPane.showMessageDialog(this, "Selecione o operador que deseja remover!!!");
             return;
         }
         Operador operador = new OperadorTableModel(operadorList).get(rowIndex);
-        int confirm = JOptionPane.showConfirmDialog(this, "Confirmar exclusão ?", "Excluir Login", JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, "Confirmar exclusão ?", "Excluir Operador", JOptionPane.YES_NO_OPTION);
         if (confirm != 0) {
             return;
         }
         int result = new OperadorController().excluirOperador(operador.getId());
         if (result == 1) {
-            JOptionPane.showMessageDialog(this, "Login removida com Sucesso!");
+            JOptionPane.showMessageDialog(this, "Operador removida com Sucesso!");
             this.refreshTable();
         } else {
             JOptionPane.showMessageDialog(this, "Tente novamente!");
@@ -227,9 +227,9 @@ public class FrmExcluirOperador extends javax.swing.JFrame {
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         if (new OperadorController().buscarOperador(tfNome.getText()) != null) {
-            JOptionPane.showMessageDialog(this, "Nome encontrado");
+            JOptionPane.showMessageDialog(this, "Nome encontrado!s");
         } else {
-            JOptionPane.showMessageDialog(this, "Nome nao encontrado");
+            JOptionPane.showMessageDialog(this, "Nome não encontrado!");
         }
     }//GEN-LAST:event_btBuscarActionPerformed
 
