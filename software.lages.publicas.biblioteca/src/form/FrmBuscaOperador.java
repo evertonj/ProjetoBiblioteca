@@ -5,6 +5,7 @@
  */
 package form;
 
+import connection.DBConnection;
 import controller.OperadorController;
 import entity.Operador;
 import table.OperadorCellRenderer;
@@ -24,6 +25,7 @@ public class FrmBuscaOperador extends javax.swing.JDialog {
     public FrmBuscaOperador(java.awt.Frame parent, boolean modal) {
        super(parent,modal);
         initComponents();
+        DBConnection.getConnection();
         refreshTable();
     }
 
@@ -195,9 +197,9 @@ public class FrmBuscaOperador extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (new OperadorController().buscarOperador(tfNome.getText()) != null) {
-            JOptionPane.showMessageDialog(this, "Nome encontrado");
+            JOptionPane.showMessageDialog(this, "Nome encontrado!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Nome nao encontrado");
+            JOptionPane.showMessageDialog(this, "Nome não encontrado!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

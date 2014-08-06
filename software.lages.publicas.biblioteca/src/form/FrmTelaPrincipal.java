@@ -35,7 +35,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         timer = new Timer(500, this);
         timer.setRepeats(true);
         timer.start();
-        UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Dialog", Font.PLAIN, 18)));
+        UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
         initComponents();
     }
 
@@ -104,6 +104,9 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
+        relogioDigital.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
+        relogioDigital.setText("Relógio");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -111,7 +114,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(relogioDigital)
-                .addContainerGap(285, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,6 +308,11 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
 
         menuSair.setText("Sair");
         menuSair.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSairActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(menuSair);
 
         setJMenuBar(jMenuBar1);
@@ -394,11 +402,15 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         telaAssunto.setVisible(true);
     }//GEN-LAST:event_menuItemGerenciamentoAssuntoActionPerformed
 
+    private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_menuSairActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
