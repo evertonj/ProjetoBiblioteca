@@ -18,7 +18,7 @@ public interface IAssuntoDAO {
     
     int update(Assunto assunto);
     
-    int remove(long id);
+    int remove(int id);
     
     List<Assunto> finAll();
     

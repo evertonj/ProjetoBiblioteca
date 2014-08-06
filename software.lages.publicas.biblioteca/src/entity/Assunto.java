@@ -11,20 +11,20 @@ package entity;
  * @author Thiago
  */
 public class Assunto {
-    private long id;
+    private int id;
     private String nome;            
 
     /**
      * @return the id
      */
-    public long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

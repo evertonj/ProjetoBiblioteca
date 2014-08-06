@@ -29,7 +29,7 @@ public class AssuntoTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 1;
     }
 
     @Override
@@ -38,8 +38,7 @@ public class AssuntoTableModel extends AbstractTableModel {
         switch (columnIndex) {
             case 0:
                 return assunto.getNome();
-            case 1:
-               
+                       
             
           
             

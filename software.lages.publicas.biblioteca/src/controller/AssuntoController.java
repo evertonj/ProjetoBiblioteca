@@ -29,7 +29,7 @@ public class AssuntoController{
         return facade.update(assunto);
     }
 
-    public int excluirAssunto(long id) {
+    public int excluirAssunto(int id) {
         return facade.remove(id);
     }
 

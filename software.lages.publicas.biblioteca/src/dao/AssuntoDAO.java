@@ -66,7 +66,7 @@ public class AssuntoDAO implements IAssuntoDAO {
            pstm.setString(1, assunto.getNome());
            
            
-            pstm.setLong(2, assunto.getId());
+            pstm.setInt(2, assunto.getId());
            
             
             result = pstm.executeUpdate();
@@ -88,13 +88,13 @@ public class AssuntoDAO implements IAssuntoDAO {
     }
 
     @Override
-    public int remove(long id) {
+    public int remove(int id) {
         Connection conn = DBConnection.getConnection();
         PreparedStatement pstm = null;
         int result = 0;
         try {
             pstm = conn.prepareStatement(SQL_REMOVE);
-            pstm.setLong(1, id);
+            pstm.setInt(1, id);
             result = pstm.executeUpdate();
             pstm.close();
         } catch (SQLException e) {
@@ -125,7 +125,7 @@ public class AssuntoDAO implements IAssuntoDAO {
             // pega todos os atributos da pessoa  
             Assunto  assunto = new Assunto();
             assunto.setNome(rs.getString("Nome"));
-            assunto.setId(rs.getLong("id"));
+            assunto.setId(rs.getInt("id"));
              return assunto;
          }  
          
@@ -148,14 +148,14 @@ public class AssuntoDAO implements IAssuntoDAO {
 
             rs = pstm.executeQuery();
 
-            while (rs.next()) {                       
-              
-                 Assunto  assunto = new Assunto();
-            assunto.setNome(rs.getString("Nome"));
-            assunto.setId(rs.getLong("id"));
+            while (rs.next()) {      
                 
-                assuntos.add(assunto);    
-               
+              
+                Assunto assunto = new Assunto();
+                assunto.setId(rs.getInt("id"));
+                assunto.setNome(rs.getString("nome"));
+                assuntos.add(assunto);
+                        
             }
 
             pstm.close();
@@ -171,9 +171,10 @@ public class AssuntoDAO implements IAssuntoDAO {
                 DBConnection.close(conn, pstm, null);
             }
             e.printStackTrace();
-        } 
+        }
         return assuntos;
     }
 
-
 }
+
+

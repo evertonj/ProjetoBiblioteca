@@ -29,7 +29,7 @@ public class FrmAtualizarAssunto extends javax.swing.JDialog {
     }
 
     List<Assunto> assuntoList;
-    Long idAssunto;
+    Integer idAssunto;
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -30,7 +30,7 @@ public class AssuntoFacade {
         return dao.update(assunto);
     }
 
-    public int remove(long id) {
+    public int remove(int id) {
         return dao.remove(id);
     }
 
