@@ -3,16 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Beatriz/Desktop/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmRealizarLogin.java</file>
-            <file>file:/C:/Users/Beatriz/Desktop/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmCadastroDeAssunto.java</file>
-            <file>file:/C:/Users/Beatriz/Desktop/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/facade/AutorFacade.java</file>
-            <file>file:/C:/Users/Beatriz/Desktop/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmTelaPrincipal.java</file>
-            <file>file:/C:/Users/Beatriz/Desktop/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/connection/DBConnection.java</file>
-            <file>file:/C:/Users/Beatriz/Desktop/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/dao/AutorDAO.java</file>
-            <file>file:/C:/Users/Beatriz/Desktop/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogNovaObra.java</file>
-            <file>file:/C:/Users/Beatriz/Desktop/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmCadastroDeAutor.java</file>
-            <file>file:/C:/Users/Beatriz/Desktop/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/entity/Editora.java</file>
-            <file>file:/C:/Users/Beatriz/Desktop/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/dao/IAutorDAO.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmAtualizarAutor.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmAtualizarOperador.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/controller/AssuntoController.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogGerenciadorAssunto.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmAtualizarAssunto.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmBuscaAutor.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmAtualizarUsuario.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/facade/AssuntoFacade.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/table/AssuntoCellRenderer.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/dao/IAssuntoDAO.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/dao/EditoraDAO.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmExcluirAutor.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/connection/DBConnection.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/dao/AssuntoDAO.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/entity/Assunto.java</file>
         </group>
     </open-files>
 </project-private>
