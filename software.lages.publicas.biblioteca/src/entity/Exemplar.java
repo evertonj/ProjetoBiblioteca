@@ -6,10 +6,95 @@
 
 package entity;
 
+import java.util.Date;
+
 /**
  *
  * @author Alex
  */
 public class Exemplar {
+    private int id;
+    private Date dataDeCadastro;
+    private String fornecedor;
+    private Date dataDeAquisicao;
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 41 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Exemplar other = (Exemplar) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
     
+    
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the dataDeCadastro
+     */
+    public Date getDataDeCadastro() {
+        return dataDeCadastro;
+    }
+
+    /**
+     * @param dataDeCadastro the dataDeCadastro to set
+     */
+    public void setDataDeCadastro(Date dataDeCadastro) {
+        this.dataDeCadastro = dataDeCadastro;
+    }
+
+    /**
+     * @return the fornecedor
+     */
+    public String getFornecedor() {
+        return fornecedor;
+    }
+
+    /**
+     * @param fornecedor the fornecedor to set
+     */
+    public void setFornecedor(String fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
+    
+    /**
+     * @return the dataDeAquisicao
+     */
+    public Date getDataDeAquisicao() {
+        return dataDeAquisicao;
+    }
+
+    /**
+     * @param dataDeAquisicao the dataDeAquisicao to set
+     */
+    public void setDataDeAquisicao(Date dataDeAquisicao) {
+        this.dataDeAquisicao = dataDeAquisicao;
+    }
 }

@@ -8,6 +8,7 @@ package dao;
 import entity.Editora;
 import entity.Autor;
 import connection.DBConnection;
+import entity.Exemplar;
 import entity.Obra;
 import entity.exceptions.NameException;
 import java.sql.Connection;
@@ -32,6 +33,7 @@ public class ObraDAO implements IObraDAO {
         PreparedStatement pstm = null;
         String sql = "insert into obra(TITULO, EDICAO, ANO, EDITORA, ISBN, ASSUNTO, FOTO) VALUES (?, ?, ?, ?, ?, ?, ?);";
         String sqlAutores = "insert into obra_autor(idobra, idautor) values(last_insert_id(), ?);";
+        String sqlExeplares = "insert into exemplar(dataDeCadastro, fornecedor, dataDeAquisicao id_Obra) values(?, ?, ?, ?)";
         try {
             conn = DBConnection.getConnection();
             pstm = conn.prepareStatement(sql);
@@ -50,6 +52,13 @@ public class ObraDAO implements IObraDAO {
                 pstm = conn.prepareStatement(sqlAutores);
                 pstm.setLong(1, autor1.getId());
                 result = pstm.executeUpdate();
+            }
+            for (Exemplar exemplar : obra.getExemplar()) {
+                pstm = conn.prepareStatement(sqlExeplares);
+                pstm.setDate(1, new java.sql.Date(exemplar.getDataDeCadastro().getTime()));
+                pstm.setString(2, exemplar.getFornecedor());
+                pstm.setDate(3, new java.sql.Date(exemplar.getDataDeAquisicao().getTime()));
+                //Corrigir pstm.setInt(4,);
             }
             pstm.close();
             return result;

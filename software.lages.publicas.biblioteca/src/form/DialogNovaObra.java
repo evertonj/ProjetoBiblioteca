@@ -5,7 +5,6 @@
  */
 package form;
 
-
 import controller.AssuntoController;
 import controller.EditoraController;
 import entity.Editora;
@@ -34,14 +33,8 @@ public class DialogNovaObra extends javax.swing.JDialog {
     public DialogNovaObra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        List<Editora> listaDeEditora = new EditoraController().finAll();
-        for (Editora editora : listaDeEditora) {
-            cbEditora.addItem(editora);
-        }
-        List<Assunto> listAssunto = new AssuntoController().finAll();
-        for (Assunto assunto : listAssunto) {
-            cbAssunto.addItem(assunto);
-        }
+        //this.carregarComboBoxEditora();
+        //this.carregarComBoboxAssunto();
     }
     public static List<Autor> listaAutores = new ArrayList<>();
     DefaultTableModel dtm;
@@ -81,6 +74,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
         tfAno = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         tfISBN = new javax.swing.JTextField();
+        btNovaEditora = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         btEscolher = new javax.swing.JButton();
@@ -165,6 +159,19 @@ public class DialogNovaObra extends javax.swing.JDialog {
         jLabel5.setText("Editora:");
 
         cbEditora.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cbEditora.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbEditoraMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cbEditoraMouseEntered(evt);
+            }
+        });
+        cbEditora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEditoraActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("Ano:");
@@ -175,6 +182,15 @@ public class DialogNovaObra extends javax.swing.JDialog {
         jLabel7.setText("ISBN:");
 
         tfISBN.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        btNovaEditora.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btNovaEditora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/insert 16x16.png"))); // NOI18N
+        btNovaEditora.setText("Nova Editora");
+        btNovaEditora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNovaEditoraActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -189,13 +205,15 @@ public class DialogNovaObra extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tfISBN)
-                    .addComponent(cbEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbEditora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(tfEdicao)
+                        .addComponent(tfEdicao, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfAno, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btNovaEditora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfAno))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -210,7 +228,8 @@ public class DialogNovaObra extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(btNovaEditora))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfISBN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,15 +311,33 @@ public class DialogNovaObra extends javax.swing.JDialog {
         btInserirExemplar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btInserirExemplar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/novoexemplar.png"))); // NOI18N
         btInserirExemplar.setText("Novo Exemplar");
+        btInserirExemplar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btInserirExemplarActionPerformed(evt);
+            }
+        });
 
         cbAssunto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cbAssunto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbAssuntoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cbAssuntoMouseEntered(evt);
+            }
+        });
+        cbAssunto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAssuntoActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setText("Assunto:");
 
         jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/insert 16x16.png"))); // NOI18N
-        jButton1.setText("Cadastrar Assunto");
+        jButton1.setText("Novo Assunto");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -324,12 +361,12 @@ public class DialogNovaObra extends javax.swing.JDialog {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel8))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(cbAssunto, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(cbAssunto, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)))
+                        .addGap(0, 1, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -365,28 +402,27 @@ public class DialogNovaObra extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel3))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(tfTitulo))
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btAdicionarComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btNovoAutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField1))))))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfTitulo))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btAdicionarComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btNovoAutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -439,30 +475,39 @@ public class DialogNovaObra extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private String[] generateValues() {
-        String[] valores = new String[10];
-        for (int i = 0; i < 10; i++) {
-            valores[i] = "teste" + i;
+    private void carregarComboBoxEditora() {
+        List<Editora> listaDeEditora = new EditoraController().finAll();
+        for (Editora editora : listaDeEditora) {
+            cbEditora.removeItem(editora);
+            cbEditora.addItem(editora);
         }
-        return valores;
+    }
+
+    private void carregarComBoboxAssunto() {
+        List<Assunto> listAssunto = new AssuntoController().finAll();
+        for (Assunto assunto : listAssunto) {
+            cbAssunto.removeItem(assunto);
+            cbAssunto.addItem(assunto);
+        }
     }
 
     private void getDados() {
         try {
-        obra.setTitulo(tfTitulo.getText());
-        obra.setAutores(listaAutores);
-        obra.setEdicao(tfEdicao.getText());
-        obra.setAno(Short.parseShort(tfAno.getText()));
-        obra.setEditora((Editora) cbEditora.getSelectedItem());
-        obra.setIsbn(tfISBN.getText());
-        obra.setAssunto((String) cbAssunto.getSelectedItem());
-        obra.setFoto(foto);
-        dao.save(obra);
-        } catch(NumberFormatException ex) {
+            obra.setTitulo(tfTitulo.getText());
+            obra.setAutores(listaAutores);
+            obra.setEdicao(tfEdicao.getText());
+            obra.setAno(Short.parseShort(tfAno.getText()));
+            obra.setEditora((Editora) cbEditora.getSelectedItem());
+            obra.setIsbn(tfISBN.getText());
+            obra.setAssunto((String) cbAssunto.getSelectedItem());
+            obra.setFoto(foto);
+            obra.setExemplar(DialogExemplar.listaDeExemplares);
+            dao.save(obra);
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "O Ano inserido é Invalido!!!");
             tfAno.setText(null);
             tfAno.requestFocus();
-        } catch(NullPointerException ex) {
+        } catch (NullPointerException ex) {
             JOptionPane.showMessageDialog(this, "Favor preencha todos os campos!!!");
         }
     }
@@ -557,9 +602,40 @@ public class DialogNovaObra extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FrmCadastroDeAssunto cadastroDeAssunto = new FrmCadastroDeAssunto(new javax.swing.JFrame(), true);
-        cadastroDeAssunto.setVisible(true);
+        new FrmCadastroDeAssunto(new javax.swing.JFrame(), true).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btNovaEditoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovaEditoraActionPerformed
+        new FrmCadastroDeEditora(new javax.swing.JFrame(), true).setVisible(true);
+    }//GEN-LAST:event_btNovaEditoraActionPerformed
+
+    private void btInserirExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInserirExemplarActionPerformed
+        new DialogExemplar(new javax.swing.JFrame(), true).setVisible(true);
+    }//GEN-LAST:event_btInserirExemplarActionPerformed
+
+    private void cbAssuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAssuntoActionPerformed
+      //  this.carregarComBoboxAssunto();
+    }//GEN-LAST:event_cbAssuntoActionPerformed
+
+    private void cbEditoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEditoraActionPerformed
+       // this.carregarComboBoxEditora();
+    }//GEN-LAST:event_cbEditoraActionPerformed
+
+    private void cbEditoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbEditoraMouseClicked
+       this.carregarComboBoxEditora();
+    }//GEN-LAST:event_cbEditoraMouseClicked
+
+    private void cbAssuntoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbAssuntoMouseClicked
+        this.carregarComBoboxAssunto();
+    }//GEN-LAST:event_cbAssuntoMouseClicked
+
+    private void cbAssuntoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbAssuntoMouseEntered
+        this.carregarComBoboxAssunto();
+    }//GEN-LAST:event_cbAssuntoMouseEntered
+
+    private void cbEditoraMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbEditoraMouseEntered
+        this.carregarComboBoxEditora();
+    }//GEN-LAST:event_cbEditoraMouseEntered
 
     /**
      * @param args the command line arguments
@@ -607,6 +683,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
     private javax.swing.JButton btAdicionarComboBox;
     private javax.swing.JButton btEscolher;
     private javax.swing.JButton btInserirExemplar;
+    private javax.swing.JButton btNovaEditora;
     private javax.swing.JButton btNovoAutor;
     private javax.swing.JButton btRemover;
     private javax.swing.JButton btSalvar;

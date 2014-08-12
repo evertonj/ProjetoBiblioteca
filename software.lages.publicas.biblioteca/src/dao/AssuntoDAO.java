@@ -6,15 +6,12 @@
 package dao;
 import connection.DBConnection;
 import entity.Assunto;
-import entity.exceptions.NameException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 //Teste Git
 /**
  *
@@ -149,13 +146,10 @@ public class AssuntoDAO implements IAssuntoDAO {
             rs = pstm.executeQuery();
 
             while (rs.next()) {      
-                
-              
                 Assunto assunto = new Assunto();
                 assunto.setId(rs.getInt("id"));
                 assunto.setNome(rs.getString("nome"));
-                assuntos.add(assunto);
-                        
+                assuntos.add(assunto);        
             }
 
             pstm.close();

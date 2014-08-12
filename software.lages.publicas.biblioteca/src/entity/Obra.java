@@ -25,7 +25,6 @@ public class Obra {
     private String assunto;
     private ImageIcon fotoIcon;
     private byte[] foto; 
-
     private List<Exemplar> exemplar;
     
     
