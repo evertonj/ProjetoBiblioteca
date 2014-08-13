@@ -234,12 +234,14 @@ public class ObraDAO implements IObraDAO {
         String sqlEditora = "select * from editora where id = id_editora;";
         String sqlAssunto = "select * from assunto where id = idassunto;";
         try {
+            conn = DBConnection.getConnection();
             pstmO = conn.prepareStatement(sql);
             rs = pstmO.executeQuery();
             pstmA = conn.prepareStatement(sqlAutores);
             rsAutores = pstmA.executeQuery();
             pstmE = conn.prepareStatement(sqlEditora);
             rsEditora = pstmE.executeQuery();
+            System.out.println("Teste FindAll");
             pstmAss = conn.prepareStatement(sqlAssunto);
             rsAssunto = pstmAss.executeQuery();
             while (rs.next()) {
