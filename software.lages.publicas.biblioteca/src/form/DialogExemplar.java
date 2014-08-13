@@ -191,13 +191,14 @@ public class DialogExemplar extends javax.swing.JDialog {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         int quantidade = (int) spQuantidade.getValue();
-        while (quantidade > 0) {
-            Exemplar exemplar = new Exemplar();
+        for (int i = 0; i < quantidade; i++) {
+           Exemplar exemplar = new Exemplar();
             exemplar.setDataDeCadastro(dcDataDeCadastro.getDate());
             exemplar.setFornecedor(tfFornecedor.getText());
             exemplar.setDataDeAquisicao(dcDataDeAquisicao.getDate());
-            listaDeExemplares.add(exemplar);
-        }
+            listaDeExemplares.add(exemplar); 
+        }         
+        this.dispose();
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed

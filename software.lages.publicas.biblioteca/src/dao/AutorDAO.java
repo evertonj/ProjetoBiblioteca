@@ -126,7 +126,7 @@ public class AutorDAO implements IAutorDAO {
              
             // pega todos os atributos da pessoa  
              Autor autor;
-             autor = new Autor( rs.getLong("ID"),
+             autor = new Autor( rs.getInt("ID"),
                      rs.getString("NOME"),
                      rs.getString("SOBRENOME"),
                      rs.getDate("DATANASCIMENTO"));
@@ -159,7 +159,7 @@ public class AutorDAO implements IAutorDAO {
             while (rs.next()) {                       
               
                 Autor autor;
-                autor = new Autor( rs.getLong("ID"),
+                autor = new Autor( rs.getInt("ID"),
                         rs.getString("NOME"),
                         rs.getString("SOBRENOME"),
                         rs.getDate("DATANASCIMENTO")

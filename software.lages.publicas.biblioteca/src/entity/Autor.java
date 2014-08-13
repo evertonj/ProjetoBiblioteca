@@ -16,7 +16,7 @@ import java.sql.Date;
  * @author Alex
  */
 public class Autor  {
-    private long id;
+    private int id;
     private String nome;
     private String sobrenome;
     private Date dataNascimento;
@@ -27,7 +27,7 @@ public class Autor  {
         this.dataNascimento = dataNascimento;
     }
 
-    public Autor(long id, String nome, String sobrenome, Date dataNascimento) throws NameException{
+    public Autor(int id, String nome, String sobrenome, Date dataNascimento) throws NameException{
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -55,14 +55,14 @@ public class Autor  {
     /**
      * @return the id
      */
-    public long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

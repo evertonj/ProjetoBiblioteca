@@ -5,7 +5,6 @@
  */
 package entity;
 
-import entity.Editora;
 import java.util.List;
 import javax.swing.ImageIcon;
 
@@ -22,7 +21,7 @@ public class Obra {
     private short Ano;
     private Editora editora;
     private String isbn;
-    private String assunto;
+    private Assunto assunto;
     private ImageIcon fotoIcon;
     private byte[] foto; 
     private List<Exemplar> exemplar;
@@ -120,20 +119,6 @@ public class Obra {
     }
 
     /**
-     * @return the assunto
-     */
-    public String getAssunto() {
-        return assunto;
-    }
-
-    /**
-     * @param assunto the assunto to set
-     */
-    public void setAssunto(String assunto) {
-        this.assunto = assunto;
-    }
-
-    /**
      * @return the exemplar
      */
     public List<Exemplar> getExemplar() {
@@ -180,6 +165,20 @@ public class Obra {
 
     public byte[] getFoto() {
         return foto;
+    }
+
+    /**
+     * @return the assunto
+     */
+    public Assunto getAssunto() {
+        return assunto;
+    }
+
+    /**
+     * @param assunto the assunto to set
+     */
+    public void setAssunto(Assunto assunto) {
+        this.assunto = assunto;
     }
 
    

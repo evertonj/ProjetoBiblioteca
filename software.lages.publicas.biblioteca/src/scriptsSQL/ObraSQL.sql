@@ -28,7 +28,6 @@ edicao varchar(80),
 ano smallint,
 id_editora int not null,
 isbn varchar(60),
-assunto varchar(60),
 foto longblob,
 idAssunto int not null,
 foreign key (idAssunto) references assunto(id),
@@ -52,3 +51,11 @@ constraint foreign key (idobra) references obra(id),
 constraint foreign key (idautor) references autor(id)
 );
 
+create table exemplar (
+id int not null auto_increment primary key,
+dataDeCadastro date,
+fornecedor varchar(80),
+dataDeAquisicao date,
+id_obra int not null,
+constraint foreign key (id_obra) references obra(id)
+);

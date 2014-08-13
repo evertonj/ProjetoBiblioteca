@@ -29,7 +29,7 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
     }
 
     List<Autor> autorList;
-    Long idAutor;
+    Integer idAutor;
 
     /**
      * This method is called from within the constructor to initialize the form.

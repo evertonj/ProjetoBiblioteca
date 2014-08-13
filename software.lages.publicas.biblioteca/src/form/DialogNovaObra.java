@@ -148,7 +148,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Edição:");
@@ -159,17 +159,9 @@ public class DialogNovaObra extends javax.swing.JDialog {
         jLabel5.setText("Editora:");
 
         cbEditora.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cbEditora.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cbEditoraMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cbEditoraMouseEntered(evt);
-            }
-        });
-        cbEditora.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbEditoraActionPerformed(evt);
+        cbEditora.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbEditoraFocusGained(evt);
             }
         });
 
@@ -237,7 +229,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
                 .addGap(13, 13, 13))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel8.setText("Foto da Capa:");
@@ -262,7 +254,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
             .addComponent(lbFoto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
         );
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
 
         btSalvar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/insert.png"))); // NOI18N
@@ -318,17 +310,9 @@ public class DialogNovaObra extends javax.swing.JDialog {
         });
 
         cbAssunto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cbAssunto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cbAssuntoMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cbAssuntoMouseEntered(evt);
-            }
-        });
-        cbAssunto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbAssuntoActionPerformed(evt);
+        cbAssunto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbAssuntoFocusGained(evt);
             }
         });
 
@@ -499,10 +483,9 @@ public class DialogNovaObra extends javax.swing.JDialog {
             obra.setAno(Short.parseShort(tfAno.getText()));
             obra.setEditora((Editora) cbEditora.getSelectedItem());
             obra.setIsbn(tfISBN.getText());
-            obra.setAssunto((String) cbAssunto.getSelectedItem());
+            obra.setAssunto((Assunto) cbAssunto.getSelectedItem());
             obra.setFoto(foto);
             obra.setExemplar(DialogExemplar.listaDeExemplares);
-            dao.save(obra);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "O Ano inserido é Invalido!!!");
             tfAno.setText(null);
@@ -570,7 +553,11 @@ public class DialogNovaObra extends javax.swing.JDialog {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         obra = new Obra();
         this.getDados();
-        dao.save(obra);
+        int result = dao.save(obra);
+        if (result == 1) {
+            this.dispose();
+            JOptionPane.showMessageDialog(this, "inserido com Sucesso!!!");
+        }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
@@ -613,29 +600,13 @@ public class DialogNovaObra extends javax.swing.JDialog {
         new DialogExemplar(new javax.swing.JFrame(), true).setVisible(true);
     }//GEN-LAST:event_btInserirExemplarActionPerformed
 
-    private void cbAssuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAssuntoActionPerformed
-      //  this.carregarComBoboxAssunto();
-    }//GEN-LAST:event_cbAssuntoActionPerformed
-
-    private void cbEditoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEditoraActionPerformed
-       // this.carregarComboBoxEditora();
-    }//GEN-LAST:event_cbEditoraActionPerformed
-
-    private void cbEditoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbEditoraMouseClicked
-       this.carregarComboBoxEditora();
-    }//GEN-LAST:event_cbEditoraMouseClicked
-
-    private void cbAssuntoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbAssuntoMouseClicked
-        this.carregarComBoboxAssunto();
-    }//GEN-LAST:event_cbAssuntoMouseClicked
-
-    private void cbAssuntoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbAssuntoMouseEntered
-        this.carregarComBoboxAssunto();
-    }//GEN-LAST:event_cbAssuntoMouseEntered
-
-    private void cbEditoraMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbEditoraMouseEntered
+    private void cbEditoraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbEditoraFocusGained
         this.carregarComboBoxEditora();
-    }//GEN-LAST:event_cbEditoraMouseEntered
+    }//GEN-LAST:event_cbEditoraFocusGained
+
+    private void cbAssuntoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbAssuntoFocusGained
+        this.carregarComBoboxAssunto();
+    }//GEN-LAST:event_cbAssuntoFocusGained
 
     /**
      * @param args the command line arguments

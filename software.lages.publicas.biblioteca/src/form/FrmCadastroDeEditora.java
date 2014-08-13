@@ -281,7 +281,8 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
         tfNome.setText(null);
         tfTelefone.setText(null);
         tfEmail.setText(null);
-
+        tfNumero.setText(null);
+        tfBairro.setText(null);
     }
 
     private void enableFields(boolean b) {
