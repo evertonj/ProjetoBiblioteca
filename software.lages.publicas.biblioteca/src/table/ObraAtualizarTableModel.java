@@ -28,7 +28,7 @@ public class ObraAtualizarTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -57,7 +57,6 @@ public class ObraAtualizarTableModel extends AbstractTableModel {
                 return coluna = "Titulo";
             case 2:
                 return coluna = "ISBN";
-
             case 3:
                 return coluna = "Assunto";
         }
@@ -68,7 +67,7 @@ public class ObraAtualizarTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return String.class;
+                return int.class;
             case 1:
                 return String.class;
             case 2:
