@@ -461,17 +461,40 @@ public class ObraDAO implements IObraDAO {
     }
 
     @Override
-    public List<Obra> consulta(String titulo) {
-        return null;
+    public List<Obra> consulta(String titulo) throws SQLException, NameException {
+        PreparedStatement pstmO, pstmE, pstmAss, pstm4;
+        Connection conn = null;
+        Obra obra;
+        ResultSet rs, rsEditora, rsAssunto, rsExterno;
+        List<Obra> listaDeObra = new ArrayList<>();
+        String sqlEditora = "select * from editora, obra where obra.id_editora = editora.id;";
+        String sqlAssunto = "select * from assunto, obra where obra.idAssunto = assunto.id;";
+        String sqlObra = "select * from obra where titulo like "+"'%"+titulo+"%';";
+        try {
+            conn = DBConnection.getConnection();
+            pstmO = conn.prepareStatement(sqlObra);
+            rs = pstmO.executeQuery();
+            pstmE = conn.prepareStatement(sqlEditora);
+            rsEditora = pstmE.executeQuery();
+            pstmAss = conn.prepareStatement(sqlAssunto);
+            rsAssunto = pstmAss.executeQuery();
+            pstm4 = conn.prepareStatement(sqlObra);
+            rsExterno = pstm4.executeQuery();
+            while (rsExterno.next()) {
+                obra = obra(rs, rsEditora, rsAssunto);
+                System.out.println(obra.getId());
+                listaDeObra.add(obra);
+            }
+            return listaDeObra;
+        } catch (SQLException ex) {
+            throw new SQLException("SQL incorreto");
+        } catch (NameException ex) {
+            throw new NameException("nome incorreto...");
+        }
     }
 
     @Override
-    public List<Obra> consulta(int codigo) {
+    public List<Obra> consulta(int codigo) throws SQLException, NameException{
         return null;
     }
-
-    public List<Autor> listaDeAutores() {
-        return null;
-    }
-
 }

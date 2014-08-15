@@ -25,7 +25,7 @@ public interface IObraDAO {
     
     List<Obra> findAll() throws SQLException, NameException;
     
-    List<Obra> consulta(String titulo);
+    List<Obra> consulta(String titulo) throws SQLException, NameException;
     
-    List<Obra> consulta(int codigo);
+    List<Obra> consulta(int codigo) throws SQLException, NameException;
 }

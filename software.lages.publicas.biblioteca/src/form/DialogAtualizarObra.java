@@ -270,7 +270,7 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
 
     private void btPesquisarPorTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorTituloActionPerformed
         try {
-            listaDeObra = dao.findAll();
+            listaDeObra = dao.consulta(tfTitulo.getText());
         } catch (SQLException ex) {
             Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NameException ex) {

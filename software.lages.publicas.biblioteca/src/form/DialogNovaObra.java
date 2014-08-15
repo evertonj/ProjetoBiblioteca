@@ -88,7 +88,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tfCodigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Nova Obra");
@@ -148,7 +148,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Edição:");
@@ -229,7 +229,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
                 .addGap(13, 13, 13))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel8.setText("Foto da Capa:");
@@ -254,7 +254,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
             .addComponent(lbFoto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
         );
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btSalvar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/insert.png"))); // NOI18N
@@ -377,8 +377,8 @@ public class DialogNovaObra extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Código");
 
-        jTextField1.setEditable(false);
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tfCodigo.setEditable(false);
+        tfCodigo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -404,7 +404,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1))))
+                                .addComponent(tfCodigo))))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -417,7 +417,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(tfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -496,13 +496,14 @@ public class DialogNovaObra extends javax.swing.JDialog {
     }
 
     public void setDados(Obra obra) {
+        tfCodigo.setText(String.valueOf(obra.getId()));
         tfTitulo.setText(obra.getTitulo());
         tbAutores.setModel(new ObraTableModel(obra.getAutores()));
         tfEdicao.setText(obra.getEdicao());
         tfAno.setText(String.valueOf(obra.getAno()));
-        cbEditora.setSelectedItem(obra.getEditora());
+        cbEditora.addItem(obra.getEditora());
         tfISBN.setText(obra.getIsbn());
-        cbAssunto.setSelectedItem(obra.getAssunto());
+        cbAssunto.addItem(obra.getAssunto());
         byte[] imgBytes = obra.getFoto();
         try {
             FileOutputStream fos = new FileOutputStream("Foto " + tfTitulo.getText() + ".jpg");
@@ -676,10 +677,10 @@ public class DialogNovaObra extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbFoto;
     public static javax.swing.JTable tbAutores;
     private javax.swing.JFormattedTextField tfAno;
+    private javax.swing.JTextField tfCodigo;
     private javax.swing.JTextField tfEdicao;
     private javax.swing.JTextField tfISBN;
     private javax.swing.JTextField tfTitulo;
