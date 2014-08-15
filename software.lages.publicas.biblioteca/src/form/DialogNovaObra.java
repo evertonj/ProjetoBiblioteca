@@ -495,10 +495,9 @@ public class DialogNovaObra extends javax.swing.JDialog {
         }
     }
 
-    private void setDados() {
+    public void setDados(Obra obra) {
         tfTitulo.setText(obra.getTitulo());
-        listaAutores = dao.listaDeAutores();
-        tbAutores.setModel(new ObraTableModel(listaAutores));
+        tbAutores.setModel(new ObraTableModel(obra.getAutores()));
         tfEdicao.setText(obra.getEdicao());
         tfAno.setText(String.valueOf(obra.getAno()));
         cbEditora.setSelectedItem(obra.getEditora());

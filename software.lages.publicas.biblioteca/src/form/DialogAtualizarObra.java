@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package form;
 
 import dao.ObraDAO;
+import entity.Editora;
 import entity.Obra;
 import entity.exceptions.NameException;
 import java.sql.SQLException;
@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import table.EditoraTableModel;
 import table.ObraAtualizarTableModel;
 import table.ObraTableModel;
 
@@ -25,6 +27,7 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
 
     ObraDAO dao = new ObraDAO();
     List<Obra> listaDeObra = new ArrayList<>();
+
     /**
      * Creates new form DialogAtualizarObra
      */
@@ -32,7 +35,7 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-
+    Obra obra;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,6 +107,11 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
 
             }
         ));
+        tbAtualizarObra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAtualizarObraMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbAtualizarObra);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -120,6 +128,11 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
         jButton6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/update.png"))); // NOI18N
         jButton6.setText("Atualizar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -265,6 +278,21 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
         }
         tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
     }//GEN-LAST:event_btPesquisarPorTituloActionPerformed
+
+    private void tbAtualizarObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarObraMouseClicked
+        int rowIndex = tbAtualizarObra.getSelectedRow();
+        if (rowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
+            return;
+        }
+        obra = new ObraAtualizarTableModel(listaDeObra).get(rowIndex);
+    }//GEN-LAST:event_tbAtualizarObraMouseClicked
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        DialogNovaObra novaObra = new DialogNovaObra(new javax.swing.JFrame(), true);
+        novaObra.setDados(obra);
+        novaObra.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments

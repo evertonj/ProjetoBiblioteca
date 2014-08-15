@@ -199,7 +199,7 @@ private void refreshTable() {
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
        int rowIndex = tbEditora.getSelectedRow();
         if (rowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione o livro a ser Removido!!!");
+            JOptionPane.showMessageDialog(this, "Selecione a Editora a ser Removida!!!");
             return;
         }
         Editora editora = new EditoraTableModel(editoraList).get(rowIndex);
