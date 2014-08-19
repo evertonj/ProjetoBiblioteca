@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.util.Date;
@@ -13,10 +12,29 @@ import java.util.Date;
  * @author Alex
  */
 public class Exemplar {
+
+    public Exemplar(Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int numeroSequancial) {
+        this.dataDeCadastro = dataDeCadastro;
+        this.fornecedor = fornecedor;
+        this.dataDeAquisicao = dataDeAquisicao;
+        this.numeroSequancial = numeroSequancial;
+    }
+
     private int id;
     private Date dataDeCadastro;
     private String fornecedor;
     private Date dataDeAquisicao;
+    private int idObra;
+    private int numeroSequancial;
+
+    public Exemplar(int id, Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int idObra, int numeroSequencial) {
+        this.id = id;
+        this.dataDeCadastro = dataDeCadastro;
+        this.fornecedor = fornecedor;
+        this.dataDeAquisicao = dataDeAquisicao;
+        this.idObra = idObra;
+        this.numeroSequancial = numeroSequencial;
+    }
 
     @Override
     public int hashCode() {
@@ -39,8 +57,7 @@ public class Exemplar {
         }
         return true;
     }
-    
-    
+
     /**
      * @return the id
      */
@@ -83,7 +100,6 @@ public class Exemplar {
         this.fornecedor = fornecedor;
     }
 
-    
     /**
      * @return the dataDeAquisicao
      */
@@ -96,5 +112,33 @@ public class Exemplar {
      */
     public void setDataDeAquisicao(Date dataDeAquisicao) {
         this.dataDeAquisicao = dataDeAquisicao;
+    }
+
+    /**
+     * @return the idObra
+     */
+    public int getIdObra() {
+        return idObra;
+    }
+
+    /**
+     * @param idObra the idObra to set
+     */
+    public void setIdObra(int idObra) {
+        this.idObra = idObra;
+    }
+
+    /**
+     * @return the numeroSequancial
+     */
+    public int getNumeroSequancial() {
+        return numeroSequancial;
+    }
+
+    /**
+     * @param numeroSequancial the numeroSequancial to set
+     */
+    public void setNumeroSequancial(int numeroSequancial) {
+        this.numeroSequancial = numeroSequancial;
     }
 }

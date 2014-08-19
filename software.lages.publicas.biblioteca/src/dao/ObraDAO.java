@@ -12,6 +12,7 @@ import connection.DBConnection;
 import entity.Exemplar;
 import entity.Obra;
 import entity.exceptions.NameException;
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,7 +70,7 @@ public class ObraDAO implements IObraDAO {
         Connection conn = null;
         PreparedStatement pstm = null, pstmIdObra = null;
         ResultSet rs = null;
-        String sqlExeplares = "insert into exemplar(dataDeCadastro, fornecedor, dataDeAquisicao, id_Obra) values(?, ?, ?, ?)";
+        String sqlExeplares = "insert into exemplar(dataDeCadastro, fornecedor, dataDeAquisicao, id_Obra, numero_sequencial) values(?, ?, ?, ?, ?)";
         int contador = 0;
         try {
             conn = DBConnection.getConnection();
@@ -84,6 +85,7 @@ public class ObraDAO implements IObraDAO {
                 pstm.setString(2, exemplar.getFornecedor());
                 pstm.setDate(3, new java.sql.Date(exemplar.getDataDeAquisicao().getTime()));
                 pstm.setInt(4, ultimoIdObra);
+                pstm.setInt(5, exemplar.getNumeroSequancial());
                 pstm.executeUpdate();
                 contador++;
                 System.out.println("Inserindo exemplar: " + contador);

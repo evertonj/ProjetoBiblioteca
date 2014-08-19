@@ -6,7 +6,6 @@
 package form;
 
 import dao.ObraDAO;
-import entity.Editora;
 import entity.Obra;
 import entity.exceptions.NameException;
 import java.sql.SQLException;
@@ -15,9 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import table.EditoraTableModel;
 import table.ObraAtualizarTableModel;
-import table.ObraTableModel;
 
 /**
  *
