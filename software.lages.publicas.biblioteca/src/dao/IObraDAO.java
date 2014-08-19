@@ -27,5 +27,5 @@ public interface IObraDAO {
     
     List<Obra> consulta(String titulo) throws SQLException, NameException;
     
-    List<Obra> consulta(int codigo) throws SQLException, NameException;
+    List<Obra> consultaPorCodigo(int codigo) throws SQLException, NameException;
 }

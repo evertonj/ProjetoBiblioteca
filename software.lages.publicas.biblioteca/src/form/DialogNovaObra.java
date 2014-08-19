@@ -496,6 +496,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
     }
 
     public void setDados(Obra obra) {
+        this.obra = obra;
         tfCodigo.setText(String.valueOf(obra.getId()));
         tfTitulo.setText(obra.getTitulo());
         tbAutores.setModel(new ObraTableModel(obra.getAutores()));
@@ -551,13 +552,22 @@ public class DialogNovaObra extends javax.swing.JDialog {
     }//GEN-LAST:event_btRemoverActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        obra = new Obra();
-        this.getDados();
-        int result = dao.save(obra);
-        if (result == 1) {
-            this.dispose();
-            JOptionPane.showMessageDialog(this, "inserido com Sucesso!!!");
-        }
+        if (obra == null) {
+            obra = new Obra();
+            this.getDados();
+            int result = dao.save(obra);
+            if (result == 1) {
+                this.dispose();
+                JOptionPane.showMessageDialog(this, "inserido com Sucesso!!!");
+            }
+        }else {
+            int result = dao.update(obra);
+            if (result == 1) {
+                this.dispose();
+                JOptionPane.showMessageDialog(this, "Alterado com Sucesso!!!");
+                this.obra = null;
+            }
+        }            
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
