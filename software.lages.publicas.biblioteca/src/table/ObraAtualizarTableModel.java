@@ -28,7 +28,7 @@ public class ObraAtualizarTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 6;
     }
 
     @Override
@@ -43,42 +43,23 @@ public class ObraAtualizarTableModel extends AbstractTableModel {
                 return obra.getIsbn();
             case 3:
                 return obra.getAssunto();
+            case 4:
+                if (!obra.getAutores().isEmpty()) {
+                    return obra.getAutores().get(0).getSobrenome() + ", " + obra.getAutores().get(0).getNome();
+                } else {
+                    return "Nenhum Autor Cadastrado";
+                }
+            case 5:
+                if (!obra.getExemplar().isEmpty()) {
+                    return obra.getExemplar().get(obra.getExemplar().size() - 1).getNumeroSequancial();
+                } else {
+                    return 1;
+                }
         }
         return null;
     }
 
-    @Override
-    public String getColumnName(int column) {
-        String coluna = "";
-        switch (column) {
-            case 0:
-                return coluna = "Código";
-            case 1:
-                return coluna = "Titulo";
-            case 2:
-                return coluna = "ISBN";
-            case 3:
-                return coluna = "Assunto";
-        }
-        return null;
-    }
-
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return int.class;
-            case 1:
-                return String.class;
-            case 2:
-                return String.class;
-            case 3:
-                return String.class;
-        }
-        return null;
-    }
-
-    public Obra get(int row) {
+      public Obra get(int row) {
         return valores.get(row);
     }
 }

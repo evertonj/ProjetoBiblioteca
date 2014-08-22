@@ -19,19 +19,16 @@ public class Autor  {
     private int id;
     private String nome;
     private String sobrenome;
-    private Date dataNascimento;
 
-    public Autor(String nome, String sobrenome, Date dataNascimento) throws NameException{
+    public Autor(String nome, String sobrenome) throws NameException{
         this.nome = nome;
         this.sobrenome = sobrenome;
-        this.dataNascimento = dataNascimento;
     }
 
-    public Autor(int id, String nome, String sobrenome, Date dataNascimento) throws NameException{
+    public Autor(int id, String nome, String sobrenome) throws NameException{
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
-        this.dataNascimento = dataNascimento;
     }
 
     @Override
@@ -80,20 +77,7 @@ public class Autor  {
         this.nome = nome;
     }
 
-    /**
-     * @return the dataNascimento
-     */
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-
-    /**
-     * @param dataNascimento the dataNascimento to set
-     */
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
+   
     /**
      * @return the sobrenome
      */

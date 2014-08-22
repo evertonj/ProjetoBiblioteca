@@ -28,7 +28,7 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
        
         this.enableFields(true);
     }
-
+    
     List<Editora> editoraList;
     int idEditora;
 
@@ -320,7 +320,7 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Tente novamente!");
             }
              
-
+            DialogNovaObra.carregarComboBoxEditora();
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed

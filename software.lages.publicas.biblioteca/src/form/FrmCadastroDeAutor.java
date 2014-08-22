@@ -57,8 +57,6 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
         btEditar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         tfSobreNome = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jDateChooserNascimento = new com.toedter.calendar.JDateChooser();
 
         tfISBN2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
@@ -79,7 +77,7 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
         setTitle("Cadastro de Autor");
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4), "Dados da Editora", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4), "Dados do Autor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Nome");
@@ -138,11 +136,6 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
 
         tfSobreNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel11.setText("Data de nascimento");
-
-        jDateChooserNascimento.setDateFormatString("dd/mm/yyyy");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -157,11 +150,7 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(jDateChooserNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
@@ -179,16 +168,10 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfSobreNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jDateChooserNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jDateChooserNascimento, tfSobreNome});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -223,8 +206,6 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
     private void onCancelar() {
         tfSobreNome.setText(null);
         tfNome.setText(null);
-       jDateChooserNascimento.setToolTipText(null);
-
     }
 
     private void enableFields(boolean b) {
@@ -238,7 +219,7 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
         try {
             {             
               
-                Autor autor = new Autor(tfNome.getText(),tfSobreNome.getText(),getCurrentDate());
+                Autor autor = new Autor(tfNome.getText(),tfSobreNome.getText());
                
                         
                 if (idAutor == null) {
@@ -290,13 +271,7 @@ this.dispose();
     private void tfISBN3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfISBN3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfISBN3ActionPerformed
-private  java.sql.Date getCurrentDate() {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
-    java.util.Date today = new java.util.Date();
-    today =  jDateChooserNascimento.getDate();
-    
-    return new java.sql.Date((today.getTime()));
-}
+
     /**
      * @param args the command line arguments
      */
@@ -343,11 +318,9 @@ private  java.sql.Date getCurrentDate() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEditar;
     private javax.swing.JButton btSalvar;
-    private com.toedter.calendar.JDateChooser jDateChooserNascimento;
     private com.toedter.calendar.JDayChooser jDayChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private com.toedter.components.JLocaleChooser jLocaleChooser1;

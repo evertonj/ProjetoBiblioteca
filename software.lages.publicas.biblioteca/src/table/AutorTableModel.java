@@ -6,7 +6,6 @@
 package table;
 
 import entity.Autor;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -29,7 +28,7 @@ public class AutorTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -40,12 +39,6 @@ public class AutorTableModel extends AbstractTableModel {
                 return obra.getNome();
             case 1:
                 return obra.getSobrenome();
-            case 2:
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
-                return dateFormat.format(obra.getDataNascimento());
-            
-          
-            
         }
         return null;
     }
@@ -58,10 +51,6 @@ public class AutorTableModel extends AbstractTableModel {
                 return coluna = "Nome";
             case 1:
                 return coluna = "Sobrenome";
-            case 2:
-                return coluna = "Nascimento";
-         
-           
         }
         return null;
     }
@@ -72,8 +61,6 @@ public class AutorTableModel extends AbstractTableModel {
             case 0:
                 return String.class;
             case 1:
-                return String.class;
-            case 2:
                 return String.class;
         }
         return null;

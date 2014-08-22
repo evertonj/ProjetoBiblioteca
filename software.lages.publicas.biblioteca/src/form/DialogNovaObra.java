@@ -33,8 +33,8 @@ public class DialogNovaObra extends javax.swing.JDialog {
     public DialogNovaObra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //this.carregarComboBoxEditora();
-        //this.carregarComBoboxAssunto();
+        carregarComboBoxEditora();
+        carregarComBoboxAssunto();
     }
     public static List<Autor> listaAutores = new ArrayList<>();
     DefaultTableModel dtm;
@@ -43,7 +43,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
     long i = 0;
     TableColumn tc;
     ObraDAO dao = new ObraDAO();
-    private Obra obra;
+    public static Obra obra;
     private ImageIcon fotoEspecie;
     byte[] foto;
 
@@ -159,11 +159,6 @@ public class DialogNovaObra extends javax.swing.JDialog {
         jLabel5.setText("Editora:");
 
         cbEditora.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cbEditora.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                cbEditoraFocusGained(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("Ano:");
@@ -243,6 +238,9 @@ public class DialogNovaObra extends javax.swing.JDialog {
             }
         });
 
+        lbFoto.setBackground(new java.awt.Color(153, 153, 153));
+        lbFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102), 3));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -310,11 +308,6 @@ public class DialogNovaObra extends javax.swing.JDialog {
         });
 
         cbAssunto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cbAssunto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                cbAssuntoFocusGained(evt);
-            }
-        });
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setText("Assunto:");
@@ -459,20 +452,22 @@ public class DialogNovaObra extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void carregarComboBoxEditora() {
+    public static void carregarComboBoxEditora() {
         List<Editora> listaDeEditora = new EditoraController().finAll();
         for (Editora editora : listaDeEditora) {
             cbEditora.removeItem(editora);
             cbEditora.addItem(editora);
         }
+        cbEditora.setSelectedIndex(-1);
     }
 
-    private void carregarComBoboxAssunto() {
+    public static void carregarComBoboxAssunto() {
         List<Assunto> listAssunto = new AssuntoController().finAll();
         for (Assunto assunto : listAssunto) {
             cbAssunto.removeItem(assunto);
             cbAssunto.addItem(assunto);
         }
+        cbAssunto.setSelectedIndex(-1);
     }
 
     private void getDados() {
@@ -502,10 +497,11 @@ public class DialogNovaObra extends javax.swing.JDialog {
         tbAutores.setModel(new ObraTableModel(obra.getAutores()));
         tfEdicao.setText(obra.getEdicao());
         tfAno.setText(String.valueOf(obra.getAno()));
-        cbEditora.addItem(obra.getEditora());
+        cbEditora.setSelectedItem(obra.getEditora());
         tfISBN.setText(obra.getIsbn());
-        cbAssunto.addItem(obra.getAssunto());
+        cbAssunto.setSelectedItem(obra.getAssunto());
         byte[] imgBytes = obra.getFoto();
+        foto = obra.getFoto();
         try {
             FileOutputStream fos = new FileOutputStream("Foto " + tfTitulo.getText() + ".jpg");
             fos.write(imgBytes);
@@ -560,14 +556,15 @@ public class DialogNovaObra extends javax.swing.JDialog {
                 this.dispose();
                 JOptionPane.showMessageDialog(this, "inserido com Sucesso!!!");
             }
-        }else {
+        } else {
+            this.getDados();
             int result = dao.update(obra);
             if (result == 1) {
                 this.dispose();
                 JOptionPane.showMessageDialog(this, "Alterado com Sucesso!!!");
                 this.obra = null;
             }
-        }            
+        }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
@@ -609,14 +606,6 @@ public class DialogNovaObra extends javax.swing.JDialog {
     private void btInserirExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInserirExemplarActionPerformed
         new DialogExemplar(new javax.swing.JFrame(), true).setVisible(true);
     }//GEN-LAST:event_btInserirExemplarActionPerformed
-
-    private void cbEditoraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbEditoraFocusGained
-        this.carregarComboBoxEditora();
-    }//GEN-LAST:event_cbEditoraFocusGained
-
-    private void cbAssuntoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbAssuntoFocusGained
-        this.carregarComBoboxAssunto();
-    }//GEN-LAST:event_cbAssuntoFocusGained
 
     /**
      * @param args the command line arguments
@@ -669,8 +658,8 @@ public class DialogNovaObra extends javax.swing.JDialog {
     private javax.swing.JButton btRemover;
     private javax.swing.JButton btSalvar;
     private javax.swing.JButton btVoltar;
-    private javax.swing.JComboBox cbAssunto;
-    private javax.swing.JComboBox cbEditora;
+    private static javax.swing.JComboBox cbAssunto;
+    private static javax.swing.JComboBox cbEditora;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

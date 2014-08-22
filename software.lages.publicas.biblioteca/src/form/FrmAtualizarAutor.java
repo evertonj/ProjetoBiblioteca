@@ -50,11 +50,9 @@ public class FrmAtualizarAutor extends javax.swing.JDialog{
         tfNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         tfSobreNome = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btSalvar = new javax.swing.JButton();
         btEditar = new javax.swing.JButton();
-        jDateChooserNascimento = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
         tfNomeBusca = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -90,9 +88,6 @@ public class FrmAtualizarAutor extends javax.swing.JDialog{
         jLabel4.setText("Sobrenome");
 
         tfSobreNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setText("Dasta de nascimento");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 204), 4));
 
@@ -157,14 +152,8 @@ public class FrmAtualizarAutor extends javax.swing.JDialog{
                             .addComponent(tfNome)
                             .addComponent(tfSobreNome)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jDateChooserNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(22, 22, 22)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 24, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -179,13 +168,9 @@ public class FrmAtualizarAutor extends javax.swing.JDialog{
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfSobreNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(jDateChooserNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 204), 4), "Busca", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
@@ -250,7 +235,6 @@ public class FrmAtualizarAutor extends javax.swing.JDialog{
    
 
     private void onCancelar() {
-       jDateChooserNascimento.setDate(null);
         tfNome.setText(null);
         tfSobreNome.setText(null);
         
@@ -261,14 +245,12 @@ public class FrmAtualizarAutor extends javax.swing.JDialog{
         
         tfNome.setEnabled(b);
         tfSobreNome.setEnabled(b);
-        jDateChooserNascimento.setEnabled(b);
     }
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
         int result;
         try {
-             Autor autor = new Autor(idAutor, tfNome.getText(), tfSobreNome.getText(), (Date) jDateChooserNascimento.getDate());
-                    
+             Autor autor = new Autor(idAutor, tfNome.getText(), tfSobreNome.getText());
                     result = new AutorController().alterarAutor(autor);
                     idAutor = null;
                 
@@ -322,7 +304,6 @@ this.dispose();
 
         tfNome.setText(autor.getNome());
      
-      jDateChooserNascimento.setDate(autor.getDataNascimento());
         tfSobreNome.setText(autor.getSobrenome());
       
         idAutor = autor.getId();
@@ -379,10 +360,8 @@ this.dispose();
     private javax.swing.JButton btBuscar;
     private javax.swing.JButton btEditar;
     private javax.swing.JButton btSalvar;
-    private com.toedter.calendar.JDateChooser jDateChooserNascimento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

@@ -4,8 +4,7 @@ use biblioteca;
 create table autor(
 id int not null auto_increment primary key,
 nome varchar(80),
-sobrenome varchar(80),
-datanascimento date
+sobrenome varchar(80)
 );
 create table assunto(
 id int not null auto_increment primary key,
@@ -57,6 +56,6 @@ dataDeCadastro date,
 fornecedor varchar(80),
 dataDeAquisicao date,
 id_obra int not null,
-numero_sequencial int not null,
+numero_sequencial int default 1,
 constraint foreign key (id_obra) references obra(id)
 );

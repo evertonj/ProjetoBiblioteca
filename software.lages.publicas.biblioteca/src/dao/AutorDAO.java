@@ -22,8 +22,8 @@ import java.util.logging.Logger;
  */
 public class AutorDAO implements IAutorDAO {
 
-    private static final String SQL_INSERT = "insert into AUTOR (NOME, SOBRENOME, DATANASCIMENTO) VALUES (?,?,?);";
-    private static final String SQL_UPDATE = "update AUTOR set NOME = ?, SOBRENOME= ?, DATANASCIMENTO=? WHERE ID = ?;";
+    private static final String SQL_INSERT = "insert into AUTOR (NOME, SOBRENOME) VALUES (?,?);";
+    private static final String SQL_UPDATE = "update AUTOR set NOME = ?, SOBRENOME= ? WHERE ID = ?;";
     private static final String SQL_REMOVE = "delete from AUTOR where ID = ?;";
     private static final String SQL_FIND_ALL = "select * from AUTOR;";
     private static final String SQL_ORDER_TABLE = "select * from autor order by nome;";
@@ -35,11 +35,8 @@ public class AutorDAO implements IAutorDAO {
         int result = 0;
         try {
             pstm = conn.prepareStatement(SQL_INSERT);
-          
             pstm.setString(1, autor.getNome());
             pstm.setString(2, autor.getSobrenome());
-            pstm.setDate(3, autor.getDataNascimento());
-       
             result = pstm.executeUpdate();
             pstm.close();
         } catch (SQLException e) {
@@ -66,9 +63,7 @@ public class AutorDAO implements IAutorDAO {
             pstm = conn.prepareStatement(SQL_UPDATE);
            pstm.setString(1, autor.getNome());
             pstm.setString(2, autor.getSobrenome());
-             pstm.setString(3, autor.getDataNascimento().toString());
-           
-            pstm.setLong(4, autor.getId());
+            pstm.setLong(3, autor.getId());
            
             
             result = pstm.executeUpdate();
@@ -128,8 +123,7 @@ public class AutorDAO implements IAutorDAO {
              Autor autor;
              autor = new Autor( rs.getInt("ID"),
                      rs.getString("NOME"),
-                     rs.getString("SOBRENOME"),
-                     rs.getDate("DATANASCIMENTO"));
+                     rs.getString("SOBRENOME"));
                return autor;
                   
              
@@ -161,9 +155,7 @@ public class AutorDAO implements IAutorDAO {
                 Autor autor;
                 autor = new Autor( rs.getInt("ID"),
                         rs.getString("NOME"),
-                        rs.getString("SOBRENOME"),
-                        rs.getDate("DATANASCIMENTO")
-                );
+                        rs.getString("SOBRENOME"));   
                 autors.add(autor);    
                
             }

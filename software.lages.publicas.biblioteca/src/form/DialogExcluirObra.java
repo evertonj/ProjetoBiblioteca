@@ -3,8 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package form;
+
+import dao.ObraDAO;
+import entity.Obra;
+import entity.exceptions.NameException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import table.ObraAtualizarTableModel;
+import table.ObraColumnModel;
+import validarJtextField.LetrasPermitidas;
+import validarJtextField.NumerosPermitidos;
+import validarJtextField.SomenteNumero;
 
 /**
  *
@@ -12,13 +27,27 @@ package form;
  */
 public class DialogExcluirObra extends javax.swing.JDialog {
 
+    ObraDAO dao = new ObraDAO();
+    List<Obra> listaDeObra = new ArrayList<>();
+
+    public void DefineDadosEAjustesNajTable() {
+        tbAtualizarObra.setAutoCreateColumnsFromModel(false);
+        java.awt.FontMetrics fm = tbAtualizarObra.getFontMetrics(tbAtualizarObra.getFont());
+        tbAtualizarObra.setColumnModel(new ObraColumnModel(fm));
+        tbAtualizarObra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
     /**
-     * Creates new form DialogExcluirObra
+     * Creates new form DialogAtualizarObra
      */
     public DialogExcluirObra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        tfAutor.setDocument(new LetrasPermitidas());
+        tfIsbn.setDocument(new SomenteNumero());
+        tfCodigo.setDocument(new SomenteNumero());
     }
+    Obra obra;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,23 +62,23 @@ public class DialogExcluirObra extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        tfTitulo = new javax.swing.JTextField();
+        btPesquisarPorTitulo = new javax.swing.JButton();
+        btPesquisarPorIsbn = new javax.swing.JButton();
+        btPesquisarPorCodigo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbAtualizarObra = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         btVoltar = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        btExcluir = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        btPesquisarPorAutor = new javax.swing.JButton();
+        tfAutor = new javax.swing.JTextField();
+        tfIsbn = new javax.swing.JTextField();
+        tfCodigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Excluir Obra");
+        setTitle("Atualizar Obra");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
@@ -63,19 +92,30 @@ public class DialogExcluirObra extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Consultar por Código:");
 
-        jFormattedTextField1.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        tfTitulo.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
 
-        jFormattedTextField2.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        btPesquisarPorTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
+        btPesquisarPorTitulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarPorTituloActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        btPesquisarPorIsbn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
+        btPesquisarPorIsbn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarPorIsbnActionPerformed(evt);
+            }
+        });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
+        btPesquisarPorCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
+        btPesquisarPorCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarPorCodigoActionPerformed(evt);
+            }
+        });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbAtualizarObra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -86,7 +126,12 @@ public class DialogExcluirObra extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbAtualizarObra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAtualizarObraMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbAtualizarObra);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -99,9 +144,14 @@ public class DialogExcluirObra extends javax.swing.JDialog {
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
-        jButton6.setText("Excluir");
+        btExcluir.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
+        btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -109,13 +159,13 @@ public class DialogExcluirObra extends javax.swing.JDialog {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
-        jPanel6Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btVoltar, jButton6});
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btExcluir, btVoltar});
 
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,18 +173,27 @@ public class DialogExcluirObra extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6))
+                    .addComponent(btExcluir))
                 .addContainerGap())
         );
 
-        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btVoltar, jButton6});
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
-
-        jFormattedTextField3.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btExcluir, btVoltar});
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Consultar por Autor:");
+
+        btPesquisarPorAutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
+        btPesquisarPorAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarPorAutorActionPerformed(evt);
+            }
+        });
+
+        tfAutor.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+
+        tfIsbn.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+
+        tfCodigo.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -143,32 +202,31 @@ public class DialogExcluirObra extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
+                                .addComponent(tfTitulo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jFormattedTextField1)
-                                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                                    .addComponent(jTextField1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btPesquisarPorTitulo))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(tfIsbn)
+                                    .addComponent(tfAutor)
+                                    .addComponent(tfCodigo))
+                                .addGap(6, 6, 6)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
-                                    .addComponent(jButton2)
-                                    .addComponent(jButton3)))
-                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(24, 24, 24)
-                        .addComponent(jFormattedTextField3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btPesquisarPorIsbn)
+                                        .addComponent(btPesquisarPorCodigo))
+                                    .addComponent(btPesquisarPorAutor))))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -176,30 +234,37 @@ public class DialogExcluirObra extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btPesquisarPorTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1)
+                        .addComponent(tfTitulo)
                         .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btPesquisarPorAutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btPesquisarPorIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btPesquisarPorCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                            .addComponent(jLabel4)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(tfAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -211,8 +276,8 @@ public class DialogExcluirObra extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,6 +294,114 @@ public class DialogExcluirObra extends javax.swing.JDialog {
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
+
+    private void btPesquisarPorTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorTituloActionPerformed
+        try {
+            listaDeObra = dao.consulta(tfTitulo.getText());
+            if (listaDeObra.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
+            } else {
+                this.DefineDadosEAjustesNajTable();
+                tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogExcluirObra.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NameException ex) {
+            Logger.getLogger(DialogExcluirObra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btPesquisarPorTituloActionPerformed
+
+    private void tbAtualizarObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarObraMouseClicked
+        int rowIndex = tbAtualizarObra.getSelectedRow();
+        if (rowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
+            return;
+        }
+        obra = new ObraAtualizarTableModel(listaDeObra).get(rowIndex);
+    }//GEN-LAST:event_tbAtualizarObraMouseClicked
+
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        int rowIndex = tbAtualizarObra.getSelectedRow();
+        if (rowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Removida!!!");
+            return;
+        }
+        Obra obraRemove = new ObraAtualizarTableModel(listaDeObra).get(rowIndex);
+        int confirm = JOptionPane.showConfirmDialog(this, "Confirmar exclusão ?", "Excluir Obra", JOptionPane.YES_NO_OPTION);
+        if (confirm != 0) {
+            return;
+        }
+        int result = dao.remove(obraRemove.getId());
+
+        if (result == 1) {
+            JOptionPane.showMessageDialog(this, "Obra removida com Sucesso!");
+            this.DefineDadosEAjustesNajTable();
+            listaDeObra.remove(rowIndex);
+            tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+        } else {
+            JOptionPane.showMessageDialog(this, "Tente novamente!");
+        }
+    }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void btPesquisarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorCodigoActionPerformed
+        try {
+            if (!tfCodigo.getText().isEmpty()) {
+                listaDeObra = dao.consultaPorCodigo(Integer.parseInt(tfCodigo.getText()));
+                if (listaDeObra.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
+                } else {
+                    this.DefineDadosEAjustesNajTable();
+                    tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Favor Informe o Código da Obra.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogExcluirObra.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NameException ex) {
+            Logger.getLogger(DialogExcluirObra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btPesquisarPorCodigoActionPerformed
+
+    private void btPesquisarPorAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorAutorActionPerformed
+        try {
+            if (!tfAutor.getText().isEmpty()) {
+                listaDeObra = dao.consultaAutor(tfAutor.getText());
+                if (listaDeObra.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
+                } else {
+                    this.DefineDadosEAjustesNajTable();
+                    tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Favor Informe o Nome do Autor.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogExcluirObra.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NameException ex) {
+            Logger.getLogger(DialogExcluirObra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btPesquisarPorAutorActionPerformed
+
+    private void btPesquisarPorIsbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorIsbnActionPerformed
+        try {
+            if (!tfIsbn.getText().isEmpty()) {
+                listaDeObra = dao.consultaIsbn(tfIsbn.getText());
+                if (listaDeObra.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
+                } else {
+                    this.DefineDadosEAjustesNajTable();
+                    tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Favor Informe o ISBN da Obra.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogExcluirObra.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NameException ex) {
+            Logger.getLogger(DialogExcluirObra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btPesquisarPorIsbnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,15 +446,12 @@ public class DialogExcluirObra extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btPesquisarPorAutor;
+    private javax.swing.JButton btPesquisarPorCodigo;
+    private javax.swing.JButton btPesquisarPorIsbn;
+    private javax.swing.JButton btPesquisarPorTitulo;
     private javax.swing.JButton btVoltar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -289,7 +459,10 @@ public class DialogExcluirObra extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tbAtualizarObra;
+    private javax.swing.JTextField tfAutor;
+    private javax.swing.JTextField tfCodigo;
+    private javax.swing.JTextField tfIsbn;
+    private javax.swing.JTextField tfTitulo;
     // End of variables declaration//GEN-END:variables
 }

@@ -218,7 +218,7 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
         
 
         
-
+        DialogNovaObra.carregarComBoboxAssunto();
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed

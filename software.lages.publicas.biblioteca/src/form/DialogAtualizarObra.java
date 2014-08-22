@@ -14,7 +14,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import table.ObraAtualizarTableModel;
+import table.ObraColumnModel;
+import validarJtextField.LetrasPermitidas;
+import validarJtextField.NumerosPermitidos;
+import validarJtextField.SomenteNumero;
 
 /**
  *
@@ -25,14 +30,25 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
     ObraDAO dao = new ObraDAO();
     List<Obra> listaDeObra = new ArrayList<>();
 
+    public void DefineDadosEAjustesNajTable() {
+        tbAtualizarObra.setAutoCreateColumnsFromModel(false);
+        java.awt.FontMetrics fm = tbAtualizarObra.getFontMetrics(tbAtualizarObra.getFont());
+        tbAtualizarObra.setColumnModel(new ObraColumnModel(fm));
+        tbAtualizarObra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
     /**
      * Creates new form DialogAtualizarObra
      */
     public DialogAtualizarObra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        tfAutor.setDocument(new LetrasPermitidas());
+        tfIsbn.setDocument(new SomenteNumero());
+        tfCodigo.setDocument(new SomenteNumero());
     }
     Obra obra;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,8 +62,6 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        tfIsbn = new javax.swing.JFormattedTextField();
-        tfCodigo = new javax.swing.JFormattedTextField();
         tfTitulo = new javax.swing.JTextField();
         btPesquisarPorTitulo = new javax.swing.JButton();
         btPesquisarPorIsbn = new javax.swing.JButton();
@@ -58,8 +72,10 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
         btVoltar = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        tfAutor = new javax.swing.JFormattedTextField();
         btPesquisarPorAutor = new javax.swing.JButton();
+        tfAutor = new javax.swing.JTextField();
+        tfIsbn = new javax.swing.JTextField();
+        tfCodigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Atualizar Obra");
@@ -75,20 +91,6 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Consultar por Código:");
-
-        try {
-            tfIsbn.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##############################")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        tfIsbn.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
-
-        try {
-            tfCodigo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###############################")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        tfCodigo.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
 
         tfTitulo.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
 
@@ -180,14 +182,18 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Consultar por Autor:");
 
-        tfAutor.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
-
         btPesquisarPorAutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
         btPesquisarPorAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btPesquisarPorAutorActionPerformed(evt);
             }
         });
+
+        tfAutor.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+
+        tfIsbn.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+
+        tfCodigo.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -197,31 +203,30 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(23, 23, 23)
-                        .addComponent(tfTitulo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btPesquisarPorTitulo))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(12, 12, 12)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfIsbn)
-                            .addComponent(tfCodigo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btPesquisarPorIsbn)
-                            .addComponent(btPesquisarPorCodigo)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(24, 24, 24)
-                        .addComponent(tfAutor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btPesquisarPorAutor))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(tfTitulo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btPesquisarPorTitulo))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(tfIsbn)
+                                    .addComponent(tfAutor)
+                                    .addComponent(tfCodigo))
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btPesquisarPorIsbn)
+                                        .addComponent(btPesquisarPorCodigo))
+                                    .addComponent(btPesquisarPorAutor))))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -234,27 +239,30 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
                         .addComponent(tfTitulo)
                         .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btPesquisarPorAutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tfAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btPesquisarPorAutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btPesquisarPorIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btPesquisarPorIsbn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addComponent(btPesquisarPorCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                            .addComponent(jLabel4)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btPesquisarPorCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(tfAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -290,12 +298,17 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
     private void btPesquisarPorTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorTituloActionPerformed
         try {
             listaDeObra = dao.consulta(tfTitulo.getText());
+            if (listaDeObra.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
+            } else {
+                this.DefineDadosEAjustesNajTable();
+                tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NameException ex) {
             Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
     }//GEN-LAST:event_btPesquisarPorTituloActionPerformed
 
     private void tbAtualizarObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarObraMouseClicked
@@ -314,36 +327,63 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btPesquisarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorCodigoActionPerformed
-         try {
-            listaDeObra = dao.consultaPorCodigo(Integer.parseInt(tfCodigo.getText()));
+        try {
+            if (!tfCodigo.getText().isEmpty()) {
+                listaDeObra = dao.consultaPorCodigo(Integer.parseInt(tfCodigo.getText()));
+                if (listaDeObra.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
+                } else {
+                    this.DefineDadosEAjustesNajTable();
+                    tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Favor Informe o Código da Obra.");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NameException ex) {
             Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
     }//GEN-LAST:event_btPesquisarPorCodigoActionPerformed
 
     private void btPesquisarPorAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorAutorActionPerformed
-         try {
-            listaDeObra = dao.consultaAutor(tfAutor.getText());
+        try {
+            if (!tfAutor.getText().isEmpty()) {
+                listaDeObra = dao.consultaAutor(tfAutor.getText());
+                if (listaDeObra.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
+                } else {
+                    this.DefineDadosEAjustesNajTable();
+                    tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Favor Informe o Nome do Autor.");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NameException ex) {
             Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
     }//GEN-LAST:event_btPesquisarPorAutorActionPerformed
 
     private void btPesquisarPorIsbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorIsbnActionPerformed
         try {
-            listaDeObra = dao.consultaIsbn(tfIsbn.getText());
+            if (!tfIsbn.getText().isEmpty()) {
+                listaDeObra = dao.consultaIsbn(tfIsbn.getText());
+                if (listaDeObra.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
+                } else {
+                    this.DefineDadosEAjustesNajTable();
+                    tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Favor Informe o ISBN da Obra.");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NameException ex) {
             Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
     }//GEN-LAST:event_btPesquisarPorIsbnActionPerformed
 
     /**
@@ -403,9 +443,9 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbAtualizarObra;
-    private javax.swing.JFormattedTextField tfAutor;
-    private javax.swing.JFormattedTextField tfCodigo;
-    private javax.swing.JFormattedTextField tfIsbn;
+    private javax.swing.JTextField tfAutor;
+    private javax.swing.JTextField tfCodigo;
+    private javax.swing.JTextField tfIsbn;
     private javax.swing.JTextField tfTitulo;
     // End of variables declaration//GEN-END:variables
 }

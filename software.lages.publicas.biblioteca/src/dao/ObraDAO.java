@@ -18,9 +18,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sun.util.resources.cldr.CalendarData;
 
 /**
  *
@@ -73,22 +75,30 @@ public class ObraDAO implements IObraDAO {
         String sqlExeplares = "insert into exemplar(dataDeCadastro, fornecedor, dataDeAquisicao, id_Obra, numero_sequencial) values(?, ?, ?, ?, ?)";
         int contador = 0;
         try {
+            int ultimoIdObra;
             conn = DBConnection.getConnection();
-            pstmIdObra = conn.prepareStatement("select max(id) AS ultimoidobra from obra");
-            rs = pstmIdObra.executeQuery();
-            System.out.println("Teste Result");
-            rs.next();
-            int ultimoIdObra = rs.getInt("ultimoidobra");
-            for (Exemplar exemplar : obra.getExemplar()) {
-                pstm = conn.prepareStatement(sqlExeplares);
-                pstm.setDate(1, new java.sql.Date(exemplar.getDataDeCadastro().getTime()));
-                pstm.setString(2, exemplar.getFornecedor());
-                pstm.setDate(3, new java.sql.Date(exemplar.getDataDeAquisicao().getTime()));
-                pstm.setInt(4, ultimoIdObra);
-                pstm.setInt(5, exemplar.getNumeroSequancial());
-                pstm.executeUpdate();
-                contador++;
-                System.out.println("Inserindo exemplar: " + contador);
+            if (obra.getId() == 0) {
+                System.out.println("Obra ID:" + obra.getId());
+                pstmIdObra = conn.prepareStatement("select max(id) AS ultimoidobra from obra");
+                rs = pstmIdObra.executeQuery();
+                System.out.println("Teste Result");
+                rs.next();
+                ultimoIdObra = rs.getInt("ultimoidobra");
+            } else {
+                ultimoIdObra = obra.getId();
+            }
+            if (obra.getExemplar() != null) {
+                for (Exemplar exemplar : obra.getExemplar()) {
+                    pstm = conn.prepareStatement(sqlExeplares);
+                    pstm.setDate(1, new java.sql.Date(exemplar.getDataDeCadastro().getTime()));
+                    pstm.setString(2, exemplar.getFornecedor());
+                    pstm.setDate(3, new java.sql.Date(exemplar.getDataDeAquisicao().getTime()));
+                    pstm.setInt(4, ultimoIdObra);
+                    pstm.setInt(5, exemplar.getNumeroSequancial());
+                    pstm.executeUpdate();
+                    contador++;
+                    System.out.println("Inserindo exemplar: " + contador);
+                }
             }
             pstm.close();
         } catch (SQLException SqlEx) {
@@ -150,12 +160,14 @@ public class ObraDAO implements IObraDAO {
 
     @Override
     public int update(Obra obra) {
+        System.out.println(" Chamou o Update  ");
         int result = 0;
         Connection conn = null;
         PreparedStatement pstm = null;
-        String sql = "update obra set TITULO = ?, EDICAO = ?, ANO = ?, EDITORA = ?,"
-                + " ISBN = ?, ASSUNTO = ?, FOTO = ? where id = ?;";
-        String sqlAutores = "update obra_autor set idobra = ?, idautor = ? where idobra = ?;";
+        String sql = "update obra set TITULO = ?, EDICAO = ?, ANO = ?, ID_EDITORA = ?,"
+                + " ISBN = ?, IDASSUNTO = ?, FOTO = ? where id = ?;";
+        String sqlAutores = "update autor set nome = ?, sobrenome = ? where id = ?";
+
         try {
             conn = DBConnection.getConnection();
             pstm = conn.prepareStatement(sql);
@@ -167,12 +179,15 @@ public class ObraDAO implements IObraDAO {
             pstm.setString(5, obra.getIsbn());
             pstm.setInt(6, obra.getAssunto().getId());
             pstm.setBytes(7, obra.getFoto());
+            pstm.setInt(8, obra.getId());
+            System.out.println("Chegou no Autor");
             result = pstm.executeUpdate();
+
             for (Autor autor1 : obra.getAutores()) {
                 pstm = conn.prepareStatement(sqlAutores);
-                pstm.setInt(1, obra.getId());
-                pstm.setLong(2, autor1.getId());
-                pstm.setInt(3, obra.getId());
+                pstm.setString(1, autor1.getNome());
+                pstm.setString(2, autor1.getSobrenome());
+                pstm.setInt(3, autor1.getId());
                 result = pstm.executeUpdate();
             }
             this.salvarExemplar(obra);
@@ -196,18 +211,22 @@ public class ObraDAO implements IObraDAO {
 
     @Override
     public int remove(int id) {
+        System.out.println("ID da Obra: "+id);
         int result = 0;
-        Connection conn = null;
-        PreparedStatement pstm = null;
-        String sql = "delete obra where id = " + id;
-        String sqlVinculo = "delete obra_autor where idobra = " + id;
+        Connection conn1 = null, conn = null;
+        PreparedStatement pstm1 = null, pstm2 = null;
+        String sql = "delete from obra where id = " + id+";";
+        String sqlVinculo = "delete from obra_autor where idobra = " + id+";";
         try {
             conn = DBConnection.getConnection();
-            pstm = conn.prepareStatement(sql);
-            result = pstm.executeUpdate();
-            pstm = conn.prepareStatement(sqlVinculo);
-            result = pstm.executeUpdate();
-            pstm.close();
+            pstm2 = conn.prepareStatement(sqlVinculo);
+            result = pstm2.executeUpdate();
+            conn1 = DBConnection.getConnection();
+            pstm1 = conn1.prepareStatement(sql);
+            result = pstm1.executeUpdate();
+            System.out.println("Teste Remover");
+            pstm1.close();
+            pstm2.close();
             return result;
         } catch (SQLException SqlEx) {
             try {
@@ -217,7 +236,8 @@ public class ObraDAO implements IObraDAO {
             } catch (SQLException SqlEx1) {
                 SqlEx1.printStackTrace();
             } finally {
-                DBConnection.close(conn, pstm, null);
+                DBConnection.close(conn, pstm1, null);
+                DBConnection.close(conn, pstm2, null);
             }
             SqlEx.printStackTrace();
         }
@@ -260,8 +280,8 @@ public class ObraDAO implements IObraDAO {
 
     private Obra obra(ResultSet rs, ResultSet rsEditora, ResultSet rsAssunto) throws SQLException, NameException {
         int idobra;
-        ResultSet rsAutor = null;
-        PreparedStatement pstmA = null;
+        ResultSet rsAutor = null, rsExemplar = null;
+        PreparedStatement pstmA = null, pstmE = null;
         Connection conn = DBConnection.getConnection();
         try {
             Obra obra = null;
@@ -280,6 +300,10 @@ public class ObraDAO implements IObraDAO {
                 obra.setIsbn(rs.getString("isbn"));
                 obra.setAssunto(assunto(rsAssunto));
                 obra.setFoto(rs.getBytes("foto"));
+                String sqlExemplar = "select * from exemplar where id_obra = "+ idobra;
+                pstmE = conn.prepareStatement(sqlExemplar);
+                rsExemplar = pstmE.executeQuery();
+                obra.setExemplar(exemplar(rsExemplar));
             }
             return obra;
         } catch (SQLException ex) {
@@ -294,7 +318,7 @@ public class ObraDAO implements IObraDAO {
         List<Autor> listaDeAutores = new ArrayList<>();
         while (rs.next()) {
             Autor autor = new Autor(rs.getInt("id"), rs.getString("nome"),
-                    rs.getString("sobrenome"), rs.getDate("datanascimento"));
+                    rs.getString("sobrenome"));
             contador++;
             System.out.println("Contador de Autores: " + contador);
             listaDeAutores.add(autor);
@@ -302,6 +326,25 @@ public class ObraDAO implements IObraDAO {
         return listaDeAutores;
     }
 
+    private List<Exemplar> exemplar(ResultSet rs) throws NameException, SQLException {
+        List<Exemplar> listaDeExemplares = new ArrayList<>();
+        Exemplar exemplar;
+        try {
+            while (rs.next()) {
+                exemplar = new Exemplar(rs.getInt("id"),
+                        new java.util.Date(rs.getDate("dataDeCadastro").getTime()),
+                        rs.getString("fornecedor"),
+                        new java.util.Date(rs.getDate("dataDeAquisicao").getTime()),
+                        rs.getInt("id_obra"), rs.getInt("numero_sequencial"));
+                listaDeExemplares.add(exemplar);
+            }
+            return listaDeExemplares;
+        } catch (SQLException ex) {
+            Logger.getLogger(ObraDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     private Assunto assunto(ResultSet rs) throws NameException, SQLException {
         Assunto assunto = new Assunto();
         try {
@@ -368,8 +411,8 @@ public class ObraDAO implements IObraDAO {
             throw new NameException("nome incorreto...");
         }
     }
-    
-     public List<Obra> consultaAutor(String autor) throws SQLException, NameException {
+
+    public List<Obra> consultaAutor(String autor) throws SQLException, NameException {
         PreparedStatement pstmO, pstmE, pstmAss, pstm4;
         Connection conn = null;
         Obra obra;
@@ -377,7 +420,7 @@ public class ObraDAO implements IObraDAO {
         List<Obra> listaDeObra = new ArrayList<>();
         String sqlEditora = "select * from editora, obra where obra.id_editora = editora.id;";
         String sqlAssunto = "select * from assunto, obra where obra.idAssunto = assunto.id;";
-        String sqlObra = "select * from obra o, autor a, obra_autor oa where a.nome like '%"+autor+"%' and oa.idautor = a.id and oa.idobra = o.id;";
+        String sqlObra = "select * from obra o, autor a, obra_autor oa where a.nome like '%" + autor + "%' and oa.idautor = a.id and oa.idobra = o.id;";
         try {
             conn = DBConnection.getConnection();
             pstmO = conn.prepareStatement(sqlObra);
@@ -409,7 +452,7 @@ public class ObraDAO implements IObraDAO {
         List<Obra> listaDeObra = new ArrayList<>();
         String sqlEditora = "select * from editora, obra where obra.id_editora = editora.id;";
         String sqlAssunto = "select * from assunto, obra where obra.idAssunto = assunto.id;";
-        String sqlObra = "select * from obra where isbn = "+isbn;
+        String sqlObra = "select * from obra where isbn = " + isbn;
         try {
             conn = DBConnection.getConnection();
             pstmO = conn.prepareStatement(sqlObra);
@@ -432,7 +475,6 @@ public class ObraDAO implements IObraDAO {
             throw new NameException("nome incorreto...");
         }
     }
-    
 
     public List<Obra> consultaPorCodigo(int codigo) throws SQLException, NameException {
         PreparedStatement pstmO, pstmE, pstmAss, pstm4;
