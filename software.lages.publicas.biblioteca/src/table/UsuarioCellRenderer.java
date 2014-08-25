@@ -33,5 +33,4 @@ public class UsuarioCellRenderer extends DefaultTableCellRenderer {
         table.setFont(fonte);
         return this;
     }
-   
 }

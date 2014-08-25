@@ -230,7 +230,7 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         if (new OperadorController().buscarOperador(tfnomePesquisa.getText()) != null) {
-            Operador operador = new OperadorController().buscarOperador(tfnomePesquisa.getText());
+            Operador operador = new OperadorController().buscarOperador(tfnomePesquisa.getText().toUpperCase());
             tfNome.setText(operador.getNome());
             tpsSenha.setText(operador.getSenha());
             idOperador = operador.getId();

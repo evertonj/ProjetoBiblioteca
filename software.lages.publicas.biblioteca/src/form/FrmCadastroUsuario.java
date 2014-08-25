@@ -8,7 +8,9 @@ package form;
 
 import controller.UsuarioController;
 import entity.Usuario;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,24 +25,12 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     public FrmCadastroUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-//        enableFields(false);
-//        refreshTable();
         onCancelar();
     }
-    private static final long serialVersionUID = 1L;
     List<Usuario> usuarioList;
-    Long idUsuario;
-//
-//    private void refreshTable() {
-//        cbNome.clear();
-//        usuarioList = new UsuarioController().finAll();
-//        Collections.sort(usuarioList);
-//        for (Usuario usuario : usuarioList) {
-//            cbNome.addItem(usuario.getNome());
-//        }
-//        tbUsuario.setModel(new UsuarioTableModel(usuarioList));
-//        tbUsuario.setDefaultRenderer(Object.class, new UsuarioCellRenderer());
-//    }
+    int idUsuario;
+    private DefaultListModel defaultListaEmail = new DefaultListModel();
+    private DefaultListModel defaultListaTelefone = new DefaultListModel();
 
     private void onCancelar() {
         tfNome.setText(null);
@@ -55,19 +45,6 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         tfEmail.setEnabled(b);
         tfTelefone.setEnabled(b);
     }
-//
-//    private void UsuarioSelected() {
-//        enableFields(false);
-//        int rowIndex = tbUsuario.getSelectedRow();
-//        if (rowIndex > -1) {
-//            enableFields(false);
-//            Usuario usuario = new UsuarioTableModel(usuarioList).get(rowIndex);
-//            cbNome.setSelectedItem(usuario.getNome());
-//            tfTelefone.setText(usuario.getSerie());
-//            tfEmail.setText(usuario.getEmail());
-//            tfTelefone.setText(usuario.getTelefone());
-//        }
-//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -191,18 +168,38 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         btAddEmail.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btAddEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/1404973899_email_add.png"))); // NOI18N
         btAddEmail.setText("Adicionar Email");
+        btAddEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddEmailActionPerformed(evt);
+            }
+        });
 
         btRemoveEmail.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btRemoveEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/1404973906_email_deny.png"))); // NOI18N
         btRemoveEmail.setText("Remover Email");
+        btRemoveEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoveEmailActionPerformed(evt);
+            }
+        });
 
         btAddTelefone.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btAddTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/1404973979_Dial.png"))); // NOI18N
         btAddTelefone.setText("Adicionar Telefone");
+        btAddTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddTelefoneActionPerformed(evt);
+            }
+        });
 
         btRemoverTelefone.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btRemoverTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/1404973983_Hungup.png"))); // NOI18N
         btRemoverTelefone.setText("Remover Telefone");
+        btRemoverTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverTelefoneActionPerformed(evt);
+            }
+        });
 
         tfTelefone.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
@@ -333,27 +330,19 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        Usuario usuario = new Usuario();
         int result;
-        if (!tfNome.getText().isEmpty() && !tfSerie.getText().isEmpty() && !tfEmail.getText().isEmpty() && !tfTelefone.getText().isEmpty()) {
-            usuario.setNome(tfNome.getText());
-            usuario.setSerie(tfSerie.getText());
-            usuario.setEmail(tfEmail.getText());
-            usuario.setTelefone(tfTelefone.getText());
-        } else {
-            JOptionPane.showMessageDialog(this, "Favor preecha todos os campos corretamente!!!");
-            return;
-        }
-        if (idUsuario == null) {
+        List<String> emails = new ArrayList<>();
+        List<String> telefones = new ArrayList<>();
+        Usuario usuario = new Usuario(idUsuario, tfNome.getText(), tfSerie.getText(), emails, telefones);
+        if (idUsuario == 0) {
             result = new UsuarioController().addUsuario(usuario);
         } else {
             usuario.setId(idUsuario);
             result = new UsuarioController().alterarUsuario(usuario);
-            idUsuario = null;
+            idUsuario = 0;
         }
         if (result == 1) {
             JOptionPane.showMessageDialog(this, "Usuario inserido com Sucesso!");
-//            this.refreshTable();
             onCancelar();
             enableFields(false);
         } else {
@@ -365,6 +354,38 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         onCancelar();
         this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
+
+    private void btAddEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddEmailActionPerformed
+        defaultListaEmail.addElement(this.tfEmail.getText());
+        this.listEmail.setModel(defaultListaEmail);
+        this.tfEmail.setText(null);
+    }//GEN-LAST:event_btAddEmailActionPerformed
+
+    private void btRemoveEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoveEmailActionPerformed
+        if (listEmail.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum email foi selecianado para ser removido"
+                    + "\n" + "Por favor Selecione um email!", "Alerta", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Object email = listEmail.getSelectedValue();
+            defaultListaEmail.removeElement(email);
+        }
+    }//GEN-LAST:event_btRemoveEmailActionPerformed
+
+    private void btAddTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddTelefoneActionPerformed
+        defaultListaTelefone.addElement(this.tfTelefone.getText());
+        this.listTelefone.setModel(defaultListaTelefone);
+        this.tfTelefone.setText(null);
+    }//GEN-LAST:event_btAddTelefoneActionPerformed
+
+    private void btRemoverTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverTelefoneActionPerformed
+        if (listTelefone.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum telefone foi selecionado para ser removido!"
+                    + "\n" + "Por favor Selecione um telefone na lista!", "Alerta", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Object telefone = listTelefone.getSelectedValue();
+            defaultListaTelefone.removeElement(telefone);
+        }
+    }//GEN-LAST:event_btRemoverTelefoneActionPerformed
 
     /**
      * @param args the command line arg uments
