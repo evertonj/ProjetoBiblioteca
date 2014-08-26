@@ -7,6 +7,7 @@ package entity;
 
 import java.util.List;
 import java.util.Objects;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -19,6 +20,8 @@ public class Usuario{
     private String serie;
     private List<String> listEmail;
     private List<String> listTelefone;
+    private ImageIcon fotoIcon;
+    private byte[] foto; 
 
     public Usuario() {
     }
@@ -30,12 +33,13 @@ public class Usuario{
         this.listTelefone = listTelefone;
     }
 
-    public Usuario(int id, String nome, String serie, List<String> listEmail, List<String> listTelefone) {
+    public Usuario(int id, String nome, String serie, List<String> listEmail, List<String> listTelefone, byte[]foto) {
         this.id = id;
         this.nome = nome;
         this.serie = serie;
         this.listEmail = listEmail;
         this.listTelefone = listTelefone;
+        this.foto = foto;
     }
 
     public int getId() {
@@ -77,6 +81,22 @@ public class Usuario{
     public void setListTelefone(List<String> listTelefone) {
         this.listTelefone = listTelefone;
     }
+    
+    public ImageIcon getFotoIcon() {
+        return fotoIcon;
+    }
+
+    public void setFotoIcon(ImageIcon fotoIcon) {
+        this.fotoIcon = fotoIcon;
+    }
+    
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
 
     @Override
     public int hashCode() {
@@ -103,5 +123,16 @@ public class Usuario{
     @Override
     public String toString() {
         return nome;
-    } 
+    }
+    
+    public ImageIcon getFotoAsImageIcon() {
+
+        this.fotoIcon = new ImageIcon();
+
+        if (this.getFoto() != null) {
+            this.fotoIcon = new ImageIcon(this.getFoto());
+        }
+
+        return this.fotoIcon;
+    }
 }

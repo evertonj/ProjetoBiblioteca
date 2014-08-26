@@ -8,10 +8,17 @@ package form;
 
 import controller.UsuarioController;
 import entity.Usuario;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -31,6 +38,10 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     int idUsuario;
     private DefaultListModel defaultListaEmail = new DefaultListModel();
     private DefaultListModel defaultListaTelefone = new DefaultListModel();
+    private ImageIcon icon;
+    private String endImage;
+    private ImageIcon fotoEspecie;
+    byte[] foto;
 
     private void onCancelar() {
         tfNome.setText(null);
@@ -44,6 +55,22 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         tfTelefone.setEnabled(b);
         tfEmail.setEnabled(b);
         tfTelefone.setEnabled(b);
+    }
+    
+    public byte[] getBytes(File file) {
+        int len = (int) file.length();
+        byte[] sendBuf = new byte[len];
+        FileInputStream inFile = null;
+        try {
+            inFile = new FileInputStream(file);
+            inFile.read(sendBuf, 0, len);
+
+        } catch (FileNotFoundException fnfex) {
+
+        } catch (IOException ioex) {
+
+        }
+        return sendBuf;
     }
 
     /**
@@ -65,6 +92,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         listTelefone = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
         panelFoto = new javax.swing.JPanel();
+        lbFoto = new javax.swing.JLabel();
         btEscolherFoto = new javax.swing.JButton();
         tfNome = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -148,16 +176,27 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         panelFoto.setLayout(panelFotoLayout);
         panelFotoLayout.setHorizontalGroup(
             panelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(panelFotoLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(lbFoto)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelFotoLayout.setVerticalGroup(
             panelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 153, Short.MAX_VALUE)
+            .addGroup(panelFotoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbFoto)
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         btEscolherFoto.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btEscolherFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/newPicture.png"))); // NOI18N
         btEscolherFoto.setText("Escolher");
+        btEscolherFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEscolherFotoActionPerformed(evt);
+            }
+        });
 
         tfNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
@@ -333,7 +372,13 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         int result;
         List<String> emails = new ArrayList<>();
         List<String> telefones = new ArrayList<>();
-        Usuario usuario = new Usuario(idUsuario, tfNome.getText(), tfSerie.getText(), emails, telefones);
+        for (int i = 0; i < defaultListaEmail.getSize(); i++) {
+            emails.add(defaultListaEmail.getElementAt(i).toString());
+        }
+        for (int i = 0; i < defaultListaTelefone.getSize(); i++) {
+            telefones.add(defaultListaTelefone.getElementAt(i).toString());
+        }
+        Usuario usuario = new Usuario(idUsuario, tfNome.getText(), tfSerie.getText(), emails, telefones, foto);
         if (idUsuario == 0) {
             result = new UsuarioController().addUsuario(usuario);
         } else {
@@ -366,7 +411,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Nenhum email foi selecianado para ser removido"
                     + "\n" + "Por favor Selecione um email!", "Alerta", JOptionPane.ERROR_MESSAGE);
         } else {
-            Object email = listEmail.getSelectedValue();
+            String email = listEmail.getSelectedValue().toString();
             defaultListaEmail.removeElement(email);
         }
     }//GEN-LAST:event_btRemoveEmailActionPerformed
@@ -387,6 +432,45 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btRemoverTelefoneActionPerformed
 
+    private void btEscolherFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEscolherFotoActionPerformed
+         try {
+            JFileChooser fc = new JFileChooser("C:\\Users\\Alex\\Desktop");
+            fc.addChoosableFileFilter(new FileNameExtensionFilter("Arquivos de Imagem", "jpg", "png", "gif", "icon", "bmp", "tif"));
+            fc.setAcceptAllFileFilterUsed(false);
+            fc.showDialog(this, "Adicionar");
+            foto = getBytes(fc.getSelectedFile());
+            icon = new ImageIcon(fc.getSelectedFile().getAbsolutePath());
+            lbFoto.setIcon(redimensionaImageIcon(icon));
+        } catch (NullPointerException n) {
+            return;
+        }
+    }//GEN-LAST:event_btEscolherFotoActionPerformed
+
+    private ImageIcon redimensionaImageIcon(ImageIcon icon) {
+        int height = icon.getIconHeight();
+        int width = icon.getIconWidth();
+        double alturaFinal = 160.0;
+        double larguraFinal = 130.0;
+        if (height > width) {
+            if (height > alturaFinal) {
+                double altura = alturaFinal / height;
+                larguraFinal = width * altura;
+            } else {
+                double altura = height / alturaFinal;
+                larguraFinal = width * altura;
+            }
+        } else {
+            if (height > 130) {
+                double largura = larguraFinal / width;
+                alturaFinal = height * largura;
+            } else {
+                double largura = width / larguraFinal;
+                alturaFinal = height * largura;
+            }
+        }
+        icon.setImage(icon.getImage().getScaledInstance((int) larguraFinal, (int) alturaFinal, 100));
+        return icon;
+    }
     /**
      * @param args the command line arg uments
      */
@@ -447,6 +531,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lbFoto;
     private javax.swing.JList listEmail;
     private javax.swing.JList listTelefone;
     private javax.swing.JPanel panelFoto;
