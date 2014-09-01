@@ -23,7 +23,7 @@ import javax.swing.plaf.FontUIResource;
  *
  * @author Bya
  */
-public class FrmTelaPrincipal extends javax.swing.JDialog implements ActionListener {
+public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListener {
 
     /**
      * Creates new form FrmTelaPrincipal
@@ -33,13 +33,16 @@ public class FrmTelaPrincipal extends javax.swing.JDialog implements ActionListe
             + "HH:mm");
     Timer timer;
 
-    public FrmTelaPrincipal(java.awt.Frame parent, boolean modal) {
-        super(parent , true);
+    public FrmTelaPrincipal() {
+        //super(parent , true);
+        setExtendedState(MAXIMIZED_BOTH);
+        setUndecorated(true);
         timer = new Timer(500, this);
         timer.setRepeats(true);
         timer.start();
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
         initComponents();
+        
     }
 
     @Override
@@ -408,18 +411,27 @@ public class FrmTelaPrincipal extends javax.swing.JDialog implements ActionListe
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-       java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-               FrmTelaPrincipal dialog = new FrmTelaPrincipal(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+        
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
-        });
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FrmRealizarLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrmRealizarLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrmRealizarLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmRealizarLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+       FrmTelaPrincipal login = new FrmTelaPrincipal();
+        login.setLocationRelativeTo(null);
+        login.setVisible(true);
     }
     
    

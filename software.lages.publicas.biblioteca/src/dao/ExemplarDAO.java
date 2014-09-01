@@ -8,7 +8,6 @@ package dao;
 import connection.DBConnection;
 import entity.Exemplar;
 import entity.Obra;
-import entity.exceptions.NameException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,9 +26,36 @@ public class ExemplarDAO implements IExemplarDAO {
     private static final String SQL_INSERT = "insert into exemplar (dataDeCadastro, fornecedor, dataDeAquisicao, id_obra , numero_sequencial) VALUES (?,?,?,?,?);";
     private static final String SQL_UPDATE = "update exemplar set dataDeCadastro = ?,fornecedor = ?, dataDeAquisicao = ?,id_obra = ?, numero_sequencial = ? WHERE id = ?;";
     private static final String SQL_REMOVE = "delete from exemplar where id = ?;";
-    private static final String SQL_FIND_ALL = "select * from exemplar;";
     private static final String SQL_ORDER_TABLE = "select * from exemplar order by nome;";
-
+    
+    public String ObtemTituloDaObra(int idOBra) {
+        String titulo;
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            pstm = conn.prepareStatement("select titulo from obra where id = "+idOBra+";");
+            rs = pstm.executeQuery();
+            if (rs.next()) {
+                return titulo = rs.getString("titulo");
+            }
+           pstm.close();
+        } catch (SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            } finally {
+                DBConnection.close(conn, pstm, null);
+            }
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     @Override
     public int save(List<Exemplar> exemplares, Obra obra) {
         Connection conn = DBConnection.getConnection();

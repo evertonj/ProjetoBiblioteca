@@ -198,27 +198,33 @@ public class DialogExemplar extends javax.swing.JDialog {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         int quantidade = (int) spQuantidade.getValue();
-        
-        String query = "SELECT count(numero_sequencial) from exemplar where id_obra = "+DialogNovaObra.obra.getId();
-        Connection conn = null;
-        ResultSet rs = null;
-        PreparedStatement pstm = null;
-        conn = DBConnection.getConnection();
         int num_sequncial = 0;
-        try {
-            pstm = conn.prepareStatement(query);
-            rs = pstm.executeQuery();
-            if (rs.next()) {
-                num_sequncial = rs.getInt("count(numero_sequencial)");
+        listaDeExemplares.clear();
+        if (DialogNovaObra.obra != null) {
+            String query = "SELECT count(numero_sequencial) from exemplar where id_obra = " + DialogNovaObra.obra.getId();
+            System.out.println(query);
+            Connection conn = null;
+            ResultSet rs = null;
+            PreparedStatement pstm = null;
+            conn = DBConnection.getConnection();
+            try {
+                pstm = conn.prepareStatement(query);
+                rs = pstm.executeQuery();
+                if (rs.next()) {
+                    num_sequncial = rs.getInt("count(numero_sequencial)");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DialogExemplar.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogExemplar.class.getName()).log(Level.SEVERE, null, ex);
-        }   
-        System.out.println("Numero Sequancial: "+num_sequncial);
+            System.out.println("Numero Sequancial: " + num_sequncial);
+
+        }
+
         for (int i = 0; i < quantidade; i++) {
-           Exemplar exemplar = new Exemplar(dcDataDeCadastro.getDate(), tfFornecedor.getText(), dcDataDeAquisicao.getDate(), (i+ num_sequncial + 1));
-            listaDeExemplares.add(exemplar); 
-        }         
+            Exemplar exemplar = new Exemplar(dcDataDeCadastro.getDate(), tfFornecedor.getText(), dcDataDeAquisicao.getDate(), (i + (num_sequncial + 1)));
+            listaDeExemplares.add(exemplar);
+        }
+
         this.dispose();
     }//GEN-LAST:event_btSalvarActionPerformed
 

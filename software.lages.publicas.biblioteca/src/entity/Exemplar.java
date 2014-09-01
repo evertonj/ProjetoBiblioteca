@@ -13,11 +13,11 @@ import java.util.Date;
  */
 public class Exemplar {
 
-    public Exemplar(Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int numeroSequancial) {
+    public Exemplar(Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int numeroSequencial) {
         this.dataDeCadastro = dataDeCadastro;
         this.fornecedor = fornecedor;
         this.dataDeAquisicao = dataDeAquisicao;
-        this.numeroSequancial = numeroSequancial;
+        this.numeroSequencial = numeroSequencial;
     }
 
     private int id;
@@ -25,7 +25,7 @@ public class Exemplar {
     private String fornecedor;
     private Date dataDeAquisicao;
     private int idObra;
-    private int numeroSequancial;
+    private int numeroSequencial;
 
     public Exemplar(int id, Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int idObra, int numeroSequencial) {
         this.id = id;
@@ -33,8 +33,8 @@ public class Exemplar {
         this.fornecedor = fornecedor;
         this.dataDeAquisicao = dataDeAquisicao;
         this.idObra = idObra;
-        this.numeroSequancial = numeroSequencial;
-    }
+        this.numeroSequencial = numeroSequencial;
+    }            
 
     @Override
     public int hashCode() {
@@ -129,16 +129,16 @@ public class Exemplar {
     }
 
     /**
-     * @return the numeroSequancial
+     * @return the numeroSequencial
      */
     public int getNumeroSequancial() {
-        return numeroSequancial;
+        return numeroSequencial;
     }
 
     /**
-     * @param numeroSequancial the numeroSequancial to set
+     * @param numeroSequencial the numeroSequencial to set
      */
-    public void setNumeroSequancial(int numeroSequancial) {
-        this.numeroSequancial = numeroSequancial;
+    public void setNumeroSequancial(int numeroSequencial) {
+        this.numeroSequencial = numeroSequencial;
     }
 }

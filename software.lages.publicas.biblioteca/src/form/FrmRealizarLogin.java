@@ -5,6 +5,7 @@
  */
 package form;
 
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -138,7 +139,7 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
         boolean result;
         result = (tfLogin.getText().equalsIgnoreCase("admin") && String.copyValueOf(tpsSenha.getPassword()).equalsIgnoreCase("admin"));
         if (result) {
-            FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal(new javax.swing.JFrame(), true);
+            FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal();
             telaPrincipal.setVisible(true);
             dispose();
         } else {
@@ -156,13 +157,9 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
             boolean result;
             result = (tfLogin.getText().equalsIgnoreCase("admin") && String.copyValueOf(tpsSenha.getPassword()).equalsIgnoreCase("admin"));
             if (result) {
-                FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal(this, true);
-                telaPrincipal.setSize(this.redimensionarTela());
-                telaPrincipal.setLocationRelativeTo(null);
-                //telaPrincipal.dispose();
-                //telaPrincipal.setUndecorated(true);
-                telaPrincipal.setModal(false);
+                FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal();
                 telaPrincipal.setVisible(true);
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
             }

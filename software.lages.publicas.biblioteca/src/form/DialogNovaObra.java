@@ -14,10 +14,8 @@ import entity.Obra;
 import table.ObraTableModel;
 import entity.Autor;
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -257,6 +255,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
         btSalvar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/insert.png"))); // NOI18N
         btSalvar.setText("Salvar");
+        btSalvar.setEnabled(false);
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSalvarActionPerformed(evt);
@@ -491,7 +490,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
     }
 
     public void setDados(Obra obra) {
-        this.obra = obra;
+        DialogNovaObra.obra = obra;
         tfCodigo.setText(String.valueOf(obra.getId()));
         tfTitulo.setText(obra.getTitulo());
         tbAutores.setModel(new ObraTableModel(obra.getAutores()));
@@ -501,15 +500,16 @@ public class DialogNovaObra extends javax.swing.JDialog {
         tfISBN.setText(obra.getIsbn());
         cbAssunto.setSelectedItem(obra.getAssunto());
         byte[] imgBytes = obra.getFoto();
-        foto = obra.getFoto();
-        try {
+       // foto = obra.getFoto();
+        try {/*
+            Gravar A Imagem no disco.
             FileOutputStream fos = new FileOutputStream("Foto " + tfTitulo.getText() + ".jpg");
             fos.write(imgBytes);
             FileDescriptor fd = fos.getFD();
             fos.flush();
             fd.sync();
-            fos.close();
-            icon = new ImageIcon("Foto " + tfTitulo.getText() + ".jpg");
+            fos.close();*/
+            icon = new ImageIcon(imgBytes);
             lbFoto.setIcon(redimensionaImageIcon(icon));
         } catch (Exception e) {
             String erro = e.toString();
