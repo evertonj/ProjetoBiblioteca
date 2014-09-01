@@ -14,7 +14,7 @@ public class OperadorDAO implements IOperadorDAO {
     private static final String SQL_SAVE = "INSERT INTO operador(nome, senha) VALUES (?, ?);";
     private static final String SQL_UPDATE = "UPDATE operador SET nome = ?, senha = ? WHERE id = ?;";
     private static final String SQL_REMOVE = "DELETE FROM operador WHERE id = ?;";
-    private static final String SQL_SEARCH = "SELECT id, nome FROM operador WHERE nome LIKE '%?';";
+    private static final String SQL_SEARCH = "SELECT id, nome FROM operador WHERE nome LIKE '?%';";
     private static final String SQL_FIND_ALL = "SELECT * FROM operador;";
 
     @Override

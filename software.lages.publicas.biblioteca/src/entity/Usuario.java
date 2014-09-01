@@ -3,101 +3,121 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
+
+import java.util.List;
+import java.util.Objects;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author Alex
  */
-public class Usuario implements Comparable<Usuario>{
-    private Long id;
+public class Usuario{
+
+    private int id;
     private String nome;
     private String serie;
-    private String email;
-    private String telefone;
+    private List<String> listEmail;
+    private List<String> listTelefone;
+    private ImageIcon fotoIcon;
+    private byte[] foto; 
 
     public Usuario() {
     }
-    
-    
 
-    public Usuario(String nome, String serie, String email, String telefone) {
+    public Usuario(String nome, String serie, List<String> listEmail, List<String> listTelefone) {
         this.nome = nome;
         this.serie = serie;
-        this.email = email;
-        this.telefone = telefone;
+        this.listEmail = listEmail;
+        this.listTelefone = listTelefone;
     }
-    
-    
 
-    /**
-     * @return the nome
-     */
+    public Usuario(int id, String nome, String serie, List<String> listEmail, List<String> listTelefone, byte[]foto) {
+        this.id = id;
+        this.nome = nome;
+        this.serie = serie;
+        this.listEmail = listEmail;
+        this.listTelefone = listTelefone;
+        this.foto = foto;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
     }
 
-    /**
-     * @param nome the nome to set
-     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     * @return the telefone
-     */
-    public String getTelefone() {
-        return telefone;
-    }
-
-    /**
-     * @param telefone the telefone to set
-     */
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    /**
-     * @return the serie
-     */
     public String getSerie() {
         return serie;
     }
 
-    /**
-     * @param serie the serie to set
-     */
     public void setSerie(String serie) {
         this.serie = serie;
     }
 
-    public Long getId() {
-        return id;
+    public List<String> getListEmail() {
+        return listEmail;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setListEmail(List<String> listEmail) {
+        this.listEmail = listEmail;
+    }
+
+    public List<String> getListTelefone() {
+        return listTelefone;
+    }
+
+    public void setListTelefone(List<String> listTelefone) {
+        this.listTelefone = listTelefone;
+    }
+    
+    public ImageIcon getFotoIcon() {
+        return fotoIcon;
+    }
+
+    public void setFotoIcon(ImageIcon fotoIcon) {
+        this.fotoIcon = fotoIcon;
+    }
+    
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     @Override
-    public int compareTo(Usuario t) {
-        return Long.valueOf(id).compareTo(Long.valueOf(t.id));
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -105,5 +125,14 @@ public class Usuario implements Comparable<Usuario>{
         return nome;
     }
     
-    
+    public ImageIcon getFotoAsImageIcon() {
+
+        this.fotoIcon = new ImageIcon();
+
+        if (this.getFoto() != null) {
+            this.fotoIcon = new ImageIcon(this.getFoto());
+        }
+
+        return this.fotoIcon;
+    }
 }
