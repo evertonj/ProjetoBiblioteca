@@ -10,6 +10,7 @@ package entity;
 
 import entity.exceptions.NameException;
 import java.sql.Date;
+import java.util.Objects;
 
 /**
  *
@@ -36,10 +37,19 @@ public class Autor  {
         return sobrenome + ", " + nome;
     }
 
-   
+    @Override
+    public boolean equals(Object obj) {
+        Autor autor = (Autor)obj;
+        return autor.nome.toUpperCase().equalsIgnoreCase(this.nome.toUpperCase());
+    }
 
-    
-   
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.nome);
+        return hash;
+    }
+
 
     
     public final void verificarDados() throws NameException {

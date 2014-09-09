@@ -10,6 +10,7 @@ import table.ObraTableModel;
 import entity.Autor;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -158,6 +159,11 @@ public class DialogAdicionarAutor extends javax.swing.JDialog {
 
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
         Autor autor = (Autor) cbAutor.getSelectedItem();
+        System.out.println("É Igual Ou Não: " + DialogNovaObra.listaAutores.contains(autor));
+        if (DialogNovaObra.listaAutores.contains(autor)) {
+            JOptionPane.showMessageDialog(this, "Este Autor já Está Inserido!");
+            return;
+        }
         DialogNovaObra.listaAutores.add(autor);
         if (!DialogNovaObra.listaAutores.isEmpty()) {
             DialogNovaObra.tbAutores.setModel(new ObraTableModel(DialogNovaObra.listaAutores));

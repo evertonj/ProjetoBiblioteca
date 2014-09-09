@@ -72,7 +72,7 @@ public class ObraDAO implements IObraDAO {
         Connection conn = null;
         PreparedStatement pstm = null, pstmIdObra = null;
         ResultSet rs = null;
-        String sqlExeplares = "insert into exemplar(dataDeCadastro, fornecedor, dataDeAquisicao, id_Obra, numero_sequencial) values(?, ?, ?, ?, ?)";
+        String sqlExeplares = "insert into exemplar(dataDeCadastro, fornecedor, dataDeAquisicao, id_Obra, numero_sequencial, situacao) values(?, ?, ?, ?, ?, ?)";
         int contador = 0;
         try {
             int ultimoIdObra;
@@ -95,6 +95,7 @@ public class ObraDAO implements IObraDAO {
                     pstm.setDate(3, new java.sql.Date(exemplar.getDataDeAquisicao().getTime()));
                     pstm.setInt(4, ultimoIdObra);
                     pstm.setInt(5, exemplar.getNumeroSequancial());
+                    pstm.setString(6, exemplar.getSituacao().toString());
                     pstm.executeUpdate();
                     contador++;
                     System.out.println("Inserindo exemplar: " + contador);

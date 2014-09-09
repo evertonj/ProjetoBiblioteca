@@ -656,7 +656,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
     private javax.swing.JButton btNovaEditora;
     private javax.swing.JButton btNovoAutor;
     private javax.swing.JButton btRemover;
-    private javax.swing.JButton btSalvar;
+    public static javax.swing.JButton btSalvar;
     private javax.swing.JButton btVoltar;
     private static javax.swing.JComboBox cbAssunto;
     private static javax.swing.JComboBox cbEditora;

@@ -57,6 +57,7 @@ fornecedor varchar(80),
 dataDeAquisicao date,
 id_obra int not null,
 numero_sequencial int default 1,
+situacao ENUM('EMPRESTADO', 'DISPONIVEL', 'CONSULTA_LOCAL', 'RESERVADO', 'INDISPONIVEL') not null,
 constraint foreign key (id_obra) references obra(id)
 );
 create table telefone_usuario(
