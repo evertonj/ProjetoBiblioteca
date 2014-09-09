@@ -27,14 +27,15 @@ public class UsuarioDAO implements IUsuarioDAO {
             pstm.setString(1, usuario.getNome());
             pstm.setString(2, usuario.getSerie());
             pstm.setBytes(3, usuario.getFoto());
-            this.salvarTelefone(usuario.getListTelefone());
-            this.salvarEmail(usuario.getListEmail());
+            
             result = pstm.executeUpdate();
            
             pstm.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        this.salvarTelefone(usuario.getListTelefone());
+        this.salvarEmail(usuario.getListEmail());
         return result;
     }
      private void salvarTelefone(List<String> telefone) {
@@ -42,7 +43,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         Connection conn = null;
         PreparedStatement pstm = null, pstmIdUsuario = null;
         ResultSet rs = null;
-        String sqlTelefones = "insert into telefone_autor(telefone, idusuario) values(?, ?)";
+        String sqlTelefones = "insert into telefone_usuario(telefone, idusuario) values(?, ?)";
         try {
             conn = DBConnection.getConnection();
             int contador = 0;
@@ -86,7 +87,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         Connection conn = null;
         PreparedStatement pstm = null, pstmIdUsuario = null;
         ResultSet rs = null;
-        String sqlTelefones = "insert into email_autor(email, idusuario) values(?, ?)";
+        String sqlTelefones = "insert into email_usuario(email, idusuario) values(?, ?)";
         try {
             conn = DBConnection.getConnection();
             int contador = 0;
@@ -98,7 +99,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
             for (int i = 0; i < email.size(); i++) {
                 {
-                    System.out.println("Inserindo Autor: " + contador);
+                
                     pstm = conn.prepareStatement(sqlTelefones);
                    
                     pstm.setString(1, email.get(i));

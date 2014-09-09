@@ -42,6 +42,8 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     private String endImage;
     private ImageIcon fotoEspecie;
     byte[] foto;
+      List<String> emails = new ArrayList<>();
+        List<String> telefones = new ArrayList<>();
 
     private void onCancelar() {
         tfNome.setText(null);
@@ -370,14 +372,8 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         int result;
-        List<String> emails = new ArrayList<>();
-        List<String> telefones = new ArrayList<>();
-        for (int i = 0; i < defaultListaEmail.getSize(); i++) {
-            emails.add(defaultListaEmail.getElementAt(i).toString());
-        }
-        for (int i = 0; i < defaultListaTelefone.getSize(); i++) {
-            telefones.add(defaultListaTelefone.getElementAt(i).toString());
-        }
+      
+    
         Usuario usuario = new Usuario(idUsuario, tfNome.getText(), tfSerie.getText(), emails, telefones, foto);
         if (idUsuario == 0) {
             result = new UsuarioController().addUsuario(usuario);
@@ -402,6 +398,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
 
     private void btAddEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddEmailActionPerformed
         defaultListaEmail.addElement(this.tfEmail.getText());
+        emails.add(tfEmail.getText());
         this.listEmail.setModel(defaultListaEmail);
         this.tfEmail.setText(null);
     }//GEN-LAST:event_btAddEmailActionPerformed
@@ -412,12 +409,14 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
                     + "\n" + "Por favor Selecione um email!", "Alerta", JOptionPane.ERROR_MESSAGE);
         } else {
             String email = listEmail.getSelectedValue().toString();
+            emails.remove(email);
             defaultListaEmail.removeElement(email);
         }
     }//GEN-LAST:event_btRemoveEmailActionPerformed
 
     private void btAddTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddTelefoneActionPerformed
         defaultListaTelefone.addElement(this.tfTelefone.getText());
+        telefones.add(tfTelefone.getText());
         this.listTelefone.setModel(defaultListaTelefone);
         this.tfTelefone.setText(null);
     }//GEN-LAST:event_btAddTelefoneActionPerformed
@@ -428,6 +427,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
                     + "\n" + "Por favor Selecione um telefone na lista!", "Alerta", JOptionPane.ERROR_MESSAGE);
         } else {
             Object telefone = listTelefone.getSelectedValue();
+            telefones.remove(telefone);
             defaultListaTelefone.removeElement(telefone);
         }
     }//GEN-LAST:event_btRemoverTelefoneActionPerformed
@@ -449,7 +449,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     private ImageIcon redimensionaImageIcon(ImageIcon icon) {
         int height = icon.getIconHeight();
         int width = icon.getIconWidth();
-        double alturaFinal = 160.0;
+        double alturaFinal = 120.0;
         double larguraFinal = 130.0;
         if (height > width) {
             if (height > alturaFinal) {
