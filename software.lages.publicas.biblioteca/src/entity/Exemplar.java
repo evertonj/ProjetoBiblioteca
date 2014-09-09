@@ -26,6 +26,7 @@ public class Exemplar {
     private Date dataDeAquisicao;
     private int idObra;
     private int numeroSequencial;
+    private EnumSituacaoExemplar situacao;
 
     public Exemplar(int id, Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int idObra, int numeroSequencial) {
         this.id = id;
@@ -140,5 +141,19 @@ public class Exemplar {
      */
     public void setNumeroSequancial(int numeroSequencial) {
         this.numeroSequencial = numeroSequencial;
+    }
+
+    /**
+     * @return the situacao
+     */
+    public EnumSituacaoExemplar getSituacao() {
+        return situacao;
+    }
+
+    /**
+     * @param situacao the situacao to set
+     */
+    public void setSituacao(EnumSituacaoExemplar situacao) {
+        this.situacao = situacao;
     }
 }

@@ -6,6 +6,7 @@
 package form;
 
 import connection.DBConnection;
+import entity.EnumSituacaoExemplar;
 import entity.Exemplar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -222,9 +223,14 @@ public class DialogExemplar extends javax.swing.JDialog {
 
         for (int i = 0; i < quantidade; i++) {
             Exemplar exemplar = new Exemplar(dcDataDeCadastro.getDate(), tfFornecedor.getText(), dcDataDeAquisicao.getDate(), (i + (num_sequncial + 1)));
+            if ((i + (num_sequncial + 1)) == 1) {
+                exemplar.setSituacao(EnumSituacaoExemplar.CONSULTA_LOCAL);
+            }else {
+                exemplar.setSituacao(EnumSituacaoExemplar.DISPONIVEL);
+            }
             listaDeExemplares.add(exemplar);
         }
-
+        DialogNovaObra.btSalvar.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_btSalvarActionPerformed
 

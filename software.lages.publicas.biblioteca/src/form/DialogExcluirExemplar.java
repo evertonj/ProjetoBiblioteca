@@ -339,9 +339,7 @@ public class DialogExcluirExemplar extends javax.swing.JDialog {
             } else {
                 JOptionPane.showMessageDialog(this, "Favor Informe o Nome do Autor.");
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogAtualizarExemplar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NameException ex) {
+        } catch (SQLException | NameException ex) {
             Logger.getLogger(DialogAtualizarExemplar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btPesquisarPorAutorActionPerformed
