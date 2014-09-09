@@ -59,3 +59,17 @@ id_obra int not null,
 numero_sequencial int default 1,
 constraint foreign key (id_obra) references obra(id)
 );
+create table telefone_usuario(
+id int not null auto_increment primary key,
+numero varchar(50),
+idUsuario int not null,
+constraint foreign key (idUsuario) references usuario(id)
+);
+create table email_usuario(
+id int not null auto_increment primary key,
+email varchar(50),
+idUsuario int not null,
+constraint foreign key (idUsuario) references usuario(id)
+);
+
+

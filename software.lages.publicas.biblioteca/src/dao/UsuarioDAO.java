@@ -23,35 +23,104 @@ public class UsuarioDAO implements IUsuarioDAO {
         ResultSet rs = null;
         try {
             String sql = "INSERT INTO usuario(nome, serie, foto) VALUES (?, ?, ?);";
-            PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, usuario.getNome());
             pstm.setString(2, usuario.getSerie());
             pstm.setBytes(3, usuario.getFoto());
+            this.salvarTelefone(usuario.getListTelefone());
+            this.salvarEmail(usuario.getListEmail());
             result = pstm.executeUpdate();
-            for (int i = 0; i < usuario.getListEmail().size(); i++) {
-                sql = "INSERT INTO email(email, Usuario_idUsuario) values (?, ?);";
-                rs = pstm.getGeneratedKeys();
-                rs.next();
-                usuario.setId(rs.getInt(1));
-                pstm = conn.prepareStatement(sql);
-                pstm.setString(1, usuario.getListEmail().get(i));
-                pstm.setInt(2, usuario.getId());
-                result = pstm.executeUpdate();
-            }
-            for (int i = 0; i < usuario.getListEmail().size(); i++) {
-                sql = "INSERT INTO telefone(telefone, Usuario_idUsuario) values (?, ?);";
-                rs = pstm.getGeneratedKeys();
-                rs.next();
-                pstm = conn.prepareStatement(sql);
-                pstm.setString(1, usuario.getListEmail().get(i));
-                pstm.setInt(2, usuario.getId());
-                result = pstm.executeUpdate();
-            }
+           
             pstm.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return result;
+    }
+     private void salvarTelefone(List<String> telefone) {
+
+        Connection conn = null;
+        PreparedStatement pstm = null, pstmIdUsuario = null;
+        ResultSet rs = null;
+        String sqlTelefones = "insert into telefone_autor(telefone, idusuario) values(?, ?)";
+        try {
+            conn = DBConnection.getConnection();
+            int contador = 0;
+            pstmIdUsuario = conn.prepareStatement("select max(id) AS ultimoidUsuario from usuario");
+            rs = pstmIdUsuario.executeQuery();
+
+            rs.next();
+            int ultimoIdUsuario = rs.getInt("ultimoidusuario");
+
+            for (int i = 0; i < telefone.size(); i++) {
+                {
+                   
+                    pstm = conn.prepareStatement(sqlTelefones);
+                   
+                    pstm.setString(1, telefone.get(i));
+                    pstm.setInt(2, ultimoIdUsuario);//Corrigir
+                   
+                    pstm.executeUpdate();
+                   
+                }
+            }
+            pstm.close();
+        } catch (SQLException SqlEx) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException SqlEx1) {
+                SqlEx1.printStackTrace();
+            } finally {
+                DBConnection.close(conn, pstm, null);
+            }
+            SqlEx.printStackTrace();
+        }
+    }
+
+    
+
+    private void salvarEmail(List<String> email) {
+
+        Connection conn = null;
+        PreparedStatement pstm = null, pstmIdUsuario = null;
+        ResultSet rs = null;
+        String sqlTelefones = "insert into email_autor(email, idusuario) values(?, ?)";
+        try {
+            conn = DBConnection.getConnection();
+            int contador = 0;
+            pstmIdUsuario = conn.prepareStatement("select max(id) AS ultimoidUsuario from usuario");
+            rs = pstmIdUsuario.executeQuery();
+
+            rs.next();
+            int ultimoIdUsuario = rs.getInt("ultimoidusuario");
+
+            for (int i = 0; i < email.size(); i++) {
+                {
+                    System.out.println("Inserindo Autor: " + contador);
+                    pstm = conn.prepareStatement(sqlTelefones);
+                   
+                    pstm.setString(1, email.get(i));
+                    pstm.setInt(2, ultimoIdUsuario);//Corrigir
+                   
+                    pstm.executeUpdate();
+                   
+                }
+            }
+            pstm.close();
+        } catch (SQLException SqlEx) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException SqlEx1) {
+                SqlEx1.printStackTrace();
+            } finally {
+                DBConnection.close(conn, pstm, null);
+            }
+            SqlEx.printStackTrace();
+        }
     }
 
     @Override
