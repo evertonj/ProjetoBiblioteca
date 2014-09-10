@@ -28,21 +28,21 @@ public class UsuarioTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 2;//Alterar valor mais tarde
+        return 4;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Usuario obra = valores.get(rowIndex);
+        Usuario usuario = valores.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return obra.getNome();
+                return usuario.getNome();
             case 1:
-                return obra.getSerie();
-//            case 2:
-//                return obra.getEmail();
-//            case 3:
-//                return obra.getTelefone();
+                return usuario.getSerie();
+           case 2:
+             return usuario.getListEmail().get(0);
+           case 3:
+               return usuario.getListTelefone().get(0);
         }
         return null;
     }
@@ -55,10 +55,10 @@ public class UsuarioTableModel extends AbstractTableModel {
                 return coluna = "Nome";
             case 1:
                 return coluna = "Série";
-//            case 2:
-//                return coluna = "E-mail";
-//            case 3:
-//                return coluna = "Telefone";
+            case 2:
+                return coluna = "E-mail";
+            case 3:
+                return coluna = "Telefone";
         }
         return null;
     }
@@ -70,10 +70,10 @@ public class UsuarioTableModel extends AbstractTableModel {
                 return String.class;
             case 1:
                 return String.class;
-//            case 2:
-//                return String.class;
-//            case 3:
-//                return String.class;
+            case 2:
+                return String.class;
+            case 3:
+                return String.class;
         }
         return null;
     }

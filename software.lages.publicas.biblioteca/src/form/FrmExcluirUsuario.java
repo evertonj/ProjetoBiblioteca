@@ -6,6 +6,12 @@
 
 package form;
 
+import controller.UsuarioController;
+import entity.Usuario;
+import java.util.List;
+import table.UsuarioCellRenderer;
+import table.UsuarioTableModel;
+
 /**
  *
  * @author Familia
@@ -17,7 +23,20 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
      */
     public FrmExcluirUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        
         initComponents();
+        refreshTable();
+    }
+    
+     List<Usuario> usuarioList;
+    private void refreshTable() {
+      
+        usuarioList = new UsuarioController().finAll();
+        
+        if (usuarioList != null) {
+           tbUsuario.setModel(new UsuarioTableModel(usuarioList));
+            tbUsuario.setDefaultRenderer(Object.class, new UsuarioCellRenderer());
+        }
     }
 
     /**
@@ -34,7 +53,7 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbUsuario = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -52,7 +71,7 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
         jButton1.setText("Pesquisar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -60,7 +79,7 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbUsuario);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
@@ -210,7 +229,7 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tbUsuario;
     // End of variables declaration//GEN-END:variables
 }

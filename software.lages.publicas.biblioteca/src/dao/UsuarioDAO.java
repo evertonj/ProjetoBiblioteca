@@ -2,6 +2,7 @@ package dao;
 
 import connection.DBConnection;
 import entity.Usuario;
+import entity.exceptions.NameException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UsuarioDAO implements IUsuarioDAO {
 
@@ -158,29 +161,93 @@ public class UsuarioDAO implements IUsuarioDAO {
         return result;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
-    public List<Usuario> findAll() {
-        List<Usuario> usuarios = new ArrayList<>();
-        ResultSet rs;
+     public List<Usuario> findAll()  {
+         
+        PreparedStatement pstmO, pstmE, pstmAss, pstm4;
+        Connection conn = null;
+        Usuario usuario;
+        ResultSet rs = null, rsExterno = null;
+        List<Usuario> listaDeUsuario = new ArrayList<>();
+       
+        String sqlUsuario = "select * from usuario;";
         try {
-            Connection conn = DBConnection.getConnection();
-            try (PreparedStatement pstm = conn.prepareStatement(SQL_FIND_ALL)) {
-                rs = pstm.executeQuery();
-                while (rs.next()) {
-                    Usuario usuario = new Usuario();
-                    usuario.setId(rs.getInt("id"));
-                    usuario.setNome(rs.getString("nome"));
-                    usuario.setSerie(rs.getString("serie"));
-//                    usuario.setEmail(rs.getString("email"));
-//                    usuario.setTelefone(rs.getString("telefone"));
-
-                    usuarios.add(usuario);
-                }
+            conn = DBConnection.getConnection();
+            pstmO = conn.prepareStatement(sqlUsuario);
+            rs = pstmO.executeQuery();
+            
+            
+            while (rs.next()) {
+                usuario = usuario(rs);
+               
+                listaDeUsuario.add(usuario);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return listaDeUsuario;
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException("SQL incorreto");
+            } catch (SQLException ex1) {
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+       
+        } catch (NameException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return usuarios;
+        return listaDeUsuario;
+     }
+
+    private Usuario usuario(ResultSet rs) throws SQLException, NameException {
+        int idusuario;
+        ResultSet rsTelefone = null, rsEmail = null;
+        PreparedStatement pstmT = null, pstmE = null;
+        Connection conn = DBConnection.getConnection();
+        try {
+            Usuario usuario = null;
+            if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setNome(rs.getString("Nome"));
+                usuario.setId(rs.getInt("id"));
+                idusuario = usuario.getId();
+                String sqlTelefone = "select * from usuario_telefone where idusuario = " + idusuario + ";";
+                 String sqlEmail = "select * from usuario_email where idusuario = " + idusuario + ";";
+                pstmT = conn.prepareStatement(sqlTelefone);
+                rsTelefone = pstmT.executeQuery();
+                usuario.setListTelefone(telefones(rsTelefone));
+                usuario.setFoto(rs.getBytes("Foto"));
+                usuario.setSerie(sqlTelefone);
+                usuario.setListEmail(emails(rsEmail));
+                
+                
+                
+            }
+            return usuario;
+        } catch (SQLException ex) {
+            throw new SQLException("Problema na Escrita do SQL...");
+        } catch (NameException ex) {
+            throw new NameException("nome incorreto...");
+        }
+    }
+    int contador = 0;
+
+    private List<String> telefones(ResultSet rs) throws NameException, SQLException {
+        List<String> listaDeTelefones = new ArrayList<>();
+        while (rs.next()) {
+            listaDeTelefones.add(rs.getString("Telefone"));
+          
+        }
+        return listaDeTelefones;
+    }
+     private List<String> emails(ResultSet rs) throws NameException, SQLException {
+        List<String> listaDeEmail = new ArrayList<>();
+        while (rs.next()) {
+            listaDeEmail.add(rs.getString("email"));
+          
+        }
+        return listaDeEmail;
     }
 
 }

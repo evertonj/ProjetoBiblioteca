@@ -37,7 +37,7 @@ public class FrmBuscaAutor extends javax.swing.JDialog {
     private void refreshTable() {
       
         autorList = new AutorController().finAll();
-        System.out.println(autorList.get(0).getNome());
+        
         if (autorList != null) {
            tbAutor.setModel(new AutorTableModel(autorList));
             tbAutor.setDefaultRenderer(Object.class, new AutorCellRenderer());
