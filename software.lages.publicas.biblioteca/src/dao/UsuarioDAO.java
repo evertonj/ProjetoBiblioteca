@@ -176,12 +176,15 @@ public class UsuarioDAO implements IUsuarioDAO {
        
         String sqlUsuario = "select * from usuario;";
         try {
+          
             conn = DBConnection.getConnection();
             pstmO = conn.prepareStatement(sqlUsuario);
+            
             rs = pstmO.executeQuery();
             
             
             while (rs.next()) {
+               
                 usuario = usuario(rs);
                
                 listaDeUsuario.add(usuario);
@@ -206,14 +209,17 @@ public class UsuarioDAO implements IUsuarioDAO {
         PreparedStatement pstmT = null, pstmE = null;
         Connection conn = DBConnection.getConnection();
         try {
+             
             Usuario usuario = null;
             if (rs.next()) {
+                System.out.println(" Teste");
                 usuario = new Usuario();
                 usuario.setNome(rs.getString("Nome"));
                 usuario.setId(rs.getInt("id"));
                 idusuario = usuario.getId();
-                String sqlTelefone = "select * from usuario_telefone where idusuario = " + idusuario + ";";
-                 String sqlEmail = "select * from usuario_email where idusuario = " + idusuario + ";";
+                System.out.println(idusuario);
+                String sqlTelefone = "select * from telefone_usuario where idusuario = " + idusuario + ";";
+                 String sqlEmail = "select * from telefone_usuario where idusuario = " + idusuario + ";";
                 pstmT = conn.prepareStatement(sqlTelefone);
                 rsTelefone = pstmT.executeQuery();
                 usuario.setListTelefone(telefones(rsTelefone));
