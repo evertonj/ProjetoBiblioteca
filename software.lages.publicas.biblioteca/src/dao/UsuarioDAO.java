@@ -46,7 +46,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         Connection conn = null;
         PreparedStatement pstm = null, pstmIdUsuario = null;
         ResultSet rs = null;
-        String sqlTelefones = "insert into telefone_usuario(telefone, idusuario) values(?, ?)";
+        String sqlTelefones = "insert into telefone_usuario(numero, idusuario) values(?, ?)";
         try {
             conn = DBConnection.getConnection();
             int contador = 0;
@@ -168,7 +168,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     @Override
      public List<Usuario> findAll()  {
          
-        PreparedStatement pstmO, pstmE, pstmAss, pstm4;
+        PreparedStatement pstmO;
         Connection conn = null;
         Usuario usuario;
         ResultSet rs = null, rsExterno = null;
@@ -211,38 +211,44 @@ public class UsuarioDAO implements IUsuarioDAO {
         try {
              
             Usuario usuario = null;
-            if (rs.next()) {
-                System.out.println(" Teste");
+            
+                
                 usuario = new Usuario();
                 usuario.setNome(rs.getString("Nome"));
                 usuario.setId(rs.getInt("id"));
                 idusuario = usuario.getId();
                 System.out.println(idusuario);
                 String sqlTelefone = "select * from telefone_usuario where idusuario = " + idusuario + ";";
-                 String sqlEmail = "select * from telefone_usuario where idusuario = " + idusuario + ";";
+                 String sqlEmail = "select * from email_usuario where idusuario = " + idusuario + ";";
                 pstmT = conn.prepareStatement(sqlTelefone);
+                System.out.println(" Teste");
                 rsTelefone = pstmT.executeQuery();
+                pstmE = conn.prepareStatement(sqlEmail);
+                rsEmail = pstmE.executeQuery();
                 usuario.setListTelefone(telefones(rsTelefone));
                 usuario.setFoto(rs.getBytes("Foto"));
-                usuario.setSerie(sqlTelefone);
+                usuario.setSerie("Serie");
+                System.out.println(" Teste");
                 usuario.setListEmail(emails(rsEmail));
                 
                 
                 
-            }
-            return usuario;
+                return usuario;
+            
+           
         } catch (SQLException ex) {
             throw new SQLException("Problema na Escrita do SQL...");
         } catch (NameException ex) {
             throw new NameException("nome incorreto...");
         }
+    
     }
     int contador = 0;
 
     private List<String> telefones(ResultSet rs) throws NameException, SQLException {
         List<String> listaDeTelefones = new ArrayList<>();
         while (rs.next()) {
-            listaDeTelefones.add(rs.getString("Telefone"));
+            listaDeTelefones.add(rs.getString("numero"));
           
         }
         return listaDeTelefones;
