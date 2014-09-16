@@ -24,8 +24,8 @@ public class ExemplarFacade {
         this.dao = new ExemplarDAO();
     }
 
-    public int save(List<Exemplar> exemplares, Obra obra) {
-        return dao.save(exemplares, obra);
+    public int save(Exemplar exemplar) {
+        return dao.save(exemplar);
     }
 
     public int update(Exemplar exemplar) {
@@ -39,7 +39,7 @@ public class ExemplarFacade {
     public List<Exemplar> finAll() {
         return dao.finAll();
     }
-    public Exemplar buscar (String nome) throws SQLException{
+    public List<Exemplar> buscar (String nome) throws SQLException{
         return dao.buscar(nome);
     }
 }

@@ -38,10 +38,11 @@ public class ExemplarColumnModel extends DefaultTableColumnModel{
     public ExemplarColumnModel(FontMetrics fm) {
         int digito = fm.stringWidth("0");
         int letra = fm.stringWidth("M");
-        addColumn(criaColuna(0, 22 * letra, fm, false, "Fornecedor"));
-        addColumn(criaColuna(1, 17 * letra, fm, true, "Data de Cadastro"));
-        addColumn(criaColuna(2, 17 * letra, fm, true, "Data de Aquisição"));
-        addColumn(criaColuna(3, 17 * letra, fm, false, "Numero Sequencial"));
-        addColumn(criaColuna(3, 22 * letra, fm, false, "Obra"));
+        addColumn(criaColuna(0, 10 * letra, fm, true, "Fornecedor"));
+        addColumn(criaColuna(1, 13 * letra, fm, true, "Data de Cadastro"));
+        addColumn(criaColuna(2, 13 * letra, fm, true, "Data de Aquisição"));
+        addColumn(criaColuna(3, 10* letra, fm, true, "Numero Sequencial"));
+        addColumn(criaColuna(4, 17 * letra, fm, true, "Obra"));
+        addColumn(criaColuna(5, 17 * letra, fm, true, "Situação"));
     } 
 }

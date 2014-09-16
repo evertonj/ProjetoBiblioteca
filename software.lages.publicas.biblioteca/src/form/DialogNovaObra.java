@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -34,15 +33,13 @@ public class DialogNovaObra extends javax.swing.JDialog {
         carregarComboBoxEditora();
         carregarComBoboxAssunto();
     }
-    public static List<Autor> listaAutores = new ArrayList<>();
+    public static List<Autor> listaAutores;
     DefaultTableModel dtm;
     private ImageIcon icon;
-    private String endImage;
     long i = 0;
     TableColumn tc;
     ObraDAO dao = new ObraDAO();
     public static Obra obra;
-    private ImageIcon fotoEspecie;
     byte[] foto;
 
     /**
@@ -494,13 +491,14 @@ public class DialogNovaObra extends javax.swing.JDialog {
         tfCodigo.setText(String.valueOf(obra.getId()));
         tfTitulo.setText(obra.getTitulo());
         tbAutores.setModel(new ObraTableModel(obra.getAutores()));
+        listaAutores = obra.getAutores();
         tfEdicao.setText(obra.getEdicao());
         tfAno.setText(String.valueOf(obra.getAno()));
         cbEditora.setSelectedItem(obra.getEditora());
         tfISBN.setText(obra.getIsbn());
         cbAssunto.setSelectedItem(obra.getAssunto());
         byte[] imgBytes = obra.getFoto();
-       // foto = obra.getFoto();
+        foto = obra.getFoto();
         try {/*
             Gravar A Imagem no disco.
             FileOutputStream fos = new FileOutputStream("Foto " + tfTitulo.getText() + ".jpg");
@@ -558,17 +556,19 @@ public class DialogNovaObra extends javax.swing.JDialog {
             }
         } else {
             this.getDados();
+            System.out.println(obra.getAutores().get(0));
+            System.out.println(obra.getAutores().get(1));
             int result = dao.update(obra);
             if (result == 1) {
                 this.dispose();
                 JOptionPane.showMessageDialog(this, "Alterado com Sucesso!!!");
-                this.obra = null;
+                obra = null;
             }
         }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
-        listaAutores.removeAll(listaAutores);
+        //listaAutores.removeAll(listaAutores);
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
@@ -592,7 +592,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
     }//GEN-LAST:event_btEscolherActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        listaAutores.removeAll(listaAutores);
+        //listaAutores.removeAll(listaAutores);
     }//GEN-LAST:event_formWindowClosed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

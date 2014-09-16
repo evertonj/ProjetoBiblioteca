@@ -6,6 +6,7 @@
 package form;
 
 import connection.DBConnection;
+import dao.ExemplarDAO;
 import entity.EnumSituacaoExemplar;
 import entity.Exemplar;
 import java.sql.Connection;
@@ -17,21 +18,32 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Alex
  */
-public class DialogExemplar extends javax.swing.JDialog {
+public final class DialogUpdateExemplar extends javax.swing.JDialog {
 
     /**
      * Creates new form DialogExemplar
      */
-    public DialogExemplar(java.awt.Frame parent, boolean modal) {
+    public DialogUpdateExemplar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-    static List<Exemplar> listaDeExemplares = new ArrayList<>();
+    static ExemplarDAO dao = new ExemplarDAO();
+    public static Exemplar exemplar;
+
+    static void setDados() {
+        tfObra.setText(dao.ObtemTituloDaObra(exemplar.getIdObra()));
+        tfFornecedor.setText(exemplar.getFornecedor());
+        dcDataDeCadastro.setDate(exemplar.getDataDeCadastro());
+        dcDataDeAquisicao.setDate(exemplar.getDataDeAquisicao());
+        cbSituacao.setSelectedItem(exemplar.getSituacao().toString());
+        tfIdExemplar.setText(String.valueOf(exemplar.getId()));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,16 +56,20 @@ public class DialogExemplar extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        tfFornecedor = new javax.swing.JTextField();
+        tfObra = new javax.swing.JTextField();
         dcDataDeAquisicao = new com.toedter.calendar.JDateChooser();
         dcDataDeCadastro = new com.toedter.calendar.JDateChooser();
-        spQuantidade = new javax.swing.JSpinner();
         jPanel6 = new javax.swing.JPanel();
         btSalvar = new javax.swing.JButton();
         btVoltar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        cbSituacao = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        tfIdExemplar = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        tfFornecedor = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Exemplar");
@@ -64,25 +80,19 @@ public class DialogExemplar extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Data de Aquisição:");
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Quantidade:");
-
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setText("Fornecedor:");
+        jLabel3.setText("Obra......................:");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Data de Cadastro:");
 
-        tfFornecedor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tfObra.setEditable(false);
+        tfObra.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         dcDataDeAquisicao.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         dcDataDeCadastro.setDate(Calendar.getInstance().getTime());
-        dcDataDeCadastro.setEnabled(false);
         dcDataDeCadastro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        spQuantidade.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        spQuantidade.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -125,6 +135,22 @@ public class DialogExemplar extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel5.setText("Situação...............:");
+
+        cbSituacao.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
+        cbSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EMPRESTADO", "DISPONIVEL", "CONSULTA_LOCAL", "RESERVADO", "INDISPONIVEL" }));
+        cbSituacao.setSelectedIndex(-1);
+
+        jLabel2.setText("Número Exemplar:");
+
+        tfIdExemplar.setEditable(false);
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel6.setText("Fornecedor..........:");
+
+        tfFornecedor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -132,49 +158,62 @@ public class DialogExemplar extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dcDataDeAquisicao, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfFornecedor)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(dcDataDeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spQuantidade, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)))))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfIdExemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dcDataDeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfObra, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dcDataDeCadastro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel4)
-                        .addComponent(spQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel3)
+                    .addComponent(tfObra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(tfFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(dcDataDeAquisicao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
+                    .addComponent(cbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dcDataDeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addComponent(dcDataDeAquisicao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfIdExemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbSituacao, tfObra});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -182,8 +221,8 @@ public class DialogExemplar extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,49 +237,41 @@ public class DialogExemplar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        int quantidade = (int) spQuantidade.getValue();
-        int num_sequncial = 0;
-        listaDeExemplares.clear();
-        if (DialogNovaObra.obra != null) {
-            String query = "SELECT count(numero_sequencial) from exemplar where id_obra = " + DialogNovaObra.obra.getId();
-            System.out.println(query);
-            Connection conn = null;
-            ResultSet rs = null;
-            PreparedStatement pstm = null;
-            conn = DBConnection.getConnection();
-            try {
-                pstm = conn.prepareStatement(query);
-                rs = pstm.executeQuery();
-                if (rs.next()) {
-                    num_sequncial = rs.getInt("count(numero_sequencial)");
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DialogExemplar.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            if (ValidaCampo()) {
+                exemplar.setDataDeAquisicao(dcDataDeAquisicao.getDate());
+                exemplar.setDataDeCadastro(dcDataDeCadastro.getDate());
+                exemplar.setFornecedor(tfFornecedor.getText());
+                exemplar.setSituacao(EnumSituacaoExemplar.getSituacao(cbSituacao.getSelectedItem().toString()));
+                dao.update(exemplar);
+                JOptionPane.showMessageDialog(this, "Atualizado Com Sucesso!");
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Favor Preencha Todos os Campos!");
             }
-            System.out.println("Numero Sequancial: " + num_sequncial);
-
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Favor Preencha Todos os Campos!");
+            return;
         }
-
-        for (int i = 0; i < quantidade; i++) {
-            EnumSituacaoExemplar situacao;
-            if ((i + (num_sequncial + 1)) == 1) {
-                situacao = EnumSituacaoExemplar.CONSULTA_LOCAL;
-            }else {
-                situacao = EnumSituacaoExemplar.DISPONIVEL;
-            }
-            Exemplar exemplar = new Exemplar(dcDataDeCadastro.getDate(),
-                    tfFornecedor.getText(), dcDataDeAquisicao.getDate(),
-                    (i + (num_sequncial + 1)), situacao);
-            
-            listaDeExemplares.add(exemplar);
-        }
-        DialogNovaObra.btSalvar.setEnabled(true);
-        this.dispose();
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
+
+    boolean ValidaCampo() {
+        if (dcDataDeAquisicao.getDate() == null) {
+            return false;
+        } else if (dcDataDeCadastro.getDate() == null) {
+            return false;
+        } else if (tfFornecedor.getText().isEmpty()) {
+            return false;
+        } else if (cbSituacao.getSelectedIndex() == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -259,20 +290,20 @@ public class DialogExemplar extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogExemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogUpdateExemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogExemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogUpdateExemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogExemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogUpdateExemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogExemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogUpdateExemplar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogExemplar dialog = new DialogExemplar(new javax.swing.JFrame(), true);
+                DialogUpdateExemplar dialog = new DialogUpdateExemplar(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -287,15 +318,19 @@ public class DialogExemplar extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSalvar;
     private javax.swing.JButton btVoltar;
-    private com.toedter.calendar.JDateChooser dcDataDeAquisicao;
-    private com.toedter.calendar.JDateChooser dcDataDeCadastro;
+    public static javax.swing.JComboBox cbSituacao;
+    public static com.toedter.calendar.JDateChooser dcDataDeAquisicao;
+    public static com.toedter.calendar.JDateChooser dcDataDeCadastro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JSpinner spQuantidade;
-    private javax.swing.JTextField tfFornecedor;
+    public static javax.swing.JTextField tfFornecedor;
+    public static javax.swing.JTextField tfIdExemplar;
+    public static javax.swing.JTextField tfObra;
     // End of variables declaration//GEN-END:variables
 }

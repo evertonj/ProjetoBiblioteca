@@ -7,7 +7,7 @@ package table;
 
 import dao.ExemplarDAO;
 import entity.Exemplar;
-import entity.Exemplar;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -30,24 +30,27 @@ public class ExemplarTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Exemplar exemplar = valores.get(rowIndex);
         ExemplarDAO dao = new ExemplarDAO();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         switch (columnIndex) {
             case 0:
                 return exemplar.getFornecedor();
             case 1:
-                return exemplar.getDataDeCadastro();
+                return sdf.format(exemplar.getDataDeCadastro());
             case 2:
-                return exemplar.getDataDeAquisicao();
+                return sdf.format(exemplar.getDataDeAquisicao());
             case 3:
                 return exemplar.getNumeroSequancial();
             case 4:
                return dao.ObtemTituloDaObra(exemplar.getIdObra());
+            case 5:
+                return exemplar.getSituacao();
         }
         return null;
     }

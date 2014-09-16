@@ -5,21 +5,18 @@
  */
 package form;
 
-import dao.ObraDAO;
-import entity.Obra;
-import entity.exceptions.NameException;
+import dao.ExemplarDAO;
+import entity.Exemplar;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import table.ObraAtualizarTableModel;
-import table.ObraColumnModel;
+import javax.swing.table.DefaultTableModel;
+import table.ExemplarColumnModel;
+import table.ExemplarTableModel;
 import validarJtextField.LetrasPermitidas;
-import validarJtextField.NumerosPermitidos;
-import validarJtextField.SomenteNumero;
 
 /**
  *
@@ -27,14 +24,16 @@ import validarJtextField.SomenteNumero;
  */
 public class DialogConsultarExemplar extends javax.swing.JDialog {
 
-    ObraDAO dao = new ObraDAO();
-    List<Obra> listaDeObra = new ArrayList<>();
+    ExemplarDAO dao = new ExemplarDAO();
+    List<Exemplar> listaDeExemplar;
+    Exemplar exemplar;
 
     public void DefineDadosEAjustesNajTable() {
-        tbAtualizarObra.setAutoCreateColumnsFromModel(false);
-        java.awt.FontMetrics fm = tbAtualizarObra.getFontMetrics(tbAtualizarObra.getFont());
-        tbAtualizarObra.setColumnModel(new ObraColumnModel(fm));
-        tbAtualizarObra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tbExcluirExemplar.setAutoCreateColumnsFromModel(false);
+        java.awt.FontMetrics fm = tbExcluirExemplar.getFontMetrics(tbExcluirExemplar.getFont());
+        tbExcluirExemplar.setColumnModel(new ExemplarColumnModel(fm));
+        tbExcluirExemplar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tbExcluirExemplar.setModel(new ExemplarTableModel(listaDeExemplar));
     }
 
     /**
@@ -43,11 +42,8 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
     public DialogConsultarExemplar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        tfAutor.setDocument(new LetrasPermitidas());
-        tfIsbn.setDocument(new SomenteNumero());
-        tfCodigo.setDocument(new SomenteNumero());
+        tfFornecedor.setDocument(new LetrasPermitidas());
     }
-    Obra obra;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,21 +56,21 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbAtualizarObra = new javax.swing.JTable();
+        tbExcluirExemplar = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         btVoltar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        btPesquisarPorAutor = new javax.swing.JButton();
+        btPesquisarPorFornecedor = new javax.swing.JButton();
         tfTitulo = new javax.swing.JTextField();
-        tfAutor = new javax.swing.JTextField();
+        tfFornecedor = new javax.swing.JTextField();
         btPesquisarPorTitulo = new javax.swing.JButton();
-        tfIsbn = new javax.swing.JTextField();
-        btPesquisarPorIsbn = new javax.swing.JButton();
-        tfCodigo = new javax.swing.JTextField();
-        btPesquisarPorCodigo = new javax.swing.JButton();
+        btPesquisarPorDataCadastro = new javax.swing.JButton();
+        btPesquisarPorDataAquisicao = new javax.swing.JButton();
+        dcDataCadastro = new com.toedter.calendar.JDateChooser();
+        dcDataAquisicao = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Atualizar Obra");
@@ -82,7 +78,7 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
 
-        tbAtualizarObra.setModel(new javax.swing.table.DefaultTableModel(
+        tbExcluirExemplar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -93,12 +89,12 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
 
             }
         ));
-        tbAtualizarObra.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbExcluirExemplar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbAtualizarObraMouseClicked(evt);
+                tbExcluirExemplarMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbAtualizarObra);
+        jScrollPane1.setViewportView(tbExcluirExemplar);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -118,7 +114,7 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(21, 21, 21))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +125,7 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
         );
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Consultar por Obra.......................:");
+        jLabel2.setText("Consultar por Titulo da Obra.......:");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Consultar por Data de Cadastro.:");
@@ -140,16 +136,16 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Consultar por Data de Aquisição:");
 
-        btPesquisarPorAutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
-        btPesquisarPorAutor.addActionListener(new java.awt.event.ActionListener() {
+        btPesquisarPorFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
+        btPesquisarPorFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisarPorAutorActionPerformed(evt);
+                btPesquisarPorFornecedorActionPerformed(evt);
             }
         });
 
         tfTitulo.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
 
-        tfAutor.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        tfFornecedor.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
 
         btPesquisarPorTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
         btPesquisarPorTitulo.addActionListener(new java.awt.event.ActionListener() {
@@ -158,23 +154,23 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
             }
         });
 
-        tfIsbn.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
-
-        btPesquisarPorIsbn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
-        btPesquisarPorIsbn.addActionListener(new java.awt.event.ActionListener() {
+        btPesquisarPorDataCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
+        btPesquisarPorDataCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisarPorIsbnActionPerformed(evt);
+                btPesquisarPorDataCadastroActionPerformed(evt);
             }
         });
 
-        tfCodigo.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
-
-        btPesquisarPorCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
-        btPesquisarPorCodigo.addActionListener(new java.awt.event.ActionListener() {
+        btPesquisarPorDataAquisicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
+        btPesquisarPorDataAquisicao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisarPorCodigoActionPerformed(evt);
+                btPesquisarPorDataAquisicaoActionPerformed(evt);
             }
         });
+
+        dcDataCadastro.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        dcDataAquisicao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -183,9 +179,9 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel5)
@@ -194,20 +190,25 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
                         .addGap(12, 12, 12)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(dcDataAquisicao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btPesquisarPorDataAquisicao)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(tfFornecedor)
+                                        .addGap(6, 6, 6))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(dcDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btPesquisarPorDataCadastro)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)))
+                                .addComponent(btPesquisarPorFornecedor))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(tfTitulo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btPesquisarPorTitulo))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(tfIsbn)
-                                    .addComponent(tfAutor)
-                                    .addComponent(tfCodigo))
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btPesquisarPorIsbn)
-                                        .addComponent(btPesquisarPorCodigo))
-                                    .addComponent(btPesquisarPorAutor))))))
+                                .addComponent(btPesquisarPorTitulo)))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -216,39 +217,36 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btPesquisarPorTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)))
+                    .addComponent(tfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btPesquisarPorAutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btPesquisarPorIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btPesquisarPorCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                            .addComponent(jLabel4)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(tfAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tfFornecedor)
+                            .addComponent(btPesquisarPorFornecedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dcDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btPesquisarPorDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btPesquisarPorDataAquisicao, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dcDataAquisicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {dcDataAquisicao, dcDataCadastro, tfFornecedor});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -275,90 +273,98 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
-    private void tbAtualizarObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarObraMouseClicked
-        int rowIndex = tbAtualizarObra.getSelectedRow();
+    private void tbExcluirExemplarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbExcluirExemplarMouseClicked
+        int rowIndex = tbExcluirExemplar.getSelectedRow();
         if (rowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
+            JOptionPane.showMessageDialog(this, "Selecione o Exemplar a ser Removido!!!");
             return;
         }
-        obra = new ObraAtualizarTableModel(listaDeObra).get(rowIndex);
-    }//GEN-LAST:event_tbAtualizarObraMouseClicked
+        exemplar = new ExemplarTableModel(listaDeExemplar).get(rowIndex);
+    }//GEN-LAST:event_tbExcluirExemplarMouseClicked
 
-    private void btPesquisarPorAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorAutorActionPerformed
-        try {
-            if (!tfAutor.getText().isEmpty()) {
-                listaDeObra = dao.consultaAutor(tfAutor.getText());
-                if (listaDeObra.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
-                } else {
-                    this.DefineDadosEAjustesNajTable();
-                    tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Favor Informe o Nome do Autor.");
+    private void btPesquisarPorFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorFornecedorActionPerformed
+        if (!tfFornecedor.getText().isEmpty()) {
+            try {
+                listaDeExemplar = dao.buscar(tfFornecedor.getText());
+                if (listaDeExemplar.isEmpty()) {
+                     tbExcluirExemplar.setModel(new DefaultTableModel());
+                     JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
+                     return;
+                 }
+//            for (int i = 0; i < listaDeExemplar.size(); i++) {
+//                System.out.println("Exemplar: "+listaDeExemplar.get(i));
+//            }
+                DefineDadosEAjustesNajTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(DialogConsultarExemplar.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogAtualizarExemplar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NameException ex) {
-            Logger.getLogger(DialogAtualizarExemplar.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            JOptionPane.showMessageDialog(this, "Digite o Nome do Fornecedor!");
         }
-    }//GEN-LAST:event_btPesquisarPorAutorActionPerformed
+    }//GEN-LAST:event_btPesquisarPorFornecedorActionPerformed
+
+    private void btPesquisarPorDataCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorDataCadastroActionPerformed
+        if (dcDataCadastro.getDate() != null) {
+             try {
+                listaDeExemplar = dao.buscarDataCadastro(dcDataCadastro.getDate());
+                 if (listaDeExemplar.isEmpty()) {
+                     tbExcluirExemplar.setModel(new DefaultTableModel());
+                     JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
+                     return;
+                 }
+//            for (int i = 0; i < listaDeExemplar.size(); i++) {
+//                System.out.println("Exemplar: "+listaDeExemplar.get(i));
+//            }
+                DefineDadosEAjustesNajTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(DialogConsultarExemplar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione Uma Data!");
+        }
+    }//GEN-LAST:event_btPesquisarPorDataCadastroActionPerformed
+
+    private void btPesquisarPorDataAquisicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorDataAquisicaoActionPerformed
+        if (dcDataAquisicao.getDate() != null) {
+             try {
+                listaDeExemplar = dao.buscarDataAquisicao(dcDataAquisicao.getDate());
+                 if (listaDeExemplar.isEmpty()) {
+                     tbExcluirExemplar.setModel(new DefaultTableModel());
+                     JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
+                     return;
+                 }
+//            for (int i = 0; i < listaDeExemplar.size(); i++) {
+//                System.out.println("Exemplar: "+listaDeExemplar.get(i));
+//            }
+                DefineDadosEAjustesNajTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(DialogConsultarExemplar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione Uma Data!");
+        }
+    }//GEN-LAST:event_btPesquisarPorDataAquisicaoActionPerformed
 
     private void btPesquisarPorTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorTituloActionPerformed
-        try {
-            listaDeObra = dao.consulta(tfTitulo.getText());
-            if (listaDeObra.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
-            } else {
-                this.DefineDadosEAjustesNajTable();
-                tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+        if (!tfTitulo.getText().isEmpty()) {
+             try {
+                listaDeExemplar = dao.buscarTitulo(tfTitulo.getText());
+                 if (listaDeExemplar.isEmpty()) {
+                     tbExcluirExemplar.setModel(new DefaultTableModel());
+                     JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
+                     return;
+                 }
+//            for (int i = 0; i < listaDeExemplar.size(); i++) {
+//                System.out.println("Exemplar: "+listaDeExemplar.get(i));
+//            }
+                DefineDadosEAjustesNajTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(DialogConsultarExemplar.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogAtualizarExemplar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NameException ex) {
-            Logger.getLogger(DialogAtualizarExemplar.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            JOptionPane.showMessageDialog(this, "Digite o Título da Obra!");
         }
     }//GEN-LAST:event_btPesquisarPorTituloActionPerformed
-
-    private void btPesquisarPorIsbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorIsbnActionPerformed
-        try {
-            if (!tfIsbn.getText().isEmpty()) {
-                listaDeObra = dao.consultaIsbn(tfIsbn.getText());
-                if (listaDeObra.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
-                } else {
-                    this.DefineDadosEAjustesNajTable();
-                    tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Favor Informe o ISBN da Obra.");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogAtualizarExemplar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NameException ex) {
-            Logger.getLogger(DialogAtualizarExemplar.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btPesquisarPorIsbnActionPerformed
-
-    private void btPesquisarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorCodigoActionPerformed
-        try {
-            if (!tfCodigo.getText().isEmpty()) {
-                listaDeObra = dao.consultaPorCodigo(Integer.parseInt(tfCodigo.getText()));
-                if (listaDeObra.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "A Consulta Não Encontrou Nenhum Resultado.");
-                } else {
-                    this.DefineDadosEAjustesNajTable();
-                    tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Favor Informe o Código da Obra.");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogAtualizarExemplar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NameException ex) {
-            Logger.getLogger(DialogAtualizarExemplar.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btPesquisarPorCodigoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,11 +409,13 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btPesquisarPorAutor;
-    private javax.swing.JButton btPesquisarPorCodigo;
-    private javax.swing.JButton btPesquisarPorIsbn;
+    private javax.swing.JButton btPesquisarPorDataAquisicao;
+    private javax.swing.JButton btPesquisarPorDataCadastro;
+    private javax.swing.JButton btPesquisarPorFornecedor;
     private javax.swing.JButton btPesquisarPorTitulo;
     private javax.swing.JButton btVoltar;
+    private com.toedter.calendar.JDateChooser dcDataAquisicao;
+    private com.toedter.calendar.JDateChooser dcDataCadastro;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -415,10 +423,8 @@ public class DialogConsultarExemplar extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbAtualizarObra;
-    private javax.swing.JTextField tfAutor;
-    private javax.swing.JTextField tfCodigo;
-    private javax.swing.JTextField tfIsbn;
+    private javax.swing.JTable tbExcluirExemplar;
+    private javax.swing.JTextField tfFornecedor;
     private javax.swing.JTextField tfTitulo;
     // End of variables declaration//GEN-END:variables
 }

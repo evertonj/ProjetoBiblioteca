@@ -86,6 +86,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         menuItemAutor = new javax.swing.JMenuItem();
         menuItemOperador = new javax.swing.JMenuItem();
         menuItemGerenciamentoAssunto = new javax.swing.JMenuItem();
+        gerenciadorExemplar = new javax.swing.JMenuItem();
         menuEmprestimo = new javax.swing.JMenu();
         menuDevolução = new javax.swing.JMenu();
         menuRelatorio = new javax.swing.JMenu();
@@ -222,11 +223,16 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Capturar.PNG"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Lages.jpg"))); // NOI18N
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
         menuGerenciamento.setText("Gerenciamento");
-        menuGerenciamento.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuGerenciamento.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        menuGerenciamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuGerenciamentoActionPerformed(evt);
+            }
+        });
 
         menuItemUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuItemUsuario.setText("Gerenciamento De Usuario");
@@ -282,20 +288,29 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuGerenciamento.add(menuItemGerenciamentoAssunto);
 
+        gerenciadorExemplar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        gerenciadorExemplar.setText("Gerenciamento De Exemplar");
+        gerenciadorExemplar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gerenciadorExemplarActionPerformed(evt);
+            }
+        });
+        menuGerenciamento.add(gerenciadorExemplar);
+
         jMenuBar1.add(menuGerenciamento);
 
         menuEmprestimo.setText("Realizar Empréstimo");
         menuEmprestimo.setToolTipText("Clique para realizar um novo empréstimo");
-        menuEmprestimo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuEmprestimo.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jMenuBar1.add(menuEmprestimo);
 
         menuDevolução.setText("Realizar Devolução");
         menuDevolução.setToolTipText("Clique para realizar a devolução do livro");
-        menuDevolução.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuDevolução.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jMenuBar1.add(menuDevolução);
 
-        menuRelatorio.setText("Relatorios");
-        menuRelatorio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuRelatorio.setText("Relatórios");
+        menuRelatorio.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
 
         jMenuItem5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem5.setText("Relatorio Mensal");
@@ -308,7 +323,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuBar1.add(menuRelatorio);
 
         menuSobre.setText("Sobre");
-        menuSobre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuSobre.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         menuSobre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuSobreMouseClicked(evt);
@@ -346,7 +361,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -407,6 +422,14 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         System.exit(0);
     }//GEN-LAST:event_formWindowClosed
 
+    private void gerenciadorExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciadorExemplarActionPerformed
+        new DialogGerenciadorExemplar(this, true).setVisible(true);
+    }//GEN-LAST:event_gerenciadorExemplarActionPerformed
+
+    private void menuGerenciamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGerenciamentoActionPerformed
+        
+    }//GEN-LAST:event_menuGerenciamentoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -442,6 +465,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JButton btGerenciarObra;
     private javax.swing.JButton btGerenciarUsuario;
     private javax.swing.JButton btSair;
+    private javax.swing.JMenuItem gerenciadorExemplar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;

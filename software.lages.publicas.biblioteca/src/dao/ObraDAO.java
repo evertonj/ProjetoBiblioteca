@@ -9,20 +9,18 @@ import entity.Assunto;
 import entity.Editora;
 import entity.Autor;
 import connection.DBConnection;
+import entity.EnumSituacaoExemplar;
 import entity.Exemplar;
 import entity.Obra;
 import entity.exceptions.NameException;
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sun.util.resources.cldr.CalendarData;
 
 /**
  *
@@ -36,7 +34,6 @@ public class ObraDAO implements IObraDAO {
         Connection conn = null;
         PreparedStatement pstm = null;
         String sql = "insert into obra(TITULO, EDICAO, ANO, ID_EDITORA, ISBN, IDASSUNTO, FOTO) VALUES (?, ?, ?, ?, ?, ?, ?);";
-//load_file('?')
         try {
             conn = DBConnection.getConnection();
             pstm = conn.prepareStatement(sql);
@@ -44,7 +41,6 @@ public class ObraDAO implements IObraDAO {
             pstm.setString(1, obra.getTitulo());
             pstm.setString(2, obra.getEdicao());
             pstm.setShort(3, obra.getAno());
-            System.out.println("ID Editora" + obra.getEditora().getId());
             pstm.setInt(4, obra.getEditora().getId());
             pstm.setString(5, obra.getIsbn());
             pstm.setInt(6, obra.getAssunto().getId());
@@ -68,7 +64,6 @@ public class ObraDAO implements IObraDAO {
     }
 
     private void salvarExemplar(Obra obra) {
-
         Connection conn = null;
         PreparedStatement pstm = null, pstmIdObra = null;
         ResultSet rs = null;
@@ -165,6 +160,7 @@ public class ObraDAO implements IObraDAO {
         int result = 0;
         Connection conn = null;
         PreparedStatement pstm = null;
+        PreparedStatement pstm1 = null;
         String sql = "update obra set TITULO = ?, EDICAO = ?, ANO = ?, ID_EDITORA = ?,"
                 + " ISBN = ?, IDASSUNTO = ?, FOTO = ? where id = ?;";
         String sqlAutores = "update autor set nome = ?, sobrenome = ? where id = ?";
@@ -183,15 +179,20 @@ public class ObraDAO implements IObraDAO {
             pstm.setInt(8, obra.getId());
             System.out.println("Chegou no Autor");
             result = pstm.executeUpdate();
-
-            for (Autor autor1 : obra.getAutores()) {
-                pstm = conn.prepareStatement(sqlAutores);
-                pstm.setString(1, autor1.getNome());
-                pstm.setString(2, autor1.getSobrenome());
-                pstm.setInt(3, autor1.getId());
-                result = pstm.executeUpdate();
+            
+            List<Autor> listaAutor = obra.getAutores();
+            for (Autor autor : listaAutor) {
+                pstm1 = conn.prepareStatement(sqlAutores);
+                pstm1.setString(1, autor.getNome());
+                pstm1.setString(2, autor.getSobrenome());
+                pstm1.setInt(3, autor.getId());
+                pstm1.execute();
             }
-            this.salvarExemplar(obra);
+            
+            for (Exemplar item : obra.getExemplar()) {
+                this.updateExemplar(item);
+            }
+            
             pstm.close();
             return result;
         } catch (SQLException SqlEx) {
@@ -209,15 +210,45 @@ public class ObraDAO implements IObraDAO {
         return result;
 
     }
+    
+        public int updateExemplar(Exemplar exemplar) {
+        Connection conn = DBConnection.getConnection();
+        PreparedStatement pstm = null;
+        int result = 0;
+        try {
+            pstm = conn.prepareStatement("update exemplar set dataDeCadastro = ?,fornecedor = ?, dataDeAquisicao = ?,id_obra = ?, numero_sequencial = ?, situacao = ? WHERE id = ?;");
+            pstm.setDate(1, new java.sql.Date(exemplar.getDataDeCadastro().getTime()));
+            pstm.setString(2, exemplar.getFornecedor());
+            pstm.setDate(3, new java.sql.Date(exemplar.getDataDeAquisicao().getTime()));
+            pstm.setInt(4, exemplar.getIdObra());
+            pstm.setInt(5, exemplar.getNumeroSequancial());
+            pstm.setString(6, exemplar.getSituacao().toString());
+            pstm.setInt(7, exemplar.getId());
+            result = pstm.executeUpdate();
+            pstm.close();
+        } catch (SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            } finally {
+                DBConnection.close(conn, pstm, null);
+            }
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     @Override
     public int remove(int id) {
-        System.out.println("ID da Obra: "+id);
+        System.out.println("ID da Obra: " + id);
         int result = 0;
         Connection conn1 = null, conn = null;
         PreparedStatement pstm1 = null, pstm2 = null;
-        String sql = "delete from obra where id = " + id+";";
-        String sqlVinculo = "delete from obra_autor where idobra = " + id+";";
+        String sql = "delete from obra where id = " + id + ";";
+        String sqlVinculo = "delete from obra_autor where idobra = " + id + ";";
         try {
             conn = DBConnection.getConnection();
             pstm2 = conn.prepareStatement(sqlVinculo);
@@ -301,7 +332,7 @@ public class ObraDAO implements IObraDAO {
                 obra.setIsbn(rs.getString("isbn"));
                 obra.setAssunto(assunto(rsAssunto));
                 obra.setFoto(rs.getBytes("foto"));
-                String sqlExemplar = "select * from exemplar where id_obra = "+ idobra;
+                String sqlExemplar = "select * from exemplar where id_obra = " + idobra;
                 pstmE = conn.prepareStatement(sqlExemplar);
                 rsExemplar = pstmE.executeQuery();
                 obra.setExemplar(exemplar(rsExemplar));
@@ -336,7 +367,8 @@ public class ObraDAO implements IObraDAO {
                         new java.util.Date(rs.getDate("dataDeCadastro").getTime()),
                         rs.getString("fornecedor"),
                         new java.util.Date(rs.getDate("dataDeAquisicao").getTime()),
-                        rs.getInt("id_obra"), rs.getInt("numero_sequencial"));
+                        rs.getInt("id_obra"), rs.getInt("numero_sequencial"),
+                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")));
                 listaDeExemplares.add(exemplar);
             }
             return listaDeExemplares;
@@ -345,7 +377,7 @@ public class ObraDAO implements IObraDAO {
         }
         return null;
     }
-    
+
     private Assunto assunto(ResultSet rs) throws NameException, SQLException {
         Assunto assunto = new Assunto();
         try {

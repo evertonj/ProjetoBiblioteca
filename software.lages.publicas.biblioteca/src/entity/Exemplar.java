@@ -13,11 +13,13 @@ import java.util.Date;
  */
 public class Exemplar {
 
-    public Exemplar(Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int numeroSequencial) {
+    public Exemplar(Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int numeroSequencial,
+            EnumSituacaoExemplar situacao) {
         this.dataDeCadastro = dataDeCadastro;
         this.fornecedor = fornecedor;
         this.dataDeAquisicao = dataDeAquisicao;
         this.numeroSequencial = numeroSequencial;
+        this.situacao = situacao;
     }
 
     private int id;
@@ -28,13 +30,15 @@ public class Exemplar {
     private int numeroSequencial;
     private EnumSituacaoExemplar situacao;
 
-    public Exemplar(int id, Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int idObra, int numeroSequencial) {
+    public Exemplar(int id, Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int idObra, int numeroSequencial,
+            EnumSituacaoExemplar situacao) {
         this.id = id;
         this.dataDeCadastro = dataDeCadastro;
         this.fornecedor = fornecedor;
         this.dataDeAquisicao = dataDeAquisicao;
         this.idObra = idObra;
         this.numeroSequencial = numeroSequencial;
+        this.situacao = situacao;
     }            
 
     @Override

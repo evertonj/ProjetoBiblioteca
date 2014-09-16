@@ -158,18 +158,22 @@ public class DialogAdicionarAutor extends javax.swing.JDialog {
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
-        Autor autor = (Autor) cbAutor.getSelectedItem();
-        System.out.println("É Igual Ou Não: " + DialogNovaObra.listaAutores.contains(autor));
-        if (DialogNovaObra.listaAutores.contains(autor)) {
-            JOptionPane.showMessageDialog(this, "Este Autor já Está Inserido!");
-            return;
+        if (cbAutor.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Adicione Um Novo Autor");
+        } else {
+            Autor autor = (Autor) cbAutor.getSelectedItem();
+            System.out.println("É Igual Ou Não: " + DialogNovaObra.listaAutores.contains(autor));
+            if (DialogNovaObra.listaAutores.contains(autor)) {
+                JOptionPane.showMessageDialog(this, "Este Autor já Está Inserido!");
+                return;
+            }
+            DialogNovaObra.listaAutores.add(autor);
+            if (!DialogNovaObra.listaAutores.isEmpty()) {
+                DialogNovaObra.tbAutores.setModel(new ObraTableModel(DialogNovaObra.listaAutores));
+                dispose();
+            }
+            System.out.println(Arrays.toString(DialogNovaObra.listaAutores.toArray()));
         }
-        DialogNovaObra.listaAutores.add(autor);
-        if (!DialogNovaObra.listaAutores.isEmpty()) {
-            DialogNovaObra.tbAutores.setModel(new ObraTableModel(DialogNovaObra.listaAutores));
-            dispose();
-        }
-        System.out.println(Arrays.toString(DialogNovaObra.listaAutores.toArray()));
     }//GEN-LAST:event_btAdicionarActionPerformed
 
     /**

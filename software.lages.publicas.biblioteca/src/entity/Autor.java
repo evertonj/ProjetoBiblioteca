@@ -9,7 +9,6 @@
 package entity;
 
 import entity.exceptions.NameException;
-import java.sql.Date;
 import java.util.Objects;
 
 /**

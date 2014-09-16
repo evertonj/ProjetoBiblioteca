@@ -18,7 +18,6 @@ import javax.swing.ListSelectionModel;
 import table.ObraAtualizarTableModel;
 import table.ObraColumnModel;
 import validarJtextField.LetrasPermitidas;
-import validarJtextField.NumerosPermitidos;
 import validarJtextField.SomenteNumero;
 
 /**
@@ -70,7 +69,7 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
         tbAtualizarObra = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         btVoltar = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btAtualizar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         btPesquisarPorAutor = new javax.swing.JButton();
         tfAutor = new javax.swing.JTextField();
@@ -144,12 +143,12 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/update.png"))); // NOI18N
-        jButton6.setText("Atualizar");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btAtualizar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/update.png"))); // NOI18N
+        btAtualizar.setText("Atualizar");
+        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btAtualizarActionPerformed(evt);
             }
         });
 
@@ -159,13 +158,13 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
 
-        jPanel6Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btVoltar, jButton6});
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btAtualizar, btVoltar});
 
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,11 +172,11 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6))
+                    .addComponent(btAtualizar))
                 .addContainerGap())
         );
 
-        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btVoltar, jButton6});
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btAtualizar, btVoltar});
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Consultar por Autor:");
@@ -312,19 +311,38 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
     }//GEN-LAST:event_btPesquisarPorTituloActionPerformed
 
     private void tbAtualizarObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarObraMouseClicked
+        try {
         int rowIndex = tbAtualizarObra.getSelectedRow();
         if (rowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
             return;
         }
         obra = new ObraAtualizarTableModel(listaDeObra).get(rowIndex);
+        }catch(IndexOutOfBoundsException e) {
+            DefineDadosEAjustesNajTable();
+        }
     }//GEN-LAST:event_tbAtualizarObraMouseClicked
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        int rowIndex = tbAtualizarObra.getSelectedRow();
+        if (rowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
+            return;
+        }
+        obra = new ObraAtualizarTableModel(listaDeObra).get(rowIndex);
         DialogNovaObra novaObra = new DialogNovaObra(new javax.swing.JFrame(), true);
+        DialogNovaObra.btSalvar.setEnabled(true);
         novaObra.setDados(obra);
         novaObra.setVisible(true);
-    }//GEN-LAST:event_jButton6ActionPerformed
+        try {
+            listaDeObra = dao.consulta(tfTitulo.getText());
+            DefineDadosEAjustesNajTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NameException ex) {
+            Logger.getLogger(DialogAtualizarObra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btPesquisarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorCodigoActionPerformed
         try {
@@ -429,12 +447,12 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAtualizar;
     private javax.swing.JButton btPesquisarPorAutor;
     private javax.swing.JButton btPesquisarPorCodigo;
     private javax.swing.JButton btPesquisarPorIsbn;
     private javax.swing.JButton btPesquisarPorTitulo;
     private javax.swing.JButton btVoltar;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -23,8 +23,8 @@ public class ExemplarController{
         this.facade = new ExemplarFacade();
     }
 
-    public int save(List<Exemplar> exemplares, Obra obra) {
-        return facade.save(exemplares, obra);
+    public int save(Exemplar exemplar) {
+        return facade.save(exemplar);
     }
 
     public int alterarExemplar(Exemplar exemplar) {
@@ -38,7 +38,7 @@ public class ExemplarController{
     public List<Exemplar> finAll() {
         return facade.finAll();
     }
-    public Exemplar buscar(String nome) throws SQLException{
+    public List<Exemplar> buscar(String nome) throws SQLException{
         return facade.buscar(nome);
     }
     

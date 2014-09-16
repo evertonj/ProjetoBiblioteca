@@ -16,7 +16,7 @@ import java.util.List;
  * @author Alex
  */
 public interface IExemplarDAO {
-    int save(List<Exemplar> exemplares, Obra obra);
+    int save(Exemplar exemplar);
     
     int update(Exemplar exemplar);
     
@@ -24,7 +24,7 @@ public interface IExemplarDAO {
     
     List<Exemplar> finAll();
     
-    Exemplar buscar(String nome)throws SQLException;
+    List<Exemplar> buscar(String nome)throws SQLException;
       
     
     

@@ -18,7 +18,6 @@ import javax.swing.ListSelectionModel;
 import table.ObraAtualizarTableModel;
 import table.ObraColumnModel;
 import validarJtextField.LetrasPermitidas;
-import validarJtextField.NumerosPermitidos;
 import validarJtextField.SomenteNumero;
 
 /**
