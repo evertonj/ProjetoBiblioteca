@@ -486,12 +486,13 @@ public class DialogNovaObra extends javax.swing.JDialog {
         }
     }
 
-    public void setDados(Obra obra) {
-        DialogNovaObra.obra = obra;
+    public void setDados(Obra obraAlteracao) {
+        DialogNovaObra.obra = obraAlteracao;
         tfCodigo.setText(String.valueOf(obra.getId()));
         tfTitulo.setText(obra.getTitulo());
         tbAutores.setModel(new ObraTableModel(obra.getAutores()));
         listaAutores = obra.getAutores();
+        DialogExemplar.listaDeExemplares = obra.getExemplar();
         tfEdicao.setText(obra.getEdicao());
         tfAno.setText(String.valueOf(obra.getAno()));
         cbEditora.setSelectedItem(obra.getEditora());
@@ -556,8 +557,8 @@ public class DialogNovaObra extends javax.swing.JDialog {
             }
         } else {
             this.getDados();
-            System.out.println(obra.getAutores().get(0));
-            System.out.println(obra.getAutores().get(1));
+            System.out.println(obra.getAutores().get(0).getId()+ ": " + obra.getAutores().get(0));
+            System.out.println(obra.getAutores().get(1).getId()+ ": " +obra.getAutores().get(1));
             int result = dao.update(obra);
             if (result == 1) {
                 this.dispose();

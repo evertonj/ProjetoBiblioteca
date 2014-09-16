@@ -163,8 +163,6 @@ public class ObraDAO implements IObraDAO {
         PreparedStatement pstm1 = null;
         String sql = "update obra set TITULO = ?, EDICAO = ?, ANO = ?, ID_EDITORA = ?,"
                 + " ISBN = ?, IDASSUNTO = ?, FOTO = ? where id = ?;";
-        String sqlAutores = "update autor set nome = ?, sobrenome = ? where id = ?";
-
         try {
             conn = DBConnection.getConnection();
             pstm = conn.prepareStatement(sql);
@@ -180,19 +178,14 @@ public class ObraDAO implements IObraDAO {
             System.out.println("Chegou no Autor");
             result = pstm.executeUpdate();
             
-            List<Autor> listaAutor = obra.getAutores();
-            for (Autor autor : listaAutor) {
-                pstm1 = conn.prepareStatement(sqlAutores);
-                pstm1.setString(1, autor.getNome());
-                pstm1.setString(2, autor.getSobrenome());
-                pstm1.setInt(3, autor.getId());
-                pstm1.execute();
+            for (Autor item : obra.getAutores()) {
+                this.updateAutor(item);
             }
-            
+
             for (Exemplar item : obra.getExemplar()) {
                 this.updateExemplar(item);
             }
-            
+
             pstm.close();
             return result;
         } catch (SQLException SqlEx) {
@@ -210,8 +203,8 @@ public class ObraDAO implements IObraDAO {
         return result;
 
     }
-    
-        public int updateExemplar(Exemplar exemplar) {
+
+    public int updateExemplar(Exemplar exemplar) {
         Connection conn = DBConnection.getConnection();
         PreparedStatement pstm = null;
         int result = 0;
@@ -224,6 +217,32 @@ public class ObraDAO implements IObraDAO {
             pstm.setInt(5, exemplar.getNumeroSequancial());
             pstm.setString(6, exemplar.getSituacao().toString());
             pstm.setInt(7, exemplar.getId());
+            result = pstm.executeUpdate();
+            pstm.close();
+        } catch (SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            } finally {
+                DBConnection.close(conn, pstm, null);
+            }
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public int updateAutor(Autor autor) {
+        Connection conn = DBConnection.getConnection();
+        PreparedStatement pstm = null;
+        int result = 0;
+        try {
+            pstm = conn.prepareStatement("update autor a set a.nome = ?, a.sobrenome = ? where a.id = ?");
+            pstm.setString(1, autor.getNome());
+            pstm.setString(2, autor.getSobrenome());
+            pstm.setInt(3, autor.getId());
             result = pstm.executeUpdate();
             pstm.close();
         } catch (SQLException e) {
@@ -322,7 +341,7 @@ public class ObraDAO implements IObraDAO {
                 obra.setTitulo(rs.getString("titulo"));
                 obra.setId(rs.getInt("id"));
                 idobra = obra.getId();
-                String sqlAutor = "select * from obra as o, autor as a, obra_autor as oha where oha.idobra = " + idobra + " and oha.idautor = a.id group by a.nome;";
+                String sqlAutor = "select * from obra o, autor a, obra_autor oha where oha.idobra = " + idobra + " and oha.idautor = a.id";
                 pstmA = conn.prepareStatement(sqlAutor);
                 rsAutor = pstmA.executeQuery();
                 obra.setAutores(autores(rsAutor));
@@ -349,8 +368,8 @@ public class ObraDAO implements IObraDAO {
     private List<Autor> autores(ResultSet rs) throws NameException, SQLException {
         List<Autor> listaDeAutores = new ArrayList<>();
         while (rs.next()) {
-            Autor autor = new Autor(rs.getInt("id"), rs.getString("nome"),
-                    rs.getString("sobrenome"));
+            Autor autor = new Autor(rs.getInt("a.id"), rs.getString("a.nome"),
+                    rs.getString("a.sobrenome"));
             contador++;
             System.out.println("Contador de Autores: " + contador);
             listaDeAutores.add(autor);
