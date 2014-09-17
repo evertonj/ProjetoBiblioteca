@@ -30,11 +30,18 @@ public class UsuarioFacade {
         return dao.update(usuario);
     }
 
-    public int remove(Long id) {
+    public int remove(int id) {
         return dao.remove(id);
     }
 
     public List<Usuario> finAll() {
         return dao.findAll();
     }
+    public Usuario buscaNome(String nome,String serie){
+        return dao.buscaNome(nome,serie);
+    }
+
+    
+
+    
 }

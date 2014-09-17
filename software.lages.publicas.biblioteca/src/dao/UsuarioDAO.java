@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class UsuarioDAO implements IUsuarioDAO {
 
     private static final String SQL_UPDATE = "update usuario set nome = ?, serie = ?, email = ?, telefone = ? where id = ?;";
-    private static final String SQL_REMOVE = "delete from usuario where id = ?;";
+    private static final String SQL_REMOVE = "delete  from usuario where id = ?;";
     private static final String SQL_FIND_ALL = "select * from usuario;";
 
     @Override
@@ -41,7 +41,10 @@ public class UsuarioDAO implements IUsuarioDAO {
         this.salvarEmail(usuario.getListEmail());
         return result;
     }
-     private void salvarTelefone(List<String> telefone) {
+    
+
+    
+    private void salvarTelefone(List<String> telefone) {
 
         Connection conn = null;
         PreparedStatement pstm = null, pstmIdUsuario = null;
@@ -58,7 +61,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
             for (int i = 0; i < telefone.size(); i++) {
                 {
-                   
+                
                     pstm = conn.prepareStatement(sqlTelefones);
                    
                     pstm.setString(1, telefone.get(i));
@@ -82,8 +85,6 @@ public class UsuarioDAO implements IUsuarioDAO {
             SqlEx.printStackTrace();
         }
     }
-
-    
 
     private void salvarEmail(List<String> email) {
 
@@ -146,12 +147,20 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public int remove(Long id) {
+    public int remove(int id) {
         int result = 0;
+        PreparedStatement pstmO = null,pstmE = null;
+        String telefone = "delete from telefone_usuario where idusuario = "+id+";";
+        
+        String email = "delete from email_usuario where idusuario ="+id+";";
         try {
             Connection conn = DBConnection.getConnection();
+            pstmO = conn.prepareStatement(telefone);
+            pstmE = conn.prepareStatement(email);
+            pstmO.executeUpdate();
+            pstmE.executeUpdate();
             try (PreparedStatement pstm = conn.prepareStatement(SQL_REMOVE)) {
-                pstm.setLong(1, id);
+                pstm.setInt(1, id);
                 result = pstm.executeUpdate();
                 pstm.close();
             }
@@ -202,6 +211,42 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
         return listaDeUsuario;
      }
+      public Usuario buscaNome(String nome, String serie)  {
+         
+        PreparedStatement pstmO;
+        Connection conn = null;
+        Usuario usuario = null;
+        ResultSet rs = null, rsExterno = null;
+       
+       
+        String sqlUsuario = "select * from usuario where nome = "+ nome+ " and serie ="+ serie+ ";";
+        try {
+          
+            conn = DBConnection.getConnection();
+            pstmO = conn.prepareStatement(sqlUsuario);
+            
+            rs = pstmO.executeQuery();
+            
+            
+           
+               
+                usuario = usuario(rs);
+               
+                
+           
+            return usuario;
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException("SQL incorreto");
+            } catch (SQLException ex1) {
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+       
+        } catch (NameException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuario;
+     }
 
     private Usuario usuario(ResultSet rs) throws SQLException, NameException {
         int idusuario;
@@ -214,7 +259,10 @@ public class UsuarioDAO implements IUsuarioDAO {
             
                 
                 usuario = new Usuario();
+                 System.out.println(" teste ");
+                 
                 usuario.setNome(rs.getString("Nome"));
+                System.out.println(usuario.getNome());
                 usuario.setId(rs.getInt("id"));
                 idusuario = usuario.getId();
                 System.out.println(idusuario);
@@ -227,8 +275,9 @@ public class UsuarioDAO implements IUsuarioDAO {
                 rsEmail = pstmE.executeQuery();
                 usuario.setListTelefone(telefones(rsTelefone));
                 usuario.setFoto(rs.getBytes("Foto"));
-                usuario.setSerie("Serie");
-                System.out.println(" Teste");
+              
+                usuario.setSerie(rs.getString("Serie"));
+               
                 usuario.setListEmail(emails(rsEmail));
                 
                 

@@ -40,10 +40,18 @@ public class UsuarioTableModel extends AbstractTableModel {
             case 1:
                 return usuario.getSerie();
            case 2:
-             return usuario.getListEmail().get(0);
-           case 3:
+               if(usuario.getListEmail().isEmpty()){
+             return "Não cadastrado";
+               }else{
+                   return usuario.getListEmail().get(0);
+               }
+           
+           case 3:if(usuario.getListTelefone().isEmpty()){
+               return "Não Cadastrado";
+           }else{
                return usuario.getListTelefone().get(0);
-        }
+           }
+           }
         return null;
     }
 

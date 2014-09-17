@@ -9,6 +9,7 @@ package form;
 import controller.UsuarioController;
 import entity.Usuario;
 import java.util.List;
+import javax.swing.JOptionPane;
 import table.UsuarioCellRenderer;
 import table.UsuarioTableModel;
 
@@ -86,6 +87,11 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
         jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
         jButton2.setText("Remover");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
@@ -178,6 +184,28 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         int rowIndex = tbUsuario.getSelectedRow();
+        if (rowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione o Usuario a ser Removido!!!");
+            return;
+        }
+       Usuario usuario = new UsuarioTableModel(usuarioList).get(rowIndex);
+        int confirm = JOptionPane.showConfirmDialog(this, "Confirmar exclusão ?", "Excluir Usuario", JOptionPane.YES_NO_OPTION);
+        if (confirm != 0) {
+            return;
+        }
+        System.out.println(usuario.getId());
+        int result = new UsuarioController().excluirUsuario(usuario.getId());
+
+        if (result == 1) {
+            JOptionPane.showMessageDialog(this, "Autor removida com Sucesso!");
+            this.refreshTable();
+        } else {
+            JOptionPane.showMessageDialog(this, "Tente novamente!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

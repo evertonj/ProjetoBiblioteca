@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author Alex
+ * @author Thiago
  */
 public class UsuarioController {
     
@@ -31,12 +31,15 @@ public class UsuarioController {
         return facade.update(usuario);
     }
 
-    public int excluirUsuario(Long id) {
+    public int excluirUsuario(int id) {
         return facade.remove(id);
     }
 
     public List<Usuario> finAll() {
         return facade.finAll();
+    }
+    public Usuario buscaNome(String nome,String serie){
+        return facade.buscaNome(nome,serie);
     }
     
 }

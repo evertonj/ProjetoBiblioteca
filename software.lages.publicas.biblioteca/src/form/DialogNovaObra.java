@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -33,7 +34,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
         carregarComboBoxEditora();
         carregarComBoboxAssunto();
     }
-    public static List<Autor> listaAutores;
+    public static List<Autor> listaAutores = new ArrayList();
     DefaultTableModel dtm;
     private ImageIcon icon;
     long i = 0;

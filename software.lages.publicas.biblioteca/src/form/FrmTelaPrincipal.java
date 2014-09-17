@@ -226,6 +226,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Lages.jpg"))); // NOI18N
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
+        menuGerenciamento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
         menuGerenciamento.setText("Gerenciamento");
         menuGerenciamento.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         menuGerenciamento.addActionListener(new java.awt.event.ActionListener() {
@@ -299,16 +300,19 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
 
         jMenuBar1.add(menuGerenciamento);
 
+        menuEmprestimo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
         menuEmprestimo.setText("Realizar Empréstimo");
         menuEmprestimo.setToolTipText("Clique para realizar um novo empréstimo");
         menuEmprestimo.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jMenuBar1.add(menuEmprestimo);
 
+        menuDevolução.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
         menuDevolução.setText("Realizar Devolução");
         menuDevolução.setToolTipText("Clique para realizar a devolução do livro");
         menuDevolução.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jMenuBar1.add(menuDevolução);
 
+        menuRelatorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
         menuRelatorio.setText("Relatórios");
         menuRelatorio.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
 
@@ -322,6 +326,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
 
         jMenuBar1.add(menuRelatorio);
 
+        menuSobre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
         menuSobre.setText("Sobre");
         menuSobre.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         menuSobre.addMouseListener(new java.awt.event.MouseAdapter() {

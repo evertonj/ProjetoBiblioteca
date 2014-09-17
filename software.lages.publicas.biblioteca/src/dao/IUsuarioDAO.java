@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author Alex
+ * @author Thiago
  */
 public interface IUsuarioDAO {
     
@@ -19,7 +19,11 @@ public interface IUsuarioDAO {
     
     int update(Usuario usuario);
     
-    int remove(Long id);
+    int remove(int id);
     
     List<Usuario> findAll();
+    
+   
+
+    public Usuario buscaNome(String nome, String serie);
 }
