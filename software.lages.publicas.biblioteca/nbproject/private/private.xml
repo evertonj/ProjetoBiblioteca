@@ -3,14 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/dao/ExemplarDAO.java</file>
-            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogAdicionarAutor.java</file>
-            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogNovaObra.java</file>
-            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogExcluirObra.java</file>
-            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmTelaPrincipal.java</file>
-            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmRealizarLogin.java</file>
-            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogExcluirExemplar.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/entity/Obra.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmCadastroDeAssunto.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/entity/Editora.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogConsultarObra.java</file>
             <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/dao/ObraDAO.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogNovaObra.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/FrmCadastroDeEditora.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogExcluirObra.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogAtualizarObra.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/validadorDeTextField/SomenteNumero.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/form/DialogExemplar.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/connection/DBConnection.java</file>
+            <file>file:/C:/ProjetoBiblioteca/ProjetoBiblioteca/software.lages.publicas.biblioteca/src/entity/Assunto.java</file>
         </group>
     </open-files>
 </project-private>

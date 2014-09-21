@@ -6,11 +6,14 @@
 package form;
 
 import controller.EditoraController;
+import dao.EditoraDAO;
 import entity.Editora;
 import entity.exceptions.NameException;
+import static form.DialogNovaObra.cbEditora;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,6 +34,7 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
     
     List<Editora> editoraList;
     int idEditora;
+    EditoraDAO daoEditora = new EditoraDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -320,7 +324,7 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Tente novamente!");
             }
              
-            DialogNovaObra.carregarComboBoxEditora();
+            cbEditora.setModel(new DefaultComboBoxModel(daoEditora.finAll().toArray()));
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
