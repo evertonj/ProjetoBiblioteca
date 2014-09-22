@@ -24,6 +24,18 @@ public class Editora  {
     private String rua;
     private String bairro;
     private String numero;
+    
+    public Editora(Editora editora) throws NameException {
+        this.id = editora.getId();
+        this.nome = editora.getNome();
+        this.telefone = editora.getTelefone();
+        this.email = editora.getEmail();
+        this.cidade = editora.getCidade();
+        this.rua = editora.getRua();
+        this.bairro = editora.getBairro();
+        this.numero = editora.getNumero();
+        verificarDados();
+    }
 
     public Editora(String nome, String telefone, String email, String cidade, String rua, String bairro, String numero)throws NameException {
         this.nome = nome;

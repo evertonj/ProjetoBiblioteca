@@ -7,8 +7,11 @@ package form;
 
 
 import controller.AssuntoController;
+import dao.AssuntoDAO;
 import entity.Assunto;
+import static form.DialogNovaObra.cbAssunto;
 import java.util.*;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,7 +31,7 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
 
     List<Assunto> assuntoList;
     Integer idAssunto;
-
+    AssuntoDAO daoAssunto = new AssuntoDAO();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,8 +41,6 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tfISBN2 = new javax.swing.JTextField();
-        tfISBN3 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -49,15 +50,6 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         btSalvar = new javax.swing.JButton();
         btEditar = new javax.swing.JButton();
-
-        tfISBN2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-
-        tfISBN3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        tfISBN3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfISBN3ActionPerformed(evt);
-            }
-        });
 
         jLabel7.setText("jLabel7");
 
@@ -218,7 +210,7 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
         
 
         
-        DialogNovaObra.carregarComBoboxAssunto();
+        cbAssunto.setModel(new DefaultComboBoxModel(daoAssunto.finAll().toArray()));
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
@@ -237,10 +229,6 @@ this.dispose();
 //        tfEmail.setText(assunto.getEmail());
 //        enableFields(true);
     }//GEN-LAST:event_btEditarActionPerformed
-
-    private void tfISBN3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfISBN3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfISBN3ActionPerformed
   /**
      * @param args the command line arguments
      */
@@ -293,8 +281,6 @@ this.dispose();
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField tfISBN2;
-    private javax.swing.JTextField tfISBN3;
     private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
 }

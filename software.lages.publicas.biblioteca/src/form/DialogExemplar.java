@@ -6,6 +6,7 @@
 package form;
 
 import connection.DBConnection;
+import dao.AssuntoDAO;
 import entity.EnumSituacaoExemplar;
 import entity.Exemplar;
 import java.sql.Connection;
@@ -17,6 +18,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,7 +33,8 @@ public class DialogExemplar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    static List<Exemplar> listaDeExemplares = new ArrayList<>();
+    public static List<Exemplar> listaDeExemplares;
+    AssuntoDAO daoAssunto = new AssuntoDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -198,15 +201,20 @@ public class DialogExemplar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        if (tfFornecedor.getText().isEmpty() || dcDataDeAquisicao.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Favor preencha todos os campos");
+            return;
+        }
+        listaDeExemplares  = new ArrayList<>();
         int quantidade = (int) spQuantidade.getValue();
         int num_sequncial = 0;
         listaDeExemplares.clear();
-        if (DialogNovaObra.obra != null) {
-            String query = "SELECT count(numero_sequencial) from exemplar where id_obra = " + DialogNovaObra.obra.getId();
+        if (DialogNovaObra.obraStatica != null) {
+            String query = "SELECT count(numero_sequencial) from exemplar where id_obra = " + DialogNovaObra.obraStatica.getId();
             System.out.println(query);
-            Connection conn = null;
-            ResultSet rs = null;
-            PreparedStatement pstm = null;
+            Connection conn;
+            ResultSet rs;
+            PreparedStatement pstm;
             conn = DBConnection.getConnection();
             try {
                 pstm = conn.prepareStatement(query);
@@ -217,7 +225,7 @@ public class DialogExemplar extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(DialogExemplar.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("Numero Sequancial: " + num_sequncial);
+            System.out.println("Numero Sequencial: " + num_sequncial);
 
         }
 
