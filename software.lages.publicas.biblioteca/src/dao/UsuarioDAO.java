@@ -211,42 +211,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
         return listaDeUsuario;
      }
-      public Usuario buscaNome(String nome, String serie)  {
-         
-        PreparedStatement pstmO;
-        Connection conn = null;
-        Usuario usuario = null;
-        ResultSet rs = null, rsExterno = null;
-       
-       
-        String sqlUsuario = "select * from usuario where nome = "+ nome+ " and serie ="+ serie+ ";";
-        try {
-          
-            conn = DBConnection.getConnection();
-            pstmO = conn.prepareStatement(sqlUsuario);
-            
-            rs = pstmO.executeQuery();
-            
-            
-           
-               
-                usuario = usuario(rs);
-               
-                
-           
-            return usuario;
-        } catch (SQLException ex) {
-            try {
-                throw new SQLException("SQL incorreto");
-            } catch (SQLException ex1) {
-                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-       
-        } catch (NameException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return usuario;
-     }
+     
 
     private Usuario usuario(ResultSet rs) throws SQLException, NameException {
         int idusuario;
@@ -309,6 +274,84 @@ public class UsuarioDAO implements IUsuarioDAO {
           
         }
         return listaDeEmail;
+    }
+     
+      public List<Usuario> buscaPorNome(String nome)  {
+         
+        PreparedStatement pstmO;
+        Connection conn = null;
+        Usuario usuario;
+        ResultSet rs = null, rsExterno = null;
+        List<Usuario> listaDeUsuario = new ArrayList<>();
+       
+        String sqlUsuario =" select * from usuario where nome like '"+nome+"%';";
+        try {
+          
+            conn = DBConnection.getConnection();
+            pstmO = conn.prepareStatement(sqlUsuario);
+            
+            rs = pstmO.executeQuery();
+            
+            
+            while (rs.next()) {
+               
+                usuario = usuario(rs);
+               
+                listaDeUsuario.add(usuario);
+            }
+            return listaDeUsuario;
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException("SQL incorreto");
+            } catch (SQLException ex1) {
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+       
+        } catch (NameException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaDeUsuario;
+     }
+       public List<Usuario> buscaPorSerie(String nome)  {
+         
+        PreparedStatement pstmO;
+        Connection conn = null;
+        Usuario usuario;
+        ResultSet rs = null, rsExterno = null;
+        List<Usuario> listaDeUsuario = new ArrayList<>();
+       
+        String sqlUsuario = "select * from usuario where serie like '"+nome+"%';";
+        try {
+          
+            conn = DBConnection.getConnection();
+            pstmO = conn.prepareStatement(sqlUsuario);
+            
+            rs = pstmO.executeQuery();
+            
+            
+            while (rs.next()) {
+               
+                usuario = usuario(rs);
+               
+                listaDeUsuario.add(usuario);
+            }
+            return listaDeUsuario;
+        } catch (SQLException ex) {
+            try {
+                throw new SQLException("SQL incorreto");
+            } catch (SQLException ex1) {
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+       
+        } catch (NameException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaDeUsuario;
+     }
+
+    @Override
+    public Usuario buscaNome(String nome, String serie) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
