@@ -337,6 +337,41 @@ public class ObraDAO implements IObraDAO {
         return result;
 
     }
+    
+    public int removeAtualizar(int id) {
+        System.out.println("ID da Obra: " + id);
+        int result = 0;
+        Connection conn1 = null, conn = null;
+        PreparedStatement pstm1 = null, pstm2 = null;
+        String sql = "delete from obra where id = " + id;
+        String sqlVinculo = "delete from obra_autor where idobra = " + id;
+        try {
+            conn = DBConnection.getConnection();
+            pstm2 = conn.prepareStatement(sqlVinculo);
+            result = pstm2.executeUpdate();
+            conn1 = DBConnection.getConnection();
+            pstm1 = conn1.prepareStatement(sql);
+            result = pstm1.executeUpdate();
+            System.out.println("Teste Remover");
+            pstm1.close();
+            pstm2.close();
+            return result;
+        } catch (SQLException SqlEx) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException SqlEx1) {
+                SqlEx1.printStackTrace();
+            } finally {
+                DBConnection.close(conn, pstm1, null);
+                DBConnection.close(conn, pstm2, null);
+            }
+            SqlEx.printStackTrace();
+        }
+        return result;
+
+    }
 
     @Override
     public List<Obra> findAll() throws SQLException, NameException {

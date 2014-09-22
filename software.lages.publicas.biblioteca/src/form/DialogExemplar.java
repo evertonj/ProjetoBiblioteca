@@ -33,7 +33,7 @@ public class DialogExemplar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    static List<Exemplar> listaDeExemplares = new ArrayList<>();
+    public static List<Exemplar> listaDeExemplares;
     AssuntoDAO daoAssunto = new AssuntoDAO();
 
     /**
@@ -205,15 +205,16 @@ public class DialogExemplar extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Favor preencha todos os campos");
             return;
         }
+        listaDeExemplares  = new ArrayList<>();
         int quantidade = (int) spQuantidade.getValue();
         int num_sequncial = 0;
         listaDeExemplares.clear();
         if (DialogNovaObra.obraStatica != null) {
             String query = "SELECT count(numero_sequencial) from exemplar where id_obra = " + DialogNovaObra.obraStatica.getId();
             System.out.println(query);
-            Connection conn = null;
-            ResultSet rs = null;
-            PreparedStatement pstm = null;
+            Connection conn;
+            ResultSet rs;
+            PreparedStatement pstm;
             conn = DBConnection.getConnection();
             try {
                 pstm = conn.prepareStatement(query);
@@ -224,7 +225,7 @@ public class DialogExemplar extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(DialogExemplar.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("Numero Sequancial: " + num_sequncial);
+            System.out.println("Numero Sequencial: " + num_sequncial);
 
         }
 
