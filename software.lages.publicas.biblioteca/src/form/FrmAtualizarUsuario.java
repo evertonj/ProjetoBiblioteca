@@ -11,6 +11,7 @@ import entity.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import table.ObraAtualizarTableModel;
 import table.UsuarioCellRenderer;
 import table.UsuarioTableModel;
 
@@ -28,11 +29,10 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
         initComponents();
 
     }
+    Usuario usuario;
     List<Usuario> listaUsuario = new ArrayList<>();
 
     private void refreshTable(List<Usuario> listaUsuario) {
-
-        
 
         if (listaUsuario != null) {
             tbAluno.setModel(new UsuarioTableModel(listaUsuario));
@@ -171,6 +171,16 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        int rowIndex = tbAluno.getSelectedRow();
+        if (rowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
+            return;
+        }
+        usuario = new UsuarioTableModel(listaUsuario).get(rowIndex);
+        FrmCadastroUsuario novoUsuario = new FrmCadastroUsuario(new javax.swing.JFrame(), true);
+        
+//        novoUsuario.setDa
+//        novaObra.setVisible(true);
 
     }//GEN-LAST:event_btAtualizarActionPerformed
 
@@ -179,29 +189,27 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btAtualizar1ActionPerformed
 
     private void tfBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBuscaKeyTyped
-        
 
-        
 
     }//GEN-LAST:event_tfBuscaKeyTyped
 
     private void tfBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBuscaKeyReleased
-        
-         if(tfBusca.getText().isEmpty()){
-             listaUsuario.clear();
-         }else{
-        switch (cbPesquisa.getSelectedIndex()) {
-            case 0:
-                listaUsuario = new UsuarioDAO().buscaPorNome(tfBusca.getText());
-                this.refreshTable(listaUsuario);
-                break;
-            case 1:
-                listaUsuario = new UsuarioDAO().buscaPorSerie(tfBusca.getText());
-                this.refreshTable(listaUsuario);
-                break;
 
+        if (tfBusca.getText().isEmpty()) {
+            listaUsuario.clear();
+        } else {
+            switch (cbPesquisa.getSelectedIndex()) {
+                case 0:
+                    listaUsuario = new UsuarioDAO().buscaPorNome(tfBusca.getText());
+                    this.refreshTable(listaUsuario);
+                    break;
+                case 1:
+                    listaUsuario = new UsuarioDAO().buscaPorSerie(tfBusca.getText());
+                    this.refreshTable(listaUsuario);
+                    break;
+
+            }
         }
-         }
 
     }//GEN-LAST:event_tfBuscaKeyReleased
 

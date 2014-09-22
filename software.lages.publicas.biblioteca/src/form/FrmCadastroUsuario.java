@@ -51,6 +51,9 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         tfEmail.setText(null);
         tfTelefone.setText(null);
     }
+    public void setDados(Usuario usuario){
+        
+    }
 
     private void enableFields(boolean b) {
         tfNome.setEnabled(b);
