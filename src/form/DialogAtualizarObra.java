@@ -13,8 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Document;
 import table.ObraAtualizarTableModel;
 import table.ObraColumnModel;
+import validarJtextField.SomenteNumero;
 
 /**
  *
@@ -144,6 +147,11 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
 
         cbOpcaoPesquisa.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cbOpcaoPesquisa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TITULO", "AUTOR", "ISBN", "CÓDIGO", "ASSUNTO" }));
+        cbOpcaoPesquisa.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbOpcaoPesquisaItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -241,6 +249,15 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
             tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
         }
     }//GEN-LAST:event_tfTituloKeyReleased
+
+    private void cbOpcaoPesquisaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbOpcaoPesquisaItemStateChanged
+        tfTitulo.requestFocus();
+        if (cbOpcaoPesquisa.getSelectedIndex() == 2 || cbOpcaoPesquisa.getSelectedIndex() == 3) {
+            tfTitulo.setDocument(new SomenteNumero());
+        } else {
+            tfTitulo.setDocument(new DefaultStyledDocument());
+        }
+    }//GEN-LAST:event_cbOpcaoPesquisaItemStateChanged
 
     private boolean pesquisa() {
         try {

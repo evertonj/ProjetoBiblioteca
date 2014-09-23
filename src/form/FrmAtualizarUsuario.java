@@ -175,7 +175,7 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btAtualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizar1ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btAtualizar1ActionPerformed
 
     private void tfBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBuscaKeyTyped

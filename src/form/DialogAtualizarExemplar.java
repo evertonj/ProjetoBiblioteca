@@ -75,7 +75,7 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
         dcDataAquisicao = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Atualizar Obra");
+        setTitle("Atualizar Exemplar");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
@@ -335,41 +335,49 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
 
     private void btPesquisarPorFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorFornecedorActionPerformed
         this.pesquisarPorFornecedor();
+        tfFornecedor.setText(null);
     }//GEN-LAST:event_btPesquisarPorFornecedorActionPerformed
 
     private void btPesquisarPorDataCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorDataCadastroActionPerformed
         this.pesquisarPorDataCadastro();
+        dcDataCadastro.setDate(null);
     }//GEN-LAST:event_btPesquisarPorDataCadastroActionPerformed
 
     private void btPesquisarPorDataAquisicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorDataAquisicaoActionPerformed
         this.pesquisarPorDataAquisicao();
+        dcDataAquisicao.setDate(null);
     }//GEN-LAST:event_btPesquisarPorDataAquisicaoActionPerformed
 
     private void btPesquisarPorTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorTituloActionPerformed
         this.pesquisarPorTitulo();
+        tfTitulo.setText(null);
     }//GEN-LAST:event_btPesquisarPorTituloActionPerformed
 
     private void tfTituloKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTituloKeyReleased
         if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
             this.pesquisarPorTitulo();
+            tfTitulo.setText(null);
         }
     }//GEN-LAST:event_tfTituloKeyReleased
 
     private void tfFornecedorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFornecedorKeyReleased
         if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
             this.pesquisarPorFornecedor();
+            tfFornecedor.setText(null);
         }
     }//GEN-LAST:event_tfFornecedorKeyReleased
 
     private void dcDataCadastroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dcDataCadastroKeyReleased
         if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
             this.pesquisarPorDataCadastro();
+            dcDataCadastro.setDate(null);
         }
     }//GEN-LAST:event_dcDataCadastroKeyReleased
 
     private void dcDataAquisicaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dcDataAquisicaoKeyReleased
         if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
             this.pesquisarPorDataAquisicao();
+            dcDataAquisicao.setDate(null);
         }
     }//GEN-LAST:event_dcDataAquisicaoKeyReleased
 

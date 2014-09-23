@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.text.DefaultStyledDocument;
 import table.ObraAtualizarTableModel;
 import table.ObraColumnModel;
+import validarJtextField.SomenteNumero;
 
 /**
  *
@@ -62,7 +64,7 @@ public class DialogConsultarObra extends javax.swing.JDialog {
         cbOpcaoPesquisa = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Atualizar Obra");
+        setTitle("Consultar Obra");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
@@ -125,6 +127,11 @@ public class DialogConsultarObra extends javax.swing.JDialog {
 
         cbOpcaoPesquisa.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cbOpcaoPesquisa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TITULO", "AUTOR", "ISBN", "CÓDIGO", "ASSUNTO" }));
+        cbOpcaoPesquisa.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbOpcaoPesquisaItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -207,6 +214,15 @@ public class DialogConsultarObra extends javax.swing.JDialog {
             tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
         }
     }//GEN-LAST:event_tfTituloKeyReleased
+
+    private void cbOpcaoPesquisaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbOpcaoPesquisaItemStateChanged
+        tfTitulo.requestFocus();
+        if (cbOpcaoPesquisa.getSelectedIndex() == 2 || cbOpcaoPesquisa.getSelectedIndex() == 3) {
+            tfTitulo.setDocument(new SomenteNumero());
+        } else {
+            tfTitulo.setDocument(new DefaultStyledDocument());
+        }
+    }//GEN-LAST:event_cbOpcaoPesquisaItemStateChanged
 
     private boolean pesquisa() {
         try {

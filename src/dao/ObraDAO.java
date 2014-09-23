@@ -337,7 +337,7 @@ public class ObraDAO implements IObraDAO {
         return result;
 
     }
-    
+
     public int removeAtualizar(int id) {
         System.out.println("ID da Obra: " + id);
         int result = 0;
@@ -608,7 +608,7 @@ public class ObraDAO implements IObraDAO {
         ResultSet rs, rsEditora, rsExterno;
         List<Obra> listaDeObra = new ArrayList<>();
         String sqlEditora = "select * from editora, obra where obra.id_editora = editora.id;";
-        String sqlObra = "select * from obra where isbn = " + isbn;
+        String sqlObra = "select * from obra where isbn LIKE '" + isbn + "%'";
         try {
             conn = DBConnection.getConnection();
             pstmO = conn.prepareStatement(sqlObra);

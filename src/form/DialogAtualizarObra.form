@@ -210,6 +210,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbOpcaoPesquisaItemStateChanged"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -45,7 +45,7 @@ public class ObraAtualizarTableModel extends AbstractTableModel {
                 return obra.getAssunto();
             case 4:
                 if (!obra.getAutores().isEmpty()) {
-                    return obra.getAutores().get(0).getSobrenome() + ", " + obra.getAutores().get(0).getNome();
+                    return obra.getAutores().get(0);
                 } else {
                     return "Nenhum Autor Cadastrado";
                 }
