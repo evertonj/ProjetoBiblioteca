@@ -179,6 +179,8 @@ public class DialogExemplar extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {dcDataDeAquisicao, tfFornecedor});
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -238,7 +240,7 @@ public class DialogExemplar extends javax.swing.JDialog {
             }
             Exemplar exemplar = new Exemplar(dcDataDeCadastro.getDate(),
                     tfFornecedor.getText(), dcDataDeAquisicao.getDate(),
-                    (i + (num_sequncial + 1)), situacao);
+                    (i + (num_sequncial + 1)), situacao, "");
             
             listaDeExemplares.add(exemplar);
         }

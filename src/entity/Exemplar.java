@@ -14,12 +14,13 @@ import java.util.Date;
 public class Exemplar {
 
     public Exemplar(Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int numeroSequencial,
-            EnumSituacaoExemplar situacao) {
+            EnumSituacaoExemplar situacao, String descricao) {
         this.dataDeCadastro = dataDeCadastro;
         this.fornecedor = fornecedor;
         this.dataDeAquisicao = dataDeAquisicao;
         this.numeroSequencial = numeroSequencial;
         this.situacao = situacao;
+        this.descricao = descricao;
     }
 
     private int id;
@@ -29,9 +30,10 @@ public class Exemplar {
     private int idObra;
     private int numeroSequencial;
     private EnumSituacaoExemplar situacao;
+    private String descricao;
 
     public Exemplar(int id, Date dataDeCadastro, String fornecedor, Date dataDeAquisicao, int idObra, int numeroSequencial,
-            EnumSituacaoExemplar situacao) {
+            EnumSituacaoExemplar situacao, String descricao) {
         this.id = id;
         this.dataDeCadastro = dataDeCadastro;
         this.fornecedor = fornecedor;
@@ -39,6 +41,7 @@ public class Exemplar {
         this.idObra = idObra;
         this.numeroSequencial = numeroSequencial;
         this.situacao = situacao;
+        this.descricao = descricao;
     }            
 
     @Override
@@ -159,5 +162,19 @@ public class Exemplar {
      */
     public void setSituacao(EnumSituacaoExemplar situacao) {
         this.situacao = situacao;
+    }
+
+    /**
+     * @return the descricao
+     */
+    public String getDescricao() {
+        return descricao;
+    }
+
+    /**
+     * @param descricao the descricao to set
+     */
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

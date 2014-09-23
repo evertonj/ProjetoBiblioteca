@@ -230,7 +230,7 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
                     idAutor = null;
                 }
                 if (result == 1) {
-                    JOptionPane.showMessageDialog(this, "Autor inserida com Sucesso!");
+                    JOptionPane.showMessageDialog(this, "Autor inserido com Sucesso!");
                     this.refreshTable();
                     onCancelar();
                    

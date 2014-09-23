@@ -195,7 +195,7 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
                     idAssunto = null;
                 }
                 if (result == 1) {
-                    JOptionPane.showMessageDialog(this, "Assunto inserida com Sucesso!");
+                    JOptionPane.showMessageDialog(this, "Assunto inserido com Sucesso!");
                    
                     onCancelar();
                    

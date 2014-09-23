@@ -22,8 +22,8 @@ import java.util.List;
  */
 public class ExemplarDAO implements IExemplarDAO {
 
-    private static final String SQL_INSERT = "insert into exemplar(dataDeCadastro, fornecedor, dataDeAquisicao, id_Obra, numero_sequencial, situacao) values(?, ?, ?, ?, ?, ?)";
-    private static final String SQL_UPDATE = "update exemplar set dataDeCadastro = ?,fornecedor = ?, dataDeAquisicao = ?,id_obra = ?, numero_sequencial = ?, situacao = ? WHERE id = ?;";
+    private static final String SQL_INSERT = "insert into exemplar(dataDeCadastro, fornecedor, dataDeAquisicao, id_Obra, numero_sequencial, situacao, descricao) values(?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "update exemplar set dataDeCadastro = ?,fornecedor = ?, dataDeAquisicao = ?, id_obra = ?, numero_sequencial = ?, situacao = ?, descricao = ? WHERE id = ?;";
     private static final String SQL_REMOVE = "delete from exemplar where id = ?;";
     private static final String SQL_ORDER_TABLE = "select * from exemplar order by nome;";
 
@@ -98,7 +98,8 @@ public class ExemplarDAO implements IExemplarDAO {
             pstm.setInt(4, exemplar.getIdObra());
             pstm.setInt(5, exemplar.getNumeroSequancial());
             pstm.setString(6, exemplar.getSituacao().toString());
-            pstm.setInt(7, exemplar.getId());
+            pstm.setString(7, exemplar.getDescricao());
+            pstm.setInt(8, exemplar.getId());
             result = pstm.executeUpdate();
             pstm.close();
         } catch (SQLException e) {
@@ -159,7 +160,8 @@ public class ExemplarDAO implements IExemplarDAO {
                         new Date(rs.getDate("dataDeAquisicao").getTime()),
                         rs.getInt("id_obra"),
                         rs.getInt("numero_sequencial"),
-                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")));
+                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")),
+                        rs.getString("descricao"));
                 exemplares.add(exemplar);
             }
         } catch (SQLException e) {
@@ -185,7 +187,8 @@ public class ExemplarDAO implements IExemplarDAO {
                         new Date(rs.getDate("dataDeAquisicao").getTime()),
                         rs.getInt("id_obra"),
                         rs.getInt("numero_sequencial"),
-                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")));
+                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")),
+                        rs.getString("descricao"));
                 exemplares.add(exemplar);
             }
         } catch (SQLException e) {
@@ -211,7 +214,8 @@ public class ExemplarDAO implements IExemplarDAO {
                         new Date(rs.getDate("dataDeAquisicao").getTime()),
                         rs.getInt("id_obra"),
                         rs.getInt("numero_sequencial"),
-                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")));
+                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")),
+                        rs.getString("descricao"));
                 exemplares.add(exemplar);
             }
         } catch (SQLException e) {
@@ -237,7 +241,8 @@ public class ExemplarDAO implements IExemplarDAO {
                         new Date(rs.getDate("dataDeAquisicao").getTime()),
                         rs.getInt("id_obra"),
                         rs.getInt("numero_sequencial"),
-                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")));
+                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")),
+                        rs.getString("descricao"));
                 exemplares.add(exemplar);
             }
         } catch (SQLException e) {
@@ -263,7 +268,8 @@ public class ExemplarDAO implements IExemplarDAO {
                         new Date(rs.getDate("dataDeAquisicao").getTime()),
                         rs.getInt("id_obra"),
                         rs.getInt("numero_sequencial"),
-                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")));
+                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")),
+                        rs.getString("descricao"));
                 exemplares.add(exemplar);
             }
             pstm.close();

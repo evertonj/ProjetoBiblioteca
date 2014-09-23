@@ -32,6 +32,8 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
     public DialogUpdateExemplar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        taDescricao.setEditable(false);
+        taDescricao.setEnabled(false);
     }
     static ExemplarDAO dao = new ExemplarDAO();
     public static Exemplar exemplar;
@@ -43,6 +45,7 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
         dcDataDeAquisicao.setDate(exemplar.getDataDeAquisicao());
         cbSituacao.setSelectedItem(exemplar.getSituacao().toString());
         tfIdExemplar.setText(String.valueOf(exemplar.getId()));
+        taDescricao.setText(exemplar.getDescricao());
     }
 
     /**
@@ -70,6 +73,9 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
         tfIdExemplar = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         tfFornecedor = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taDescricao = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Exemplar");
@@ -139,8 +145,13 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
         jLabel5.setText("Situação...............:");
 
         cbSituacao.setFont(new java.awt.Font("Franklin Gothic Book", 0, 18)); // NOI18N
-        cbSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EMPRESTADO", "DISPONIVEL", "CONSULTA_LOCAL", "RESERVADO", "INDISPONIVEL" }));
+        cbSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EMPRESTADO", "DISPONIVEL", "CONSULTA_LOCAL", "RESERVADO", "INDISPONIVEL", "BAIXADO" }));
         cbSituacao.setSelectedIndex(-1);
+        cbSituacao.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbSituacaoItemStateChanged(evt);
+            }
+        });
 
         jLabel2.setText("Número Exemplar:");
 
@@ -150,6 +161,13 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
         jLabel6.setText("Fornecedor..........:");
 
         tfFornecedor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        taDescricao.setColumns(20);
+        taDescricao.setRows(5);
+        jScrollPane1.setViewportView(taDescricao);
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel7.setText("Motivo:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -180,6 +198,14 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
                 .addGap(10, 10, 10)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,9 +234,13 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(tfIdExemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbSituacao, tfObra});
@@ -228,8 +258,8 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -243,6 +273,7 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
                 exemplar.setDataDeCadastro(dcDataDeCadastro.getDate());
                 exemplar.setFornecedor(tfFornecedor.getText());
                 exemplar.setSituacao(EnumSituacaoExemplar.getSituacao(cbSituacao.getSelectedItem().toString()));
+                exemplar.setDescricao(taDescricao.getText());
                 dao.update(exemplar);
                 JOptionPane.showMessageDialog(this, "Atualizado Com Sucesso!");
                 dispose();
@@ -258,6 +289,17 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
+
+    private void cbSituacaoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbSituacaoItemStateChanged
+        if (cbSituacao.getSelectedIndex() == 4 || cbSituacao.getSelectedIndex() == 5) {
+            taDescricao.setEditable(true);
+            taDescricao.setEnabled(true);
+        } else {
+            taDescricao.setText(null);
+            taDescricao.setEditable(false);
+            taDescricao.setEnabled(false);
+        }
+    }//GEN-LAST:event_cbSituacaoItemStateChanged
 
     boolean ValidaCampo() {
         if (dcDataDeAquisicao.getDate() == null) {
@@ -327,8 +369,11 @@ public final class DialogUpdateExemplar extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    public static javax.swing.JTextArea taDescricao;
     public static javax.swing.JTextField tfFornecedor;
     public static javax.swing.JTextField tfIdExemplar;
     public static javax.swing.JTextField tfObra;

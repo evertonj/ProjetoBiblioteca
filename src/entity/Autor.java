@@ -33,7 +33,7 @@ public class Autor  {
 
     @Override
     public String toString() {
-        return sobrenome + ", " + nome;
+        return nome+" "+sobrenome;
     }
 
     @Override

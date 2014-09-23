@@ -467,7 +467,8 @@ public class ObraDAO implements IObraDAO {
                         rs.getString("fornecedor"),
                         new java.util.Date(rs.getDate("dataDeAquisicao").getTime()),
                         rs.getInt("id_obra"), rs.getInt("numero_sequencial"),
-                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")));
+                        EnumSituacaoExemplar.getSituacao(rs.getString("situacao")),
+                        rs.getString("descricao"));
                 listaDeExemplares.add(exemplar);
             }
             return listaDeExemplares;

@@ -7,6 +7,7 @@ package form;
 
 import dao.ExemplarDAO;
 import entity.Exemplar;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -163,8 +164,18 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
         });
 
         tfTitulo.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        tfTitulo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfTituloKeyReleased(evt);
+            }
+        });
 
         tfFornecedor.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        tfFornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfFornecedorKeyReleased(evt);
+            }
+        });
 
         btPesquisarPorTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search16x16.png"))); // NOI18N
         btPesquisarPorTitulo.addActionListener(new java.awt.event.ActionListener() {
@@ -188,8 +199,18 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
         });
 
         dcDataCadastro.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        dcDataCadastro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                dcDataCadastroKeyReleased(evt);
+            }
+        });
 
         dcDataAquisicao.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        dcDataAquisicao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                dcDataAquisicaoKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -236,29 +257,26 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btPesquisarPorTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel4))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfFornecedor)
-                            .addComponent(btPesquisarPorFornecedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(11, 11, 11)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dcDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btPesquisarPorDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btPesquisarPorDataAquisicao, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dcDataAquisicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfFornecedor)
+                        .addComponent(jLabel5))
+                    .addComponent(btPesquisarPorFornecedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dcDataCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btPesquisarPorDataCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btPesquisarPorDataAquisicao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dcDataAquisicao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -316,6 +334,46 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btPesquisarPorFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorFornecedorActionPerformed
+        this.pesquisarPorFornecedor();
+    }//GEN-LAST:event_btPesquisarPorFornecedorActionPerformed
+
+    private void btPesquisarPorDataCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorDataCadastroActionPerformed
+        this.pesquisarPorDataCadastro();
+    }//GEN-LAST:event_btPesquisarPorDataCadastroActionPerformed
+
+    private void btPesquisarPorDataAquisicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorDataAquisicaoActionPerformed
+        this.pesquisarPorDataAquisicao();
+    }//GEN-LAST:event_btPesquisarPorDataAquisicaoActionPerformed
+
+    private void btPesquisarPorTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorTituloActionPerformed
+        this.pesquisarPorTitulo();
+    }//GEN-LAST:event_btPesquisarPorTituloActionPerformed
+
+    private void tfTituloKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTituloKeyReleased
+        if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
+            this.pesquisarPorTitulo();
+        }
+    }//GEN-LAST:event_tfTituloKeyReleased
+
+    private void tfFornecedorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFornecedorKeyReleased
+        if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
+            this.pesquisarPorFornecedor();
+        }
+    }//GEN-LAST:event_tfFornecedorKeyReleased
+
+    private void dcDataCadastroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dcDataCadastroKeyReleased
+        if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
+            this.pesquisarPorDataCadastro();
+        }
+    }//GEN-LAST:event_dcDataCadastroKeyReleased
+
+    private void dcDataAquisicaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dcDataAquisicaoKeyReleased
+        if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
+            this.pesquisarPorDataAquisicao();
+        }
+    }//GEN-LAST:event_dcDataAquisicaoKeyReleased
+
+    private void pesquisarPorFornecedor() {
         if (!tfFornecedor.getText().isEmpty()) {
             try {
                 listaDeExemplar = dao.buscar(tfFornecedor.getText());
@@ -334,9 +392,9 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Digite o Nome do Fornecedor!");
         }
-    }//GEN-LAST:event_btPesquisarPorFornecedorActionPerformed
-
-    private void btPesquisarPorDataCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorDataCadastroActionPerformed
+    }
+    
+    private void pesquisarPorDataCadastro() {
         if (dcDataCadastro.getDate() != null) {
              try {
                 listaDeExemplar = dao.buscarDataCadastro(dcDataCadastro.getDate());
@@ -355,9 +413,9 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Selecione Uma Data!");
         }
-    }//GEN-LAST:event_btPesquisarPorDataCadastroActionPerformed
-
-    private void btPesquisarPorDataAquisicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorDataAquisicaoActionPerformed
+    }
+    
+    private void pesquisarPorDataAquisicao() {
         if (dcDataAquisicao.getDate() != null) {
              try {
                 listaDeExemplar = dao.buscarDataAquisicao(dcDataAquisicao.getDate());
@@ -376,9 +434,9 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Selecione Uma Data!");
         }
-    }//GEN-LAST:event_btPesquisarPorDataAquisicaoActionPerformed
-
-    private void btPesquisarPorTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorTituloActionPerformed
+    }
+    
+    private void pesquisarPorTitulo() {
         if (!tfTitulo.getText().isEmpty()) {
              try {
                 listaDeExemplar = dao.buscarTitulo(tfTitulo.getText());
@@ -397,8 +455,8 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Digite o Título da Obra!");
         }
-    }//GEN-LAST:event_btPesquisarPorTituloActionPerformed
-
+    }
+    
     /**
      * @param args the command line arguments
      */

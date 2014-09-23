@@ -11,8 +11,6 @@ import entity.exceptions.NameException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import table.ObraAtualizarTableModel;
@@ -41,6 +39,7 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
     public DialogAtualizarObra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        tfTitulo.requestFocus();
     }
     Obra obra;
 
@@ -229,6 +228,7 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
         DialogNovaObra.btSalvar.setEnabled(true);
         novaObra.setDados(obra);
         novaObra.setVisible(true);
+        tfTitulo.requestFocus();
         this.pesquisa();
     }//GEN-LAST:event_btAtualizarActionPerformed
 

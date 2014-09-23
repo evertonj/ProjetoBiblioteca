@@ -15,7 +15,9 @@ public enum EnumSituacaoExemplar {
     DISPONIVEL("DISPONIVEL"),
     CONSULTA_LOCAL("CONSULTA_LOCAL"),
     RESERVADO("RESERVADO"),
-    INDISPONIVEL("INDISPONIVEL");
+    INDISPONIVEL("INDISPONIVEL"),
+    BAIXADO("BAIXADO");
+    
 
     private final String situacao;
 
@@ -35,6 +37,8 @@ public enum EnumSituacaoExemplar {
                 return EnumSituacaoExemplar.RESERVADO;
             case "INDISPONIVEL":
                 return EnumSituacaoExemplar.INDISPONIVEL;
+            case "BAIXADO":
+                return EnumSituacaoExemplar.BAIXADO;
         }
         return null;
     }
