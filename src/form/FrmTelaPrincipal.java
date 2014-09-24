@@ -229,6 +229,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         menuGerenciamento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
         menuGerenciamento.setText("Gerenciamento");
         menuGerenciamento.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        menuGerenciamento.setMargin(new java.awt.Insets(0, 25, 0, 25));
         menuGerenciamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuGerenciamentoActionPerformed(evt);

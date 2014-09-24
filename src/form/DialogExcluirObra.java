@@ -212,7 +212,7 @@ public class DialogExcluirObra extends javax.swing.JDialog {
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
-
+    int contador = 0;
     private void tbAtualizarObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarObraMouseClicked
         try {
             int rowIndex = tbAtualizarObra.getSelectedRow();
@@ -224,10 +224,20 @@ public class DialogExcluirObra extends javax.swing.JDialog {
         } catch (IndexOutOfBoundsException e) {
             DefineDadosEAjustesNajTable();
         }
+        contador++;
+        if(contador == 2) {
+            excluir();
+            tfTitulo.requestFocus();
+            contador = 0;
+        }
     }//GEN-LAST:event_tbAtualizarObraMouseClicked
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-         int rowIndex = tbAtualizarObra.getSelectedRow();
+        excluir();
+    }//GEN-LAST:event_btAtualizarActionPerformed
+
+    private void excluir() {
+        int rowIndex = tbAtualizarObra.getSelectedRow();
         if (rowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Removida!!!");
             return;
@@ -247,8 +257,8 @@ public class DialogExcluirObra extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Tente novamente!");
         }
-    }//GEN-LAST:event_btAtualizarActionPerformed
-
+    }
+    
     private void tfTituloKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTituloKeyReleased
         if (!tfTitulo.getText().isEmpty()) {
             this.pesquisa();

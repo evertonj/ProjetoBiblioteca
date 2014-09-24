@@ -309,7 +309,7 @@ public class DialogExcluirExemplar extends javax.swing.JDialog {
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
-
+    int contador = 0;
     private void tbExcluirExemplarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbExcluirExemplarMouseClicked
         int rowIndex = tbExcluirExemplar.getSelectedRow();
         if (rowIndex == -1) {
@@ -317,9 +317,19 @@ public class DialogExcluirExemplar extends javax.swing.JDialog {
             return;
         }
         exemplar = new ExemplarTableModel(listaDeExemplar).get(rowIndex);
+        contador++;
+        if(contador == 2) {
+            excluir();
+            tfTitulo.requestFocus();
+            contador = 0;
+        }
     }//GEN-LAST:event_tbExcluirExemplarMouseClicked
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        excluir();
+    }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void excluir() {
         int rowIndex = tbExcluirExemplar.getSelectedRow();
         if (rowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Selecione o Exemplar a ser Removido!!!");
@@ -341,8 +351,8 @@ public class DialogExcluirExemplar extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Tente novamente!");
         }
-    }//GEN-LAST:event_btExcluirActionPerformed
-
+    }
+    
     private void btPesquisarPorFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorFornecedorActionPerformed
         this.pesquisarPorFornecedor();
         tfFornecedor.setText(null);

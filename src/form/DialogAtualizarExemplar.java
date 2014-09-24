@@ -309,7 +309,7 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
-
+    int contador = 0;
     private void tbAlterarExemplarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAlterarExemplarMouseClicked
         int rowIndex = tbAlterarExemplar.getSelectedRow();
         if (rowIndex == -1) {
@@ -317,9 +317,19 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
             return;
         }
         exemplar = new ExemplarTableModel(listaDeExemplar).get(rowIndex);
+        contador++;
+        if (contador == 2) {
+            atualizar();
+            tfTitulo.requestFocus();
+            contador = 0;
+        }
     }//GEN-LAST:event_tbAlterarExemplarMouseClicked
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        atualizar();
+    }//GEN-LAST:event_btAtualizarActionPerformed
+
+    private void atualizar() {
         int rowIndex = tbAlterarExemplar.getSelectedRow();
         if (rowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Selecione o Exemplar a ser Alterado!!!");
@@ -330,9 +340,9 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
         DialogUpdateExemplar.exemplar = exemplar;
         DialogUpdateExemplar.setDados();
         du.setVisible(true);
-        DefineDadosEAjustesNajTable();
-    }//GEN-LAST:event_btAtualizarActionPerformed
-
+        //DefineDadosEAjustesNajTable();
+    }
+    
     private void btPesquisarPorFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarPorFornecedorActionPerformed
         this.pesquisarPorFornecedor();
         tfFornecedor.setText(null);
@@ -386,10 +396,10 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
             try {
                 listaDeExemplar = dao.buscar(tfFornecedor.getText());
                 if (listaDeExemplar.isEmpty()) {
-                     tbAlterarExemplar.setModel(new DefaultTableModel());
-                     JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
-                     return;
-                 }
+                    tbAlterarExemplar.setModel(new DefaultTableModel());
+                    JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
+                    return;
+                }
 //            for (int i = 0; i < listaDeExemplar.size(); i++) {
 //                System.out.println("Exemplar: "+listaDeExemplar.get(i));
 //            }
@@ -401,16 +411,16 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Digite o Nome do Fornecedor!");
         }
     }
-    
+
     private void pesquisarPorDataCadastro() {
         if (dcDataCadastro.getDate() != null) {
-             try {
+            try {
                 listaDeExemplar = dao.buscarDataCadastro(dcDataCadastro.getDate());
-                 if (listaDeExemplar.isEmpty()) {
-                     tbAlterarExemplar.setModel(new DefaultTableModel());
-                     JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
-                     return;
-                 }
+                if (listaDeExemplar.isEmpty()) {
+                    tbAlterarExemplar.setModel(new DefaultTableModel());
+                    JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
+                    return;
+                }
 //            for (int i = 0; i < listaDeExemplar.size(); i++) {
 //                System.out.println("Exemplar: "+listaDeExemplar.get(i));
 //            }
@@ -422,16 +432,16 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Selecione Uma Data!");
         }
     }
-    
+
     private void pesquisarPorDataAquisicao() {
         if (dcDataAquisicao.getDate() != null) {
-             try {
+            try {
                 listaDeExemplar = dao.buscarDataAquisicao(dcDataAquisicao.getDate());
-                 if (listaDeExemplar.isEmpty()) {
-                     tbAlterarExemplar.setModel(new DefaultTableModel());
-                     JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
-                     return;
-                 }
+                if (listaDeExemplar.isEmpty()) {
+                    tbAlterarExemplar.setModel(new DefaultTableModel());
+                    JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
+                    return;
+                }
 //            for (int i = 0; i < listaDeExemplar.size(); i++) {
 //                System.out.println("Exemplar: "+listaDeExemplar.get(i));
 //            }
@@ -443,16 +453,16 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Selecione Uma Data!");
         }
     }
-    
+
     private void pesquisarPorTitulo() {
         if (!tfTitulo.getText().isEmpty()) {
-             try {
+            try {
                 listaDeExemplar = dao.buscarTitulo(tfTitulo.getText());
-                 if (listaDeExemplar.isEmpty()) {
-                     tbAlterarExemplar.setModel(new DefaultTableModel());
-                     JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
-                     return;
-                 }
+                if (listaDeExemplar.isEmpty()) {
+                    tbAlterarExemplar.setModel(new DefaultTableModel());
+                    JOptionPane.showMessageDialog(this, "A Busca Não Encontrou Nenhum Valor!!!");
+                    return;
+                }
 //            for (int i = 0; i < listaDeExemplar.size(); i++) {
 //                System.out.println("Exemplar: "+listaDeExemplar.get(i));
 //            }
@@ -464,7 +474,7 @@ public class DialogAtualizarExemplar extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Digite o Título da Obra!");
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */

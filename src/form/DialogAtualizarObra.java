@@ -14,7 +14,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.Document;
 import table.ObraAtualizarTableModel;
 import table.ObraColumnModel;
 import validarJtextField.SomenteNumero;
@@ -211,7 +210,7 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
-
+    int contador = 0;
     private void tbAtualizarObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarObraMouseClicked
         try {
             int rowIndex = tbAtualizarObra.getSelectedRow();
@@ -223,9 +222,19 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
         } catch (IndexOutOfBoundsException e) {
             DefineDadosEAjustesNajTable();
         }
+        contador++;
+        if (contador == 2) {
+            atualizar();
+            tfTitulo.requestFocus();
+            contador = 0;
+        }
     }//GEN-LAST:event_tbAtualizarObraMouseClicked
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        atualizar();
+    }//GEN-LAST:event_btAtualizarActionPerformed
+    
+    private void atualizar() {
         int rowIndex = tbAtualizarObra.getSelectedRow();
         if (rowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
@@ -238,8 +247,8 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
         novaObra.setVisible(true);
         tfTitulo.requestFocus();
         this.pesquisa();
-    }//GEN-LAST:event_btAtualizarActionPerformed
-
+    }
+    
     private void tfTituloKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTituloKeyReleased
         if (!tfTitulo.getText().isEmpty()) {
             this.pesquisa();
@@ -286,7 +295,7 @@ public class DialogAtualizarObra extends javax.swing.JDialog {
                         return false;
                     }
 //                    return verifica(listaDeObra);
-                break;
+                    break;
                 case 4:
                     listaDeObra = dao.consultaAssunto(tfTitulo.getText());
 //                    return verifica(listaDeObra);
