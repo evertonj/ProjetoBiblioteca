@@ -10,7 +10,9 @@ import dao.UsuarioDAO;
 import entity.Usuario;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import table.ObraAtualizarTableModel;
 import table.UsuarioCellRenderer;
 import table.UsuarioTableModel;
 
@@ -28,17 +30,18 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
         initComponents();
 
     }
+    Usuario usuario;
     List<Usuario> listaUsuario = new ArrayList<>();
 
     private void refreshTable(List<Usuario> listaUsuario) {
-
-        
 
         if (listaUsuario != null) {
             tbAluno.setModel(new UsuarioTableModel(listaUsuario));
             tbAluno.setDefaultRenderer(Object.class, new UsuarioCellRenderer());
         }
     }
+    private ImageIcon icon;
+    byte[] foto;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -123,6 +126,11 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
 
             }
         ));
+        tbAluno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAlunoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbAluno);
 
         btAtualizar1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -171,39 +179,59 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        int rowIndex = tbAluno.getSelectedRow();
+        if (rowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
+            return;
+        }
+        usuario = new UsuarioTableModel(listaUsuario).get(rowIndex);
+        FrmCadastroUsuario novoUsuario = new FrmCadastroUsuario(new javax.swing.JFrame(), true);
+
+        novoUsuario.setDados(usuario);
+        novoUsuario.setVisible(true);
 
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btAtualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizar1ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btAtualizar1ActionPerformed
 
     private void tfBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBuscaKeyTyped
-        
 
-        
 
     }//GEN-LAST:event_tfBuscaKeyTyped
 
     private void tfBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBuscaKeyReleased
-        
-         if(tfBusca.getText().isEmpty()){
-             listaUsuario.clear();
-         }else{
-        switch (cbPesquisa.getSelectedIndex()) {
-            case 0:
-                listaUsuario = new UsuarioDAO().buscaPorNome(tfBusca.getText());
-                this.refreshTable(listaUsuario);
-                break;
-            case 1:
-                listaUsuario = new UsuarioDAO().buscaPorSerie(tfBusca.getText());
-                this.refreshTable(listaUsuario);
-                break;
 
+        if (tfBusca.getText().isEmpty()) {
+            listaUsuario.clear();
+        } else {
+            switch (cbPesquisa.getSelectedIndex()) {
+                case 0:
+                    listaUsuario = new UsuarioDAO().buscaPorNome(tfBusca.getText());
+                    this.refreshTable(listaUsuario);
+                    break;
+                case 1:
+                    listaUsuario = new UsuarioDAO().buscaPorSerie(tfBusca.getText());
+                    this.refreshTable(listaUsuario);
+                    break;
+
+            }
         }
-         }
 
     }//GEN-LAST:event_tfBuscaKeyReleased
+
+    private void tbAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAlunoMouseClicked
+        if (evt.getClickCount() == 2) {
+            int rowIndex = tbAluno.getSelectedRow();
+            usuario = new UsuarioTableModel(listaUsuario).get(rowIndex);
+            FrmCadastroUsuario novoUsuario = new FrmCadastroUsuario(new javax.swing.JFrame(), true);
+
+            novoUsuario.setDados(usuario);
+            novoUsuario.setVisible(true);
+
+        }
+    }//GEN-LAST:event_tbAlunoMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

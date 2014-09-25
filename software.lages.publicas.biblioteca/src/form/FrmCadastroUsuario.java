@@ -5,7 +5,6 @@
  */
 package form;
 
-
 import controller.UsuarioController;
 import entity.Usuario;
 import java.io.File;
@@ -38,12 +37,15 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     int idUsuario;
     private DefaultListModel defaultListaEmail = new DefaultListModel();
     private DefaultListModel defaultListaTelefone = new DefaultListModel();
-    private ImageIcon icon;
+    Usuario usuario;
+  
     private String endImage;
     private ImageIcon fotoEspecie;
+    private ImageIcon icon;
     byte[] foto;
-      List<String> emails = new ArrayList<>();
-        List<String> telefones = new ArrayList<>();
+    List<String> emails = new ArrayList<>();
+    List<String> telefones = new ArrayList<>();
+    boolean verificador;
 
     private void onCancelar() {
         tfNome.setText(null);
@@ -52,13 +54,46 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         tfTelefone.setText(null);
     }
 
+    public void setDados(Usuario usuario) {
+        this.usuario = usuario;
+        tfNome.setText(usuario.getNome());
+        tfSerie.setText(usuario.getSerie());
+        for (int i = 0; i < usuario.getListEmail().size(); i++) {
+            defaultListaEmail.addElement(usuario.getListEmail().get(i));
+            this.listEmail.setModel(defaultListaEmail);
+
+        }
+        for (int i = 0; i < usuario.getListTelefone().size(); i++) {
+            defaultListaTelefone.addElement(usuario.getListEmail().get(i));
+            this.listTelefone.setModel(defaultListaTelefone);
+        }
+         byte[] imgBytes = usuario.getFoto();
+        foto = usuario.getFoto();
+        try {/*
+             Gravar A Imagem no disco.
+             FileOutputStream fos = new FileOutputStream("Foto " + tfTitulo.getText() + ".jpg");
+             fos.write(imgBytes);
+             FileDescriptor fd = fos.getFD();
+             fos.flush();
+             fd.sync();
+             fos.close();*/
+
+            icon = new ImageIcon(imgBytes);
+            lbFoto.setIcon(redimensionaImageIcon(icon));
+        } catch (Exception e) {
+            String erro = e.toString();
+        }
+        idUsuario = usuario.getId();
+   
+    }
+
     private void enableFields(boolean b) {
         tfNome.setEnabled(b);
         tfTelefone.setEnabled(b);
         tfEmail.setEnabled(b);
         tfTelefone.setEnabled(b);
     }
-    
+
     public byte[] getBytes(File file) {
         int len = (int) file.length();
         byte[] sendBuf = new byte[len];
@@ -372,14 +407,14 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         int result;
-      
-    
+
         Usuario usuario = new Usuario(idUsuario, tfNome.getText(), tfSerie.getText(), emails, telefones, foto);
         if (idUsuario == 0) {
             result = new UsuarioController().addUsuario(usuario);
         } else {
             usuario.setId(idUsuario);
             result = new UsuarioController().alterarUsuario(usuario);
+            
             idUsuario = 0;
         }
         if (result == 1) {
@@ -433,7 +468,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btRemoverTelefoneActionPerformed
 
     private void btEscolherFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEscolherFotoActionPerformed
-         try {
+        try {
             JFileChooser fc = new JFileChooser("C:\\Users\\Alex\\Desktop");
             fc.addChoosableFileFilter(new FileNameExtensionFilter("Arquivos de Imagem", "jpg", "png", "gif", "icon", "bmp", "tif"));
             fc.setAcceptAllFileFilterUsed(false);
@@ -460,7 +495,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
                 larguraFinal = width * altura;
             }
         } else {
-            if (height > 130) {
+            if (height > 90) {
                 double largura = larguraFinal / width;
                 alturaFinal = height * largura;
             } else {
@@ -471,6 +506,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         icon.setImage(icon.getImage().getScaledInstance((int) larguraFinal, (int) alturaFinal, 100));
         return icon;
     }
+
     /**
      * @param args the command line arg uments
      */

@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -156,7 +156,7 @@ public class DialogGerenciadorUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        FrmBuscaUsuario consultar = new FrmBuscaUsuario(new javax.swing.JFrame(), true);
+        FrmAtualizarUsuario consultar = new FrmAtualizarUsuario(new javax.swing.JFrame(), true);
         consultar.setVisible(true);
     }//GEN-LAST:event_btAtualizarActionPerformed
 
