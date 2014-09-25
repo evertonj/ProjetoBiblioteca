@@ -5,8 +5,8 @@
  */
 package entity;
 
-import entity.exceptions.NameException;
-import entity.exceptions.PasswordException;
+import entity.exception.NameException;
+import entity.exception.PasswordException;
 
 
 

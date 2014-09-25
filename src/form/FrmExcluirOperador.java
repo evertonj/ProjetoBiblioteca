@@ -31,7 +31,6 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
 
     private void refreshTable() {
         operadorList = new OperadorController().finAll();
-        System.out.println(operadorList.get(0).getNome());
         if (operadorList != null) {
             tbLogin.setModel(new OperadorTableModel(operadorList));
             tbLogin.setDefaultRenderer(Object.class, new OperadorCellRenderer());

@@ -12,9 +12,9 @@ import java.util.List;
 public class OperadorDAO implements IOperadorDAO {
 
     private static final String SQL_SAVE = "INSERT INTO operador(nome, senha) VALUES (?, ?);";
-    private static final String SQL_UPDATE = "UPDATE operador SET nome = ?, senha = ? WHERE id = ?;";
-    private static final String SQL_REMOVE = "DELETE FROM operador WHERE id = ?;";
-    private static final String SQL_SEARCH = "SELECT id, nome FROM operador WHERE nome LIKE '?%';";
+    private static final String SQL_UPDATE = "UPDATE operador SET nome = ?, senha = ? WHERE idOperador = ?;";
+    private static final String SQL_REMOVE = "DELETE FROM operador WHERE idOperador = ?;";
+    private static final String SQL_SEARCH = "SELECT * FROM operador WHERE nome = ?";
     private static final String SQL_FIND_ALL = "SELECT * FROM operador;";
 
     @Override
@@ -23,8 +23,8 @@ public class OperadorDAO implements IOperadorDAO {
         try {
             Connection conn = DBConnection.getConnection();
             try (PreparedStatement pstm = conn.prepareStatement(SQL_SAVE)) {
-                pstm.setString(1, operador.getNome().toUpperCase());
-                pstm.setString(2, operador.getSenha().toUpperCase());
+                pstm.setString(1, operador.getNome());
+                pstm.setString(2, operador.getSenha());
                 result = pstm.executeUpdate();
                 pstm.close();
             }
@@ -40,9 +40,9 @@ public class OperadorDAO implements IOperadorDAO {
         try {
             Connection conn = DBConnection.getConnection();
             try (PreparedStatement pstm = conn.prepareStatement(SQL_UPDATE)) {
-                pstm.setString(1, operador.getNome().toUpperCase());
-                pstm.setString(2, operador.getSenha().toUpperCase());
-                pstm.setLong(5, operador.getId());
+                pstm.setString(1, operador.getNome());
+                pstm.setString(2, operador.getSenha());
+                pstm.setLong(3, operador.getId());
                 result = pstm.executeUpdate();
                 pstm.close();
             }
@@ -71,14 +71,15 @@ public class OperadorDAO implements IOperadorDAO {
     @Override
     public Operador search(String nome) {
         Connection conn = DBConnection.getConnection();
-        ResultSet rs = null;
-        PreparedStatement comando = null;
+        ResultSet rs;
+        PreparedStatement comando;
         try {
             comando = conn.prepareStatement(SQL_SEARCH);
+            comando.setString(1, nome);
             rs = comando.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 // pega todos os atributos da pessoa  
-                Operador operador = new Operador(rs.getLong("id"),
+                Operador operador = new Operador(rs.getLong("idOperador"),
                         rs.getString("nome"),
                         rs.getString("senha"));
                 return operador;
@@ -99,7 +100,7 @@ public class OperadorDAO implements IOperadorDAO {
                 rs = pstm.executeQuery();
                 while (rs.next()) {
                     Operador operador = new Operador();
-                    operador.setId(rs.getLong("id"));
+                    operador.setId(rs.getLong("idOperador"));
                     operador.setNome(rs.getString("nome"));
                     operadores.add(operador);
                 }

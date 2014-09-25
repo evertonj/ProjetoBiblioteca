@@ -39,7 +39,6 @@ public class FrmBuscaOperador extends javax.swing.JDialog {
     private void refreshTable() {
 
         loginList = new OperadorController().finAll();
-        System.out.println(loginList.get(0).getNome());
         if (loginList != null) {
             tbLogin.setModel(new OperadorTableModel(loginList));
             tbLogin.setDefaultRenderer(Object.class, new OperadorCellRenderer());

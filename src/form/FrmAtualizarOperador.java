@@ -7,10 +7,10 @@ package form;
 
 import controller.OperadorController;
 import entity.Operador;
-import entity.exceptions.NameException;
-import entity.exceptions.PasswordException;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -22,10 +22,11 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
      * Creates new form FrmAtualizarOperador
      */
     public FrmAtualizarOperador(java.awt.Frame parent, boolean modal) {
-        super(parent,modal);
+        super(parent, modal);
         initComponents();
     }
     List<Operador> operadorList;
+    Operador operador;
     Long idOperador;
 
     private void onCancelar() {
@@ -34,9 +35,9 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
         tpsSenha.setText(null);
 
     }
-    
+
     private void enableFields(boolean b) {
-        
+
         tfNome.setEnabled(b);
         tpsSenha.setEnabled(b);
     }
@@ -198,46 +199,50 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        int result;
-        try {
-            Operador operador = new Operador(tfNome.getText(), String.copyValueOf(tpsSenha.getPassword()));
-
-            result = new OperadorController().alterarOperador(operador);
-            idOperador = null;
-
-            if (result == 1) {
-                JOptionPane.showMessageDialog(this, "Autor inserido com Sucesso!");
-                onCancelar();
-                enableFields(false);
+        JLabel label = new JLabel("Digite a senha:");
+        JPasswordField jpf = new JPasswordField();
+        JOptionPane.showConfirmDialog(null,
+                new Object[]{label, jpf}, "Password:",
+                JOptionPane.OK_CANCEL_OPTION);
+        String s = String.valueOf(jpf.getPassword());
+        System.out.println(s);
+        if (!s.isEmpty() && operador != null) {
+            if (!operador.getSenha().equals(s)) {
+                JOptionPane.showMessageDialog(this, "Senha Incorreta!");
             } else {
-                JOptionPane.showMessageDialog(this, "Tente novamente!");
+                int result;
+                operador.setNome(tfNome.getText());
+                operador.setSenha(String.copyValueOf(tpsSenha.getPassword()));
+                result = new OperadorController().alterarOperador(operador);
+                idOperador = null;
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(this, "Operador Atualizado com Sucesso!");
+                    onCancelar();
+                    enableFields(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Tente novamente!");
+                }
             }
-
-        } catch (NameException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-            tfNome.requestFocus();
-            tfNome.selectAll();
-            return;
-        } catch (PasswordException ex) {
-            tpsSenha.requestFocus();
-            tpsSenha.selectAll();
         }
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         if (new OperadorController().buscarOperador(tfnomePesquisa.getText()) != null) {
-            Operador operador = new OperadorController().buscarOperador(tfnomePesquisa.getText().toUpperCase());
+            operador = new OperadorController().buscarOperador(tfnomePesquisa.getText());
             tfNome.setText(operador.getNome());
             tpsSenha.setText(operador.getSenha());
             idOperador = operador.getId();
             enableFields(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Nome nao encontrado");
+            JOptionPane.showMessageDialog(this, "Operador não encontrado!");
         }
+
+        tfnomePesquisa.setText(null);
+
     }//GEN-LAST:event_btBuscarActionPerformed
 
     /**
@@ -270,14 +275,15 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               FrmAtualizarOperador dialog = new FrmAtualizarOperador(new javax.swing.JFrame(), true);
+                FrmAtualizarOperador dialog = new FrmAtualizarOperador(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
                 });
-                dialog.setVisible(true);}
+                dialog.setVisible(true);
+            }
         });
     }
 
