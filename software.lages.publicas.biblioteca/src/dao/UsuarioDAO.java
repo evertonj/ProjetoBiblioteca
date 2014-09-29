@@ -219,9 +219,9 @@ public class UsuarioDAO implements IUsuarioDAO {
     private void updateTelefone(List<String> telefone, int id) {
 
         Connection conn = null;
-        PreparedStatement pstm = null;
+        PreparedStatement pstm = null, pstmIdUsuario = null;
         ResultSet rs = null;
-        String sqlEmail = "delete from telefone_usuario where idusuario = " + id + ";";
+        String sqlEmail = "update telefone_usuario set numero = ? where idusuario = " + id + ";";
         try {
             conn = DBConnection.getConnection();
             pstm = conn.prepareStatement(sqlEmail);
