@@ -107,7 +107,7 @@ public class UsuarioDAO implements IUsuarioDAO {
                     pstm = conn.prepareStatement(sqlTelefones);
                    
                     pstm.setString(1, email.get(i));
-                    pstm.setInt(2, ultimoIdUsuario);//Corrigir
+                    pstm.setInt(2, ultimoIdUsuario);
                    
                     pstm.executeUpdate();
                    
