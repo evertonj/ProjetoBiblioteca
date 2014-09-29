@@ -60,7 +60,6 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`usuario` (
   `serie` VARCHAR(80) NULL DEFAULT NULL,
   `foto` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -91,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`exemplar` (
   `numero_sequencial` INT(11) NULL DEFAULT '1',
   `situacao` ENUM('EMPRESTADO','DISPONIVEL','CONSULTA_LOCAL','RESERVADO','INDISPONIVEL','BAIXADO') NOT NULL,
   `id_obra` INT(11) NULL DEFAULT NULL,
-  `descricao` TEXT NULL,
+  `descricao` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -130,6 +129,18 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`obra_autor` (
   CONSTRAINT `obra_autor_ibfk_2`
     FOREIGN KEY (`idautor`)
     REFERENCES `biblioteca`.`autor` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `biblioteca`.`operador`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`operador` (
+  `idoperador` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `senha` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idoperador`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

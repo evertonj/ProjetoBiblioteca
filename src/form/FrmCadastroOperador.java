@@ -9,6 +9,7 @@ import controller.OperadorController;
 import entity.Operador;
 import entity.exception.NameException;
 import entity.exception.PasswordException;
+import java.security.MessageDigest;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -150,10 +151,30 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
         tpsSenha.setText(null);
     }
 
+    public static String ComputeHash(String senha) {
+        try {
+            MessageDigest mecanismoDeHash = MessageDigest.getInstance("SHA-256");
+            byte[] hashEmBytes = mecanismoDeHash.digest(senha.getBytes("UTF-8"));
+            StringBuffer hashEmHexadecimal = new StringBuffer();
+ 
+            for (int i = 0; i < hashEmBytes.length; i++) {
+                String hex = Integer.toHexString(0xff & hashEmBytes[i]);
+                if (hex.length() == 1) {
+                    hashEmHexadecimal.append('0');
+                }
+                hashEmHexadecimal.append(hex);
+            }
+ 
+            return hashEmHexadecimal.toString();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         int result;
         try {
-            Operador operador = new Operador(tfNome.getText(), String.copyValueOf(tpsSenha.getPassword()));
+            Operador operador = new Operador(tfNome.getText(), ComputeHash(String.copyValueOf(tpsSenha.getPassword())));
             if (idOperador == null) {
                 result = new OperadorController().addOperador(operador);
             } else {

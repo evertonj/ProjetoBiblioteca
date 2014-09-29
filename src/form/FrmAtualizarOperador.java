@@ -7,6 +7,7 @@ package form;
 
 import controller.OperadorController;
 import entity.Operador;
+import java.security.MessageDigest;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -202,6 +203,26 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
+    public static String ComputeHash(String senha) {
+        try {
+            MessageDigest mecanismoDeHash = MessageDigest.getInstance("SHA-256");
+            byte[] hashEmBytes = mecanismoDeHash.digest(senha.getBytes("UTF-8"));
+            StringBuffer hashEmHexadecimal = new StringBuffer();
+ 
+            for (int i = 0; i < hashEmBytes.length; i++) {
+                String hex = Integer.toHexString(0xff & hashEmBytes[i]);
+                if (hex.length() == 1) {
+                    hashEmHexadecimal.append('0');
+                }
+                hashEmHexadecimal.append(hex);
+            }
+ 
+            return hashEmHexadecimal.toString();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
         JLabel label = new JLabel("Digite a senha:");
         JPasswordField jpf = new JPasswordField();
@@ -209,14 +230,14 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
                 new Object[]{label, jpf}, "Password:",
                 JOptionPane.OK_CANCEL_OPTION);
         String s = String.valueOf(jpf.getPassword());
-        System.out.println(s);
+        s = ComputeHash(s);
         if (!s.isEmpty() && operador != null) {
             if (!operador.getSenha().equals(s)) {
                 JOptionPane.showMessageDialog(this, "Senha Incorreta!");
             } else {
                 int result;
                 operador.setNome(tfNome.getText());
-                operador.setSenha(String.copyValueOf(tpsSenha.getPassword()));
+                operador.setSenha(ComputeHash(String.copyValueOf(tpsSenha.getPassword())));
                 result = new OperadorController().alterarOperador(operador);
                 idOperador = null;
                 if (result == 1) {
@@ -234,7 +255,7 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
         if (new OperadorController().buscarOperador(tfnomePesquisa.getText()) != null) {
             operador = new OperadorController().buscarOperador(tfnomePesquisa.getText());
             tfNome.setText(operador.getNome());
-            tpsSenha.setText(operador.getSenha());
+            tpsSenha.setText("********");
             idOperador = operador.getId();
             enableFields(true);
         } else {
