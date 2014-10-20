@@ -17,7 +17,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import table.ExemplarColumnModel;
 import table.ExemplarTableModel;
-import validarJtextField.LetrasPermitidas;
+import validadorDeTextField.LetrasPermitidas;
 
 /**
  *

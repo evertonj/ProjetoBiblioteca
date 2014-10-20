@@ -11,14 +11,12 @@ import entity.exceptions.NameException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.text.DefaultStyledDocument;
 import table.ObraAtualizarTableModel;
 import table.ObraColumnModel;
-import validarJtextField.SomenteNumero;
+import validadorDeTextField.SomenteNumero;
 
 /**
  *

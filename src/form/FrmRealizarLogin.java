@@ -48,7 +48,7 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
         jLabel3.setText("Senha:");
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Bandeira 2 - Copia.jpg"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Lages - Cópia1.jpg"))); // NOI18N
         jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 102, 255), 2));
 
         tfLogin.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N

@@ -16,7 +16,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.text.DefaultStyledDocument;
 import table.ObraAtualizarTableModel;
 import table.ObraColumnModel;
-import validarJtextField.SomenteNumero;
+import validadorDeTextField.SomenteNumero;
 
 /**
  *

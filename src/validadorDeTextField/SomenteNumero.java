@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package validarJtextField;
+package validadorDeTextField;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
