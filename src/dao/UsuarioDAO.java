@@ -136,14 +136,77 @@ public class UsuarioDAO implements IUsuarioDAO {
             try (PreparedStatement pstm = conn.prepareStatement(SQL_UPDATE)) {
                 pstm.setString(1, usuario.getNome());
                 pstm.setString(2, usuario.getSerie());
-                pstm.setLong(5, usuario.getId());
+                pstm.setLong(3, usuario.getId());
                 result = pstm.executeUpdate();
                 pstm.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        this.removeEmail(usuario.getId());
+        this.removeTelefone(usuario.getId());
+        this.updateTelefoneEmail(usuario);
+        
         return result;
+    }
+    public void updateTelefoneEmail(Usuario usuario){
+        PreparedStatement pstmT = null, pstmE = null;
+        ResultSet rsTelefone = null, rsEmail = null;
+        Connection conn = DBConnection.getConnection();
+         String sqlTelefone = "select * from telefone_usuario where idusuario = " + usuario.getId() + ";";
+                 String sqlEmail = "select * from email_usuario where idusuario = " + usuario.getId() + ";"; 
+                 try {
+                pstmT = conn.prepareStatement(sqlTelefone);
+                
+       
+            rsTelefone = pstmT.executeQuery();
+        
+                pstmE = conn.prepareStatement(sqlEmail);
+                rsEmail = pstmE.executeQuery();
+                usuario.setListTelefone(telefones(rsTelefone));
+               
+               
+                usuario.setListEmail(emails(rsEmail));}
+                 catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NameException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+   
+    public void removeEmail(int id) {
+     
+        PreparedStatement pstmE = null;
+        
+        String email = "delete from email_usuario where idusuario ="+id+";";
+        try {
+            Connection conn = DBConnection.getConnection();
+          
+            pstmE = conn.prepareStatement(email);
+            
+            pstmE.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+     public void removeTelefone(int id) {
+     
+        PreparedStatement pstmE = null;
+        
+        String email = "delete from telefone_usuario where idusuario ="+id+";";
+        try {
+            Connection conn = DBConnection.getConnection();
+          
+            pstmE = conn.prepareStatement(email);
+            
+            pstmE.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
     }
 
     @Override
@@ -224,17 +287,17 @@ public class UsuarioDAO implements IUsuarioDAO {
             
                 
                 usuario = new Usuario();
-                 System.out.println(" teste ");
+               
                  
                 usuario.setNome(rs.getString("Nome"));
-                System.out.println(usuario.getNome());
+               
                 usuario.setId(rs.getInt("id"));
                 idusuario = usuario.getId();
-                System.out.println(idusuario);
+               
                 String sqlTelefone = "select * from telefone_usuario where idusuario = " + idusuario + ";";
                  String sqlEmail = "select * from email_usuario where idusuario = " + idusuario + ";";
                 pstmT = conn.prepareStatement(sqlTelefone);
-                System.out.println(" Teste");
+                
                 rsTelefone = pstmT.executeQuery();
                 pstmE = conn.prepareStatement(sqlEmail);
                 rsEmail = pstmE.executeQuery();
