@@ -52,8 +52,9 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
             tbTelefone.setDefaultRenderer(Object.class, new UsuarioCellRenderer());
         }
     }
+    Usuario usuario;
     List<Usuario> usuarioList;
-    int idUsuario;
+    int idUsuario = 0;
     private DefaultListModel defaultListaEmail = new DefaultListModel();
     private DefaultListModel defaultListaTelefone = new DefaultListModel();
     private ImageIcon icon;
@@ -102,15 +103,15 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
             for (int i = 0; i < telefones.size(); i++) {
                 aux = telefones.get(i);
                 if (nome.equals(aux)) {
-                    return true;
-                } else {
                     return false;
+                } else {
+                    return true;
                 }
 
             }
 
         }
-        return false;
+        return true;
     }
 
     private void enableFields(boolean b) {
@@ -458,7 +459,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         int result;
 
-        Usuario usuario = new Usuario(idUsuario, tfNome.getText(), tfSerie.getText(), emails, telefones, foto);
+        usuario = new Usuario(idUsuario, tfNome.getText(), tfSerie.getText(), emails, telefones, foto);
         if (idUsuario == 0) {
             result = new UsuarioController().addUsuario(usuario);
         } else {
@@ -654,7 +655,32 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     private javax.swing.JTextField tfTelefone;
     // End of variables declaration//GEN-END:variables
 
-    void setDados(Usuario usuario) {
+  public  void setDados(Usuario novoUsuario) {
+        this.usuario = novoUsuario;
+        tfNome.setText(usuario.getNome());
+        tfSerie.setText(usuario.getSerie());
+        
+        emails = usuario.getListEmail();
+        this.refreshTableEmail();
+         byte[] imgBytes = usuario.getFoto();
+         telefones = usuario.getListTelefone();
+         this.refreshTableTelefone();
+        foto = usuario.getFoto();
+        try {/*
+             Gravar A Imagem no disco.
+             FileOutputStream fos = new FileOutputStream("Foto " + tfTitulo.getText() + ".jpg");
+             fos.write(imgBytes);
+             FileDescriptor fd = fos.getFD();
+             fos.flush();
+             fd.sync();
+             fos.close();*/
 
+            icon = new ImageIcon(imgBytes);
+            lbFoto.setIcon(redimensionaImageIcon(icon));
+        } catch (Exception e) {
+            String erro = e.toString();
+        }
+        idUsuario = usuario.getId();
+   
     }
 }
