@@ -9,7 +9,6 @@ package form;
 import controller.AutorController;
 import entity.Autor;
 import entity.exceptions.NameException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.JOptionPane;
 
@@ -334,4 +333,10 @@ this.dispose();
     private javax.swing.JTextField tfNome;
     private javax.swing.JTextField tfSobreNome;
     // End of variables declaration//GEN-END:variables
+
+    void setDados(Autor autor) {
+        idAutor = autor.getId();
+        tfNome.setText(autor.getNome());
+        tfSobreNome.setText(autor.getSobrenome());
+    }
 }

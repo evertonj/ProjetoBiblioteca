@@ -22,8 +22,5 @@ public interface IAutorDAO {
     
     List<Autor> finAll();
     
-    Autor buscar(String nome);
-      
-    
-    
+    List<Autor> buscar(String nome);
 }

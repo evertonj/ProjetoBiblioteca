@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package dao;
+
 import connection.DBConnection;
 import entity.Autor;
 import entity.exceptions.NameException;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //Teste Git
+
 /**
  *
  * @author Alex
@@ -61,14 +63,13 @@ public class AutorDAO implements IAutorDAO {
         int result = 0;
         try {
             pstm = conn.prepareStatement(SQL_UPDATE);
-           pstm.setString(1, autor.getNome());
+            pstm.setString(1, autor.getNome());
             pstm.setString(2, autor.getSobrenome());
             pstm.setLong(3, autor.getId());
-           
-            
+
             result = pstm.executeUpdate();
             pstm.close();
-           
+
         } catch (SQLException e) {
             try {
                 if (conn != null) {
@@ -108,38 +109,36 @@ public class AutorDAO implements IAutorDAO {
         }
         return result;
     }
+
     @Override
-     public Autor buscar(String nome) {  
-         Connection conn = DBConnection.getConnection();
-      
-      ResultSet rs=null;  
-      try {  
-           PreparedStatement comando = conn.prepareStatement("SELECT * FROM Autor WHERE Nome LIKE '%"+nome+"%';" );
-       
-         rs = comando.executeQuery();
-         while (rs.next()) {  
-             
-            // pega todos os atributos da pessoa  
-             Autor autor;
-             autor = new Autor( rs.getInt("ID"),
-                     rs.getString("NOME"),
-                     rs.getString("SOBRENOME"));
-               return autor;
-                  
-             
-         }  
-         
-      } catch (SQLException e) {  
-          
-         return null;  
-      } catch (NameException ex) {  
+    public List<Autor> buscar(String nome) {
+        Connection conn = DBConnection.getConnection();
+        List<Autor> lista = new ArrayList();
+        ResultSet rs = null;
+        try {
+            PreparedStatement comando = conn.prepareStatement("SELECT * FROM Autor WHERE Nome LIKE '%" + nome + "%';");
+            rs = comando.executeQuery();
+            while (rs.next()) {
+                // pega todos os atributos da pessoa  
+                Autor autor;
+                autor = new Autor(rs.getInt("ID"),
+                        rs.getString("NOME"),
+                        rs.getString("SOBRENOME"));
+                lista.add(autor);
+            }
+            return lista;
+
+        } catch (SQLException e) {
+            return null;
+        } catch (NameException ex) {
             Logger.getLogger(AutorDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }  
-      return null;
-     }
+        }
+        return null;
+    }
+
     @Override
     public List<Autor> finAll() {
-        
+
         Connection conn = DBConnection.getConnection();
         PreparedStatement pstm = null;
         List<Autor> autors = new ArrayList<>();
@@ -150,14 +149,14 @@ public class AutorDAO implements IAutorDAO {
 
             rs = pstm.executeQuery();
 
-            while (rs.next()) {                       
-              
+            while (rs.next()) {
+
                 Autor autor;
-                autor = new Autor( rs.getInt("ID"),
+                autor = new Autor(rs.getInt("ID"),
                         rs.getString("NOME"),
-                        rs.getString("SOBRENOME"));   
-                autors.add(autor);    
-               
+                        rs.getString("SOBRENOME"));
+                autors.add(autor);
+
             }
 
             pstm.close();
@@ -178,6 +177,5 @@ public class AutorDAO implements IAutorDAO {
         }
         return autors;
     }
-
 
 }

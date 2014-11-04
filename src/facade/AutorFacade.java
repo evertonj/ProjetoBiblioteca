@@ -37,7 +37,7 @@ public class AutorFacade {
     public List<Autor> finAll() {
         return dao.finAll();
     }
-    public Autor buscar (String nome){
+    public List<Autor> buscar (String nome){
         return dao.buscar(nome);
     }
 }

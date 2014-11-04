@@ -37,7 +37,7 @@ public class AutorController{
     public List<Autor> finAll() {
         return facade.finAll();
     }
-    public Autor buscar(String nome){
+    public List<Autor> buscar(String nome){
         return facade.buscar(nome);
     }
     

@@ -38,7 +38,7 @@ public class DialogGerenciadorAutor extends javax.swing.JDialog {
         btConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gerenciador de Editora");
+        setTitle("Gerenciador de Autor");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
