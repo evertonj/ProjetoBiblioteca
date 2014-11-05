@@ -5,7 +5,7 @@
  */
 package table;
 
-import entity.Usuario;
+import entity.Telefone;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,9 +15,9 @@ import javax.swing.table.AbstractTableModel;
  */
 public class TelefoneTableModel extends AbstractTableModel {
 
-    private List<String> valores;
+    private List<Telefone> valores;
 
-    public TelefoneTableModel(List<String> valores) {
+    public TelefoneTableModel(List<Telefone> valores) {
         this.valores = valores;
     }
 
@@ -33,11 +33,10 @@ public class TelefoneTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-       String telefones  = valores.get(rowIndex);
+       Telefone telefone  = valores.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return telefones;
-                   
+                return telefone.getTelefone();
            }
         return null;
     }
@@ -48,7 +47,6 @@ public class TelefoneTableModel extends AbstractTableModel {
         switch (column) {
             case 0:
                 return coluna = "Telefone";
-          
         }
         return null;
     }
@@ -63,7 +61,7 @@ public class TelefoneTableModel extends AbstractTableModel {
         return null;
     }
     
-    public String get(int row) {
+    public Telefone get(int row) {
         return valores.get(row);
     }
     //Teste

@@ -5,20 +5,19 @@
  */
 package form;
 
+import controller.AutorController;
 import dao.AutorDAO;
 import entity.Autor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 import table.AutorTableModel;
-import table.ObraColumnModel;
 
 /**
  *
  * @author Alex
  */
-public class FrmAtualizarAutor1 extends javax.swing.JDialog {
+public class FrmExcluirAutor extends javax.swing.JDialog {
 
     AutorDAO dao = new AutorDAO();
     List<Autor> listaDeAutor = new ArrayList();
@@ -30,13 +29,12 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
     /**
      * Creates new form DialogAtualizarObra
      */
-    public FrmAtualizarAutor1(java.awt.Frame parent, boolean modal) {
+    public FrmExcluirAutor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         tfTitulo.requestFocus();
     }
     Autor autor;
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,10 +51,10 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
         tbAtualizarObra = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         btVoltar = new javax.swing.JButton();
-        btAtualizar = new javax.swing.JButton();
+        btExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Atualizar Obra");
+        setTitle("Excluir Autor");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
@@ -100,12 +98,12 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
             }
         });
 
-        btAtualizar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/update.png"))); // NOI18N
-        btAtualizar.setText("Atualizar");
-        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
+        btExcluir.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
+        btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAtualizarActionPerformed(evt);
+                btExcluirActionPerformed(evt);
             }
         });
 
@@ -115,13 +113,13 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanel6Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btAtualizar, btVoltar});
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btExcluir, btVoltar});
 
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,11 +127,11 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btAtualizar))
+                    .addComponent(btExcluir))
                 .addContainerGap())
         );
 
-        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btAtualizar, btVoltar});
+        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btExcluir, btVoltar});
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -202,27 +200,48 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
         }
         contador++;
         if (contador == 2) {
-            atualizar();
+            Excluir();
             tfTitulo.requestFocus();
             contador = 0;
         }
     }//GEN-LAST:event_tbAtualizarObraMouseClicked
 
-    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        atualizar();
-    }//GEN-LAST:event_btAtualizarActionPerformed
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        Excluir();
+    }//GEN-LAST:event_btExcluirActionPerformed
     
-    private void atualizar() {
+//    private void atualizar() {
+//        int rowIndex = tbAtualizarObra.getSelectedRow();
+//        if (rowIndex == -1) {
+//            JOptionPane.showMessageDialog(this, "Selecione o Autor a ser Atualizada!!!");
+//            return;
+//        }
+//        autor = new AutorTableModel(listaDeAutor).get(rowIndex);
+//        FrmCadastroDeAutor updateAutor = new FrmCadastroDeAutor(new javax.swing.JFrame(), true);
+//        updateAutor.setDados(autor);
+//        updateAutor.setVisible(true);
+//        this.pesquisa();
+//    }
+    
+    private void Excluir() {
         int rowIndex = tbAtualizarObra.getSelectedRow();
         if (rowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
+            JOptionPane.showMessageDialog(this, "Selecione o Autor a ser Removido!!!");
             return;
         }
-        autor = new AutorTableModel(listaDeAutor).get(rowIndex);
-        FrmCadastroDeAutor updateAutor = new FrmCadastroDeAutor(new javax.swing.JFrame(), true);
-        updateAutor.setDados(autor);
-        updateAutor.setVisible(true);
-        this.pesquisa();
+        Autor autor = new AutorTableModel(listaDeAutor).get(rowIndex);
+        int confirm = JOptionPane.showConfirmDialog(this, "Confirmar exclusão ?", "Excluir Autor", JOptionPane.YES_NO_OPTION);
+        if (confirm != 0) {
+            return;
+        }
+        int result = new AutorController().excluirAutor(autor.getId());
+
+        if (result == 1) {
+            JOptionPane.showMessageDialog(this, "Autor removido com Sucesso!");
+            pesquisa();
+        } else {
+            JOptionPane.showMessageDialog(this, "Este Autor não pode ser removido, pois está sendo utilizado!");
+        }
     }
     
     private void tfTituloKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTituloKeyReleased
@@ -236,7 +255,8 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
     }//GEN-LAST:event_tfTituloKeyReleased
 
     private void pesquisa() {
-        listaDeAutor =  dao.buscar(tfTitulo.getText());   
+        listaDeAutor =  dao.buscar(tfTitulo.getText());
+        tbAtualizarObra.setModel(new AutorTableModel(listaDeAutor));
     }
 
     /**
@@ -256,21 +276,35 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarAutor1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmExcluirAutor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarAutor1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmExcluirAutor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarAutor1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmExcluirAutor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarAutor1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmExcluirAutor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmAtualizarAutor1 dialog = new FrmAtualizarAutor1(new javax.swing.JFrame(), true);
+                FrmExcluirAutor dialog = new FrmExcluirAutor(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -283,7 +317,7 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAtualizar;
+    private javax.swing.JButton btExcluir;
     private javax.swing.JButton btVoltar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;

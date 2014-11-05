@@ -72,7 +72,7 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Excluir editora");
+        setTitle("Excluir Operador");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
@@ -93,13 +93,13 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
         tbLogin.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tbLogin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Nome"
+
             }
         ));
         tbLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

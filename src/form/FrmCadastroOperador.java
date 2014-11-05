@@ -48,7 +48,7 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
         btVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de login");
+        setTitle("Cadastro de Operador");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N

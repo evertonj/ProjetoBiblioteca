@@ -191,16 +191,16 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void refreshTable() {
-      
-        autorList = new AutorController().finAll();
-        System.out.println(autorList.get(0).getNome());
-        if (autorList != null) {
-            //tbObra.setModel(new AutorTableModel(autorList));
-           // tbObra.setDefaultRenderer(Object.class, new AutorCellRenderer());
-        }
-    }
+//
+//    private void refreshTable() {
+//      
+//        autorList = new AutorController().finAll();
+//        System.out.println(autorList.get(0).getNome());
+//        if (autorList != null) {
+//            //tbObra.setModel(new AutorTableModel(autorList));
+//           // tbObra.setDefaultRenderer(Object.class, new AutorCellRenderer());
+//        }
+//    }
 
     private void onCancelar() {
         tfSobreNome.setText(null);
@@ -215,6 +215,7 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
         int result;
+        boolean atualizou = false;
         try {
             {             
               
@@ -226,11 +227,15 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
                 } else {
                     autor.setId(idAutor);
                     result = new AutorController().alterarAutor(autor);
+                    atualizou = true;
                     idAutor = null;
                 }
                 if (result == 1) {
-                    JOptionPane.showMessageDialog(this, "Autor inserido com Sucesso!");
-                    this.refreshTable();
+                    if(atualizou) {
+                        JOptionPane.showMessageDialog(this, "Autor atualizado com Sucesso!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Autor inserido com Sucesso!");
+                    }
                     onCancelar();
                    
                 } else {
@@ -251,7 +256,7 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-this.dispose();
+        this.dispose();
         //int rowIndex = tbObra.getSelectedRow();
 //        if (rowIndex == -1) {
 //            JOptionPane.showMessageDialog(this, "Selecione o livro a ser Alterado!!!");

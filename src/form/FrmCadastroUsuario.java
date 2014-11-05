@@ -6,6 +6,9 @@
 package form;
 
 import controller.UsuarioController;
+import dao.UsuarioDAO;
+import entity.Email;
+import entity.Telefone;
 import entity.Usuario;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import table.EmailTableModel;
 import table.TelefoneTableModel;
 import table.UsuarioCellRenderer;
@@ -36,6 +40,8 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         initComponents();
         onCancelar();
     }
+    
+    UsuarioDAO dao = new UsuarioDAO();
 
     private void refreshTableEmail() {
 
@@ -61,21 +67,24 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     private String endImage;
     private ImageIcon fotoEspecie;
     byte[] foto;
-    List<String> emails = new ArrayList<>();
-    List<String> telefones = new ArrayList<>();
+    List<Email> emails = new ArrayList<>();
+    List<Telefone> telefones = new ArrayList<>();
 
     private void onCancelar() {
         tfNome.setText(null);
         tfTelefone.setText(null);
+        tfSerie.setText(null);
         tfEmail.setText(null);
-        tfTelefone.setText(null);
+        lbFoto.setIcon(null);
+        tbEmail.setModel(new DefaultTableModel());
+        tbTelefone.setModel(new DefaultTableModel());
     }
 
     private boolean verificaEmail(String nome) {
         String aux;
         if (!emails.isEmpty()) {
             for (int i = 0; i < emails.size(); i++) {
-                aux = emails.get(i);
+                aux = emails.get(i).getEmail();
                 if (nome.equals(aux)) {
                     return false;
                 }
@@ -101,7 +110,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         String aux;
         if (!telefones.isEmpty()) {
             for (int i = 0; i < telefones.size(); i++) {
-                aux = telefones.get(i);
+                aux = telefones.get(i).getTelefone();
                 if (nome.equals(aux)) {
                     return false;
                 } else {
@@ -457,7 +466,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        int result;
+        int result, atualizar = 0;
 
         usuario = new Usuario(idUsuario, tfNome.getText(), tfSerie.getText(), emails, telefones, foto);
         if (idUsuario == 0) {
@@ -465,12 +474,16 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         } else {
             usuario.setId(idUsuario);
             result = new UsuarioController().alterarUsuario(usuario);
+            atualizar = 1;
             idUsuario = 0;
         }
         if (result == 1) {
-            JOptionPane.showMessageDialog(this, "Usuario inserido com Sucesso!");
+            if (atualizar == 1) {
+                JOptionPane.showMessageDialog(this, "Usuario Atualizado com Sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario inserido com Sucesso!");
+            }
             onCancelar();
-            enableFields(false);
         } else {
             JOptionPane.showMessageDialog(this, "Tente novamente!");
         }
@@ -484,12 +497,14 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     private void btAddEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddEmailActionPerformed
         if (validaEmail(tfEmail.getText())) {
             if (this.verificaEmail(tfEmail.getText())) {
-                emails.add(tfEmail.getText());
+                Email email = new Email();
+                email.setEmail(tfEmail.getText());
+                emails.add(email);
                 this.refreshTableEmail();
             } else {
                 JOptionPane.showMessageDialog(this, "Email já cadastrado");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Email inválido");
         }
 
@@ -501,13 +516,14 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Selecione o Email a ser Removido!!!");
             return;
         }
-        String email = new EmailTableModel(emails).get(rowIndex);
+        Email email = new EmailTableModel(emails).get(rowIndex);
         int confirm = JOptionPane.showConfirmDialog(this, "Confirmar exclusão ?", "Excluir Email", JOptionPane.YES_NO_OPTION);
         if (confirm != 0) {
             return;
         }
-
+        
         if (emails.remove(email)) {
+            dao.removerEmail(email);
             JOptionPane.showMessageDialog(this, "Email removido com Sucesso!");
             this.refreshTableEmail();
         } else {
@@ -517,7 +533,9 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
 
     private void btAddTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddTelefoneActionPerformed
         if (this.verificaTelefone(tfTelefone.getText())) {
-            telefones.add(tfTelefone.getText());
+            Telefone tel = new Telefone();
+            tel.setTelefone(tfTelefone.getText());
+            telefones.add(tel);
             this.refreshTableTelefone();
         } else {
             JOptionPane.showMessageDialog(this, "Telefone já cadastrado");
@@ -531,13 +549,14 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Selecione o Telefone a ser Removido!!!");
             return;
         }
-        String telefone = new EmailTableModel(telefones).get(rowIndex);
+        Telefone telefone = new TelefoneTableModel(telefones).get(rowIndex);
         int confirm = JOptionPane.showConfirmDialog(this, "Confirmar exclusão ?", "Excluir Telefone", JOptionPane.YES_NO_OPTION);
         if (confirm != 0) {
             return;
         }
 
         if (telefones.remove(telefone)) {
+            dao.removerTelefone(telefone);
             JOptionPane.showMessageDialog(this, "telefone removido com Sucesso!");
             this.refreshTableEmail();
         } else {
@@ -655,16 +674,16 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     private javax.swing.JTextField tfTelefone;
     // End of variables declaration//GEN-END:variables
 
-  public  void setDados(Usuario novoUsuario) {
+    public void setDados(Usuario novoUsuario) {
         this.usuario = novoUsuario;
         tfNome.setText(usuario.getNome());
         tfSerie.setText(usuario.getSerie());
-        
+
         emails = usuario.getListEmail();
         this.refreshTableEmail();
-         byte[] imgBytes = usuario.getFoto();
-         telefones = usuario.getListTelefone();
-         this.refreshTableTelefone();
+        byte[] imgBytes = usuario.getFoto();
+        telefones = usuario.getListTelefone();
+        this.refreshTableTelefone();
         foto = usuario.getFoto();
         try {/*
              Gravar A Imagem no disco.
@@ -681,6 +700,6 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
             String erro = e.toString();
         }
         idUsuario = usuario.getId();
-   
+
     }
 }

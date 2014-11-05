@@ -1,14 +1,14 @@
 package dao;
 
 import connection.DBConnection;
-import dao.IUsuarioDAO;
+import entity.Email;
+import entity.Telefone;
 import entity.Usuario;
 import entity.exceptions.NameException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,7 +42,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         return result;
     }
 
-    private void salvarTelefone(List<String> telefone) {
+    private void salvarTelefone(List<Telefone> telefones) {
 
         Connection conn = null;
         PreparedStatement pstm = null, pstmIdUsuario = null;
@@ -57,16 +57,13 @@ public class UsuarioDAO implements IUsuarioDAO {
             rs.next();
             int ultimoIdUsuario = rs.getInt("ultimoidusuario");
 
-            for (int i = 0; i < telefone.size(); i++) {
+            for (int i = 0; i < telefones.size(); i++) {
                 {
-
                     pstm = conn.prepareStatement(sqlTelefones);
-
-                    pstm.setString(1, telefone.get(i));
+                    pstm.setString(1, telefones.get(i).getTelefone());
                     pstm.setInt(2, ultimoIdUsuario);//Corrigir
 
                     pstm.executeUpdate();
-
                 }
             }
             pstm.close();
@@ -84,12 +81,38 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
     }
 
-    private void salvarEmail(List<String> email) {
+    private void salvarUmEmail(Email email, int idUsuario) {
+        String sqlEmail = "insert into email_usuario(email, idusuario) values(?, ?)";
+        Connection conn = DBConnection.getConnection();;
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sqlEmail);
+            pstm.setString(1, email.getEmail());
+            pstm.setInt(2, idUsuario);
+            pstm.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void salvarUmTelefone(Telefone tel, int idUsuario) {
+        String sqlTelefone = "insert into telefone_usuario(numero, idusuario) values(?, ?)";
+        Connection conn = DBConnection.getConnection();;
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sqlTelefone);
+            pstm.setString(1, tel.getTelefone());
+            pstm.setInt(2, idUsuario);
+            pstm.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void salvarEmail(List<Email> emails) {
 
         Connection conn = null;
         PreparedStatement pstm = null, pstmIdUsuario = null;
         ResultSet rs = null;
-        String sqlTelefones = "insert into email_usuario(email, idusuario) values(?, ?)";
+        String sqlEmails = "insert into email_usuario(email, idusuario) values(?, ?)";
         try {
             conn = DBConnection.getConnection();
             int contador = 0;
@@ -99,16 +122,13 @@ public class UsuarioDAO implements IUsuarioDAO {
             rs.next();
             int ultimoIdUsuario = rs.getInt("ultimoidusuario");
 
-            for (int i = 0; i < email.size(); i++) {
+            for (int i = 0; i < emails.size(); i++) {
                 {
-
-                    pstm = conn.prepareStatement(sqlTelefones);
-
-                    pstm.setString(1, email.get(i));
+                    pstm = conn.prepareStatement(sqlEmails);
+                    pstm.setString(1, emails.get(i).getEmail());
                     pstm.setInt(2, ultimoIdUsuario);//Corrigir
 
                     pstm.executeUpdate();
-
                 }
             }
             pstm.close();
@@ -136,7 +156,22 @@ public class UsuarioDAO implements IUsuarioDAO {
                 pstm.setString(2, usuario.getSerie());
                 pstm.setBytes(3, usuario.getFoto());
                 pstm.setInt(4, usuario.getId());
-               
+                for (Email col : usuario.getListEmail()) {
+                    if (col.getId() == 0) {
+                        System.out.println("Adicionou email");
+                        salvarUmEmail(col, usuario.getId());
+                    } else {
+                        updateEmail(col, usuario.getId());
+                    }
+                }
+                for (Telefone col : usuario.getListTelefone()) {
+                    if (col.getId() == 0) {
+                        System.out.println("Adicionou Telefone");
+                        salvarUmTelefone(col, usuario.getId());
+                    } else {
+                        updateTelefone(col, usuario.getId());
+                    }
+                }
                 result = pstm.executeUpdate();
                 pstm.close();
             }
@@ -144,32 +179,45 @@ public class UsuarioDAO implements IUsuarioDAO {
             e.printStackTrace();
         }
         //remove(result)
-       
-        
+
         return result;
     }
-    private void updateEmail(String email, int id) {
+    
+    public void removerEmail(Email email) {
+        Connection conn = DBConnection.getConnection();
+        try {
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM email_usuario WHERE id = ?");
+            pstm.setInt(1, email.getId());
+            pstm.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void removerTelefone(Telefone tel) {
+        Connection conn = DBConnection.getConnection();
+        try {
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM telefone_usuario WHERE id = ?");
+            pstm.setInt(1, tel.getId());
+            pstm.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    private void updateEmail(Email email, int id) {
         Connection conn = null;
         PreparedStatement pstm = null, pstmIdUsuario = null;
         ResultSet rs = null;
-        String sqlEmail = "update email_usuario set email = ? where idusuario = " + id + ";";
-        
+        String sqlEmail = "update email_usuario set email = ? where idusuario = ? and id = ?";
+
         try {
             conn = DBConnection.getConnection();
             pstm = conn.prepareStatement(sqlEmail);
-         
-
-            
-
-                    pstm.setString(1, email);
-                    pstm.setInt(2, id);
-
-                    pstm.executeUpdate();
-
-                
-
-           
+            pstm.setString(1, email.getEmail());
+            pstm.setInt(2, id);
+            pstm.setInt(3, email.getId());
+            pstm.executeUpdate();
             pstm.close();
         } catch (SQLException SqlEx) {
             try {
@@ -192,7 +240,6 @@ public class UsuarioDAO implements IUsuarioDAO {
 //     
 //       
 //   }
-
     @Override
     public int remove(int id) {
         int result = 0;
@@ -216,33 +263,20 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
         return result;
     }
-    
 
-    private void updateTelefone(List<String> telefone, int id) {
+    private void updateTelefone(Telefone telefone, int id) {
 
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
-        String sqlEmail = "delete from telefone_usuario where idusuario = " + id + ";";
+        String sqlTelefone = "update telefone_usuario set numero = ? where idusuario = ? and id = ?";
         try {
             conn = DBConnection.getConnection();
-            pstm = conn.prepareStatement(sqlEmail);
-            rs = pstm.executeQuery();
-            
-
-            while(rs.next()){
-
-                for (int i = 0; i < telefone.size(); i++) {
-                    
-               
-                    pstm.setString(1, telefone.get(i));
-                    pstm.setInt(2, id);
-
-                    pstm.executeUpdate();
-
-                 }
-            }
-           
+            pstm = conn.prepareStatement(sqlTelefone);
+            pstm.setString(1, telefone.getTelefone());
+            pstm.setInt(2, id);
+            pstm.setInt(3, telefone.getId());
+            pstm.executeUpdate();
             pstm.close();
         } catch (SQLException SqlEx) {
             try {
@@ -341,20 +375,24 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
     int contador = 0;
 
-    private List<String> telefones(ResultSet rs) throws NameException, SQLException {
-        List<String> listaDeTelefones = new ArrayList<>();
+    private List<Telefone> telefones(ResultSet rs) throws NameException, SQLException {
+        List<Telefone> listaDeTelefones = new ArrayList<>();
         while (rs.next()) {
-            listaDeTelefones.add(rs.getString("numero"));
-
+            Telefone tel = new Telefone();
+            tel.setId(rs.getInt("id"));
+            tel.setTelefone(rs.getString("numero"));
+            listaDeTelefones.add(tel);
         }
         return listaDeTelefones;
     }
 
-    private List<String> emails(ResultSet rs) throws NameException, SQLException {
-        List<String> listaDeEmail = new ArrayList<>();
+    private List<Email> emails(ResultSet rs) throws NameException, SQLException {
+        List<Email> listaDeEmail = new ArrayList<>();
         while (rs.next()) {
-            listaDeEmail.add(rs.getString("email"));
-
+            Email email = new Email();
+            email.setId(rs.getInt("id"));
+            email.setEmail(rs.getString("email"));
+            listaDeEmail.add(email);
         }
         return listaDeEmail;
     }
@@ -430,10 +468,4 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
         return listaDeUsuario;
     }
-
-    @Override
-    public Usuario buscaNome(String nome, String serie) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

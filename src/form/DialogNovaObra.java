@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -443,13 +444,27 @@ public class DialogNovaObra extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void getDados() {
+    private boolean getDados() {
         try {
             obra = new Obra();
-            obra.setTitulo(tfTitulo.getText());
+            String titulo = tfTitulo.getText();
+            if(titulo.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Digite o Titulo!!!");
+                tfTitulo.setText(null);
+                tfTitulo.requestFocus();
+                return false;
+            }
+            obra.setTitulo(titulo);
             obra.setAutores(listaAutores);
             obra.setEdicao(tfEdicao.getText());
-            obra.setAno(Short.parseShort(tfAno.getText()));
+            short ano = Short.parseShort(tfAno.getText());
+            if (ano < 1000 || ano > Calendar.getInstance().getWeekYear()) {
+                JOptionPane.showMessageDialog(this, "O Ano inserido é Invalido!!!");
+                tfAno.setText(null);
+                tfAno.requestFocus();
+                return false;
+            }
+            obra.setAno(ano);
             if (cbEditora.getSelectedIndex() != -1 && cbEditora.getSelectedItem() != null) {
                 try {
                     obra.setEditora(new Editora((Editora) cbEditora.getSelectedItem()));
@@ -458,14 +473,14 @@ public class DialogNovaObra extends javax.swing.JDialog {
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Selecione a Editora.");
-                return;
+                return false;
             }
             obra.setIsbn(tfISBN.getText());
             if (cbAssunto.getSelectedIndex() != -1 && cbAssunto.getSelectedItem() != null) {
                 obra.setAssunto(new Assunto((Assunto) cbAssunto.getSelectedItem()));
             } else {
                 JOptionPane.showMessageDialog(this, "Selecione o Assunto.");
-                return;
+                return false;
             }
             obra.setFoto(foto);
             obra.setExemplar(DialogExemplar.listaDeExemplares);
@@ -473,9 +488,11 @@ public class DialogNovaObra extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "O Ano inserido é Invalido!!!");
             tfAno.setText(null);
             tfAno.requestFocus();
+            return false;
         } catch (NullPointerException ex) {
 
         }
+        return true;
     }
 
     public void setDados(Obra obraAlteracao) {
@@ -540,7 +557,9 @@ public class DialogNovaObra extends javax.swing.JDialog {
     }//GEN-LAST:event_btRemoverActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        this.getDados();
+        if(!this.getDados()) {
+            return;
+        }
         int result;
         if (idObraRemover > 0) {
             dao.removeAtualizar(idObraRemover);

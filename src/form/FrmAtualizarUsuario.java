@@ -5,15 +5,12 @@
  */
 package form;
 
-import controller.UsuarioController;
 import dao.UsuarioDAO;
 import entity.Usuario;
-import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import table.ObraAtualizarTableModel;
 import table.UsuarioCellRenderer;
 import table.UsuarioTableModel;
 
@@ -68,7 +65,7 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
         jFormattedTextField1.setText("jFormattedTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Usuários");
+        setTitle("Atualizar Usuários");
         setResizable(false);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));

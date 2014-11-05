@@ -10,15 +10,13 @@ import entity.Autor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 import table.AutorTableModel;
-import table.ObraColumnModel;
 
 /**
  *
  * @author Alex
  */
-public class FrmAtualizarAutor1 extends javax.swing.JDialog {
+public class FrmAtualizarAutor extends javax.swing.JDialog {
 
     AutorDAO dao = new AutorDAO();
     List<Autor> listaDeAutor = new ArrayList();
@@ -30,7 +28,7 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
     /**
      * Creates new form DialogAtualizarObra
      */
-    public FrmAtualizarAutor1(java.awt.Frame parent, boolean modal) {
+    public FrmAtualizarAutor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         tfTitulo.requestFocus();
@@ -56,7 +54,7 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
         btAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Atualizar Obra");
+        setTitle("Atualizar Autor");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
@@ -236,7 +234,8 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
     }//GEN-LAST:event_tfTituloKeyReleased
 
     private void pesquisa() {
-        listaDeAutor =  dao.buscar(tfTitulo.getText());   
+        listaDeAutor =  dao.buscar(tfTitulo.getText());
+        tbAtualizarObra.setModel(new AutorTableModel(listaDeAutor));
     }
 
     /**
@@ -256,21 +255,23 @@ public class FrmAtualizarAutor1 extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarAutor1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAtualizarAutor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarAutor1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAtualizarAutor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarAutor1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAtualizarAutor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarAutor1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAtualizarAutor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmAtualizarAutor1 dialog = new FrmAtualizarAutor1(new javax.swing.JFrame(), true);
+                FrmAtualizarAutor dialog = new FrmAtualizarAutor(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

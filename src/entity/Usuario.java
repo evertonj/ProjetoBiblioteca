@@ -18,22 +18,22 @@ public class Usuario{
     private int id;
     private String nome;
     private String serie;
-    private List<String> listEmail;
-    private List<String> listTelefone;
+    private List<Email> listEmail;
+    private List<Telefone> listTelefone;
     private ImageIcon fotoIcon;
     private byte[] foto; 
 
     public Usuario() {
     }
 
-    public Usuario(String nome, String serie, List<String> listEmail, List<String> listTelefone) {
+    public Usuario(String nome, String serie, List<Email> listEmail, List<Telefone> listTelefone) {
         this.nome = nome;
         this.serie = serie;
         this.listEmail = listEmail;
         this.listTelefone = listTelefone;
     }
 
-    public Usuario(int id, String nome, String serie, List<String> listEmail, List<String> listTelefone, byte[]foto) {
+    public Usuario(int id, String nome, String serie, List<Email> listEmail, List<Telefone> listTelefone, byte[]foto) {
         this.id = id;
         this.nome = nome;
         this.serie = serie;
@@ -66,19 +66,19 @@ public class Usuario{
         this.serie = serie;
     }
 
-    public List<String> getListEmail() {
+    public List<Email> getListEmail() {
         return listEmail;
     }
 
-    public void setListEmail(List<String> listEmail) {
+    public void setListEmail(List<Email> listEmail) {
         this.listEmail = listEmail;
     }
 
-    public List<String> getListTelefone() {
+    public List<Telefone> getListTelefone() {
         return listTelefone;
     }
 
-    public void setListTelefone(List<String> listTelefone) {
+    public void setListTelefone(List<Telefone> listTelefone) {
         this.listTelefone = listTelefone;
     }
     

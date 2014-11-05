@@ -5,15 +5,11 @@
  */
 package form;
 
-import controller.UsuarioController;
 import dao.UsuarioDAO;
 import entity.Usuario;
-import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import table.ObraAtualizarTableModel;
 import table.UsuarioCellRenderer;
 import table.UsuarioTableModel;
 
@@ -21,12 +17,12 @@ import table.UsuarioTableModel;
  *
  * @author Alex
  */
-public class FrmAtualizarUsuario extends javax.swing.JDialog {
+public class FrmConsultarUsuario extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmCadastroUsuario
      */
-    public FrmAtualizarUsuario(java.awt.Frame parent, boolean modal) {
+    public FrmConsultarUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
@@ -58,7 +54,6 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         tfBusca = new javax.swing.JTextField();
         cbPesquisa = new javax.swing.JComboBox();
-        btAtualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbAluno = new javax.swing.JTable();
         btAtualizar1 = new javax.swing.JButton();
@@ -68,7 +63,7 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
         jFormattedTextField1.setText("jFormattedTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Usuários");
+        setTitle("Consultar Usuários");
         setResizable(false);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
@@ -107,15 +102,6 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
-        btAtualizar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/update.png"))); // NOI18N
-        btAtualizar.setText("Atualizar");
-        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAtualizarActionPerformed(evt);
-            }
-        });
-
         tbAluno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -127,11 +113,6 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
 
             }
         ));
-        tbAluno.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbAlunoMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tbAluno);
 
         btAtualizar1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -150,15 +131,9 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btAtualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btAtualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -169,28 +144,13 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btAtualizar)
-                    .addComponent(btAtualizar1))
+                .addComponent(btAtualizar1)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        int rowIndex = tbAluno.getSelectedRow();
-        if (rowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione  a ser Modificado!!!");
-            return;
-        }
-        usuario = new UsuarioTableModel(listaUsuario).get(rowIndex);
-       FrmCadastroUsuario cadastroUsuario = new FrmCadastroUsuario(new javax.swing.JFrame(), true);
-       cadastroUsuario.setDados(usuario);
-       cadastroUsuario.setVisible(true);
-
-    }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btAtualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizar1ActionPerformed
         this.dispose();
@@ -221,18 +181,6 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
 
     }//GEN-LAST:event_tfBuscaKeyReleased
 
-    private void tbAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAlunoMouseClicked
-        if (evt.getClickCount() == 2) {
-            int rowIndex = tbAluno.getSelectedRow();
-            usuario = new UsuarioTableModel(listaUsuario).get(rowIndex);
-            FrmCadastroUsuario novoUsuario = new FrmCadastroUsuario(new javax.swing.JFrame(), true);
-
-            novoUsuario.setDados(usuario);
-            novoUsuario.setVisible(true);
-
-        }
-    }//GEN-LAST:event_tbAlunoMouseClicked
-
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -247,20 +195,21 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmConsultarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmConsultarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmConsultarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAtualizarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmConsultarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmAtualizarUsuario dialog = new FrmAtualizarUsuario(new javax.swing.JFrame(), true);
+                FrmConsultarUsuario dialog = new FrmConsultarUsuario(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -273,7 +222,6 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAtualizar;
     private javax.swing.JButton btAtualizar1;
     private javax.swing.JComboBox cbPesquisa;
     private javax.swing.JFormattedTextField jFormattedTextField1;

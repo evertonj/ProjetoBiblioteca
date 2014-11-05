@@ -5,7 +5,7 @@
  */
 package table;
 
-import entity.Usuario;
+import entity.Email;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,9 +15,9 @@ import javax.swing.table.AbstractTableModel;
  */
 public class EmailTableModel extends AbstractTableModel {
 
-    private List<String> valores;
+    private List<Email> valores;
 
-    public EmailTableModel(List<String> valores) {
+    public EmailTableModel(List<Email> valores) {
         this.valores = valores;
     }
 
@@ -33,11 +33,10 @@ public class EmailTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-       String telefones  = valores.get(rowIndex);
+       Email email  = valores.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return telefones;
-                   
+                return email.getEmail();
            }
         return null;
     }
@@ -48,7 +47,6 @@ public class EmailTableModel extends AbstractTableModel {
         switch (column) {
             case 0:
                 return coluna = "Email";
-          
         }
         return null;
     }
@@ -63,7 +61,7 @@ public class EmailTableModel extends AbstractTableModel {
         return null;
     }
     
-    public String get(int row) {
+    public Email get(int row) {
         return valores.get(row);
     }
     //Teste

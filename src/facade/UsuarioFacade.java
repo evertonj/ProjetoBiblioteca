@@ -36,12 +36,5 @@ public class UsuarioFacade {
 
     public List<Usuario> finAll() {
         return dao.findAll();
-    }
-    public Usuario buscaNome(String nome,String serie){
-        return dao.buscaNome(nome,serie);
-    }
-
-    
-
-    
+    }    
 }

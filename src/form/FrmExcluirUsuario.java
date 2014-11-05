@@ -7,10 +7,10 @@
 package form;
 
 import controller.UsuarioController;
+import dao.UsuarioDAO;
 import entity.Usuario;
 import java.util.List;
 import javax.swing.JOptionPane;
-import table.UsuarioCellRenderer;
 import table.UsuarioTableModel;
 
 /**
@@ -26,17 +26,14 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
         super(parent, modal);
         
         initComponents();
-        refreshTable();
+
     }
-    
+    UsuarioDAO dao = new UsuarioDAO();
      List<Usuario> usuarioList;
     private void refreshTable() {
-      
-        usuarioList = new UsuarioController().finAll();
-        
+        usuarioList = dao.buscaPorNome(tfNome.getText());
         if (usuarioList != null) {
            tbUsuario.setModel(new UsuarioTableModel(usuarioList));
-            tbUsuario.setDefaultRenderer(Object.class, new UsuarioCellRenderer());
         }
     }
 
@@ -51,8 +48,7 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        tfNome = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbUsuario = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -60,17 +56,19 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Excluir Usuário");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Nome:");
 
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
-        jButton1.setText("Pesquisar");
+        tfNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tfNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfNomeKeyReleased(evt);
+            }
+        });
 
         tbUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -139,9 +137,8 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -151,8 +148,7 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -188,7 +184,7 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          int rowIndex = tbUsuario.getSelectedRow();
         if (rowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione o Usuario a ser Removido!!!");
+            JOptionPane.showMessageDialog(this, "Selecione o usuário a ser Removido!!!");
             return;
         }
        Usuario usuario = new UsuarioTableModel(usuarioList).get(rowIndex);
@@ -200,12 +196,16 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
         int result = new UsuarioController().excluirUsuario(usuario.getId());
 
         if (result == 1) {
-            JOptionPane.showMessageDialog(this, "Autor removida com Sucesso!");
+            JOptionPane.showMessageDialog(this, "Usuário removido com Sucesso!");
             this.refreshTable();
         } else {
             JOptionPane.showMessageDialog(this, "Tente novamente!");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tfNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNomeKeyReleased
+        refreshTable();
+    }//GEN-LAST:event_tfNomeKeyReleased
 
     /**
      * @param args the command line arguments
@@ -250,14 +250,13 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tbUsuario;
+    private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
 }

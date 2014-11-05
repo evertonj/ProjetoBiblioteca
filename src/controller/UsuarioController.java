@@ -38,8 +38,4 @@ public class UsuarioController {
     public List<Usuario> finAll() {
         return facade.finAll();
     }
-    public Usuario buscaNome(String nome,String serie){
-        return facade.buscaNome(nome,serie);
-    }
-    
 }

@@ -23,7 +23,4 @@ public interface IUsuarioDAO {
     
     List<Usuario> findAll();
     
-   
-
-    public Usuario buscaNome(String nome, String serie);
 }
