@@ -547,7 +547,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
 
     private void btRemoverTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverTelefoneActionPerformed
         int rowIndex = tbTelefone.getSelectedRow();
-        if (rowIndex == -1) {
+        if (rowIndex == -1) { 
             JOptionPane.showMessageDialog(this, "Selecione o Telefone a ser Removido!!!");
             return;
         }
