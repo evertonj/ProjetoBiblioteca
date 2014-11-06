@@ -501,6 +501,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
                 email.setEmail(tfEmail.getText());
                 emails.add(email);
                 this.refreshTableEmail();
+                tfEmail.setText("");
             } else {
                 JOptionPane.showMessageDialog(this, "Email já cadastrado");
             }
@@ -537,6 +538,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
             tel.setTelefone(tfTelefone.getText());
             telefones.add(tel);
             this.refreshTableTelefone();
+            tfTelefone.setText("");
         } else {
             JOptionPane.showMessageDialog(this, "Telefone já cadastrado");
         }
