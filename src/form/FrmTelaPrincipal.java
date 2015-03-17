@@ -415,7 +415,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
 
     private void menuSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSobreMouseClicked
         JOptionPane.showMessageDialog(null, "Este software faz parte do projeto de extensão Biblioteca das escolas municipais em transformação"
-                + "\n" + "Ele foi desenvolvido no Institudo Federal de Santa Catarina e têm como principal objetivo "
+                + "\n" + "Ele foi desenvolvido no Institudo Federal de Santa Catarina e tem como principal objetivo "
                 + "\n" + "auxiliar nas atividades básicas realizadas em uma biblioteca educacional!");
     }//GEN-LAST:event_menuSobreMouseClicked
 

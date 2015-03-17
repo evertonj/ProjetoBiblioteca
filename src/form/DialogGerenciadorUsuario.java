@@ -57,7 +57,7 @@ public class DialogGerenciadorUsuario extends javax.swing.JDialog {
 
         btNova.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btNova.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/insert.png"))); // NOI18N
-        btNova.setText("NOVA");
+        btNova.setText("NOVO");
         btNova.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btNovaActionPerformed(evt);

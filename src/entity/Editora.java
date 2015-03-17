@@ -12,7 +12,7 @@ import entity.exceptions.NameException;
 
 /**
  *
- * @author Alex
+ * @author Thiago
  */
 public class Editora  {
     private int id;
