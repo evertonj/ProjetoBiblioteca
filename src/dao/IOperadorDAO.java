@@ -24,4 +24,7 @@ public interface IOperadorDAO {
     Operador search(String nome);
     
     List<Operador> findAll();
+
+    List<Operador> listOfOperator(String name);
+
 }

@@ -37,6 +37,10 @@ public class OperadorFacade {
     public Operador search(String nome) {
         return dao.search(nome);
     }
+    
+    public List<Operador> listaDeOperadores(String name) {
+        return dao.listOfOperator(name);
+    }
 
     public List<Operador> finAll() {
         return dao.findAll();

@@ -24,10 +24,10 @@ import java.util.logging.Logger;
  */
 public class AutorDAO implements IAutorDAO {
 
-    private static final String SQL_INSERT = "insert into AUTOR (NOME, SOBRENOME) VALUES (?,?);";
-    private static final String SQL_UPDATE = "update AUTOR set NOME = ?, SOBRENOME= ? WHERE ID = ?;";
-    private static final String SQL_REMOVE = "delete from AUTOR where ID = ?;";
-    private static final String SQL_FIND_ALL = "select * from AUTOR;";
+    private static final String SQL_INSERT = "insert into autor (nome, sobrenome) values (?,?);";
+    private static final String SQL_UPDATE = "update autor set nome = ?, sobrenome= ? where id = ?;";
+    private static final String SQL_REMOVE = "delete from autor where id = ?;";
+    private static final String SQL_FIND_ALL = "select * from autor;";
     private static final String SQL_ORDER_TABLE = "select * from autor order by nome;";
 
     @Override
@@ -116,14 +116,14 @@ public class AutorDAO implements IAutorDAO {
         List<Autor> lista = new ArrayList();
         ResultSet rs = null;
         try {
-            PreparedStatement comando = conn.prepareStatement("SELECT * FROM Autor WHERE Nome LIKE '%" + nome + "%';");
+            PreparedStatement comando = conn.prepareStatement("select * from autor where nome like '%" + nome + "%';");
             rs = comando.executeQuery();
             while (rs.next()) {
                 // pega todos os atributos da pessoa  
                 Autor autor;
-                autor = new Autor(rs.getInt("ID"),
-                        rs.getString("NOME"),
-                        rs.getString("SOBRENOME"));
+                autor = new Autor(rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("sobrenome"));
                 lista.add(autor);
             }
             return lista;
@@ -152,9 +152,9 @@ public class AutorDAO implements IAutorDAO {
             while (rs.next()) {
 
                 Autor autor;
-                autor = new Autor(rs.getInt("ID"),
-                        rs.getString("NOME"),
-                        rs.getString("SOBRENOME"));
+                autor = new Autor(rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("sobrenome"));
                 autors.add(autor);
 
             }

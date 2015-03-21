@@ -16,6 +16,8 @@ public class OperadorDAO implements IOperadorDAO {
     private static final String SQL_REMOVE = "DELETE FROM operador WHERE idOperador = ?;";
     private static final String SQL_SEARCH = "SELECT * FROM operador WHERE nome = ?";
     private static final String SQL_FIND_ALL = "SELECT * FROM operador;";
+    private static final String SQL_LIST_OPERATOR = "SELECT * FROM operador WHERE nome LIKE ?";
+
 
     @Override
     public int save(Operador operador) {
@@ -79,7 +81,7 @@ public class OperadorDAO implements IOperadorDAO {
             rs = comando.executeQuery();
             if (rs.next()) {
                 // pega todos os atributos da pessoa  
-                Operador operador = new Operador(rs.getLong("idOperador"),
+                Operador operador = new Operador(rs.getLong("idoperador"),
                         rs.getString("nome"),
                         rs.getString("senha"));
                 return operador;
@@ -100,8 +102,32 @@ public class OperadorDAO implements IOperadorDAO {
                 rs = pstm.executeQuery();
                 while (rs.next()) {
                     Operador operador = new Operador();
-                    operador.setId(rs.getLong("idOperador"));
+                    operador.setId(rs.getLong("idoperador"));
                     operador.setNome(rs.getString("nome"));
+                    operador.setSenha(rs.getString("senha"));
+                    operadores.add(operador);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return operadores;
+    }
+
+    @Override
+    public List<Operador> listOfOperator(String name) {
+        List<Operador> operadores = new ArrayList<>();
+        ResultSet rs;
+        try {
+            Connection conn = DBConnection.getConnection();
+            try (PreparedStatement pstm = conn.prepareStatement(SQL_LIST_OPERATOR)) {
+                pstm.setString(1, name+"%");
+                rs = pstm.executeQuery();
+                while (rs.next()) {
+                    Operador operador = new Operador();
+                    operador.setId(rs.getLong("idoperador"));
+                    operador.setNome(rs.getString("nome"));
+                    operador.setSenha(rs.getString("senha"));
                     operadores.add(operador);
                 }
             }
