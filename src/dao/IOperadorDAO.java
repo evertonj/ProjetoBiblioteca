@@ -23,6 +23,8 @@ public interface IOperadorDAO {
     
     Operador search(String nome);
     
+    Operador searchOperadorAuthentication(String nome, String senha);
+    
     List<Operador> findAll();
 
     List<Operador> listOfOperator(String name);

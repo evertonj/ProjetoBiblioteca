@@ -8,7 +8,6 @@ package form;
 import controller.OperadorController;
 import entity.Operador;
 import java.security.MessageDigest;
-import java.util.Arrays;
 import table.OperadorCellRenderer;
 import table.OperadorTableModel;
 import java.util.List;

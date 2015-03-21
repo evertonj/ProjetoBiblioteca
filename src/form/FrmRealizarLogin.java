@@ -5,6 +5,8 @@
  */
 package form;
 
+import controller.OperadorController;
+import entity.Operador;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -134,9 +136,13 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
 
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
-        boolean result;
-        result = (tfLogin.getText().equalsIgnoreCase("admin") && String.copyValueOf(tpsSenha.getPassword()).equalsIgnoreCase("admin"));
-        if (result) {
+        String usuario = tfLogin.getText();
+        String senha = String.copyValueOf(tpsSenha.getPassword());
+        String senhaCrip = FrmCadastroOperador.ComputeHash(senha);
+        
+        Operador operador = new OperadorController().searchOperadorAuthentication(usuario, senhaCrip);
+        
+        if (operador != null) {
             FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal();
             telaPrincipal.setVisible(true);
             dispose();

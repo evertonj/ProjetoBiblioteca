@@ -17,7 +17,8 @@ public class OperadorDAO implements IOperadorDAO {
     private static final String SQL_SEARCH = "SELECT * FROM operador WHERE nome = ?";
     private static final String SQL_FIND_ALL = "SELECT * FROM operador;";
     private static final String SQL_LIST_OPERATOR = "SELECT * FROM operador WHERE nome LIKE ?";
-
+    private static final String SQL_SEARCH_AUTHENTICATION = "SELECT * FROM operador WHERE nome = ? and senha = ?";
+      
 
     @Override
     public int save(Operador operador) {
@@ -135,5 +136,28 @@ public class OperadorDAO implements IOperadorDAO {
             e.printStackTrace();
         }
         return operadores;
+    }
+
+    @Override
+    public Operador searchOperadorAuthentication(String nome, String senha) {
+        Connection conn = DBConnection.getConnection();
+        ResultSet rs;
+        PreparedStatement comando;
+        try {
+            comando = conn.prepareStatement(SQL_SEARCH_AUTHENTICATION);
+            comando.setString(1, nome);
+            comando.setString(2, senha);
+            rs = comando.executeQuery();
+            if (rs.next()) {
+                // pega todos os atributos da pessoa  
+                Operador operador = new Operador(rs.getLong("idoperador"),
+                        rs.getString("nome"),
+                        rs.getString("senha"));
+                return operador;
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+        return null;
     }
 }

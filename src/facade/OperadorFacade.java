@@ -38,6 +38,10 @@ public class OperadorFacade {
         return dao.search(nome);
     }
     
+    public Operador searchOperadorAuthentication(String nome, String senha) {
+        return dao.searchOperadorAuthentication(nome, senha);
+    }
+    
     public List<Operador> listaDeOperadores(String name) {
         return dao.listOfOperator(name);
     }
