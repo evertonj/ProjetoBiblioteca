@@ -17,10 +17,10 @@ import java.sql.SQLException;
  */
 public class DBConnection {
 
-    private static final String URL_MYSQL = "jdbc:mysql://localhost/biblioteca";
+    private static final String URL_MYSQL = "jdbc:mysql://acad03.lages.ifsc.edu.br/biblioteca";
     private static final String DRIVER_CLASS_MYSQL = "com.mysql.jdbc.Driver";
-    private static final String USER = "root";
-    private static final String PASS = "root";//Senha alterada para teste em sala de aula
+    private static final String USER = "aluno";
+    private static final String PASS = "lages";//Senha alterada para teste em sala de aula
 
     public static Connection getConnection() {
         try {
