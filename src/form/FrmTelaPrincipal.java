@@ -90,8 +90,6 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         menuEmprestimo = new javax.swing.JMenu();
         menuDevolução = new javax.swing.JMenu();
         menuRelatorio = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         menuSobre = new javax.swing.JMenu();
 
         jMenu3.setText("jMenu3");
@@ -316,15 +314,16 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         menuRelatorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
         menuRelatorio.setText("Relatórios");
         menuRelatorio.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-
-        jMenuItem5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem5.setText("Relatorio Mensal");
-        menuRelatorio.add(jMenuItem5);
-
-        jMenuItem6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem6.setText("Relatorio Anual");
-        menuRelatorio.add(jMenuItem6);
-
+        menuRelatorio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuRelatorioMouseClicked(evt);
+            }
+        });
+        menuRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRelatorioActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(menuRelatorio);
 
         menuSobre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
@@ -333,6 +332,11 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         menuSobre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuSobreMouseClicked(evt);
+            }
+        });
+        menuSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSobreActionPerformed(evt);
             }
         });
         jMenuBar1.add(menuSobre);
@@ -436,6 +440,18 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         
     }//GEN-LAST:event_menuGerenciamentoActionPerformed
 
+    private void menuRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRelatorioActionPerformed
+     
+    }//GEN-LAST:event_menuRelatorioActionPerformed
+
+    private void menuSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSobreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuSobreActionPerformed
+
+    private void menuRelatorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatorioMouseClicked
+       new DialogRelatorio(this,false).setVisible(true);
+    }//GEN-LAST:event_menuRelatorioMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -479,8 +495,6 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
