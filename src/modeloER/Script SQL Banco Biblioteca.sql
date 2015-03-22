@@ -1,3 +1,5 @@
+-- MySQL Workbench Forward Engineering
+
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
@@ -5,6 +7,10 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema biblioteca
+-- -----------------------------------------------------
+
 -- -----------------------------------------------------
 -- Schema biblioteca
 -- -----------------------------------------------------
@@ -60,6 +66,7 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`usuario` (
   `serie` VARCHAR(80) NULL DEFAULT NULL,
   `foto` LONGBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -139,9 +146,10 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `biblioteca`.`operador` (
   `idoperador` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
-  `senha` VARCHAR(45) NOT NULL,
+  `senha` MEDIUMTEXT NOT NULL,
   PRIMARY KEY (`idoperador`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -164,3 +172,13 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `biblioteca`.`operador`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `biblioteca`;
+INSERT INTO `biblioteca`.`operador` (`idoperador`, `nome`, `senha`) VALUES (1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918');
+
+COMMIT;
+

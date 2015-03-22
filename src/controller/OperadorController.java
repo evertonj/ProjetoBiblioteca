@@ -36,6 +36,14 @@ public class OperadorController {
     public Operador buscarOperador(String nome) {
         return facade.search(nome);
     }
+    
+    public Operador searchOperadorAuthentication(String nome, String senha) {
+        return facade.searchOperadorAuthentication(nome, senha);
+    }
+    
+    public List<Operador> listaDeOperadores(String name) {
+        return facade.listaDeOperadores(name);
+    }
 
     public List<Operador> finAll() {
         return facade.finAll();

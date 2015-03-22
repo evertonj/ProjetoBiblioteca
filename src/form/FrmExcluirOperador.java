@@ -7,10 +7,13 @@ package form;
 
 import controller.OperadorController;
 import entity.Operador;
+import java.security.MessageDigest;
 import table.OperadorCellRenderer;
 import table.OperadorTableModel;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -22,18 +25,38 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
      * Creates new form FrmBuscaEditora
      */
     public FrmExcluirOperador(java.awt.Frame parent, boolean modal) {
-        super(parent,modal);
+        super(parent, modal);
         initComponents();
-        refreshTable();
+        //refreshTable();
     }
 
     List<Operador> operadorList;
 
     private void refreshTable() {
-        operadorList = new OperadorController().finAll();
+        operadorList = new OperadorController().listaDeOperadores(tfNome.getText());
         if (operadorList != null) {
             tbLogin.setModel(new OperadorTableModel(operadorList));
             tbLogin.setDefaultRenderer(Object.class, new OperadorCellRenderer());
+        }
+    }
+
+    public static String ComputeHash(String senha) {
+        try {
+            MessageDigest mecanismoDeHash = MessageDigest.getInstance("SHA-256");
+            byte[] hashEmBytes = mecanismoDeHash.digest(senha.getBytes("UTF-8"));
+            StringBuffer hashEmHexadecimal = new StringBuffer();
+
+            for (int i = 0; i < hashEmBytes.length; i++) {
+                String hex = Integer.toHexString(0xff & hashEmBytes[i]);
+                if (hex.length() == 1) {
+                    hashEmHexadecimal.append('0');
+                }
+                hashEmHexadecimal.append(hex);
+            }
+
+            return hashEmHexadecimal.toString();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -51,7 +74,6 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         tfNome = new javax.swing.JTextField();
-        btBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbLogin = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -80,13 +102,9 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
         jLabel1.setText("Nome");
 
         tfNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-
-        btBuscar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
-        btBuscar.setText("Buscar");
-        btBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBuscarActionPerformed(evt);
+        tfNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfNomeKeyReleased(evt);
             }
         });
 
@@ -157,9 +175,7 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
                         .addGap(0, 5, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -167,9 +183,8 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
@@ -205,32 +220,42 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        JPasswordField jpf = new JPasswordField();
+        JLabel lbSenha = new JLabel("Senha: ");
+
         int rowIndex = tbLogin.getSelectedRow();
         if (rowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Selecione o operador que deseja remover!!!");
             return;
         }
         Operador operador = new OperadorTableModel(operadorList).get(rowIndex);
-        int confirm = JOptionPane.showConfirmDialog(this, "Confirmar exclusão ?", "Excluir Operador", JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, new Object[]{lbSenha, jpf}, "Confirmar Senha para Excluir", JOptionPane.OK_CANCEL_OPTION);
+
+        //int confirm = JOptionPane.showConfirmDialog(this, "Confirmar exclusão ?", "Excluir Operador", JOptionPane.YES_NO_OPTION);
         if (confirm != 0) {
             return;
         }
-        int result = new OperadorController().excluirOperador(operador.getId());
-        if (result == 1) {
-            JOptionPane.showMessageDialog(this, "Operador removida com Sucesso!");
-            this.refreshTable();
+
+        String senhaDigitada = String.copyValueOf(jpf.getPassword());
+        String senhaDigitadaCriptografada = ComputeHash(senhaDigitada);
+        boolean passIsEquals = operador.getSenha().equals(senhaDigitadaCriptografada);
+
+        if (passIsEquals) {
+            int result = new OperadorController().excluirOperador(operador.getId());
+            if (result == 1) {
+                JOptionPane.showMessageDialog(this, "Operador removido com Sucesso!");
+                this.refreshTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Tente novamente!");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Tente novamente!");
+            JOptionPane.showMessageDialog(this, "Senha Incorreta.");
         }
     }//GEN-LAST:event_btExcluirActionPerformed
 
-    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        if (new OperadorController().buscarOperador(tfNome.getText()) != null) {
-            JOptionPane.showMessageDialog(this, "Nome encontrado!s");
-        } else {
-            JOptionPane.showMessageDialog(this, "Nome não encontrado!");
-        }
-    }//GEN-LAST:event_btBuscarActionPerformed
+    private void tfNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNomeKeyReleased
+        refreshTable();
+    }//GEN-LAST:event_tfNomeKeyReleased
 
     /**
      * @param args the command line arguments
@@ -262,7 +287,7 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                 FrmExcluirOperador dialog = new FrmExcluirOperador(new javax.swing.JFrame(), true);
+                FrmExcluirOperador dialog = new FrmExcluirOperador(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -275,7 +300,6 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btBuscar;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btVoltar;
     private javax.swing.JButton jButton2;

@@ -23,7 +23,7 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
      * Creates new form FrmCadastroDeObra
      */
     public FrmCadastroOperador(java.awt.Frame parent, boolean modal) {
-        super(parent,modal);
+        super(parent, modal);
         initComponents();
     }
 
@@ -46,6 +46,8 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         btSalvar = new javax.swing.JButton();
         btVoltar = new javax.swing.JButton();
+        tpsConfirmSenha = new javax.swing.JPasswordField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Operador");
@@ -103,10 +105,13 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                    .addComponent(btVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
                     .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setText("Confirmar Senha:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,15 +120,17 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel9))
-                        .addGap(28, 28, 28)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfNome)
-                            .addComponent(tpsSenha)))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(tpsSenha)
+                            .addComponent(tpsConfirmSenha))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -138,9 +145,15 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
                     .addComponent(jLabel9)
                     .addComponent(tpsSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tpsConfirmSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(28, 28, 28)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {tpsConfirmSenha, tpsSenha});
 
         pack();
         setLocationRelativeTo(null);
@@ -149,6 +162,7 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
     private void onCancelar() {
         tfNome.setText(null);
         tpsSenha.setText(null);
+        tpsConfirmSenha.setText(null);
     }
 
     public static String ComputeHash(String senha) {
@@ -156,7 +170,7 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
             MessageDigest mecanismoDeHash = MessageDigest.getInstance("SHA-256");
             byte[] hashEmBytes = mecanismoDeHash.digest(senha.getBytes("UTF-8"));
             StringBuffer hashEmHexadecimal = new StringBuffer();
- 
+
             for (int i = 0; i < hashEmBytes.length; i++) {
                 String hex = Integer.toHexString(0xff & hashEmBytes[i]);
                 if (hex.length() == 1) {
@@ -164,43 +178,50 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
                 }
                 hashEmHexadecimal.append(hex);
             }
- 
+
             return hashEmHexadecimal.toString();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
-    
+
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         int result;
-        try {
-            Operador operador = new Operador(tfNome.getText(), ComputeHash(String.copyValueOf(tpsSenha.getPassword())));
-            if (idOperador == null) {
-                result = new OperadorController().addOperador(operador);
-            } else {
-                operador.setId(idOperador);
-                result = new OperadorController().alterarOperador(operador);
-                idOperador = null;
+        String senha1 = String.copyValueOf(tpsSenha.getPassword());
+        String senha2 = String.copyValueOf(tpsConfirmSenha.getPassword());
+        boolean passIsEquals = senha1.equals(senha2);
+        if (passIsEquals) {
+            try {
+                Operador operador = new Operador(tfNome.getText(), ComputeHash(String.copyValueOf(tpsSenha.getPassword())));
+                if (idOperador == null) {
+                    result = new OperadorController().addOperador(operador);
+                } else {
+                    operador.setId(idOperador);
+                    result = new OperadorController().alterarOperador(operador);
+                    idOperador = null;
+                }
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(this, "Operação de cadastro realizada com Sucesso!");
+                    onCancelar();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Tente novamente!");
+                }
+            } catch (NameException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+                tfNome.requestFocus();
+                tfNome.selectAll();
+                return;
+            } catch (PasswordException ex) {
+                tpsSenha.requestFocus();
+                tpsSenha.selectAll();
             }
-            if (result == 1) {
-                JOptionPane.showMessageDialog(this, "Operação de cadastro realizada com Sucesso!");
-                onCancelar();
-            } else {
-                JOptionPane.showMessageDialog(this, "Tente novamente!");
-            }
-        } catch (NameException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-            tfNome.requestFocus();
-            tfNome.selectAll();
-            return;
-        } catch (PasswordException ex) {
-            tpsSenha.requestFocus();
-            tpsSenha.selectAll();
+        } else {
+            JOptionPane.showMessageDialog(this, "As senhas não conferem.");
         }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
     /**
@@ -249,9 +270,11 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
     private javax.swing.JButton btSalvar;
     private javax.swing.JButton btVoltar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField tfNome;
+    private javax.swing.JPasswordField tpsConfirmSenha;
     private javax.swing.JPasswordField tpsSenha;
     // End of variables declaration//GEN-END:variables
 }

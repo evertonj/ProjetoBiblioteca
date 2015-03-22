@@ -8,6 +8,7 @@ package form;
 import controller.OperadorController;
 import entity.Operador;
 import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,16 +34,16 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
     private void onCancelar() {
         tfnomePesquisa.setText(null);
         tfNome.setText(null);
-        tpsSenha.setText(null);
-
+        tpsSenhaAtual.setText(null);
+        tpsNovaSenha.setText(null);
+        tpsConfirmarSenha.setText(null);
     }
 
-    private void enableFields(boolean b) {
-
-        tfNome.setEnabled(b);
-        tpsSenha.setEnabled(b);
-    }
-
+//    private void enableFields(boolean b) {
+//
+//        tfNome.setEnabled(b);
+//        tpsSenha.setEnabled(b);
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +59,11 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tfNome = new javax.swing.JTextField();
-        tpsSenha = new javax.swing.JPasswordField();
+        tpsSenhaAtual = new javax.swing.JPasswordField();
+        tpsNovaSenha = new javax.swing.JPasswordField();
+        tpsConfirmarSenha = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btAtualizar = new javax.swing.JButton();
@@ -83,12 +88,19 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
         jLabel1.setText("Nome:");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Senha:");
+        jLabel2.setText("Senha Atual:");
 
+        tfNome.setEditable(false);
         tfNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tfNome.setEnabled(false);
 
-        tpsSenha.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tpsSenhaAtual.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setText("Nova Senha:");
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setText("Confirmar Senha:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -98,11 +110,15 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tfNome)
-                    .addComponent(tpsSenha))
+                    .addComponent(tpsSenhaAtual)
+                    .addComponent(tpsNovaSenha)
+                    .addComponent(tpsConfirmarSenha))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -112,12 +128,22 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tpsSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tpsSenhaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tpsNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tpsConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {tpsConfirmarSenha, tpsNovaSenha, tpsSenhaAtual});
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Nome para pesquisa:");
@@ -153,6 +179,9 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btAtualizar, btVoltar});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -190,7 +219,7 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -208,7 +237,7 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
             MessageDigest mecanismoDeHash = MessageDigest.getInstance("SHA-256");
             byte[] hashEmBytes = mecanismoDeHash.digest(senha.getBytes("UTF-8"));
             StringBuffer hashEmHexadecimal = new StringBuffer();
- 
+
             for (int i = 0; i < hashEmBytes.length; i++) {
                 String hex = Integer.toHexString(0xff & hashEmBytes[i]);
                 if (hex.length() == 1) {
@@ -216,48 +245,61 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
                 }
                 hashEmHexadecimal.append(hex);
             }
- 
+
             return hashEmHexadecimal.toString();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
-    
+
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        JLabel label = new JLabel("Digite a senha:");
-        JPasswordField jpf = new JPasswordField();
-        JOptionPane.showConfirmDialog(null,
-                new Object[]{label, jpf}, "Password:",
-                JOptionPane.OK_CANCEL_OPTION);
-        String s = String.valueOf(jpf.getPassword());
-        s = ComputeHash(s);
-        if (!s.isEmpty() && operador != null) {
-            if (!operador.getSenha().equals(s)) {
-                JOptionPane.showMessageDialog(this, "Senha Incorreta!");
-            } else {
-                int result;
-                operador.setNome(tfNome.getText());
-                operador.setSenha(ComputeHash(String.copyValueOf(tpsSenha.getPassword())));
-                result = new OperadorController().alterarOperador(operador);
-                idOperador = null;
-                if (result == 1) {
-                    JOptionPane.showMessageDialog(this, "Operador Atualizado com Sucesso!");
-                    onCancelar();
-                    enableFields(false);
+        int result = 0;
+        String senhaAtual = ComputeHash(String.copyValueOf(tpsSenhaAtual.getPassword()));
+        if (operador != null) {
+            if (senhaAtual.equals(operador.getSenha())) {
+                String novaSenha = String.copyValueOf(tpsNovaSenha.getPassword());
+                String confirmSenha = String.copyValueOf(tpsConfirmarSenha.getPassword());
+                if (novaSenha.equals(confirmSenha)) {
+                    operador.setSenha(ComputeHash(novaSenha));
+                    result = new OperadorController().alterarOperador(operador);
+                    if (result == 1) {
+                        JOptionPane.showMessageDialog(this, "Operador Atualizado com Sucesso!");
+                        onCancelar();
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Tente novamente!");
+                    JOptionPane.showMessageDialog(this, "Senha de confirmação não confere com a nova senha.");
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Senha Atual não confere.");
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Realize a pesquisa para poder alterar.");
         }
+//        if (s.isEmpty() && operador != null) {
+//            if (!operador.getSenha().equals(s)) {
+//                JOptionPane.showMessageDialog(this, "Senha Incorreta!");
+//            } else {
+//                int result;
+//                operador.setNome(tfNome.getText());
+//                operador.setSenha(ComputeHash(String.copyValueOf(tpsSenhaAtual.getPassword())));
+//                result = new OperadorController().alterarOperador(operador);
+//                idOperador = null;
+//                if (result == 1) {
+//                    JOptionPane.showMessageDialog(this, "Operador Atualizado com Sucesso!");
+//                    onCancelar();
+//                    //enableFields(false);
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Tente novamente!");
+//                }
+//            }
+//        }
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         if (new OperadorController().buscarOperador(tfnomePesquisa.getText()) != null) {
             operador = new OperadorController().buscarOperador(tfnomePesquisa.getText());
             tfNome.setText(operador.getNome());
-            tpsSenha.setText("********");
             idOperador = operador.getId();
-            enableFields(true);
         } else {
             JOptionPane.showMessageDialog(this, "Operador não encontrado!");
         }
@@ -315,10 +357,14 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField tfNome;
     private javax.swing.JTextField tfnomePesquisa;
-    private javax.swing.JPasswordField tpsSenha;
+    private javax.swing.JPasswordField tpsConfirmarSenha;
+    private javax.swing.JPasswordField tpsNovaSenha;
+    private javax.swing.JPasswordField tpsSenhaAtual;
     // End of variables declaration//GEN-END:variables
 }
