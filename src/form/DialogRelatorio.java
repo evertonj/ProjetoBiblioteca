@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -76,6 +77,11 @@ public class DialogRelatorio extends javax.swing.JDialog {
 
         btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
         btVoltar.setText("Voltar");
+        btVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -125,13 +131,23 @@ public class DialogRelatorio extends javax.swing.JDialog {
     }//GEN-LAST:event_cbTipoActionPerformed
 
     private void btGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerarActionPerformed
-      if(defineStringConnect(cbTipo.getSelectedItem().toString())){
+        try{
+            
+         if(defineStringConnect(cbTipo.getSelectedItem().toString())){
            chamaRelatorio();
       }
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this, "Nenhum dado cadastrado");
+        }
         
+       
        
         
     }//GEN-LAST:event_btGerarActionPerformed
+
+    private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
+       this.dispose();
+    }//GEN-LAST:event_btVoltarActionPerformed
 
     /**
      * @param args the command line arguments
