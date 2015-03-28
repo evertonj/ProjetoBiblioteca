@@ -5,17 +5,16 @@
  */
 package form;
 
-import dao.ObraDAO;
-import entity.Obra;
-import entity.exceptions.NameException;
+import dao.ExemplarObraDAO;
+import entity.ExemplarEmprestimo;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.text.DefaultStyledDocument;
-import table.ObraAtualizarTableModel;
-import table.ObraColumnModel;
+import table.ExemplarEmprestimoTableModel;
+import table.ExemplarObraColumnModel;
 import validadorDeTextField.SomenteNumero;
 
 /**
@@ -24,15 +23,15 @@ import validadorDeTextField.SomenteNumero;
  */
 public class DialogSelecionarObra extends javax.swing.JDialog {
 
-    ObraDAO dao = new ObraDAO();
-    List<Obra> listaDeObra = new ArrayList<>();
+    ExemplarObraDAO dao = new ExemplarObraDAO();
+    List<ExemplarEmprestimo> listaDeObra = new ArrayList<>();
 
     public void DefineDadosEAjustesNajTable() {
         tbAtualizarObra.setAutoCreateColumnsFromModel(false);
         java.awt.FontMetrics fm = tbAtualizarObra.getFontMetrics(tbAtualizarObra.getFont());
-        tbAtualizarObra.setColumnModel(new ObraColumnModel(fm));
+        tbAtualizarObra.setColumnModel(new ExemplarObraColumnModel(fm));
         tbAtualizarObra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+        tbAtualizarObra.setModel(new ExemplarEmprestimoTableModel(listaDeObra));
     }
 
     /**
@@ -43,7 +42,7 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
         initComponents();
         tfTitulo.requestFocus();
     }
-    Obra obra;
+    ExemplarEmprestimo exemplarEmprestimo;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -218,7 +217,7 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
                 return;
             }
-            obra = new ObraAtualizarTableModel(listaDeObra).get(rowIndex);
+            exemplarEmprestimo = new ExemplarEmprestimoTableModel(listaDeObra).get(rowIndex);
         } catch (IndexOutOfBoundsException e) {
             DefineDadosEAjustesNajTable();
         }
@@ -240,8 +239,8 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
             return;
         }
-        obra = new ObraAtualizarTableModel(listaDeObra).get(rowIndex);
-        DialogEmprestimo.setObraNaLista(obra);
+        exemplarEmprestimo = new ExemplarEmprestimoTableModel(listaDeObra).get(rowIndex);
+        DialogEmprestimo.setObraNaLista(exemplarEmprestimo);
         dispose();
     }
     
@@ -251,7 +250,7 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
             DefineDadosEAjustesNajTable();
         } else {
             listaDeObra.clear();
-            tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+            tbAtualizarObra.setModel(new ExemplarEmprestimoTableModel(listaDeObra));
         }
     }//GEN-LAST:event_tfTituloKeyReleased
 
@@ -276,11 +275,11 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
 //                    return verifica(listaDeObra);
                     break;
                 case 1:
-                    listaDeObra = dao.consultaAutor(tfTitulo.getText());
+                   // listaDeObra = dao.consultaAutor(tfTitulo.getText());
 //                    return verifica(listaDeObra);
                     break;
                 case 2:
-                    listaDeObra = dao.consultaIsbn(tfTitulo.getText());
+                   // listaDeObra = dao.consultaIsbn(tfTitulo.getText());
 //                    return verifica(listaDeObra);
                     break;
                 case 3:
@@ -293,11 +292,11 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
 //                    return verifica(listaDeObra);
                     break;
                 case 4:
-                    listaDeObra = dao.consultaAssunto(tfTitulo.getText());
+                    //listaDeObra = dao.consultaAssunto(tfTitulo.getText());
 //                    return verifica(listaDeObra);
                     break;
             }
-        } catch (SQLException | NameException ex) {
+        } catch (SQLException ex) {
             return false;
         }
         return false;

@@ -23,6 +23,11 @@ public class Exemplar {
         this.descricao = descricao;
     }
 
+    public Exemplar() {
+    }
+    
+    
+
     private int id;
     private Date dataDeCadastro;
     private String fornecedor;

@@ -6,16 +6,15 @@
 package form;
 
 import dao.ObraDAO;
-import entity.Obra;
+import entity.ExemplarEmprestimo;
 import entity.Usuario;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.ListSelectionModel;
 import org.joda.time.Instant;
-import table.ObraAtualizarTableModel;
-import table.ObraColumnModel;
+import table.ExemplarEmprestimoTableModel;
+import table.ExemplarObraColumnModel;
 
 /**
  *
@@ -24,14 +23,14 @@ import table.ObraColumnModel;
 public class DialogEmprestimo extends javax.swing.JDialog {
 
     ObraDAO dao = new ObraDAO();
-    static List<Obra> listaDeObra = new ArrayList<>();
+    static List<ExemplarEmprestimo> listaDeObra = new ArrayList<>();
 
     public static void DefineDadosEAjustesNajTable() {
         tbAtualizarObra.setAutoCreateColumnsFromModel(false);
         java.awt.FontMetrics fm = tbAtualizarObra.getFontMetrics(tbAtualizarObra.getFont());
-        tbAtualizarObra.setColumnModel(new ObraColumnModel(fm));
+        tbAtualizarObra.setColumnModel(new ExemplarObraColumnModel(fm));
         tbAtualizarObra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tbAtualizarObra.setModel(new ObraAtualizarTableModel(listaDeObra));
+        tbAtualizarObra.setModel(new ExemplarEmprestimoTableModel(listaDeObra));
     }
 
     /**
@@ -47,7 +46,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         //tfTitulo.requestFocus();
     }
 
-    public static void setObraNaLista(Obra obra) {
+    public static void setObraNaLista(ExemplarEmprestimo obra) {
         listaDeObra.add(obra);
         DefineDadosEAjustesNajTable();
     }

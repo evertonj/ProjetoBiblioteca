@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -323,7 +324,7 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
             } else {
                 JOptionPane.showMessageDialog(this, "Tente novamente!");
             }
-             
+             cbEditora = new JComboBox();
             cbEditora.setModel(new DefaultComboBoxModel(daoEditora.finAll().toArray()));
     }//GEN-LAST:event_btSalvarActionPerformed
 
