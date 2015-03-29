@@ -142,7 +142,7 @@ public class DialogGerenciadorEmprestimo extends javax.swing.JDialog {
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-
+        new DialogConsultarEmprestimo(new javax.swing.JFrame(), true).setVisible(true);
     }//GEN-LAST:event_btConsultarActionPerformed
 
     /**
