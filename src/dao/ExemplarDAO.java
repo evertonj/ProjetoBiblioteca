@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,6 +28,7 @@ public class ExemplarDAO implements IExemplarDAO {
     private static final String SQL_UPDATE = "update exemplar set dataDeCadastro = ?,fornecedor = ?, dataDeAquisicao = ?, id_obra = ?, numero_sequencial = ?, situacao = ?, descricao = ? WHERE id = ?;";
     private static final String SQL_REMOVE = "delete from exemplar where id = ?;";
     private static final String SQL_ORDER_TABLE = "select * from exemplar order by nome;";
+    private static final String SQL_UPDATE_SITUATION = "update exemplar set situacao = 'EMPRESTADO' where id = ?";
 
     public String ObtemTituloDaObra(int idOBra) {
         String titulo;
@@ -168,6 +171,19 @@ public class ExemplarDAO implements IExemplarDAO {
             throw new SQLException("Sintaxe do Sql esta Incorreta...");
         }
         return exemplares;
+    }
+
+    public void mudarSituacaoParaEmprestado(List<Integer> ids) {
+        Connection con = DBConnection.getConnection();
+        try {
+            for (Integer id : ids) {
+                PreparedStatement pstm = con.prepareStatement(SQL_UPDATE_SITUATION);
+                pstm.setInt(1, id);
+                pstm.execute();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExemplarDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public List<Exemplar> buscarTitulo(String titulo) throws SQLException {

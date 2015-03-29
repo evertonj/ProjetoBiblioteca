@@ -5,12 +5,15 @@
  */
 package form;
 
-import dao.ObraDAO;
+import controller.EmprestimoController;
+import entity.Emprestimo;
 import entity.ExemplarEmprestimo;
 import entity.Usuario;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import org.joda.time.Instant;
 import table.ExemplarEmprestimoTableModel;
@@ -22,7 +25,6 @@ import table.ExemplarObraColumnModel;
  */
 public class DialogEmprestimo extends javax.swing.JDialog {
 
-    ObraDAO dao = new ObraDAO();
     static List<ExemplarEmprestimo> listaDeObra = new ArrayList<>();
 
     public static void DefineDadosEAjustesNajTable() {
@@ -46,9 +48,14 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         //tfTitulo.requestFocus();
     }
 
-    public static void setObraNaLista(ExemplarEmprestimo obra) {
-        listaDeObra.add(obra);
-        DefineDadosEAjustesNajTable();
+    public static boolean setObraNaLista(ExemplarEmprestimo obra) {
+        boolean contem = listaDeObra.contains(obra);
+        if (!contem) {
+            listaDeObra.add(obra);
+            DefineDadosEAjustesNajTable();
+            return false;
+        }
+        return true;
     }
 
     public static void setUsuario(Usuario u) {
@@ -69,6 +76,8 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     }
     Instant dataAtual = new Instant();
     static Usuario usuario;
+
+    Emprestimo emprestimo;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,7 +112,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         lbFone = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consultar Obra");
+        setTitle("Empréstimo");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
@@ -315,10 +324,12 @@ public class DialogEmprestimo extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(lbFone))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btAlterarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btSelecionarObra, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btAlterarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btSelecionarObra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,6 +346,8 @@ public class DialogEmprestimo extends javax.swing.JDialog {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btAlterarUsuario, btSelecionarObra});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -374,24 +387,51 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     }//GEN-LAST:event_btVoltar1ActionPerformed
 
     private void btEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEmprestimoActionPerformed
-        dispose();
+        if (listaDeObra.size() > 0 && usuario != null) {
+            realizarEmprestimo(listaDeObra, usuario);
+            dispose();
+        } else {
+            if(listaDeObra.isEmpty() && usuario == null) {
+                JOptionPane.showMessageDialog(this, "Usuário e exemplar(es) devem ser selecionados para realizar o empréstimo");
+            }else if(listaDeObra.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Selecione o(s) exemplar(es) que serão emprestados");
+            }else {
+                JOptionPane.showMessageDialog(this, "Selecione o Usuário");
+            }
+        }
     }//GEN-LAST:event_btEmprestimoActionPerformed
 
     private void tbAtualizarObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarObraMouseClicked
-        //        try {
-            //            int rowIndex = tbAtualizarObra.getSelectedRow();
-            //            if (rowIndex == -1) {
-                //                JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
-                //                return;
-                //            }
-            //            obra = new ObraAtualizarTableModel(listaDeObra).get(rowIndex);
-            //        } catch (IndexOutOfBoundsException e) {
-            //            DefineDadosEAjustesNajTable();
-            //        }
+        if (evt.getButton() == MouseEvent.BUTTON3) {
+            int indice = tbAtualizarObra.getSelectedRow();
+            if (indice == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione um exemplar, e clique com o botão direito do mouse para remover");
+                return;
+            }
+            int remove = JOptionPane.showConfirmDialog(this, "Deseja remover da tabela de empréstimo", "Remover", JOptionPane.OK_CANCEL_OPTION);
+            if (remove == 0) {
+                listaDeObra.remove(indice);
+                DefineDadosEAjustesNajTable();
+            }
+        }
     }//GEN-LAST:event_tbAtualizarObraMouseClicked
 
-    
-     private static ImageIcon redimensionaImageIcon(ImageIcon icon) {
+    private void realizarEmprestimo(List<ExemplarEmprestimo> listaDeObra, Usuario usuario) {
+        emprestimo = new Emprestimo();
+        emprestimo.setData_emprestimo(dataAtual);
+        emprestimo.setData_devolucao(dataAtual.toDateTime().plusDays((int) spDias.getValue()).toInstant());
+        emprestimo.setUsuario_id(usuario.getId());
+        List<Integer> idExemplares = new ArrayList<>();
+        for (ExemplarEmprestimo item : listaDeObra) {
+            idExemplares.add(item.getExemplar().getId());
+        }
+        emprestimo.setObra_id(idExemplares);
+        new EmprestimoController().emprestimo(emprestimo);
+        JOptionPane.showMessageDialog(this, "Empréstimo concluído");
+
+    }
+
+    private static ImageIcon redimensionaImageIcon(ImageIcon icon) {
         int height = icon.getIconHeight();
         int width = icon.getIconWidth();
         double alturaFinal = 141.0;
@@ -405,7 +445,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
                 larguraFinal = width * altura;
             }
         } else {
-            if (height > 126) {
+            if (height > larguraFinal) {
                 double largura = larguraFinal / width;
                 alturaFinal = height * largura;
             } else {
@@ -416,8 +456,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         icon.setImage(icon.getImage().getScaledInstance((int) larguraFinal, (int) alturaFinal, 100));
         return icon;
     }
-    
-    
+
 //    private boolean pesquisa() {
 //        try {
 ////            if (tfTitulo.getText().isEmpty()) {
@@ -530,4 +569,5 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     private javax.swing.JSpinner spDias;
     public static javax.swing.JTable tbAtualizarObra;
     // End of variables declaration//GEN-END:variables
+
 }

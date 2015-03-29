@@ -156,9 +156,8 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
             telaPrincipal.setVisible(true);
             dispose();
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
@@ -166,25 +165,29 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btFecharActionPerformed
     int contador = 1;
     private void tpsSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tpsSenhaKeyReleased
-        if (evt.getKeyChar() == 10) {
-            contador++;
-            if(contador == 2 && login()){
-                JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
-                contador = 0;
-            } else {
-                login();
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            if (login()) {
+                contador++;
+                if (contador == 2) {
+                    JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
+                    contador = 0;
+                } else {
+                    contador = 1;
+                }
             }
         }
     }//GEN-LAST:event_tpsSenhaKeyReleased
 
     private void tfLoginKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfLoginKeyReleased
-        if (evt.getKeyChar() == 10) {
-            contador++;
-            if(contador == 2 && login()){
-                JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
-                contador = 0;
-            } else {
-                login();
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            if (login()) {
+                contador++;
+                if (contador == 2) {
+                    JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
+                    contador = 0;
+                } else {
+                    contador = 1;
+                }
             }
         }
     }//GEN-LAST:event_tfLoginKeyReleased

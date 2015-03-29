@@ -5,6 +5,8 @@
  */
 package entity;
 
+import java.util.Objects;
+
 /**
  *
  * @author Alex
@@ -14,6 +16,29 @@ public class ExemplarEmprestimo {
     public ExemplarEmprestimo(Exemplar exemplar, Obra obra) {
         this.exemplar = exemplar;
         this.obra = obra;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.exemplar);
+        hash = 43 * hash + Objects.hashCode(this.obra);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ExemplarEmprestimo other = (ExemplarEmprestimo) obj;
+        if (!Objects.equals(this.obra.getTitulo(), other.obra.getTitulo())) {
+            return false;
+        }
+        return true;
     }
 
         

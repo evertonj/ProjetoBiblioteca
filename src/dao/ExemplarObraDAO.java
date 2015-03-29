@@ -590,119 +590,313 @@ public class ExemplarObraDAO implements IExemplarObraDAO {
         conn.close();
         return listaDeExemplarEObra;
     }
-
-    public List<Obra> consultaAutor(String autor) throws SQLException, NameException {
-        PreparedStatement pstmO, pstmE, pstm4;
-        Connection conn = null;
-        Obra obra;
-        ResultSet rs, rsEditora, rsExterno;
-        List<Obra> listaDeObra = new ArrayList<>();
+       
+    public List<ExemplarEmprestimo> consultaAutor(String autorPesquisa) throws SQLException{
+        PreparedStatement pstm;
+        Connection conn = DBConnection.getConnection();
+        Obra obra = null;
+        Autor autor = null;
+        Editora editora = null;
+        Exemplar exemplar = null;
+        ExemplarEmprestimo exemplarEmprestimo = null;
+        
+        ResultSet rs, rsAutores, rsEdit, rsExemplar;
+        List<ExemplarEmprestimo> listaDeExemplarEObra = new ArrayList<>();
+        String sqlExemplar = "select * from exemplar where id_obra = ? and numero_sequencial <> 1";
         String sqlEditora = "select * from editora, obra where obra.id_editora = editora.id;";
-        String sqlObra = "select * from obra o, autor a, obra_autor oa where a.nome like '%" + autor + "%' and oa.idautor = a.id and oa.idobra = o.id;";
+        String sqlAutores = "select * from autor a, obra o, obra_autor oa where ? = oa.idobra and oa.idautor = a.id";
+         String sqlObra = "select * from obra o, autor a, obra_autor oa where a.nome like ? and oa.idautor = a.id and oa.idobra = o.id;";
         try {
-            conn = DBConnection.getConnection();
-            pstmO = conn.prepareStatement(sqlObra);
-            rs = pstmO.executeQuery();
-            pstmE = conn.prepareStatement(sqlEditora);
-            rsEditora = pstmE.executeQuery();
-            pstm4 = conn.prepareStatement(sqlObra);
-            rsExterno = pstm4.executeQuery();
-            while (rsExterno.next()) {
-                obra = obra(rs, rsEditora);
-                System.out.println(obra.getId());
-                listaDeObra.add(obra);
+
+            //obra
+            pstm = conn.prepareStatement(sqlObra);
+            pstm.setString(1, autorPesquisa + "%");
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                obra = new Obra();
+                obra.setId(rs.getInt("id"));
+                obra.setTitulo(rs.getString("titulo"));
+                obra.setEdicao(rs.getString("edicao"));
+                obra.setAno(rs.getShort("ano"));
+
+                //Autores
+                pstm = conn.prepareStatement(sqlAutores);
+                pstm.setInt(1, obra.getId());
+                rsAutores = pstm.executeQuery();
+                List<Autor> autores = new ArrayList<>();
+                while (rsAutores.next()) {
+                    try {
+                        autor = new Autor(rsAutores.getInt("id"),
+                                rsAutores.getString("nome"),
+                                rsAutores.getString("sobrenome"));
+                    } catch (NameException ex) {
+                        Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    autores.add(autor);
+                }
+                obra.setAutores(autores);
+
+                //Editora
+                pstm = conn.prepareStatement(sqlEditora);
+                rsEdit = pstm.executeQuery();
+                try {
+                    editora = editora(rsEdit);
+                    obra.setEditora(editora);
+                } catch (NameException ex) {
+                    Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                //Exemplar
+                pstm = conn.prepareStatement(sqlExemplar);
+                pstm.setInt(1, obra.getId());
+                rsExemplar = pstm.executeQuery();
+                while (rsExemplar.next()) {                    
+                    exemplar = new Exemplar();
+                    exemplar.setId(rsExemplar.getInt("id"));
+                    exemplar.setNumeroSequancial(rsExemplar.getInt("numero_sequencial"));
+                    exemplar.setSituacao(EnumSituacaoExemplar.getSituacao(rsExemplar.getString("situacao")));
+                    exemplarEmprestimo = new ExemplarEmprestimo();
+                    exemplarEmprestimo.setObra(obra);
+                    exemplarEmprestimo.setExemplar(exemplar);
+                    listaDeExemplarEObra.add(exemplarEmprestimo);
+                }
             }
-            return listaDeObra;
         } catch (SQLException ex) {
-            throw new SQLException("SQL incorreto");
-        } catch (NameException ex) {
-            throw new NameException("nome incorreto...");
+            throw new SQLException("SQL incorreto.");
         }
+        conn.close();
+        return listaDeExemplarEObra;
     }
 
-    public List<Obra> consultaAssunto(String assunto) throws SQLException, NameException {
-        PreparedStatement pstmO, pstmE, pstm4;
-        Connection conn = null;
-        Obra obra;
-        ResultSet rs, rsEditora, rsExterno;
-        List<Obra> listaDeObra = new ArrayList<>();
+    public List<ExemplarEmprestimo> consultaAssunto(String assunto) throws SQLException {
+       PreparedStatement pstm;
+        Connection conn = DBConnection.getConnection();
+        Obra obra = null;
+        Autor autor = null;
+        Editora editora = null;
+        Exemplar exemplar = null;
+        ExemplarEmprestimo exemplarEmprestimo = null;
+        
+        ResultSet rs, rsAutores, rsEdit, rsExemplar;
+        List<ExemplarEmprestimo> listaDeExemplarEObra = new ArrayList<>();
+        String sqlExemplar = "select * from exemplar where id_obra = ? and numero_sequencial <> 1";
         String sqlEditora = "select * from editora, obra where obra.id_editora = editora.id;";
-
-        String sqlObra = "select * from obra o, autor a, obra_autor oa, assunto ass where ass.nome like '%" + assunto + "%' and o.idassunto = ass.id group by o.titulo";
+        String sqlAutores = "select * from autor a, obra o, obra_autor oa where ? = oa.idobra and oa.idautor = a.id";
+         String sqlObra = "select * from obra o, autor a, obra_autor oa, assunto ass where ass.nome like ? and o.idassunto = ass.id group by o.titulo";
         try {
-            conn = DBConnection.getConnection();
-            pstmO = conn.prepareStatement(sqlObra);
-            rs = pstmO.executeQuery();
-            pstmE = conn.prepareStatement(sqlEditora);
-            rsEditora = pstmE.executeQuery();
-            pstm4 = conn.prepareStatement(sqlObra);
-            rsExterno = pstm4.executeQuery();
-            while (rsExterno.next()) {
-                obra = obra(rs, rsEditora);
-                System.out.println(obra.getId());
-                listaDeObra.add(obra);
+
+            //obra
+            pstm = conn.prepareStatement(sqlObra);
+            pstm.setString(1, assunto + "%");
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                obra = new Obra();
+                obra.setId(rs.getInt("id"));
+                obra.setTitulo(rs.getString("titulo"));
+                obra.setEdicao(rs.getString("edicao"));
+                obra.setAno(rs.getShort("ano"));
+
+                //Autores
+                pstm = conn.prepareStatement(sqlAutores);
+                pstm.setInt(1, obra.getId());
+                rsAutores = pstm.executeQuery();
+                List<Autor> autores = new ArrayList<>();
+                while (rsAutores.next()) {
+                    try {
+                        autor = new Autor(rsAutores.getInt("id"),
+                                rsAutores.getString("nome"),
+                                rsAutores.getString("sobrenome"));
+                    } catch (NameException ex) {
+                        Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    autores.add(autor);
+                }
+                obra.setAutores(autores);
+
+                //Editora
+                pstm = conn.prepareStatement(sqlEditora);
+                rsEdit = pstm.executeQuery();
+                try {
+                    editora = editora(rsEdit);
+                    obra.setEditora(editora);
+                } catch (NameException ex) {
+                    Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                //Exemplar
+                pstm = conn.prepareStatement(sqlExemplar);
+                pstm.setInt(1, obra.getId());
+                rsExemplar = pstm.executeQuery();
+                while (rsExemplar.next()) {                    
+                    exemplar = new Exemplar();
+                    exemplar.setId(rsExemplar.getInt("id"));
+                    exemplar.setNumeroSequancial(rsExemplar.getInt("numero_sequencial"));
+                    exemplar.setSituacao(EnumSituacaoExemplar.getSituacao(rsExemplar.getString("situacao")));
+                    exemplarEmprestimo = new ExemplarEmprestimo();
+                    exemplarEmprestimo.setObra(obra);
+                    exemplarEmprestimo.setExemplar(exemplar);
+                    listaDeExemplarEObra.add(exemplarEmprestimo);
+                }
             }
-            return listaDeObra;
         } catch (SQLException ex) {
-            throw new SQLException("SQL incorreto");
-        } catch (NameException ex) {
-            throw new NameException("nome incorreto...");
+            throw new SQLException("SQL incorreto.");
         }
+        conn.close();
+        return listaDeExemplarEObra;
     }
 
-    public List<Obra> consultaIsbn(String isbn) throws SQLException, NameException {
-        PreparedStatement pstmO, pstmE, pstm4;
-        Connection conn = null;
-        Obra obra;
-        ResultSet rs, rsEditora, rsExterno;
-        List<Obra> listaDeObra = new ArrayList<>();
+    public List<ExemplarEmprestimo> consultaIsbn(String isbn) throws SQLException {
+        PreparedStatement pstm;
+        Connection conn = DBConnection.getConnection();
+        Obra obra = null;
+        Autor autor = null;
+        Editora editora = null;
+        Exemplar exemplar = null;
+        ExemplarEmprestimo exemplarEmprestimo = null;
+        
+        ResultSet rs, rsAutores, rsEdit, rsExemplar;
+        List<ExemplarEmprestimo> listaDeExemplarEObra = new ArrayList<>();
+        String sqlExemplar = "select * from exemplar where id_obra = ? and numero_sequencial <> 1";
         String sqlEditora = "select * from editora, obra where obra.id_editora = editora.id;";
-        String sqlObra = "select * from obra where isbn LIKE '" + isbn + "%'";
+        String sqlAutores = "select * from autor a, obra o, obra_autor oa where ? = oa.idobra and oa.idautor = a.id";
+         String sqlObra = "select * from obra where isbn LIKE ?";
         try {
-            conn = DBConnection.getConnection();
-            pstmO = conn.prepareStatement(sqlObra);
-            rs = pstmO.executeQuery();
-            pstmE = conn.prepareStatement(sqlEditora);
-            rsEditora = pstmE.executeQuery();
-            pstm4 = conn.prepareStatement(sqlObra);
-            rsExterno = pstm4.executeQuery();
-            while (rsExterno.next()) {
-                obra = obra(rs, rsEditora);
-                System.out.println(obra.getId());
-                listaDeObra.add(obra);
+
+            //obra
+            pstm = conn.prepareStatement(sqlObra);
+            pstm.setString(1, isbn + "%");
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                obra = new Obra();
+                obra.setId(rs.getInt("id"));
+                obra.setTitulo(rs.getString("titulo"));
+                obra.setEdicao(rs.getString("edicao"));
+                obra.setAno(rs.getShort("ano"));
+
+                //Autores
+                pstm = conn.prepareStatement(sqlAutores);
+                pstm.setInt(1, obra.getId());
+                rsAutores = pstm.executeQuery();
+                List<Autor> autores = new ArrayList<>();
+                while (rsAutores.next()) {
+                    try {
+                        autor = new Autor(rsAutores.getInt("id"),
+                                rsAutores.getString("nome"),
+                                rsAutores.getString("sobrenome"));
+                    } catch (NameException ex) {
+                        Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    autores.add(autor);
+                }
+                obra.setAutores(autores);
+
+                //Editora
+                pstm = conn.prepareStatement(sqlEditora);
+                rsEdit = pstm.executeQuery();
+                try {
+                    editora = editora(rsEdit);
+                    obra.setEditora(editora);
+                } catch (NameException ex) {
+                    Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                //Exemplar
+                pstm = conn.prepareStatement(sqlExemplar);
+                pstm.setInt(1, obra.getId());
+                rsExemplar = pstm.executeQuery();
+                while (rsExemplar.next()) {                    
+                    exemplar = new Exemplar();
+                    exemplar.setId(rsExemplar.getInt("id"));
+                    exemplar.setNumeroSequancial(rsExemplar.getInt("numero_sequencial"));
+                    exemplar.setSituacao(EnumSituacaoExemplar.getSituacao(rsExemplar.getString("situacao")));
+                    exemplarEmprestimo = new ExemplarEmprestimo();
+                    exemplarEmprestimo.setObra(obra);
+                    exemplarEmprestimo.setExemplar(exemplar);
+                    listaDeExemplarEObra.add(exemplarEmprestimo);
+                }
             }
-            return listaDeObra;
         } catch (SQLException ex) {
-            throw new SQLException("SQL incorreto");
-        } catch (NameException ex) {
-            throw new NameException("nome incorreto...");
+            throw new SQLException("SQL incorreto.");
         }
+        conn.close();
+        return listaDeExemplarEObra;
     }
 
+    @Override
     public List<ExemplarEmprestimo> consultaPorCodigo(int codigo) throws SQLException {
-        PreparedStatement pstmO, pstmE, pstm4;
-        Connection conn = null;
-        Obra obra;
-        ResultSet rs, rsEditora, rsExterno;
-        List<ExemplarEmprestimo> listaDeObra = new ArrayList<>();
+        PreparedStatement pstm;
+        Connection conn = DBConnection.getConnection();
+        Obra obra = null;
+        Autor autor = null;
+        Editora editora = null;
+        Exemplar exemplar = null;
+        ExemplarEmprestimo exemplarEmprestimo = null;
+        
+        ResultSet rs, rsAutores, rsEdit, rsExemplar;
+        List<ExemplarEmprestimo> listaDeExemplarEObra = new ArrayList<>();
+        String sqlExemplar = "select * from exemplar where id_obra = ? and numero_sequencial <> 1";
         String sqlEditora = "select * from editora, obra where obra.id_editora = editora.id;";
-        String sqlObra = "select * from obra where id = " + codigo + ";";
+        String sqlAutores = "select * from autor a, obra o, obra_autor oa where ? = oa.idobra and oa.idautor = a.id";
+         String sqlObra = "select * from obra where id = ?";
         try {
-            conn = DBConnection.getConnection();
-            pstmO = conn.prepareStatement(sqlObra);
-            rs = pstmO.executeQuery();
-            pstmE = conn.prepareStatement(sqlEditora);
-            rsEditora = pstmE.executeQuery();
-            pstm4 = conn.prepareStatement(sqlObra);
-            rsExterno = pstm4.executeQuery();
-            while (rsExterno.next()) {
-                //obra = obra(rs, rsEditora);
-                // System.out.println(obra.getId());
-                //listaDeObra.add(obra);
+
+            //obra
+            pstm = conn.prepareStatement(sqlObra);
+            pstm.setInt(1, codigo);
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                obra = new Obra();
+                obra.setId(rs.getInt("id"));
+                obra.setTitulo(rs.getString("titulo"));
+                obra.setEdicao(rs.getString("edicao"));
+                obra.setAno(rs.getShort("ano"));
+
+                //Autores
+                pstm = conn.prepareStatement(sqlAutores);
+                pstm.setInt(1, obra.getId());
+                rsAutores = pstm.executeQuery();
+                List<Autor> autores = new ArrayList<>();
+                while (rsAutores.next()) {
+                    try {
+                        autor = new Autor(rsAutores.getInt("id"),
+                                rsAutores.getString("nome"),
+                                rsAutores.getString("sobrenome"));
+                    } catch (NameException ex) {
+                        Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    autores.add(autor);
+                }
+                obra.setAutores(autores);
+
+                //Editora
+                pstm = conn.prepareStatement(sqlEditora);
+                rsEdit = pstm.executeQuery();
+                try {
+                    editora = editora(rsEdit);
+                    obra.setEditora(editora);
+                } catch (NameException ex) {
+                    Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                //Exemplar
+                pstm = conn.prepareStatement(sqlExemplar);
+                pstm.setInt(1, obra.getId());
+                rsExemplar = pstm.executeQuery();
+                while (rsExemplar.next()) {                    
+                    exemplar = new Exemplar();
+                    exemplar.setId(rsExemplar.getInt("id"));
+                    exemplar.setNumeroSequancial(rsExemplar.getInt("numero_sequencial"));
+                    exemplar.setSituacao(EnumSituacaoExemplar.getSituacao(rsExemplar.getString("situacao")));
+                    exemplarEmprestimo = new ExemplarEmprestimo();
+                    exemplarEmprestimo.setObra(obra);
+                    exemplarEmprestimo.setExemplar(exemplar);
+                    listaDeExemplarEObra.add(exemplarEmprestimo);
+                }
             }
-            return listaDeObra;
         } catch (SQLException ex) {
-            throw new SQLException("SQL incorreto");
+            throw new SQLException("SQL incorreto.");
         }
+        conn.close();
+        return listaDeExemplarEObra;
     }
 }

@@ -6,6 +6,7 @@
 package form;
 
 import dao.ExemplarObraDAO;
+import entity.EnumSituacaoExemplar;
 import entity.ExemplarEmprestimo;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
         cbOpcaoPesquisa = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Atualizar Obra");
+        setTitle("Exemplares para Emprestimo");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
@@ -232,7 +233,7 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
         atualizar();
     }//GEN-LAST:event_btAtualizarActionPerformed
-    
+
     private void atualizar() {
         int rowIndex = tbAtualizarObra.getSelectedRow();
         if (rowIndex == -1) {
@@ -240,10 +241,19 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
             return;
         }
         exemplarEmprestimo = new ExemplarEmprestimoTableModel(listaDeObra).get(rowIndex);
-        DialogEmprestimo.setObraNaLista(exemplarEmprestimo);
+        if(exemplarEmprestimo.getExemplar().getSituacao() == EnumSituacaoExemplar.DISPONIVEL) {
+            if(DialogEmprestimo.setObraNaLista(exemplarEmprestimo)) {
+                JOptionPane.showMessageDialog(this, "Um exemplar com este título, já foi adicionado.");
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Só é possível emprestar exemplar com situação disponível.");
+            contador = 0;
+            return;
+        }
         dispose();
     }
-    
+
     private void tfTituloKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTituloKeyReleased
         if (!tfTitulo.getText().isEmpty()) {
             this.pesquisa();
@@ -265,23 +275,23 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
 
     private boolean pesquisa() {
         try {
-//            if (tfTitulo.getText().isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "Digite sua pesquisa.");
-//                return false;
-//            }
+            if (tfTitulo.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Digite sua pesquisa.");
+                return false;
+            }
             switch (cbOpcaoPesquisa.getSelectedIndex()) {
                 case 0:
                     listaDeObra = dao.consulta(tfTitulo.getText());
-//                    return verifica(listaDeObra);
-                    break;
+                    return verifica(listaDeObra);
+                    
                 case 1:
-                   // listaDeObra = dao.consultaAutor(tfTitulo.getText());
-//                    return verifica(listaDeObra);
-                    break;
+                    listaDeObra = dao.consultaAutor(tfTitulo.getText());
+                    return verifica(listaDeObra);
+                    
                 case 2:
-                   // listaDeObra = dao.consultaIsbn(tfTitulo.getText());
-//                    return verifica(listaDeObra);
-                    break;
+                    listaDeObra = dao.consultaIsbn(tfTitulo.getText());
+                    return verifica(listaDeObra);
+                    
                 case 3:
                     try {
                         listaDeObra = dao.consultaPorCodigo(Integer.parseInt(tfTitulo.getText()));
@@ -289,12 +299,12 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
                         JOptionPane.showMessageDialog(this, "Favor digite somente números.");
                         return false;
                     }
-//                    return verifica(listaDeObra);
-                    break;
+                    return verifica(listaDeObra);
+                    
                 case 4:
-                    //listaDeObra = dao.consultaAssunto(tfTitulo.getText());
-//                    return verifica(listaDeObra);
-                    break;
+                    listaDeObra = dao.consultaAssunto(tfTitulo.getText());
+                    return verifica(listaDeObra);
+                    
             }
         } catch (SQLException ex) {
             return false;
@@ -302,13 +312,14 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
         return false;
     }
 
-//    private boolean verifica(List<Obra> lista) {
-//        if (lista.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "A busca não encontrou nenhum resultado.");
-//            return false;
-//        }
-//        return true;
-//    }
+    private boolean verifica(List<ExemplarEmprestimo> lista) {
+        if (lista.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "A busca não encontrou nenhum resultado.");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * @param args the command line arguments
      */

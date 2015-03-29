@@ -19,26 +19,29 @@ import java.util.logging.Logger;
  * @author Everton
  */
 public class EmprestimoDAO implements IEmprestimoDAO {
-
+    ExemplarDAO exemDAO = new ExemplarDAO();
     String sql = "INSERT INTO `biblioteca`.`emprestimo`\n"
-            + "(`obra_id`,\n"
+            + "(`exemplar_id`,\n"
             + "`usuario_id`,\n"
             + "`data_emprestimo`,\n"
             + "`data_devolucao`)\n"
-            + "VALUES(?, ?, ?, ?)";
+            + "`foi_devolvido`)\n"
+            + "VALUES(?, ?, ?, ?, ?)";
 
     @Override
     public void emprestimo(Emprestimo emprestimo) {
-        Date date;
         Connection con = DBConnection.getConnection();
         try {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < emprestimo.getObra_id().size(); i++) {
                 PreparedStatement pstm = con.prepareStatement(sql);
                 pstm.setInt(1, emprestimo.getObra_id().get(i));
                 pstm.setInt(2, emprestimo.getUsuario_id());
                 pstm.setDate(3, new Date(emprestimo.getData_emprestimo().toDate().getTime()));
                 pstm.setDate(4, new Date(emprestimo.getData_devolucao().toDateTime().plusDays(emprestimo.getDiasParaDevolucao()).getMillis()));
-                pstm.execute();
+                pstm.setBoolean(5, false);
+                if(pstm.execute()) {
+                    exemDAO.mudarSituacaoParaEmprestado(emprestimo.getObra_id());
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
