@@ -51,20 +51,16 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         }
     }
 
-    public List<String> consultarSeJaPussuiAlgoEmprestado(int idUsuario, List<Integer> idExemplares) {
+    public List<Integer> consultarSeJaPussuiAlgoEmprestado(int idUsuario) {
         Connection con = DBConnection.getConnection();
-        List<String> lista = new ArrayList<>();
+        List<Integer> lista = new ArrayList<>();
         try {
-            for (int i = 0; i < idExemplares.size(); i++) {
-                PreparedStatement pstm = con.prepareStatement("select exemplar_id, usuario_id from emprestimo where exemplar_id = ? and usuario_id = ? and foi_devolvido = 0");
-                pstm.setInt(1, idExemplares.get(i));
-                pstm.setInt(2, idUsuario);
-                ResultSet rs = pstm.executeQuery();
-                if (rs.first()) {
-                    String exemplar_id = String.valueOf(rs.getInt("exemplar_id"));
-                    String usuario_id = String.valueOf(rs.getInt("usuario_id"));
-                    lista.add(exemplar_id + usuario_id);
-                }
+            PreparedStatement pstm = con.prepareStatement("select exemplar_id from emprestimo where usuario_id = ? and foi_devolvido = 0");
+            pstm.setInt(1, idUsuario);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                int exemplar_id = rs.getInt("exemplar_id");
+                lista.add(exemplar_id);
             }
         } catch (SQLException ex) {
             Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,14 +73,15 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         String titulo = null;
         try {
             PreparedStatement pstm = con.prepareStatement("select titulo from obra o, exemplar e where e.id = ? and o.id = id_obra");
+            pstm.setInt(1, exemplar_id);
             ResultSet rs = pstm.executeQuery();
-            if(rs.first()) {
+            if (rs.first()) {
                 titulo = rs.getString("titulo");
             }
         } catch (SQLException ex) {
             Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return titulo;
     }
 }

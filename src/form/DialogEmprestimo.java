@@ -425,22 +425,24 @@ public class DialogEmprestimo extends javax.swing.JDialog {
 
     private boolean consultaSeUsuarioJaPossuiExemplarComMesmoTitulo(Usuario usuario, List<ExemplarEmprestimo> listaDeObra) {
         EmprestimoDAO emp = new EmprestimoDAO();
-        List<Integer> listaIdExemplar = new ArrayList<>();
-        String titulos = "";
+        String exemplaresParaRemover = "";
+        List<String> titulos = new ArrayList<>();
+        for (Integer exemplar_id : emp.consultarSeJaPussuiAlgoEmprestado(usuario.getId())) {
+            titulos.add(emp.consultarTituloDoExemplar(exemplar_id));
+        }
         for (int i = 0; i < listaDeObra.size(); i++) {
-            listaIdExemplar.add(listaDeObra.get(i).getExemplar().getId());
-        }
-        List<String> listaDeExemplaresIguais = emp.consultarSeJaPussuiAlgoEmprestado(usuario.getId(), listaIdExemplar);
-        if (!listaDeExemplaresIguais.isEmpty()) {
-            for (String item : listaDeExemplaresIguais) {
-                int exemplar_id = Integer.valueOf(String.valueOf(item.charAt(0)));
-                titulos += emp.consultarTituloDoExemplar(exemplar_id) + "\n";
+            for (int j = 0; j < titulos.size(); j++) {
+                if (listaDeObra.get(i).getObra().getTitulo().equals(titulos.get(j))) {
+                    exemplaresParaRemover += titulos.get(j) + ",\n";
+                }
             }
-            JOptionPane.showMessageDialog(this, "Remova estes exemplares: " + titulos + "\n"
-                    + "Pois este Usuário, já possuí exemplares com o mesmo titulo emprestado.");
-            return false;
         }
-        return true;
+        if (exemplaresParaRemover.isEmpty()) {
+            return true;
+        }
+        JOptionPane.showMessageDialog(this, "Remova: " + exemplaresParaRemover + "\n"
+                + "Pois este Usuário, já possuí exemplares com o mesmo titulo emprestado.");
+        return false;
     }
 
     private void realizarEmprestimo(List<ExemplarEmprestimo> listaDeObra, Usuario usuario) {
