@@ -76,7 +76,7 @@ public class Editora  {
             return false;
         }
         final Editora other = (Editora) obj;
-        if (this.id != other.id) {
+        if (this.nome != other.nome) {
             return false;
         }
         return true;

@@ -71,7 +71,7 @@ public class Assunto {
             return false;
         }
         final Assunto other = (Assunto) obj;
-        if (this.id != other.id) {
+        if (this.nome != other.nome) {
             return false;
         }
         return true;

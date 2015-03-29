@@ -487,6 +487,8 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Usuario inserido com Sucesso!");
             }
             onCancelar();
+            emails.clear();
+            telefones.clear();
         } else {
             JOptionPane.showMessageDialog(this, "Tente novamente!");
         }

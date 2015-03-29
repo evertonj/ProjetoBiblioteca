@@ -324,8 +324,8 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
             } else {
                 JOptionPane.showMessageDialog(this, "Tente novamente!");
             }
-             cbEditora = new JComboBox();
             cbEditora.setModel(new DefaultComboBoxModel(daoEditora.finAll().toArray()));
+            cbEditora.getModel().setSelectedItem(editora);
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed

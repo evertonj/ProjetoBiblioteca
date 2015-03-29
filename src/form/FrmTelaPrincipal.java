@@ -458,7 +458,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_menuRelatorioMouseClicked
 
     private void btEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEmprestimoActionPerformed
-        new DialogEmprestimo(this, true).setVisible(true);
+        new DialogGerenciadorEmprestimo(this, true).setVisible(true);
     }//GEN-LAST:event_btEmprestimoActionPerformed
 
     /**

@@ -11,12 +11,15 @@ import entity.Emprestimo;
 import entity.ExemplarEmprestimo;
 import entity.Usuario;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import org.joda.time.Instant;
 import table.ExemplarEmprestimoTableModel;
 import table.ExemplarObraColumnModel;
 
@@ -42,13 +45,15 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     public DialogEmprestimo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        lbDataDevolucao.setText(dataAtual.toDateTime().plusDays((int) spDias.getValue()).toString("dd/MM/yyyy"));
+        lbDataDevolucao.setText(dataAtual.plusDays((int) spDias.getValue()).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         lbUsuario.setText("");
         lbEmail.setText("");
         lbFone.setText("");
         //tfTitulo.requestFocus();
     }
 
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
     public static boolean setObraNaLista(ExemplarEmprestimo obra) {
         boolean contem = listaDeObra.contains(obra);
         if (!contem) {
@@ -77,7 +82,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             lbFone.setText(usuario.getListTelefone() != null ? usuario.getListTelefone().get(0).getTelefone() : "");
         }
     }
-    Instant dataAtual = new Instant();
+    LocalDate dataAtual = LocalDate.now();
     static Usuario usuario;
 
     Emprestimo emprestimo;
@@ -378,7 +383,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void spDiasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spDiasStateChanged
-        lbDataDevolucao.setText(dataAtual.toDateTime().plusDays((int) spDias.getValue()).toString("dd/MM/yyyy"));
+        lbDataDevolucao.setText(dataAtual.plusDays((int) spDias.getValue()).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }//GEN-LAST:event_spDiasStateChanged
 
     private void btSelecionarObraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarObraActionPerformed
@@ -450,16 +455,19 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     }
 
     private void realizarEmprestimo(List<ExemplarEmprestimo> listaDeObra, Usuario usuario) {
-        emprestimo = new Emprestimo();
-        emprestimo.setData_emprestimo(dataAtual);
-        emprestimo.setData_devolucao(dataAtual.toDateTime().plusDays((int) spDias.getValue()).toInstant());
-        emprestimo.setUsuario_id(usuario.getId());
-        List<Integer> idExemplares = new ArrayList<>();
-        for (ExemplarEmprestimo item : listaDeObra) {
-            idExemplares.add(item.getExemplar().getId());
+        for (int i = 0; i < listaDeObra.size(); i++) {
+            emprestimo = new Emprestimo();
+            emprestimo.setData_emprestimo(dataAtual);
+            emprestimo.setData_devolucao(dataAtual.plusDays((int) spDias.getValue()));
+            emprestimo.setUsuario_id(usuario.getId());
+            emprestimo.setExemplar_id(listaDeObra.get(i).getExemplar().getId());
+            emprestimo.setObra_id(listaDeObra.get(i).getObra().getId());
+            emprestimo.setEditora_id(listaDeObra.get(i).getObra().getEditora().getId());
+            emprestimo.setAutor_id(listaDeObra.get(i).getObra().getAutores().get(0).getId());
+            emprestimo.setDiasParaDevolucao((int)spDias.getValue());
+            new EmprestimoController().emprestimo(emprestimo);
         }
-        emprestimo.setObra_id(idExemplares);
-        new EmprestimoController().emprestimo(emprestimo);
+
         JOptionPane.showMessageDialog(this, "Empréstimo concluído");
 
     }

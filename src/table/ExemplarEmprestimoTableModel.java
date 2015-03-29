@@ -35,11 +35,11 @@ public class ExemplarEmprestimoTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         ExemplarEmprestimo exemplar = valores.get(rowIndex);
         String numeroExemplar = String.valueOf(exemplar.getObra().getId());
-        numeroExemplar +=  String.valueOf(exemplar.getExemplar().getId());
+        numeroExemplar += String.valueOf(exemplar.getExemplar().getId());
         numeroExemplar += String.valueOf(exemplar.getExemplar().getNumeroSequancial());
         switch (columnIndex) {
             case 0:
-                return numeroExemplar;
+                return exemplar.getExemplar().getId();
             case 1:
                 return exemplar.getObra().getTitulo();
             case 2:

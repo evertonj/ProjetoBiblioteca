@@ -5,7 +5,6 @@
  */
 package form;
 
-
 import controller.AssuntoController;
 import dao.AssuntoDAO;
 import entity.Assunto;
@@ -24,7 +23,7 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
      * Creates new form FrmCadastroDeObra
      */
     public FrmCadastroDeAssunto(java.awt.Frame parent, boolean modal) {
-         super(parent, modal);
+        super(parent, modal);
         initComponents();
         this.enableFields(true);
     }
@@ -32,6 +31,7 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
     List<Assunto> assuntoList;
     Integer idAssunto;
     AssuntoDAO daoAssunto = new AssuntoDAO();
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,31 +162,26 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
-      
-        
-
     private void onCancelar() {
-        
+
         tfNome.setText(null);
-      
+
     }
 
     private void enableFields(boolean b) {
-      
+
         tfNome.setEnabled(b);
-        
+
     }
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
         int result;
         try {
-            {             
-              
+            {
+
                 Assunto assunto = new Assunto();
                 assunto.setNome(tfNome.getText());
-               
-                        
+
                 if (idAssunto == null) {
                     result = new AssuntoController().addAssunto(assunto);
                 } else {
@@ -196,25 +191,25 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
                 }
                 if (result == 1) {
                     JOptionPane.showMessageDialog(this, "Assunto inserido com Sucesso!");
-                   
+
                     onCancelar();
-                   
+
                 } else {
                     JOptionPane.showMessageDialog(this, "Tente novamente!");
                 }
+                cbAssunto.setModel(new DefaultComboBoxModel(daoAssunto.finAll().toArray()));
+                cbAssunto.getModel().setSelectedItem(assunto);
             }
-            
-        }catch(NullPointerException ex){
-            JOptionPane.showMessageDialog(this,"");
-        } 
-        
 
-        
-        cbAssunto.setModel(new DefaultComboBoxModel(daoAssunto.finAll().toArray()));
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(this, "");
+        }
+
+
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-this.dispose();
+        this.dispose();
         //int rowIndex = tbObra.getSelectedRow();
 //        if (rowIndex == -1) {
 //            JOptionPane.showMessageDialog(this, "Selecione o livro a ser Alterado!!!");
@@ -229,7 +224,7 @@ this.dispose();
 //        tfEmail.setText(assunto.getEmail());
 //        enableFields(true);
     }//GEN-LAST:event_btEditarActionPerformed
-  /**
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -259,7 +254,7 @@ this.dispose();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                 FrmCadastroDeAssunto dialog = new FrmCadastroDeAssunto(new javax.swing.JFrame(), true);
+                FrmCadastroDeAssunto dialog = new FrmCadastroDeAssunto(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -267,7 +262,7 @@ this.dispose();
                     }
                 });
                 dialog.setVisible(true);
-              
+
             }
         });
     }

@@ -200,8 +200,13 @@ public class DialogAdicionarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btSelecionarActionPerformed
 
     private void tfBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBuscaKeyReleased
-        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
-            buscarDadosParaTabela();
+        if (tfBusca.getText().isEmpty()) {
+            listaUsuario.clear();
+            refreshTable(listaUsuario);
+        } else {
+            if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+                buscarDadosParaTabela();
+            }
         }
     }//GEN-LAST:event_tfBuscaKeyReleased
 
