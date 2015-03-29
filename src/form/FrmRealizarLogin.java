@@ -142,7 +142,10 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
 
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
-        login();
+        if(login()) {
+            JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
+            tfLogin.requestFocus();
+        }
     }//GEN-LAST:event_btLoginActionPerformed
     private boolean login() throws HeadlessException {
         String usuario = tfLogin.getText();

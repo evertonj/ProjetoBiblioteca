@@ -26,7 +26,7 @@ public class DialogAdicionarUsuario extends javax.swing.JDialog {
     public DialogAdicionarUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
+        tfBusca.requestFocus();
     }
     private Usuario usuario;
     List<Usuario> listaUsuario = new ArrayList<>();

@@ -6,6 +6,7 @@
 package form;
 
 import controller.EmprestimoController;
+import dao.EmprestimoDAO;
 import entity.Emprestimo;
 import entity.ExemplarEmprestimo;
 import entity.Usuario;
@@ -65,9 +66,11 @@ public class DialogEmprestimo extends javax.swing.JDialog {
 
     private static void setDados() {
         if (usuario != null) {
-            if (usuario.getFoto().length > 0) {
+            if (usuario.getFoto() != null) {
                 ImageIcon img = new ImageIcon(usuario.getFoto());
                 lbFoto.setIcon(redimensionaImageIcon(img));
+            } else {
+                lbFoto.setIcon(new ImageIcon());
             }
             lbUsuario.setText(usuario.getNome());
             lbEmail.setText(usuario.getListEmail() != null ? usuario.getListEmail().get(0).getEmail() : "");
@@ -387,16 +390,20 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     }//GEN-LAST:event_btVoltar1ActionPerformed
 
     private void btEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEmprestimoActionPerformed
-        if (listaDeObra.size() > 0 && usuario != null) {
-            realizarEmprestimo(listaDeObra, usuario);
-            dispose();
-        } else {
-            if(listaDeObra.isEmpty() && usuario == null) {
-                JOptionPane.showMessageDialog(this, "Usuário e exemplar(es) devem ser selecionados para realizar o empréstimo");
-            }else if(listaDeObra.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Selecione o(s) exemplar(es) que serão emprestados");
-            }else {
-                JOptionPane.showMessageDialog(this, "Selecione o Usuário");
+        if (consultaSeUsuarioJaPossuiExemplarComMesmoTitulo(usuario, listaDeObra)) {
+            if (listaDeObra.size() > 0 && usuario != null) {
+                realizarEmprestimo(listaDeObra, usuario);
+                listaDeObra.clear();
+                usuario = null;
+                dispose();
+            } else {
+                if (listaDeObra.isEmpty() && usuario == null) {
+                    JOptionPane.showMessageDialog(this, "Usuário e exemplar(es) devem ser selecionados para realizar o empréstimo");
+                } else if (listaDeObra.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Selecione os exemplares que serão emprestados");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Selecione o Usuário");
+                }
             }
         }
     }//GEN-LAST:event_btEmprestimoActionPerformed
@@ -415,6 +422,26 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_tbAtualizarObraMouseClicked
+
+    private boolean consultaSeUsuarioJaPossuiExemplarComMesmoTitulo(Usuario usuario, List<ExemplarEmprestimo> listaDeObra) {
+        EmprestimoDAO emp = new EmprestimoDAO();
+        List<Integer> listaIdExemplar = new ArrayList<>();
+        String titulos = "";
+        for (int i = 0; i < listaDeObra.size(); i++) {
+            listaIdExemplar.add(listaDeObra.get(i).getExemplar().getId());
+        }
+        List<String> listaDeExemplaresIguais = emp.consultarSeJaPussuiAlgoEmprestado(usuario.getId(), listaIdExemplar);
+        if (!listaDeExemplaresIguais.isEmpty()) {
+            for (String item : listaDeExemplaresIguais) {
+                int exemplar_id = Integer.valueOf(String.valueOf(item.charAt(0)));
+                titulos += emp.consultarTituloDoExemplar(exemplar_id) + "\n";
+            }
+            JOptionPane.showMessageDialog(this, "Remova estes exemplares: " + titulos + "\n"
+                    + "Pois este Usuário, já possuí exemplares com o mesmo titulo emprestado.");
+            return false;
+        }
+        return true;
+    }
 
     private void realizarEmprestimo(List<ExemplarEmprestimo> listaDeObra, Usuario usuario) {
         emprestimo = new Emprestimo();
