@@ -75,6 +75,11 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
                 btLoginActionPerformed(evt);
             }
         });
+        btLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btLoginKeyReleased(evt);
+            }
+        });
 
         btFechar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/1404967476_Exit.png"))); // NOI18N
@@ -83,6 +88,11 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
         btFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btFecharActionPerformed(evt);
+            }
+        });
+        btFechar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btFecharKeyReleased(evt);
             }
         });
 
@@ -194,6 +204,26 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tfLoginKeyReleased
+
+    private void btLoginKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btLoginKeyReleased
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            if (login()) {
+                contador++;
+                if (contador == 2) {
+                    JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
+                    contador = 0;
+                } else {
+                    contador = 1;
+                }
+            }
+        }
+    }//GEN-LAST:event_btLoginKeyReleased
+
+    private void btFecharKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btFecharKeyReleased
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btFecharKeyReleased
 
     private Dimension redimensionarTela() {
         return (new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));

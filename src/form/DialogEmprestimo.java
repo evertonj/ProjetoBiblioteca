@@ -209,6 +209,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         jLabel3.setText("Usuário:");
 
         lbUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lbUsuario.setForeground(new java.awt.Color(0, 102, 204));
         lbUsuario.setText("Fulano da Silva");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -226,6 +227,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         jLabel4.setText("dias");
 
         lbDataDevolucao.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lbDataDevolucao.setForeground(new java.awt.Color(0, 102, 204));
         lbDataDevolucao.setText("dd/MM/yyyy");
 
         lbDataDevolucao1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -256,9 +258,11 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         jLabel6.setText("Fone:");
 
         lbEmail.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lbEmail.setForeground(new java.awt.Color(0, 102, 204));
         lbEmail.setText("Fulano da Silva");
 
         lbFone.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lbFone.setForeground(new java.awt.Color(0, 102, 204));
         lbFone.setText("Fulano da Silva.............................................................");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -390,20 +394,20 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     }//GEN-LAST:event_btVoltar1ActionPerformed
 
     private void btEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEmprestimoActionPerformed
-        if (consultaSeUsuarioJaPossuiExemplarComMesmoTitulo(usuario, listaDeObra)) {
-            if (listaDeObra.size() > 0 && usuario != null) {
+        if (listaDeObra.size() > 0 && usuario != null) {
+            if (consultaSeUsuarioJaPossuiExemplarComMesmoTitulo(usuario, listaDeObra)) {
                 realizarEmprestimo(listaDeObra, usuario);
                 listaDeObra.clear();
                 usuario = null;
                 dispose();
+            }
+        } else {
+            if (listaDeObra.isEmpty() && usuario == null) {
+                JOptionPane.showMessageDialog(this, "Usuário e exemplar(es) devem ser selecionados para realizar o empréstimo");
+            } else if (listaDeObra.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Selecione os exemplares que serão emprestados");
             } else {
-                if (listaDeObra.isEmpty() && usuario == null) {
-                    JOptionPane.showMessageDialog(this, "Usuário e exemplar(es) devem ser selecionados para realizar o empréstimo");
-                } else if (listaDeObra.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Selecione os exemplares que serão emprestados");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Selecione o Usuário");
-                }
+                JOptionPane.showMessageDialog(this, "Selecione o Usuário");
             }
         }
     }//GEN-LAST:event_btEmprestimoActionPerformed

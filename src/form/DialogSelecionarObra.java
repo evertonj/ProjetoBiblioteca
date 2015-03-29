@@ -8,6 +8,7 @@ package form;
 import dao.ExemplarObraDAO;
 import entity.EnumSituacaoExemplar;
 import entity.ExemplarEmprestimo;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -241,8 +242,8 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
             return;
         }
         exemplarEmprestimo = new ExemplarEmprestimoTableModel(listaDeObra).get(rowIndex);
-        if(exemplarEmprestimo.getExemplar().getSituacao() == EnumSituacaoExemplar.DISPONIVEL) {
-            if(DialogEmprestimo.setObraNaLista(exemplarEmprestimo)) {
+        if (exemplarEmprestimo.getExemplar().getSituacao() == EnumSituacaoExemplar.DISPONIVEL) {
+            if (DialogEmprestimo.setObraNaLista(exemplarEmprestimo)) {
                 JOptionPane.showMessageDialog(this, "Um exemplar com este título, já foi adicionado.");
                 return;
             }
@@ -255,12 +256,14 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
     }
 
     private void tfTituloKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTituloKeyReleased
-        if (!tfTitulo.getText().isEmpty()) {
-            this.pesquisa();
-            DefineDadosEAjustesNajTable();
-        } else {
-            listaDeObra.clear();
-            tbAtualizarObra.setModel(new ExemplarEmprestimoTableModel(listaDeObra));
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+            if (!tfTitulo.getText().isEmpty()) {
+                this.pesquisa();
+                DefineDadosEAjustesNajTable();
+            } else {
+                listaDeObra.clear();
+                tbAtualizarObra.setModel(new ExemplarEmprestimoTableModel(listaDeObra));
+            }
         }
     }//GEN-LAST:event_tfTituloKeyReleased
 
@@ -283,15 +286,15 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
                 case 0:
                     listaDeObra = dao.consulta(tfTitulo.getText());
                     return verifica(listaDeObra);
-                    
+
                 case 1:
                     listaDeObra = dao.consultaAutor(tfTitulo.getText());
                     return verifica(listaDeObra);
-                    
+
                 case 2:
                     listaDeObra = dao.consultaIsbn(tfTitulo.getText());
                     return verifica(listaDeObra);
-                    
+
                 case 3:
                     try {
                         listaDeObra = dao.consultaPorCodigo(Integer.parseInt(tfTitulo.getText()));
@@ -300,11 +303,11 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
                         return false;
                     }
                     return verifica(listaDeObra);
-                    
+
                 case 4:
                     listaDeObra = dao.consultaAssunto(tfTitulo.getText());
                     return verifica(listaDeObra);
-                    
+
             }
         } catch (SQLException ex) {
             return false;

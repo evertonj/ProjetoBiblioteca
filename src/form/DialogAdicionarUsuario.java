@@ -6,12 +6,14 @@
 package form;
 
 import dao.UsuarioDAO;
+import entity.ExemplarEmprestimo;
 import entity.Usuario;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import table.UsuarioCellRenderer;
+import javax.swing.ListSelectionModel;
 import table.UsuarioTableModel;
 
 /**
@@ -35,9 +37,10 @@ public class DialogAdicionarUsuario extends javax.swing.JDialog {
 
         if (listaUsuario != null) {
             tbAluno.setModel(new UsuarioTableModel(listaUsuario));
-            tbAluno.setDefaultRenderer(Object.class, new UsuarioCellRenderer());
+            tbAluno.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         }
     }
+
     private Usuario getUsuarioDaTabela() {
         int indice = tbAluno.getSelectedRow();
         if (indice != -1) {
@@ -120,6 +123,11 @@ public class DialogAdicionarUsuario extends javax.swing.JDialog {
 
             }
         ));
+        tbAluno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAlunoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbAluno);
 
         btSelecionar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -192,28 +200,53 @@ public class DialogAdicionarUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btSelecionarActionPerformed
 
     private void tfBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBuscaKeyReleased
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+            buscarDadosParaTabela();
+        }
+    }//GEN-LAST:event_tfBuscaKeyReleased
 
+    private void buscarDadosParaTabela() {
         if (tfBusca.getText().isEmpty()) {
             listaUsuario.clear();
         } else {
             switch (cbPesquisa.getSelectedIndex()) {
                 case 0:
                     listaUsuario = new UsuarioDAO().buscaPorNome(tfBusca.getText());
-                    this.refreshTable(listaUsuario);
+                    verifica(listaUsuario);
                     break;
                 case 1:
                     listaUsuario = new UsuarioDAO().buscaPorSerie(tfBusca.getText());
-                    this.refreshTable(listaUsuario);
+                    verifica(listaUsuario);
                     break;
 
             }
         }
+    }
 
-    }//GEN-LAST:event_tfBuscaKeyReleased
+    private void verifica(List<Usuario> lista) {
+        if (lista.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "A busca não encontrou nenhum resultado.");
+        }
+        this.refreshTable(listaUsuario);
+    }
+
 
     private void btAtualizar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizar2ActionPerformed
         dispose();
     }//GEN-LAST:event_btAtualizar2ActionPerformed
+
+    private void tbAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAlunoMouseClicked
+        if (evt.getClickCount() == 2) {
+            this.usuario = getUsuarioDaTabela();
+            if (this.usuario == null) {
+                JOptionPane.showMessageDialog(this, "Selecione um usuário.");
+                return;
+            } else {
+                DialogEmprestimo.setUsuario(this.usuario);
+            }
+            dispose();
+        }
+    }//GEN-LAST:event_tbAlunoMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
