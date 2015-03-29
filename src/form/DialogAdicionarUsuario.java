@@ -81,7 +81,7 @@ public class DialogAdicionarUsuario extends javax.swing.JDialog {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
-        tfBusca.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        tfBusca.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         tfBusca.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tfBuscaKeyReleased(evt);
