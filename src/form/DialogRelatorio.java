@@ -74,7 +74,7 @@ public class DialogRelatorio extends javax.swing.JDialog {
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 4, true));
         jPanel1.setAutoscrolls(true);
 
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Autor", "Obra", "Editora", "Usuário" }));
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Autor", "Editora", "Usuário" }));
         cbTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTipoActionPerformed(evt);

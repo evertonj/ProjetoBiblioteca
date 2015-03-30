@@ -1,29 +1,209 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-
-<jasperReport name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-    <background>
-        <band/>
-    </background>
-    <title>
-        <band height="79"/>
-    </title>
-    <pageHeader>
-        <band height="35"/>
-    </pageHeader>
-    <columnHeader>
-        <band height="61"/>
-    </columnHeader>
-    <detail>
-        <band height="125"/>
-    </detail>
-    <columnFooter>
-        <band height="45"/>
-    </columnFooter>
-    <pageFooter>
-        <band height="54"/>
-    </pageFooter>
-    <summary>
-        <band height="42"/>
-    </summary>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df33996e-3bfe-433b-ae60-eed1d7293453">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#8B0000">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#954A4A">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#E6CFCF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="7793d268-5a22-473f-ab9f-bc7572ab626b"/>
+	<subDataset name="Table Dataset 2" uuid="85aa0171-dc74-423c-8a21-b062b7847610"/>
+	<subDataset name="Table Dataset 3" uuid="2b04d0be-3ee3-4f37-9da3-6f00d4587a07"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     usuario.`id`,email_usuario.`id`, telefone_usuario.`numero`, email_usuario.`email`,email_usuario.`idUsuario`,
+     usuario.`nome` AS usuario_nome,
+     usuario.`serie` AS usuario_serie,
+     usuario.`foto` AS usuario_foto,
+     telefone_usuario.`numero` AS telefone_usuario_numero,
+     email_usuario.`id` AS email_usuario_id,
+     email_usuario.`email` AS email_usuario_email,
+     email_usuario.`idUsuario` AS email_usuario_idUsuario,
+     email_usuario_A.`email` AS email_usuario_A_email,
+     usuario.`id` AS usuario_id
+FROM
+     `usuario` usuario INNER JOIN `telefone_usuario` telefone_usuario ON usuario.`id` = telefone_usuario.`idUsuario`
+     left JOIN `email_usuario` email_usuario ON usuario.`id` = email_usuario.`idUsuario`
+     INNER JOIN `email_usuario` email_usuario_A ON usuario.`id` = email_usuario_A.`idUsuario` GROUP BY usuario.`id` order by usuario.`serie`]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idUsuario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="usuario_nome" class="java.lang.String"/>
+	<field name="usuario_serie" class="java.lang.String"/>
+	<field name="usuario_foto" class="java.lang.Object"/>
+	<field name="telefone_usuario_numero" class="java.lang.String"/>
+	<field name="email_usuario_id" class="java.lang.Integer"/>
+	<field name="email_usuario_email" class="java.lang.String"/>
+	<field name="email_usuario_idUsuario" class="java.lang.Integer"/>
+	<field name="email_usuario_A_email" class="java.lang.String"/>
+	<field name="usuario_id" class="java.lang.Integer"/>
+	<sortField name="usuario_serie"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="126" splitType="Stretch">
+			<staticText>
+				<reportElement x="185" y="45" width="370" height="48" uuid="e64a411c-48b1-45fd-b140-1654d8fbb808"/>
+				<textElement>
+					<font fontName="Charlemagne Std" size="24"/>
+				</textElement>
+				<text><![CDATA[Relatório DE Usuários]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="110" height="105" uuid="262880ae-5208-4163-a741-31f81cb91419"/>
+				<imageExpression><![CDATA["C:\\ProjetoBiblioteca\\ProjetoBiblioteca\\src\\icon\\User.png"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="10" y="105" width="100" height="20" uuid="4cdde18b-f876-410d-bdb9-d712cbc7964f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="63" splitType="Stretch">
+			<line>
+				<reportElement x="-32" y="60" width="610" height="1" uuid="1cf29740-f79f-4151-a64e-00c3294a017d"/>
+			</line>
+			<rectangle>
+				<reportElement x="-20" y="40" width="598" height="20" backcolor="#993300" uuid="cef52924-2fe1-4775-a111-208ae99d81e7"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="354" y="42" width="100" height="20" uuid="06f7ba01-8257-4b89-900e-9d693b9d2145"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="231" y="42" width="100" height="20" uuid="53a35602-b493-4c52-be5c-20bca132dc2e"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="41" width="100" height="20" uuid="4e57f33e-f377-4bda-9019-fabd3d446597"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Série]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="42" width="100" height="20" uuid="cc75c2ee-b980-47e7-80e8-12df3ee593ca"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="49c2a0cb-782c-4f39-8c7f-f9579d84b48f"/>
+				<textFieldExpression><![CDATA[$F{usuario_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="100" height="20" uuid="a17003dc-e13d-4540-8efe-7e22a4df27b2"/>
+				<textFieldExpression><![CDATA[$F{usuario_serie}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-20" y="20" width="598" height="1" uuid="db594d01-3c6d-4446-ae7d-c701a2580dfd"/>
+			</line>
+			<textField>
+				<reportElement x="231" y="0" width="100" height="20" uuid="0645212a-c6e5-4fdf-a0fc-caa4ab00c2ca"/>
+				<textFieldExpression><![CDATA[$F{telefone_usuario_numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="0" width="137" height="20" uuid="73cecb15-7a7b-4149-89e4-67ecef0cee61"/>
+				<textFieldExpression><![CDATA[$F{email_usuario_email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="42" splitType="Stretch">
+			<line>
+				<reportElement x="-42" y="21" width="620" height="1" uuid="c3182406-e6a2-469f-9ece-a0e723f21480"/>
+			</line>
+			<textField>
+				<reportElement x="488" y="21" width="100" height="20" uuid="d419cfd6-51e3-4f75-b284-1ad23d2d47fd"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
 </jasperReport>
