@@ -35,8 +35,8 @@ public class DialogNovaObra extends javax.swing.JDialog {
     public DialogNovaObra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cbAssunto.setModel(new DefaultComboBoxModel(daoAssunto.finAll().toArray()));
-        cbEditora.setModel(new DefaultComboBoxModel(daoEditora.finAll().toArray()));
+       cbAssunto.setModel(new DefaultComboBoxModel(daoAssunto.finAll().toArray()));
+       cbEditora.setModel(new DefaultComboBoxModel(daoEditora.finAll().toArray()));
         cbAssunto.setSelectedIndex(-1);
         cbEditora.setSelectedIndex(-1);
         obraStatica = null;

@@ -87,6 +87,23 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `biblioteca`.`obra`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`obra` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(80) NULL DEFAULT NULL,
+  `edicao` VARCHAR(80) NULL DEFAULT NULL,
+  `ano` SMALLINT(6) NULL DEFAULT NULL,
+  `isbn` VARCHAR(60) NULL DEFAULT NULL,
+  `foto` LONGBLOB NULL DEFAULT NULL,
+  `id_editora` INT(11) NULL DEFAULT NULL,
+  `idassunto` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `biblioteca`.`exemplar`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biblioteca`.`exemplar` (
@@ -104,18 +121,49 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `biblioteca`.`obra`
+-- Table `biblioteca`.`emprestimo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `biblioteca`.`obra` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(80) NULL DEFAULT NULL,
-  `edicao` VARCHAR(80) NULL DEFAULT NULL,
-  `ano` SMALLINT(6) NULL DEFAULT NULL,
-  `isbn` VARCHAR(60) NULL DEFAULT NULL,
-  `foto` LONGBLOB NULL DEFAULT NULL,
-  `id_editora` INT(11) NULL DEFAULT NULL,
-  `idassunto` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
+CREATE TABLE IF NOT EXISTS `biblioteca`.`emprestimo` (
+  `exemplar_id` INT(11) NOT NULL,
+  `usuario_id` INT(11) NOT NULL,
+  `data_emprestimo` DATE NULL DEFAULT NULL,
+  `data_devolucao` DATE NULL DEFAULT NULL,
+  `foi_devolvido` BIT(1) NULL DEFAULT NULL,
+  `autor_id` INT(11) NOT NULL,
+  `editora_id` INT(11) NOT NULL,
+  `obra_id` INT(11) NOT NULL,
+  `dias_para_devolver` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`exemplar_id`, `usuario_id`, `obra_id`),
+  INDEX `fk_obra_has_usuario_usuario1_idx` (`usuario_id` ASC),
+  INDEX `fk_obra_has_usuario_obra1_idx` (`exemplar_id` ASC),
+  INDEX `fk_emprestimo_autor1_idx` (`autor_id` ASC),
+  INDEX `fk_emprestimo_editora1_idx` (`editora_id` ASC),
+  INDEX `fk_emprestimo_obra1_idx` (`obra_id` ASC),
+  CONSTRAINT `fk_emprestimo_autor1`
+    FOREIGN KEY (`autor_id`)
+    REFERENCES `biblioteca`.`autor` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_emprestimo_editora1`
+    FOREIGN KEY (`editora_id`)
+    REFERENCES `biblioteca`.`editora` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_emprestimo_obra1`
+    FOREIGN KEY (`obra_id`)
+    REFERENCES `biblioteca`.`obra` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_exemplar_has_exemplar_id`
+    FOREIGN KEY (`exemplar_id`)
+    REFERENCES `biblioteca`.`exemplar` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_obra_has_usuario_usuario1`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `biblioteca`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

@@ -467,7 +467,10 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         int result, atualizar = 0;
-
+        if(tfNome.getText().isEmpty() || tfSerie.getText().isEmpty() || emails.isEmpty() || telefones.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos os campos são obrigatórios, exceto a foto");
+            return;
+        }
         usuario = new Usuario(idUsuario, tfNome.getText(), tfSerie.getText(), emails, telefones, foto);
         if (idUsuario == 0) {
             result = new UsuarioController().addUsuario(usuario);
@@ -484,6 +487,8 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Usuario inserido com Sucesso!");
             }
             onCancelar();
+            emails.clear();
+            telefones.clear();
         } else {
             JOptionPane.showMessageDialog(this, "Tente novamente!");
         }

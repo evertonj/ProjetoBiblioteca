@@ -156,6 +156,11 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         btEmprestimo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btEmprestimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/orientacao_preventiva.png"))); // NOI18N
         btEmprestimo.setText("Emprestimo");
+        btEmprestimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEmprestimoActionPerformed(evt);
+            }
+        });
 
         btDevolução.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btDevolução.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/archive-icon.png"))); // NOI18N
@@ -451,6 +456,10 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     private void menuRelatorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatorioMouseClicked
        new DialogRelatorio(this,false).setVisible(true);
     }//GEN-LAST:event_menuRelatorioMouseClicked
+
+    private void btEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEmprestimoActionPerformed
+        new DialogGerenciadorEmprestimo(this, true).setVisible(true);
+    }//GEN-LAST:event_btEmprestimoActionPerformed
 
     /**
      * @param args the command line arguments

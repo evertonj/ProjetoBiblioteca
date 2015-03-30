@@ -8,6 +8,7 @@ package form;
 import controller.OperadorController;
 import entity.Operador;
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
@@ -53,6 +54,11 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
         jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 102, 255), 2));
 
         tfLogin.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tfLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfLoginKeyReleased(evt);
+            }
+        });
 
         tpsSenha.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tpsSenha.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -69,6 +75,11 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
                 btLoginActionPerformed(evt);
             }
         });
+        btLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btLoginKeyReleased(evt);
+            }
+        });
 
         btFechar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/1404967476_Exit.png"))); // NOI18N
@@ -77,6 +88,11 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
         btFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btFecharActionPerformed(evt);
+            }
+        });
+        btFechar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btFecharKeyReleased(evt);
             }
         });
 
@@ -136,39 +152,62 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
 
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
+        if(login()) {
+            JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
+            tfLogin.requestFocus();
+        }
+    }//GEN-LAST:event_btLoginActionPerformed
+    private boolean login() throws HeadlessException {
         String usuario = tfLogin.getText();
         String senha = String.copyValueOf(tpsSenha.getPassword());
         String senhaCrip = FrmCadastroOperador.ComputeHash(senha);
-        
+
         Operador operador = new OperadorController().searchOperadorAuthentication(usuario, senhaCrip);
-        
+
         if (operador != null) {
             FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal();
             telaPrincipal.setVisible(true);
             dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
+            return false;
         }
-    }//GEN-LAST:event_btLoginActionPerformed
+        return true;
+    }
 
     private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btFecharActionPerformed
-
+    int contador = 1;
     private void tpsSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tpsSenhaKeyReleased
-        int key = evt.getKeyCode();
-        if (key == KeyEvent.VK_ENTER) {
-            boolean result;
-            result = (tfLogin.getText().equalsIgnoreCase("admin") && String.copyValueOf(tpsSenha.getPassword()).equalsIgnoreCase("admin"));
-            if (result) {
-                FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal();
-                telaPrincipal.setVisible(true);
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
+        loginKeyEvent(evt);
+    }//GEN-LAST:event_tpsSenhaKeyReleased
+
+    private void tfLoginKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfLoginKeyReleased
+        loginKeyEvent(evt);
+    }//GEN-LAST:event_tfLoginKeyReleased
+
+    private void btLoginKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btLoginKeyReleased
+        loginKeyEvent(evt);
+    }//GEN-LAST:event_btLoginKeyReleased
+
+    private void loginKeyEvent(KeyEvent evt) throws HeadlessException {
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            if (login()) {
+                contador++;
+                if (contador == 2) {
+                    JOptionPane.showMessageDialog(null, "Nome e/ou senha incorretos!");
+                    contador = 0;
+                } else {
+                    contador = 1;
+                }
             }
         }
-    }//GEN-LAST:event_tpsSenhaKeyReleased
+    }
+
+    private void btFecharKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btFecharKeyReleased
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btFecharKeyReleased
 
     private Dimension redimensionarTela() {
         return (new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
