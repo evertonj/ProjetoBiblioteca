@@ -231,7 +231,11 @@ public class DialogAdicionarUsuario extends javax.swing.JDialog {
 
     private void verifica(List<Usuario> lista) {
         if (lista.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "A busca não encontrou nenhum resultado.");
+            int confirme;
+            confirme = JOptionPane.showConfirmDialog(this, "A busca não encontrou nenhum resultado.\nDeseja adicionar um novo usuário ?", "Novo Usuário", JOptionPane.YES_NO_OPTION);
+            if(confirme == 0) {
+                new FrmCadastroUsuario(new javax.swing.JFrame(), true).setVisible(true);
+            }
         }
         this.refreshTable(listaUsuario);
     }
