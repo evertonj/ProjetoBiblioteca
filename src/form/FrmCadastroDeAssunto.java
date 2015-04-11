@@ -197,8 +197,11 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
                 } else {
                     JOptionPane.showMessageDialog(this, "Tente novamente!");
                 }
-                cbAssunto.setModel(new DefaultComboBoxModel(daoAssunto.finAll().toArray()));
+                List<Assunto> listaAssunto = daoAssunto.finAll();
+                cbAssunto.setModel(new DefaultComboBoxModel(listaAssunto.toArray()));
                 cbAssunto.getModel().setSelectedItem(assunto);
+                int indice = listaAssunto.indexOf(assunto);
+                cbAssunto.setSelectedIndex(indice);
             }
 
         } catch (NullPointerException ex) {
