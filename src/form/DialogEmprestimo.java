@@ -192,8 +192,9 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel1.setText("Lista de Obras:");
 
-        btAlterarUsuario.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btAlterarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/User.png"))); // NOI18N
+        btAlterarUsuario.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btAlterarUsuario.setForeground(new java.awt.Color(0, 102, 204));
+        btAlterarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/selecionarUsuario.png"))); // NOI18N
         btAlterarUsuario.setText("Selecionar Usuário");
         btAlterarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,7 +202,8 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             }
         });
 
-        btSelecionarObra.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btSelecionarObra.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btSelecionarObra.setForeground(new java.awt.Color(0, 102, 204));
         btSelecionarObra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Book-icon.png"))); // NOI18N
         btSelecionarObra.setText("Selecionar Obra");
         btSelecionarObra.addActionListener(new java.awt.event.ActionListener() {
