@@ -132,7 +132,7 @@ public class DialogAdicionarUsuario extends javax.swing.JDialog {
 
         btSelecionar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btSelecionar.setForeground(new java.awt.Color(0, 102, 204));
-        btSelecionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/selecionarUsuario.png"))); // NOI18N
+        btSelecionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/selecionarUsuario48x48.png"))); // NOI18N
         btSelecionar.setText("Selecionar");
         btSelecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

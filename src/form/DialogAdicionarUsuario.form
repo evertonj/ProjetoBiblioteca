@@ -163,7 +163,7 @@
           <Color blue="cc" green="66" red="0" type="rgb"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icon/selecionarUsuario.png"/>
+          <Image iconType="3" name="/icon/selecionarUsuario48x48.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Selecionar"/>
       </Properties>
