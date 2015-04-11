@@ -59,6 +59,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         if (!contem) {
             listaDeObra.add(obra);
             DefineDadosEAjustesNajTable();
+            btEmprestimo.setEnabled(true);
             return false;
         }
         return true;
@@ -80,6 +81,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             lbUsuario.setText(usuario.getNome());
             lbEmail.setText(usuario.getListEmail() != null ? usuario.getListEmail().get(0).getEmail() : "");
             lbFone.setText(usuario.getListTelefone() != null ? usuario.getListTelefone().get(0).getTelefone() : "");
+            btSelecionarObra.setEnabled(true);
         }
     }
     LocalDate dataAtual = LocalDate.now();
@@ -148,6 +150,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         btEmprestimo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btEmprestimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/emprestimo.png"))); // NOI18N
         btEmprestimo.setText("Emprestar");
+        btEmprestimo.setEnabled(false);
         btEmprestimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btEmprestimoActionPerformed(evt);
@@ -206,6 +209,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         btSelecionarObra.setForeground(new java.awt.Color(0, 102, 204));
         btSelecionarObra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Book-icon.png"))); // NOI18N
         btSelecionarObra.setText("Selecionar Obra");
+        btSelecionarObra.setEnabled(false);
         btSelecionarObra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSelecionarObraActionPerformed(evt);
@@ -430,10 +434,13 @@ public class DialogEmprestimo extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Selecione um exemplar, e clique com o botão direito do mouse para remover");
                 return;
             }
-            int remove = JOptionPane.showConfirmDialog(this, "Deseja remover da tabela de empréstimo", "Remover", JOptionPane.OK_CANCEL_OPTION);
+            int remove = JOptionPane.showConfirmDialog(this, "Deseja remover o exemplar", "Remover", JOptionPane.OK_CANCEL_OPTION);
             if (remove == 0) {
                 listaDeObra.remove(indice);
                 DefineDadosEAjustesNajTable();
+                if (listaDeObra.isEmpty()) {
+                    btEmprestimo.setEnabled(false);
+                }
             }
         }
     }//GEN-LAST:event_tbAtualizarObraMouseClicked
@@ -594,8 +601,8 @@ public class DialogEmprestimo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlterarUsuario;
-    private javax.swing.JButton btEmprestimo;
-    private javax.swing.JButton btSelecionarObra;
+    private static javax.swing.JButton btEmprestimo;
+    private static javax.swing.JButton btSelecionarObra;
     private javax.swing.JButton btVoltar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
