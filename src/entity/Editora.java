@@ -3,28 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import entity.exceptions.NameException;
-
-
 
 /**
  *
  * @author Alex
  */
-public class Editora  {
+public class Editora {
+
     private int id;
     private String nome;
     private String telefone;
     private String email;
     private String cidade;
-  
+
     private String rua;
     private String bairro;
     private String numero;
-    
+
     public Editora(Editora editora) throws NameException {
         this.id = editora.getId();
         this.nome = editora.getNome();
@@ -37,7 +35,7 @@ public class Editora  {
         verificarDados();
     }
 
-    public Editora(String nome, String telefone, String email, String cidade, String rua, String bairro, String numero)throws NameException {
+    public Editora(String nome, String telefone, String email, String cidade, String rua, String bairro, String numero) throws NameException {
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
@@ -48,7 +46,7 @@ public class Editora  {
         verificarDados();
     }
 
-    public Editora(int id, String nome, String telefone, String email, String cidade, String rua, String bairro, String numero) throws NameException{
+    public Editora(int id, String nome, String telefone, String email, String cidade, String rua, String bairro, String numero) throws NameException {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -76,13 +74,9 @@ public class Editora  {
             return false;
         }
         final Editora other = (Editora) obj;
-        if (this.nome != other.nome) {
-            return false;
-        }
-        return true;
+        return this.nome.equals(other.nome);
     }
 
-    
     @Override
     public String toString() {
         return nome;
@@ -147,8 +141,6 @@ public class Editora  {
     /**
      * @return the endereco
      */
-   
-
     /**
      * @return the id
      */
@@ -162,11 +154,12 @@ public class Editora  {
     public void setId(int id) {
         this.id = id;
     }
+
     public final void verificarDados() throws NameException {
         if (this.nome.isEmpty()) {
             throw new NameException("É obrigado ter o nome da editora...");
         }
-       
+
     }
 
     /**
@@ -211,5 +204,3 @@ public class Editora  {
         this.numero = numero;
     }
 }
-
-   
