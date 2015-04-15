@@ -163,7 +163,8 @@ public class DialogGerenciadorAutor extends javax.swing.JDialog {
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        FrmBuscaAutor buscaAutor = new FrmBuscaAutor(new javax.swing.JFrame(), true);
+       this.dispose();
+        FrmBuscaAutor buscaAutor = new FrmBuscaAutor(new javax.swing.JFrame(), false);
        buscaAutor.setVisible(true);
     }//GEN-LAST:event_btConsultarActionPerformed
 

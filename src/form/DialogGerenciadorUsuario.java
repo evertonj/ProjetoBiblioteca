@@ -161,7 +161,8 @@ public class DialogGerenciadorUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        FrmConsultarUsuario consultar = new FrmConsultarUsuario(new javax.swing.JFrame(), true);
+        this.dispose();
+        FrmConsultarUsuario consultar = new FrmConsultarUsuario(new javax.swing.JFrame(), false);
         consultar.setVisible(true);
     }//GEN-LAST:event_btConsultarActionPerformed
 

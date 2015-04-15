@@ -51,6 +51,7 @@ public class FrmBuscaAutor extends javax.swing.JDialog {
         tbAtualizarObra = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         btVoltar = new javax.swing.JButton();
+        btGerar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consultar Autor");
@@ -97,19 +98,32 @@ public class FrmBuscaAutor extends javax.swing.JDialog {
             }
         });
 
+        btGerar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btGerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/update.png"))); // NOI18N
+        btGerar.setText("Relatório");
+        btGerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGerarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btVoltar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+                    .addComponent(btGerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(btGerar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -137,8 +151,8 @@ public class FrmBuscaAutor extends javax.swing.JDialog {
                     .addComponent(tfTitulo)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -166,6 +180,7 @@ public class FrmBuscaAutor extends javax.swing.JDialog {
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         dispose();
+          new DialogGerenciadorAutor(new javax.swing.JFrame(),false).setVisible(true);
     }//GEN-LAST:event_btVoltarActionPerformed
     int contador = 0;
     private void tbAtualizarObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarObraMouseClicked
@@ -181,24 +196,24 @@ public class FrmBuscaAutor extends javax.swing.JDialog {
         }
         contador++;
         if (contador == 2) {
-            atualizar();
+//            atualizar();
             tfTitulo.requestFocus();
             contador = 0;
         }
     }//GEN-LAST:event_tbAtualizarObraMouseClicked
     
-    private void atualizar() {
-        int rowIndex = tbAtualizarObra.getSelectedRow();
-        if (rowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
-            return;
-        }
-        autor = new AutorTableModel(listaDeAutor).get(rowIndex);
-        FrmCadastroDeAutor updateAutor = new FrmCadastroDeAutor(new javax.swing.JFrame(), true);
-        updateAutor.setDados(autor);
-        updateAutor.setVisible(true);
-        this.pesquisa();
-    }
+//    private void atualizar() {
+//        int rowIndex = tbAtualizarObra.getSelectedRow();
+//        if (rowIndex == -1) {
+//            JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
+//            return;
+//        }
+//        autor = new AutorTableModel(listaDeAutor).get(rowIndex);
+//        FrmCadastroDeAutor updateAutor = new FrmCadastroDeAutor(new javax.swing.JFrame(), true);
+//        updateAutor.setDados(autor);
+//        updateAutor.setVisible(true);
+//        this.pesquisa();
+//    }
     
     private void tfTituloKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTituloKeyReleased
         if (!tfTitulo.getText().isEmpty()) {
@@ -209,6 +224,11 @@ public class FrmBuscaAutor extends javax.swing.JDialog {
             tbAtualizarObra.setModel(new AutorTableModel(listaDeAutor));
         }
     }//GEN-LAST:event_tfTituloKeyReleased
+
+    private void btGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerarActionPerformed
+      this.dispose();
+        new DialogRelatorioAutor(new javax.swing.JFrame(),false).setVisible(true);
+    }//GEN-LAST:event_btGerarActionPerformed
 
     private void pesquisa() {
         listaDeAutor =  dao.buscar(tfTitulo.getText());
@@ -273,6 +293,7 @@ public class FrmBuscaAutor extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btGerar;
     private javax.swing.JButton btVoltar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
