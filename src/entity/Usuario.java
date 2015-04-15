@@ -5,13 +5,14 @@
  */
 package entity;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.swing.ImageIcon;
 
 /**
  *
- * @author Alex
+ * @author Thiago
  */
 public class Usuario{
 
@@ -22,18 +23,24 @@ public class Usuario{
     private List<Telefone> listTelefone;
     private ImageIcon fotoIcon;
     private byte[] foto; 
+     private EnumSituacaoUsuario situacao;
+     private Date dataCadastro;
 
     public Usuario() {
     }
 
-    public Usuario(String nome, String serie, List<Email> listEmail, List<Telefone> listTelefone) {
+    public Usuario(String nome, String serie, List<Email> listEmail, List<Telefone> listTelefone,EnumSituacaoUsuario situacao, Date dataCadastro ) {
+        this.situacao = situacao;
+        this.dataCadastro = dataCadastro;
         this.nome = nome;
         this.serie = serie;
         this.listEmail = listEmail;
         this.listTelefone = listTelefone;
     }
 
-    public Usuario(int id, String nome, String serie, List<Email> listEmail, List<Telefone> listTelefone, byte[]foto) {
+    public Usuario(int id, String nome, String serie, List<Email> listEmail, List<Telefone> listTelefone, byte[]foto,EnumSituacaoUsuario situacao, Date dataCadastro) {
+        this.situacao = situacao;
+        this.dataCadastro = dataCadastro;
         this.id = id;
         this.nome = nome;
         this.serie = serie;
@@ -94,14 +101,12 @@ public class Usuario{
         return foto;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
+    
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.getId());
         return hash;
     }
 
@@ -122,17 +127,57 @@ public class Usuario{
 
     @Override
     public String toString() {
-        return nome;
+        return getNome();
     }
     
     public ImageIcon getFotoAsImageIcon() {
 
-        this.fotoIcon = new ImageIcon();
+        this.setFotoIcon(new ImageIcon());
 
         if (this.getFoto() != null) {
-            this.fotoIcon = new ImageIcon(this.getFoto());
+            this.setFotoIcon(new ImageIcon(this.getFoto()));
         }
 
-        return this.fotoIcon;
+        return this.getFotoIcon();
+    }
+
+    /**
+     * @param foto the foto to set
+     */
+   
+
+    /**
+     * @return the situacao
+     */
+    public EnumSituacaoUsuario getSituacao() {
+        return situacao;
+    }
+
+    /**
+     * @param situacao the situacao to set
+     */
+    public void setSituacao(EnumSituacaoUsuario situacao) {
+        this.situacao = situacao;
+    }
+
+    /**
+     * @return the dataCadastro
+     */
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
+
+    /**
+     * @param dataCadastro the dataCadastro to set
+     */
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    /**
+     * @param foto the foto to set
+     */
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 }

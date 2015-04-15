@@ -183,7 +183,7 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
             return;
         }
         usuario = new UsuarioTableModel(listaUsuario).get(rowIndex);
-       FrmCadastroUsuario cadastroUsuario = new FrmCadastroUsuario(new javax.swing.JFrame(), true);
+       FrmUpdateUsuario cadastroUsuario = new FrmUpdateUsuario(new javax.swing.JFrame(), true);
        cadastroUsuario.setDados(usuario);
        cadastroUsuario.setVisible(true);
 
@@ -220,9 +220,11 @@ public class FrmAtualizarUsuario extends javax.swing.JDialog {
 
     private void tbAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAlunoMouseClicked
         if (evt.getClickCount() == 2) {
+          
             int rowIndex = tbAluno.getSelectedRow();
             usuario = new UsuarioTableModel(listaUsuario).get(rowIndex);
-            FrmCadastroUsuario novoUsuario = new FrmCadastroUsuario(new javax.swing.JFrame(), true);
+            this.dispose();
+            FrmUpdateUsuario novoUsuario = new FrmUpdateUsuario(new javax.swing.JFrame(), true);
 
             novoUsuario.setDados(usuario);
             novoUsuario.setVisible(true);

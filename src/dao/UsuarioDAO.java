@@ -2,6 +2,7 @@ package dao;
 
 import connection.DBConnection;
 import entity.Email;
+import entity.EnumSituacaoUsuario;
 import entity.Telefone;
 import entity.Usuario;
 import entity.exceptions.NameException;
@@ -25,12 +26,13 @@ public class UsuarioDAO implements IUsuarioDAO {
         Connection conn = DBConnection.getConnection();
         ResultSet rs = null;
         try {
-            String sql = "INSERT INTO usuario(nome, serie, foto) VALUES (?, ?, ?);";
+            String sql = "INSERT INTO usuario(nome, serie, foto,DataCadastro,situacao) VALUES (?, ?, ?,?,?);";
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, usuario.getNome());
             pstm.setString(2, usuario.getSerie());
             pstm.setBytes(3, usuario.getFoto());
-
+            pstm.setDate(4, new java.sql.Date(usuario.getDataCadastro().getTime()));
+            pstm.setString(5, usuario.getSituacao().toString());
             result = pstm.executeUpdate();
 
             pstm.close();
@@ -151,11 +153,12 @@ public class UsuarioDAO implements IUsuarioDAO {
         int result = 0;
         try {
             Connection conn = DBConnection.getConnection();
-            try (PreparedStatement pstm = conn.prepareStatement("update usuario set nome = ?, serie = ?, foto = ? where id = ?;")) {
+            try (PreparedStatement pstm = conn.prepareStatement("update usuario set nome = ?, serie = ?, foto = ? , situacao = ? where id = ?;")) {
                 pstm.setString(1, usuario.getNome());
                 pstm.setString(2, usuario.getSerie());
                 pstm.setBytes(3, usuario.getFoto());
-                pstm.setInt(4, usuario.getId());
+                 pstm.setString(4, usuario.getSituacao().toString());
+                pstm.setInt(5, usuario.getId());
                 for (Email col : usuario.getListEmail()) {
                     if (col.getId() == 0) {
                         System.out.println("Adicionou email");
@@ -361,6 +364,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             usuario.setFoto(rs.getBytes("Foto"));
 
             usuario.setSerie(rs.getString("Serie"));
+            usuario.setSituacao(EnumSituacaoUsuario.getSituacao(rs.getString("situacao")));
 
             usuario.setListEmail(emails(rsEmail));
 
