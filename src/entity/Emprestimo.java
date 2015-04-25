@@ -25,6 +25,7 @@ public class Emprestimo {
     int editora_id;
     int obra_id;
     int autor_id;
+    private Long operador_id;
 
     public int getExemplar_id() {
         return exemplar_id;
@@ -88,6 +89,20 @@ public class Emprestimo {
 
     public void setData_devolucao(LocalDate data_devolucao) {
         this.data_devolucao = data_devolucao;
+    }
+
+    /**
+     * @return the operador_id
+     */
+    public Long getOperador_id() {
+        return operador_id;
+    }
+
+    /**
+     * @param operador_id the operador_id to set
+     */
+    public void setOperador_id(Long operador_id) {
+        this.operador_id = operador_id;
     }
 
 }

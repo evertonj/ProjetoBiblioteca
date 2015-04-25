@@ -37,8 +37,9 @@ public class EmprestimoDAO implements IEmprestimoDAO {
             + "`autor_id`,"
             + "`editora_id`,"
             + "`dias_para_devolver`,"
-            + "`obra_id`)"
-            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + "`obra_id`,"
+            + "`operador_idoperador`)"
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     String queryBuscaDadosEmprestimo = "select u.id, u.nome, ex.id, o.titulo, a.nome, a.sobrenome, o.edicao, o.ano, edit.nome "
             + "from usuario u, obra o, editora edit, emprestimo e, autor a, obra_autor oa, exemplar ex "
@@ -58,6 +59,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
             pstm.setInt(7, emprestimo.getEditora_id());
             pstm.setInt(8, emprestimo.getDiasParaDevolucao());
             pstm.setInt(9, emprestimo.getObra_id());
+            pstm.setLong(10, emprestimo.getOperador_id());
             pstm.execute();
             exemDAO.mudarSituacaoParaEmprestado(emprestimo.getExemplar_id());
         } catch (SQLException ex) {

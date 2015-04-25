@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
  * @author Alex
  */
 public class DialogAdicionarAutor extends javax.swing.JDialog {
+    
 
     /**
      * Creates new form DialogAdicionarAutor
