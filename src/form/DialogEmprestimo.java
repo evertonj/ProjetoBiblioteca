@@ -7,10 +7,8 @@ package form;
 
 import controller.EmprestimoController;
 import dao.EmprestimoDAO;
-import dao.OperadorDAO;
 import entity.Emprestimo;
 import entity.ExemplarEmprestimo;
-import entity.Operador;
 import entity.Usuario;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -61,6 +59,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         if (!contem) {
             listaDeObra.add(obra);
             DefineDadosEAjustesNajTable();
+            btEmprestimo.setEnabled(true);
             return false;
         }
         return true;
@@ -82,6 +81,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             lbUsuario.setText(usuario.getNome());
             lbEmail.setText(usuario.getListEmail() != null ? usuario.getListEmail().get(0).getEmail() : "");
             lbFone.setText(usuario.getListTelefone() != null ? usuario.getListTelefone().get(0).getTelefone() : "");
+            btSelecionarObra.setEnabled(true);
         }
     }
     LocalDate dataAtual = LocalDate.now();
@@ -150,6 +150,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         btEmprestimo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btEmprestimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/emprestimo.png"))); // NOI18N
         btEmprestimo.setText("Emprestar");
+        btEmprestimo.setEnabled(false);
         btEmprestimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btEmprestimoActionPerformed(evt);
@@ -195,7 +196,8 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         jLabel1.setText("Lista de Obras:");
 
         btAlterarUsuario.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btAlterarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/User.png"))); // NOI18N
+        btAlterarUsuario.setForeground(new java.awt.Color(0, 102, 204));
+        btAlterarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/selecionarUsuario48x48.png"))); // NOI18N
         btAlterarUsuario.setText("Selecionar Usuário");
         btAlterarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,8 +206,10 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         });
 
         btSelecionarObra.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btSelecionarObra.setForeground(new java.awt.Color(0, 102, 204));
         btSelecionarObra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Book-icon.png"))); // NOI18N
         btSelecionarObra.setText("Selecionar Obra");
+        btSelecionarObra.setEnabled(false);
         btSelecionarObra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSelecionarObraActionPerformed(evt);
@@ -288,7 +292,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 146, Short.MAX_VALUE)
+                                .addGap(0, 137, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
@@ -321,6 +325,9 @@ public class DialogEmprestimo extends javax.swing.JDialog {
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btAlterarUsuario, btSelecionarObra});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -338,14 +345,15 @@ public class DialogEmprestimo extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(lbFone))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btAlterarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btSelecionarObra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btSelecionarObra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btAlterarUsuario))))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
@@ -403,7 +411,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     private void btEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEmprestimoActionPerformed
         if (listaDeObra.size() > 0 && usuario != null) {
             if (consultaSeUsuarioJaPossuiExemplarComMesmoTitulo(usuario, listaDeObra)) {
-                realizarEmprestimo(listaDeObra, usuario, OperadorDAO.operador);
+                realizarEmprestimo(listaDeObra, usuario);
                 listaDeObra.clear();
                 usuario = null;
                 dispose();
@@ -426,10 +434,13 @@ public class DialogEmprestimo extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Selecione um exemplar, e clique com o botão direito do mouse para remover");
                 return;
             }
-            int remove = JOptionPane.showConfirmDialog(this, "Deseja remover da tabela de empréstimo", "Remover", JOptionPane.OK_CANCEL_OPTION);
+            int remove = JOptionPane.showConfirmDialog(this, "Deseja remover o exemplar", "Remover", JOptionPane.OK_CANCEL_OPTION);
             if (remove == 0) {
                 listaDeObra.remove(indice);
                 DefineDadosEAjustesNajTable();
+                if (listaDeObra.isEmpty()) {
+                    btEmprestimo.setEnabled(false);
+                }
             }
         }
     }//GEN-LAST:event_tbAtualizarObraMouseClicked
@@ -456,7 +467,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         return false;
     }
 
-    private void realizarEmprestimo(List<ExemplarEmprestimo> listaDeObra, Usuario usuario, Operador operador) {
+    private void realizarEmprestimo(List<ExemplarEmprestimo> listaDeObra, Usuario usuario) {
         for (int i = 0; i < listaDeObra.size(); i++) {
             emprestimo = new Emprestimo();
             emprestimo.setData_emprestimo(dataAtual);
@@ -467,7 +478,6 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             emprestimo.setEditora_id(listaDeObra.get(i).getObra().getEditora().getId());
             emprestimo.setAutor_id(listaDeObra.get(i).getObra().getAutores().get(0).getId());
             emprestimo.setDiasParaDevolucao((int)spDias.getValue());
-            emprestimo.setOperador_id(operador.getId());
             new EmprestimoController().emprestimo(emprestimo);
         }
 
@@ -591,8 +601,8 @@ public class DialogEmprestimo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlterarUsuario;
-    private javax.swing.JButton btEmprestimo;
-    private javax.swing.JButton btSelecionarObra;
+    private static javax.swing.JButton btEmprestimo;
+    private static javax.swing.JButton btSelecionarObra;
     private javax.swing.JButton btVoltar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

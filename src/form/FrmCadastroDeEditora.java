@@ -324,7 +324,12 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
             } else {
                 JOptionPane.showMessageDialog(this, "Tente novamente!");
             }
-          
+
+            List<Editora> listaEditora = daoEditora.finAll();
+                cbEditora.setModel(new DefaultComboBoxModel(listaEditora.toArray()));
+                cbEditora.getModel().setSelectedItem(editora);
+                int indice = listaEditora.indexOf(editora);
+                cbEditora.setSelectedIndex(indice);
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed

@@ -153,7 +153,7 @@ public class DialogGerenciadorEditora extends javax.swing.JDialog {
     }//GEN-LAST:event_btNovaActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        FrmExcluirEditora excluirEditora = new FrmExcluirEditora(new javax.swing.JFrame(), false);
+        FrmExcluirEditora excluirEditora = new FrmExcluirEditora(new javax.swing.JFrame(), true);
        excluirEditora.setVisible(true);
     }//GEN-LAST:event_btExcluirActionPerformed
 
@@ -163,9 +163,7 @@ public class DialogGerenciadorEditora extends javax.swing.JDialog {
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        this.dispose();
-        FrmBuscaEditora buscaEditora = new FrmBuscaEditora(null, true);
-        
+        FrmBuscaEditora buscaEditora = new FrmBuscaEditora(new javax.swing.JFrame(), true);
        buscaEditora.setVisible(true);
     }//GEN-LAST:event_btConsultarActionPerformed
 

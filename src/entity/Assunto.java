@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 /**
@@ -11,22 +10,20 @@ package entity;
  * @author Thiago
  */
 public class Assunto {
+
     private int id;
-    private String nome;            
+    private String nome;
 
     public Assunto() {
     }
 
-    
-    
     public Assunto(Assunto assunto) {
         System.out.println("Contrutor Assunto nome: " + assunto.getNome());
         this.id = assunto.getId();
         this.nome = assunto.getNome();
-        
+
     }
 
-    
     /**
      * @return the id
      */
@@ -71,15 +68,12 @@ public class Assunto {
             return false;
         }
         final Assunto other = (Assunto) obj;
-        if (this.nome != other.nome) {
-            return false;
-        }
-        return true;
+        return this.nome.equals(other.nome);
     }
 
     @Override
     public String toString() {
         return nome;
     }
-    
+
 }
