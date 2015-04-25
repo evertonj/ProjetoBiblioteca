@@ -409,7 +409,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         ResultSet rs = null, rsExterno = null;
         List<Usuario> listaDeUsuario = new ArrayList<>();
 
-        String sqlUsuario = " select * from usuario where nome like '" + nome + "%';";
+        String sqlUsuario = "select * from usuario where nome like '" + nome + "%'";
         try {
 
             conn = DBConnection.getConnection();
