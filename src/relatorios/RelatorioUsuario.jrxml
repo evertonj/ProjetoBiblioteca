@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df33996e-3bfe-433b-ae60-eed1d7293453">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
@@ -67,44 +67,27 @@
 	<subDataset name="Table Dataset 1" uuid="7793d268-5a22-473f-ab9f-bc7572ab626b"/>
 	<subDataset name="Table Dataset 2" uuid="85aa0171-dc74-423c-8a21-b062b7847610"/>
 	<subDataset name="Table Dataset 3" uuid="2b04d0be-3ee3-4f37-9da3-6f00d4587a07"/>
+	<parameter name="nome" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT DISTINCT
-     usuario.`id`,email_usuario.`id`, telefone_usuario.`numero`, email_usuario.`email`,email_usuario.`idUsuario`,
+		<![CDATA[SELECT
+     email_usuario.`email` AS email_usuario_email,
      usuario.`nome` AS usuario_nome,
      usuario.`serie` AS usuario_serie,
-     usuario.`foto` AS usuario_foto,
-     telefone_usuario.`numero` AS telefone_usuario_numero,
-     email_usuario.`id` AS email_usuario_id,
-     email_usuario.`email` AS email_usuario_email,
-     email_usuario.`idUsuario` AS email_usuario_idUsuario,
-     email_usuario_A.`email` AS email_usuario_A_email,
-     usuario.`id` AS usuario_id
+     usuario.`DataCadastro` AS usuario_DataCadastro,
+     usuario.`situacao` AS usuario_situacao,
+     telefone_usuario.`numero` AS telefone_usuario_numero
 FROM
-     `usuario` usuario INNER JOIN `telefone_usuario` telefone_usuario ON usuario.`id` = telefone_usuario.`idUsuario`
-     left JOIN `email_usuario` email_usuario ON usuario.`id` = email_usuario.`idUsuario`
-     INNER JOIN `email_usuario` email_usuario_A ON usuario.`id` = email_usuario_A.`idUsuario` GROUP BY usuario.`id` order by usuario.`serie`]]>
+     `usuario` usuario INNER JOIN `email_usuario` email_usuario ON usuario.`id` = email_usuario.`idUsuario`
+     INNER JOIN `telefone_usuario` telefone_usuario ON usuario.`id` = telefone_usuario.`idUsuario` where usuario.`nome` like  $P{nome}]]>
 	</queryString>
-	<field name="id" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="numero" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="email" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="idUsuario" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="email_usuario_email" class="java.lang.String"/>
 	<field name="usuario_nome" class="java.lang.String"/>
 	<field name="usuario_serie" class="java.lang.String"/>
-	<field name="usuario_foto" class="java.lang.Object"/>
+	<field name="usuario_DataCadastro" class="java.sql.Date"/>
+	<field name="usuario_situacao" class="java.lang.String"/>
 	<field name="telefone_usuario_numero" class="java.lang.String"/>
-	<field name="email_usuario_id" class="java.lang.Integer"/>
-	<field name="email_usuario_email" class="java.lang.String"/>
-	<field name="email_usuario_idUsuario" class="java.lang.Integer"/>
-	<field name="email_usuario_A_email" class="java.lang.String"/>
-	<field name="usuario_id" class="java.lang.Integer"/>
 	<sortField name="usuario_serie"/>
 	<background>
 		<band splitType="Stretch"/>

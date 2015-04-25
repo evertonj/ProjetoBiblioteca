@@ -10,10 +10,12 @@ import java.awt.Cursor;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -36,10 +38,13 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
     public DialogRelatorioUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        desabilitaCampos();
+        cbSituacao.setEnabled(false);
     }
     private String stringConnect, stringRel;
     private Cursor cursor;
     Relatorio relatorio = new Relatorio();
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,13 +56,19 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
 
         jColorChooser1 = new javax.swing.JColorChooser();
         jPanel2 = new javax.swing.JPanel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jRadioButton3 = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         btVoltar = new javax.swing.JButton();
         btGerar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         cbTipo = new javax.swing.JComboBox();
+        tfLetra = new javax.swing.JTextField();
+        checkTipo = new javax.swing.JCheckBox();
+        checkLetra = new javax.swing.JCheckBox();
+        checkSituacao = new javax.swing.JCheckBox();
+        cbSituacao = new javax.swing.JComboBox();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -69,6 +80,8 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
+
+        jRadioButton3.setText("jRadioButton3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatórios");
@@ -105,7 +118,7 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btGerar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,9 +132,6 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Filtrar por:");
-
         cbTipo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nome", "Série" }));
         cbTipo.addActionListener(new java.awt.event.ActionListener() {
@@ -130,25 +140,72 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
             }
         });
 
+        checkTipo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        checkTipo.setText("Ordenar por:");
+        checkTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkTipoActionPerformed(evt);
+            }
+        });
+
+        checkLetra.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        checkLetra.setText("Por letra");
+        checkLetra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkLetraActionPerformed(evt);
+            }
+        });
+
+        checkSituacao.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        checkSituacao.setText("Selecionar situação");
+        checkSituacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkSituacaoActionPerformed(evt);
+            }
+        });
+
+        cbSituacao.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ATIVO", "INATIVO", "SUSPENSE" }));
+        cbSituacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSituacaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkTipo)
+                    .addComponent(checkLetra)
+                    .addComponent(checkSituacao))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cbSituacao, 0, 125, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cbTipo, 0, 125, Short.MAX_VALUE)
+                        .addComponent(tfLetra)))
+                .addGap(24, 24, 24))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkTipo))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfLetra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkLetra))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkSituacao)
+                    .addComponent(cbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -156,20 +213,20 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -194,9 +251,25 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
     private void btGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerarActionPerformed
         try {
 
-            if (relatorio.defineStringConnect("Usuario"+cbTipo.getSelectedItem().toString())) {
-                chamaRelatorio();
+            if (checkTipo.isSelected() && !checkSituacao.isSelected()) {
+                if (relatorio.defineStringConnect("Usuario" + cbTipo.getSelectedItem().toString())) {
+                    chamaRelatorio();
+                }
             }
+            if(checkTipo.isSelected()&& checkSituacao.isSelected()){
+                
+            }
+            if (checkLetra.isSelected() && !checkSituacao.isSelected()) {
+                relatorio.filtroLetra(tfLetra.getText());
+                chamarRelatorio();
+            }
+            if(checkLetra.isSelected() && checkSituacao.isSelected()){
+                
+            }
+            if(checkSituacao.isSelected() && !checkLetra.isSelected() && !checkTipo.isSelected()){
+                
+            }
+           
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, "Nenhum dado cadastrado");
         } catch (Exception e) {
@@ -209,6 +282,46 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
+
+    private void checkLetraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkLetraActionPerformed
+        if (checkLetra.isSelected()) {
+            checkTipo.setSelected(false);
+            cbTipo.setEnabled(false);
+
+            tfLetra.setEnabled(true);
+        } else {
+            desabilitaCampos();
+        }
+
+    }//GEN-LAST:event_checkLetraActionPerformed
+
+    private void checkSituacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSituacaoActionPerformed
+        if (checkSituacao.isSelected()) {
+            cbSituacao.setEnabled(true);
+
+        } else {
+            cbSituacao.setEnabled(false);
+        }
+    }//GEN-LAST:event_checkSituacaoActionPerformed
+
+    private void cbSituacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSituacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbSituacaoActionPerformed
+
+    private void checkTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTipoActionPerformed
+        if (checkTipo.isSelected()) {
+            checkLetra.setSelected(false);
+            tfLetra.setEnabled(false);
+            cbTipo.setEnabled(true);
+        } else {
+            desabilitaCampos();
+        }
+    }//GEN-LAST:event_checkTipoActionPerformed
+    public void desabilitaCampos() {
+        tfLetra.setEnabled(false);
+
+        cbTipo.setEnabled(false);
+    }
 
     /**
      * @param args the command line arguments
@@ -267,16 +380,14 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
         });
     }
 
-   
-
     private void chamaRelatorio() {
         try {
-
+            System.out.println(relatorio.getStringConnect());
+            System.out.println(relatorio.getStringRel());
             cursor = Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR);
             setCursor(cursor);
             Connection conn = DBConnection.getConnection();
             PreparedStatement pstm = null;
-           
 
             pstm = conn.prepareStatement(relatorio.getStringConnect());
 
@@ -297,16 +408,39 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
             setCursor(cursor);
         }
     }
+    
+   
+    private void chamarRelatorio(){  
+        JasperPrint rel = null;  
+          
+        try {  
+        Map<String, Object> parametros = new HashMap();  
+        parametros.put("nome", tfLetra.getText());  
+         Connection conn = DBConnection.getConnection();
+        rel = JasperFillManager.fillReport(stringRel, parametros, conn);//tem q criar a classe conexao!  
+        JasperViewer jv = new JasperViewer(rel, false);  
+        jv.setExtendedState(jv.MAXIMIZED_BOTH);  
+        jv.setVisible(true);  
+        } catch (Exception e) {  
+        JOptionPane.showMessageDialog(null, e.getMessage());  
+        }  
+    }  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGerar;
     private javax.swing.JButton btVoltar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox cbSituacao;
     private javax.swing.JComboBox cbTipo;
+    private javax.swing.JCheckBox checkLetra;
+    private javax.swing.JCheckBox checkSituacao;
+    private javax.swing.JCheckBox checkTipo;
     private javax.swing.JColorChooser jColorChooser1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JTextField tfLetra;
     // End of variables declaration//GEN-END:variables
 }
