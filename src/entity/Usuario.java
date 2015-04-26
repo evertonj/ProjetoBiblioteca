@@ -12,9 +12,9 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Thiago
+ * @author Alex
  */
-public class Usuario{
+public class Usuario {
 
     private int id;
     private String nome;
@@ -22,9 +22,9 @@ public class Usuario{
     private List<Email> listEmail;
     private List<Telefone> listTelefone;
     private ImageIcon fotoIcon;
-    private byte[] foto; 
-     private EnumSituacaoUsuario situacao;
-     private Date dataCadastro;
+    private byte[] foto;
+    private EnumSituacaoUsuario situacao;
+    private Date dataCadastro;
 
     public Usuario() {
     }
@@ -88,7 +88,7 @@ public class Usuario{
     public void setListTelefone(List<Telefone> listTelefone) {
         this.listTelefone = listTelefone;
     }
-    
+
     public ImageIcon getFotoIcon() {
         return fotoIcon;
     }
@@ -96,12 +96,12 @@ public class Usuario{
     public void setFotoIcon(ImageIcon fotoIcon) {
         this.fotoIcon = fotoIcon;
     }
-    
+
     public byte[] getFoto() {
         return foto;
     }
 
-    
+
 
     @Override
     public int hashCode() {
@@ -129,7 +129,7 @@ public class Usuario{
     public String toString() {
         return getNome();
     }
-    
+
     public ImageIcon getFotoAsImageIcon() {
 
         this.setFotoIcon(new ImageIcon());
@@ -179,5 +179,5 @@ public class Usuario{
      */
     public void setFoto(byte[] foto) {
         this.foto = foto;
-    }
+}
 }

@@ -131,7 +131,8 @@ public class DialogAdicionarUsuario extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tbAluno);
 
         btSelecionar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btSelecionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/selecionar.png"))); // NOI18N
+        btSelecionar.setForeground(new java.awt.Color(0, 102, 204));
+        btSelecionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/selecionarUsuario48x48.png"))); // NOI18N
         btSelecionar.setText("Selecionar");
         btSelecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,7 +231,11 @@ public class DialogAdicionarUsuario extends javax.swing.JDialog {
 
     private void verifica(List<Usuario> lista) {
         if (lista.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "A busca não encontrou nenhum resultado.");
+            int confirme;
+            confirme = JOptionPane.showConfirmDialog(this, "A busca não encontrou aluno com nome iniciado em: ("+tfBusca.getText()+").\nDeseja adicionar um novo usuário ?.", "Novo Usuário", JOptionPane.YES_NO_OPTION);
+            if(confirme == 0) {
+                new FrmCadastroUsuario(new javax.swing.JFrame(), true).setVisible(true);
+            }
         }
         this.refreshTable(listaUsuario);
     }
