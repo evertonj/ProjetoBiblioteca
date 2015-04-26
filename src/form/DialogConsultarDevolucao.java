@@ -6,28 +6,24 @@
 package form;
 
 import dao.DevolucaoDAO;
-import dao.EmprestimoDAO;
-import dao.OperadorDAO;
-import entity.ExcluirEmprestimo;
-import java.awt.HeadlessException;
+import entity.InfoDevolucao;
 import java.awt.event.KeyEvent;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import table.ExcluirEmprestimoColumnModel;
-import table.ExcluirEmprestimoTableModel;
+import table.DadosDevolucaoColumnModel;
+import table.DadosDevolucaoTableModel;
 
 /**
  *
  * @author Everton
  */
-public class DialogExcluirEmprestimo extends javax.swing.JDialog {
+public class DialogConsultarDevolucao extends javax.swing.JDialog {
 
     /**
      * Creates new form DialogExcluirEmprestimo
      */
-    public DialogExcluirEmprestimo(java.awt.Frame parent, boolean modal) {
+    public DialogConsultarDevolucao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         tfBuscaUsuario.requestFocus();
@@ -36,12 +32,12 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
     public void DefineDadosEAjustesNajTable() {
         tbExcluirEmprestimo.setAutoCreateColumnsFromModel(false);
         java.awt.FontMetrics fm = tbExcluirEmprestimo.getFontMetrics(tbExcluirEmprestimo.getFont());
-        tbExcluirEmprestimo.setColumnModel(new ExcluirEmprestimoColumnModel(fm));
+        tbExcluirEmprestimo.setColumnModel(new DadosDevolucaoColumnModel(fm));
         tbExcluirEmprestimo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tbExcluirEmprestimo.setModel(new ExcluirEmprestimoTableModel(listaDeExclusao));
+        tbExcluirEmprestimo.setModel(new DadosDevolucaoTableModel(listaDeDevolucao));
     }
 
-    List<ExcluirEmprestimo> listaDeExclusao;
+    List<InfoDevolucao> listaDeDevolucao;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,13 +52,12 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         tfBuscaUsuario = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbExcluirEmprestimo = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Excluir Empréstimo");
+        setTitle("Consultar Devolução");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 204), 4));
         jPanel1.setForeground(new java.awt.Color(0, 102, 204));
@@ -79,16 +74,6 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 102, 204));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/archive-icon.png"))); // NOI18N
-        jButton1.setText("Devolução");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
         jButton2.setText("Voltar");
@@ -102,27 +87,18 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
-
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addContainerGap())
         );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2});
 
         tbExcluirEmprestimo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -132,11 +108,6 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
 
             }
         ));
-        tbExcluirEmprestimo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbExcluirEmprestimoMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(tbExcluirEmprestimo);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -149,7 +120,7 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfBuscaUsuario))
+                        .addComponent(tfBuscaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,14 +136,14 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfBuscaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 469, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 461, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(51, 51, 51)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(86, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(99, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -196,19 +167,20 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
     private void tfBuscaUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfBuscaUsuarioKeyReleased
         if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
             if (tfBuscaUsuario.getText().isEmpty()) {
-                listaDeExclusao.clear();
+                listaDeDevolucao.clear();
                 DefineDadosEAjustesNajTable();
             } else {
-                listaDeExclusao = new EmprestimoDAO().ConsultarPorNomeParaExcluir(tfBuscaUsuario.getText());
-                if (verifica(listaDeExclusao)) {
+                DevolucaoDAO devDAO = new DevolucaoDAO();
+                listaDeDevolucao = devDAO.buscarDevolucao(tfBuscaUsuario.getText());
+                if (verifica(listaDeDevolucao)) {
                     DefineDadosEAjustesNajTable();
                 }
             }
         }
     }//GEN-LAST:event_tfBuscaUsuarioKeyReleased
 
-    private boolean verifica(List<ExcluirEmprestimo> listaDeExclusao) {
-        if (listaDeExclusao.isEmpty()) {
+    private boolean verifica(List<InfoDevolucao> listaDeDevolucao) {
+        if (listaDeDevolucao.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhum usuário encontrado.");
             return false;
         }
@@ -219,32 +191,21 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void tbExcluirEmprestimoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbExcluirEmprestimoMouseClicked
-        if (evt.getClickCount() == 2) {
-            excluir();
-        }
-    }//GEN-LAST:event_tbExcluirEmprestimoMouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        excluir();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void excluir() throws HeadlessException {
-        ExcluirEmprestimo empexcluso;
-            int indice = tbExcluirEmprestimo.getSelectedRow();
-            if (indice > -1) {
-                empexcluso = listaDeExclusao.remove(indice);
-                DefineDadosEAjustesNajTable();
-                new EmprestimoDAO().excluirEmprestimo(empexcluso.getEmprestimo());
-                DevolucaoDAO devolucao = new DevolucaoDAO();
-                devolucao.salvarDevolucao(empexcluso.getEmprestimo().getUsuario_id(), empexcluso.getEmprestimo().getExemplar_id(), OperadorDAO.operador.getId(), LocalDateTime.now());
-                JOptionPane.showMessageDialog(this, "Devolução realizada com sucesso.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Selecione um empréstimo para realizar a devolução");
-            }
-
-        tfBuscaUsuario.requestFocus();
-    }
+//    private void excluir() throws HeadlessException {
+//        ExcluirEmprestimo empexcluso;
+//        int excluir = JOptionPane.showConfirmDialog(this, "Deseja excluir emprestimo", "Excluir", JOptionPane.OK_CANCEL_OPTION);
+//        if (excluir == 0) {
+//            int indice = tbExcluirEmprestimo.getSelectedRow();
+//            if (indice > -1) {
+//                empexcluso = listaDeDevolucao.remove(indice);
+//                DefineDadosEAjustesNajTable();
+//                new EmprestimoDAO().excluirEmprestimo(empexcluso.getEmprestimo());
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Selecione um empréstimo para excluir");
+//            }
+//        }
+//        tfBuscaUsuario.requestFocus();
+//    }
 
     /**
      * @param args the command line arguments
@@ -263,20 +224,23 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogExcluirEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogConsultarDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogExcluirEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogConsultarDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogExcluirEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogConsultarDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogExcluirEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogConsultarDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogExcluirEmprestimo dialog = new DialogExcluirEmprestimo(new javax.swing.JFrame(), true);
+                DialogConsultarDevolucao dialog = new DialogConsultarDevolucao(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -289,7 +253,6 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

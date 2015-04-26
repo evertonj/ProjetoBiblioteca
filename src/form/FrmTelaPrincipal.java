@@ -481,7 +481,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_btEmprestimoActionPerformed
 
     private void btDevoluçãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDevoluçãoActionPerformed
-        new DialogExcluirEmprestimo(new javax.swing.JFrame(), true).setVisible(true);
+        new DialogGerenciadorDevolucao(new javax.swing.JFrame(), true).setVisible(true);
     }//GEN-LAST:event_btDevoluçãoActionPerformed
 
     private void menuEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEmprestimoActionPerformed
@@ -489,7 +489,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_menuEmprestimoActionPerformed
 
     private void menuDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDevolucaoActionPerformed
-        new DialogExcluirEmprestimo(new javax.swing.JFrame(), true).setVisible(true);
+        new DialogGerenciadorDevolucao(new javax.swing.JFrame(), true).setVisible(true);
     }//GEN-LAST:event_menuDevolucaoActionPerformed
 
     /**

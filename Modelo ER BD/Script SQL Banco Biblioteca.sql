@@ -233,6 +233,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `biblioteca`.`devolucao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biblioteca`.`devolucao` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `exemplar_id` INT(11) NOT NULL,
   `usuario_id` INT(11) NOT NULL,
   `data_devolucao` DATE NOT NULL,
@@ -240,6 +241,7 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`devolucao` (
   INDEX `fk_devolucao_exemplar1_idx` (`exemplar_id` ASC),
   INDEX `fk_devolucao_usuario1_idx` (`usuario_id` ASC),
   INDEX `fk_devolucao_operador1_idx` (`operador_idoperador` ASC),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_devolucao_exemplar1`
     FOREIGN KEY (`exemplar_id`)
     REFERENCES `biblioteca`.`exemplar` (`id`)
