@@ -16,14 +16,14 @@ import entity.exception.PasswordException;
  */
 public class Operador {
 
-    private long id;
+    private int id;
     private String nome;
     private String senha;
 
     public Operador() {
     }
 
-    public Operador(long id, String nome, String senha) {
+    public Operador(int id, String nome, String senha) {
         this.id = id;
         this.nome = nome;
         this.senha = senha;
@@ -44,11 +44,11 @@ public class Operador {
         }
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

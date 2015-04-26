@@ -33,7 +33,6 @@ public class DialogGerenciadorEmprestimo extends javax.swing.JDialog {
         btVoltar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btNova = new javax.swing.JButton();
-        btExcluir = new javax.swing.JButton();
         btConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -64,15 +63,6 @@ public class DialogGerenciadorEmprestimo extends javax.swing.JDialog {
             }
         });
 
-        btExcluir.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
-        btExcluir.setText("EXCLUIR");
-        btExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btExcluirActionPerformed(evt);
-            }
-        });
-
         btConsultar.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
         btConsultar.setText("CONSULTAR");
@@ -90,7 +80,6 @@ public class DialogGerenciadorEmprestimo extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btNova, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -99,8 +88,6 @@ public class DialogGerenciadorEmprestimo extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btNova, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -119,7 +106,7 @@ public class DialogGerenciadorEmprestimo extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -136,10 +123,6 @@ public class DialogGerenciadorEmprestimo extends javax.swing.JDialog {
     private void btNovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovaActionPerformed
         new DialogEmprestimo(new javax.swing.JFrame(), true).setVisible(true);
     }//GEN-LAST:event_btNovaActionPerformed
-
-    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        new DialogExcluirEmprestimo(new javax.swing.JFrame(), true).setVisible(true);
-    }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
         new DialogConsultarEmprestimo(new javax.swing.JFrame(), true).setVisible(true);
@@ -190,7 +173,6 @@ public class DialogGerenciadorEmprestimo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btConsultar;
-    private javax.swing.JButton btExcluir;
     private javax.swing.JButton btNova;
     private javax.swing.JButton btVoltar;
     private javax.swing.JPanel jPanel2;

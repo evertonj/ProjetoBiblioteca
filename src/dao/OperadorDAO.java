@@ -18,7 +18,8 @@ public class OperadorDAO implements IOperadorDAO {
     private static final String SQL_FIND_ALL = "SELECT * FROM operador;";
     private static final String SQL_LIST_OPERATOR = "SELECT * FROM operador WHERE nome LIKE ?";
     private static final String SQL_SEARCH_AUTHENTICATION = "SELECT * FROM operador WHERE nome = ? and senha = ?";
-      
+    public static Operador operador = null;  
+
 
     @Override
     public int save(Operador operador) {
@@ -56,7 +57,7 @@ public class OperadorDAO implements IOperadorDAO {
     }
 
     @Override
-    public int remove(Long id) {
+    public int remove(int id) {
         int result = 0;
         try {
             Connection conn = DBConnection.getConnection();
@@ -82,7 +83,7 @@ public class OperadorDAO implements IOperadorDAO {
             rs = comando.executeQuery();
             if (rs.next()) {
                 // pega todos os atributos da pessoa  
-                Operador operador = new Operador(rs.getLong("idoperador"),
+                Operador operador = new Operador(rs.getInt("idoperador"),
                         rs.getString("nome"),
                         rs.getString("senha"));
                 return operador;
@@ -103,7 +104,7 @@ public class OperadorDAO implements IOperadorDAO {
                 rs = pstm.executeQuery();
                 while (rs.next()) {
                     Operador operador = new Operador();
-                    operador.setId(rs.getLong("idoperador"));
+                    operador.setId(rs.getInt("idoperador"));
                     operador.setNome(rs.getString("nome"));
                     operador.setSenha(rs.getString("senha"));
                     operadores.add(operador);
@@ -126,7 +127,7 @@ public class OperadorDAO implements IOperadorDAO {
                 rs = pstm.executeQuery();
                 while (rs.next()) {
                     Operador operador = new Operador();
-                    operador.setId(rs.getLong("idoperador"));
+                    operador.setId(rs.getInt("idoperador"));
                     operador.setNome(rs.getString("nome"));
                     operador.setSenha(rs.getString("senha"));
                     operadores.add(operador);
@@ -150,7 +151,7 @@ public class OperadorDAO implements IOperadorDAO {
             rs = comando.executeQuery();
             if (rs.next()) {
                 // pega todos os atributos da pessoa  
-                Operador operador = new Operador(rs.getLong("idoperador"),
+                operador = new Operador(rs.getInt("idoperador"),
                         rs.getString("nome"),
                         rs.getString("senha"));
                 return operador;

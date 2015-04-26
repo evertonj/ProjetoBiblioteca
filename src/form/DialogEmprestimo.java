@@ -7,6 +7,7 @@ package form;
 
 import controller.EmprestimoController;
 import dao.EmprestimoDAO;
+import dao.OperadorDAO;
 import entity.Emprestimo;
 import entity.ExemplarEmprestimo;
 import entity.Usuario;
@@ -411,7 +412,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     private void btEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEmprestimoActionPerformed
         if (listaDeObra.size() > 0 && usuario != null) {
             if (consultaSeUsuarioJaPossuiExemplarComMesmoTitulo(usuario, listaDeObra)) {
-                realizarEmprestimo(listaDeObra, usuario);
+                realizarEmprestimo(listaDeObra, usuario, OperadorDAO.operador.getId());
                 listaDeObra.clear();
                 usuario = null;
                 dispose();
@@ -467,7 +468,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         return false;
     }
 
-    private void realizarEmprestimo(List<ExemplarEmprestimo> listaDeObra, Usuario usuario) {
+    private void realizarEmprestimo(List<ExemplarEmprestimo> listaDeObra, Usuario usuario, int idOperador) {
         for (int i = 0; i < listaDeObra.size(); i++) {
             emprestimo = new Emprestimo();
             emprestimo.setData_emprestimo(dataAtual);
@@ -478,6 +479,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             emprestimo.setEditora_id(listaDeObra.get(i).getObra().getEditora().getId());
             emprestimo.setAutor_id(listaDeObra.get(i).getObra().getAutores().get(0).getId());
             emprestimo.setDiasParaDevolucao((int)spDias.getValue());
+            emprestimo.setOperador_id(idOperador);
             new EmprestimoController().emprestimo(emprestimo);
         }
 

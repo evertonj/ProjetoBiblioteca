@@ -28,7 +28,7 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
     }
 
     List<Operador> operadorList;
-    Long idOperador;
+    int idOperador;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -193,12 +193,12 @@ public class FrmCadastroOperador extends javax.swing.JDialog {
         if (passIsEquals) {
             try {
                 Operador operador = new Operador(tfNome.getText(), ComputeHash(String.copyValueOf(tpsSenha.getPassword())));
-                if (idOperador == null) {
+                if (idOperador == 0) {
                     result = new OperadorController().addOperador(operador);
                 } else {
                     operador.setId(idOperador);
                     result = new OperadorController().alterarOperador(operador);
-                    idOperador = null;
+                    idOperador = 0;
                 }
                 if (result == 1) {
                     JOptionPane.showMessageDialog(this, "Operação de cadastro realizada com Sucesso!");

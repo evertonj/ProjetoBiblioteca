@@ -30,7 +30,7 @@ public class OperadorFacade {
         return dao.update(operador);
     }
 
-    public int remove(Long id) {
+    public int remove(int id) {
         return dao.remove(id);
     }
     

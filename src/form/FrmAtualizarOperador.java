@@ -29,7 +29,7 @@ public class FrmAtualizarOperador extends javax.swing.JDialog {
     }
     List<Operador> operadorList;
     Operador operador;
-    Long idOperador;
+    int idOperador;
 
     private void onCancelar() {
         tfnomePesquisa.setText(null);

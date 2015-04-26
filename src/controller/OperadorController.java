@@ -29,7 +29,7 @@ public class OperadorController {
         return facade.update(operador);
     }
 
-    public int excluirOperador(Long id) {
+    public int excluirOperador(int id) {
         return facade.remove(id);
     }
 

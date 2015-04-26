@@ -5,10 +5,13 @@
  */
 package form;
 
+import dao.DevolucaoDAO;
 import dao.EmprestimoDAO;
+import dao.OperadorDAO;
 import entity.ExcluirEmprestimo;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -76,9 +79,10 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
-        jButton1.setText("Excluir");
+        jButton1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(0, 102, 204));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/archive-icon.png"))); // NOI18N
+        jButton1.setText("Devolução");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -227,17 +231,17 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
 
     private void excluir() throws HeadlessException {
         ExcluirEmprestimo empexcluso;
-        int excluir = JOptionPane.showConfirmDialog(this, "Deseja excluir emprestimo", "Excluir", JOptionPane.OK_CANCEL_OPTION);
-        if (excluir == 0) {
             int indice = tbExcluirEmprestimo.getSelectedRow();
             if (indice > -1) {
                 empexcluso = listaDeExclusao.remove(indice);
                 DefineDadosEAjustesNajTable();
                 new EmprestimoDAO().excluirEmprestimo(empexcluso.getEmprestimo());
+                DevolucaoDAO devolucao = new DevolucaoDAO();
+                devolucao.salvarDevolucao(empexcluso.getEmprestimo().getUsuario_id(), empexcluso.getEmprestimo().getExemplar_id(), OperadorDAO.operador.getId(), LocalDateTime.now() );
             } else {
-                JOptionPane.showMessageDialog(this, "Selecione um empréstimo para excluir");
+                JOptionPane.showMessageDialog(this, "Selecione um empréstimo para realizar a devolução");
             }
-        }
+
         tfBuscaUsuario.requestFocus();
     }
 

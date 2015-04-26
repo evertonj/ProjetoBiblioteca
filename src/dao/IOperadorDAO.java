@@ -19,7 +19,7 @@ public interface IOperadorDAO {
     
     int update(Operador usuario);
     
-    int remove(Long id);
+    int remove(int id);
     
     Operador search(String nome);
     
