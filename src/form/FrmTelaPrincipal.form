@@ -136,7 +136,7 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="menuEmprestimo">
+        <Menu class="javax.swing.JMenu" name="menuMovimenta&#xe7;&#xf5;es">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -145,28 +145,36 @@
                 </LineBorder>
               </Border>
             </Property>
-            <Property name="text" type="java.lang.String" value="Realizar Empr&#xe9;stimo"/>
+            <Property name="text" type="java.lang.String" value="Movimenta&#xe7;&#xf5;es"/>
             <Property name="toolTipText" type="java.lang.String" value="Clique para realizar um novo empr&#xe9;stimo"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="24" style="0"/>
             </Property>
           </Properties>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="menuDevolu&#xe7;&#xe3;o">
-          <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder thickness="2">
-                  <Color PropertyName="color" blue="cc" green="33" red="0" type="rgb"/>
-                </LineBorder>
-              </Border>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Realizar Devolu&#xe7;&#xe3;o"/>
-            <Property name="toolTipText" type="java.lang.String" value="Clique para realizar a devolu&#xe7;&#xe3;o do livro"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="24" style="0"/>
-            </Property>
-          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuEmprestimo">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="14" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Empr&#xe9;stimo"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuEmprestimoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuDevolucao">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="14" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Devolu&#xe7;&#xe3;o"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuDevolucaoActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuRelatorio">
           <Properties>
@@ -395,7 +403,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icon/orientacao_preventiva.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Emprestimo"/>
+            <Property name="text" type="java.lang.String" value="Empr&#xe9;stimo"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btEmprestimoActionPerformed"/>
