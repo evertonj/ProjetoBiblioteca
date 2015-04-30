@@ -249,7 +249,7 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_cbTipoActionPerformed
 
     private void btGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerarActionPerformed
-        try {
+       // try {
 
             if (checkTipo.isSelected() && !checkSituacao.isSelected()) {
                 if (relatorio.defineStringConnect("Usuario" + cbTipo.getSelectedItem().toString())) {
@@ -257,24 +257,32 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
                 }
             }
             if(checkTipo.isSelected()&& checkSituacao.isSelected()){
-                
+                relatorioTipoSituacao();
             }
             if (checkLetra.isSelected() && !checkSituacao.isSelected()) {
-                relatorio.filtroLetra(tfLetra.getText());
-                chamarRelatorio();
+                if(tfLetra.getText().equals("")){
+                    JOptionPane.showMessageDialog(this, "Campo letra nao pode ser vazio");
+                }else{
+                    relatorioLetra();
+                }
+             
             }
             if(checkLetra.isSelected() && checkSituacao.isSelected()){
-                
+                if(tfLetra.getText().equals("")){
+                    JOptionPane.showMessageDialog(this, "Campo letra nao pode ser vazio");
+                }else{
+                    relatorioLetraSituacao();
+                }
             }
             if(checkSituacao.isSelected() && !checkLetra.isSelected() && !checkTipo.isSelected()){
-                
+                relatorioSituacao();
             }
            
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Nenhum dado cadastrado");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ocorreu um erro");
-        }
+        //} catch (NullPointerException e) {
+          //  JOptionPane.showMessageDialog(this, "Nenhum dado cadastrado");
+        //} catch (Exception e) {
+           // JOptionPane.showMessageDialog(this, "Ocorreu um erro");
+        //}
 
 
     }//GEN-LAST:event_btGerarActionPerformed
@@ -392,7 +400,6 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
             pstm = conn.prepareStatement(relatorio.getStringConnect());
 
             HashMap params = new HashMap();
-
             InputStream stream = getClass().getResourceAsStream(relatorio.getStringRel());
             JRResultSetDataSource relatResul = new JRResultSetDataSource(pstm.executeQuery());
             JasperPrint jpPrint = JasperFillManager.fillReport(stream, params, relatResul);
@@ -409,22 +416,105 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
         }
     }
     
+    
    
     private void chamarRelatorio(){  
         JasperPrint rel = null;  
-          
-        try {  
-        Map<String, Object> parametros = new HashMap();  
+          Map parametros = new HashMap(); 
+         
+         
         parametros.put("nome", tfLetra.getText());  
          Connection conn = DBConnection.getConnection();
-        rel = JasperFillManager.fillReport(stringRel, parametros, conn);//tem q criar a classe conexao!  
+        try {
+           
+            rel = JasperFillManager.fillReport("\\relatorios\\RelatorioUsuario.jasper", parametros, conn);//tem q criar a classe conexao!  
+       
         JasperViewer jv = new JasperViewer(rel, false);  
         jv.setExtendedState(jv.MAXIMIZED_BOTH);  
         jv.setVisible(true);  
-        } catch (Exception e) {  
-        JOptionPane.showMessageDialog(null, e.getMessage());  
-        }  
+        } catch (JRException ex) {
+            System.out.println(ex.getMessage());
+        }
     }  
+     public void relatorioLetra () {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioUsuario.jasper");
+            HashMap map = new HashMap();
+            String nome = tfLetra.getText();
+            map.put("nome", nome);
+            
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+          
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+     }
+     public void relatorioLetraSituacao () {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioUsuarioLetraSituacao.jasper");
+            HashMap map = new HashMap();
+            String nome = tfLetra.getText();
+            map.put("nome", nome);
+            map.put("situacao", cbSituacao.getSelectedItem().toString());
+            
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+          
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+     }
+      public void relatorioTipoSituacao () {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioUsuarioTipoSituacao.jasper");
+            HashMap map = new HashMap();
+            String tipo = cbTipo.getSelectedItem().toString();
+            map.put("tipo", tipo);
+            map.put("situacao", cbSituacao.getSelectedItem().toString());
+            
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+          
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+     }
+       public void relatorioSituacao () {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioUsuarioSituacao.jasper");
+            HashMap map = new HashMap();
+           
+           
+            map.put("situacao", cbSituacao.getSelectedItem().toString());
+            
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+          
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGerar;

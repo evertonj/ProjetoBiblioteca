@@ -26,12 +26,13 @@ public class UsuarioDAO implements IUsuarioDAO {
         Connection conn = DBConnection.getConnection();
         ResultSet rs = null;
         try {
-            String sql = "INSERT INTO usuario(nome, serie, foto) VALUES (?, ?, ?);";
+            String sql = "INSERT INTO usuario(nome, serie, foto,DataCadastro,situacao) VALUES (?, ?, ?,?,?);";
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, usuario.getNome());
             pstm.setString(2, usuario.getSerie());
             pstm.setBytes(3, usuario.getFoto());
-
+            pstm.setDate(4, new java.sql.Date(usuario.getDataCadastro().getTime()));
+            pstm.setString(5, usuario.getSituacao().toString());
             result = pstm.executeUpdate();
 
             pstm.close();
