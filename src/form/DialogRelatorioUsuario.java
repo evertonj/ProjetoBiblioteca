@@ -418,24 +418,7 @@ public class DialogRelatorioUsuario extends javax.swing.JDialog {
     
     
    
-    private void chamarRelatorio(){  
-        JasperPrint rel = null;  
-          Map parametros = new HashMap(); 
-         
-         
-        parametros.put("nome", tfLetra.getText());  
-         Connection conn = DBConnection.getConnection();
-        try {
-           
-            rel = JasperFillManager.fillReport("\\relatorios\\RelatorioUsuario.jasper", parametros, conn);//tem q criar a classe conexao!  
-       
-        JasperViewer jv = new JasperViewer(rel, false);  
-        jv.setExtendedState(jv.MAXIMIZED_BOTH);  
-        jv.setVisible(true);  
-        } catch (JRException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }  
+    
      public void relatorioLetra () {
         try {
             Connection conn = DBConnection.getConnection();
