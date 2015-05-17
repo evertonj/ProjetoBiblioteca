@@ -17,7 +17,7 @@
      usuario.`situacao` AS usuario_situacao
 FROM
      `usuario` usuario INNER JOIN `telefone_usuario` telefone_usuario ON usuario.`id` = telefone_usuario.`idUsuario`
-     INNER JOIN `email_usuario` email_usuario ON usuario.`id` = email_usuario.`idUsuario` WHERE usuario.`situacao` =  $P{situacao}  group by usuario.`id` ]]>
+     INNER JOIN `email_usuario` email_usuario ON usuario.`id` = email_usuario.`idUsuario` WHERE usuario.`situacao` =  $P{situacao}  group by usuario.`id`]]>
 	</queryString>
 	<field name="telefone_usuario_numero" class="java.lang.String"/>
 	<field name="usuario_nome" class="java.lang.String"/>
@@ -37,10 +37,6 @@ FROM
 				</textElement>
 				<text><![CDATA[Relatório DE Usuários]]></text>
 			</staticText>
-			<image>
-				<reportElement x="10" y="0" width="128" height="128" uuid="0c487929-bf6b-4328-aed3-048f3b877500"/>
-				<imageExpression><![CDATA["C:\\ProjetoBiblioteca\\ProjetoBiblioteca\\src\\icon\\Editora.png"]]></imageExpression>
-			</image>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
 				<reportElement x="32" y="128" width="100" height="20" uuid="ee94d898-01b8-4d5f-97db-236ab527fc59"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>

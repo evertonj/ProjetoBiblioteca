@@ -37,10 +37,6 @@ FROM
 				</textElement>
 				<text><![CDATA[Relatório DE Usuários]]></text>
 			</staticText>
-			<image>
-				<reportElement x="10" y="0" width="128" height="128" uuid="0c487929-bf6b-4328-aed3-048f3b877500"/>
-				<imageExpression><![CDATA["C:\\ProjetoBiblioteca\\ProjetoBiblioteca\\src\\icon\\Editora.png"]]></imageExpression>
-			</image>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
 				<reportElement x="32" y="128" width="100" height="20" uuid="ee94d898-01b8-4d5f-97db-236ab527fc59"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>

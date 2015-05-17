@@ -42,10 +42,6 @@
 				</textElement>
 				<text><![CDATA[Relatório DE EDitoras]]></text>
 			</staticText>
-			<image>
-				<reportElement x="15" y="0" width="128" height="128" uuid="ca38d977-af4c-420c-affd-05658481f63d"/>
-				<imageExpression><![CDATA["C:\\ProjetoBiblioteca\\ProjetoBiblioteca\\src\\icon\\Editora.png"]]></imageExpression>
-			</image>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
 				<reportElement x="24" y="138" width="100" height="20" uuid="c0dcc5a8-e353-45e4-b304-f1c4e0f01918"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
