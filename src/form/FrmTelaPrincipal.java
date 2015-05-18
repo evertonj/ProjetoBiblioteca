@@ -249,7 +249,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
             }
         });
 
-        menuItemUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuItemUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         menuItemUsuario.setText("Gerenciamento De Usuario");
         menuItemUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -258,7 +258,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuGerenciamento.add(menuItemUsuario);
 
-        menuItemObra.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuItemObra.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         menuItemObra.setText("Gerenciamento De Obra");
         menuItemObra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,7 +267,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuGerenciamento.add(menuItemObra);
 
-        menuItemEditora.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuItemEditora.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         menuItemEditora.setText("Gerenciamento De Editora");
         menuItemEditora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,7 +276,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuGerenciamento.add(menuItemEditora);
 
-        menuItemAutor.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuItemAutor.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         menuItemAutor.setText("Gerenciamento De Autor");
         menuItemAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -285,7 +285,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuGerenciamento.add(menuItemAutor);
 
-        menuItemOperador.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuItemOperador.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         menuItemOperador.setText("Gerenciamento De Operador");
         menuItemOperador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,7 +294,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuGerenciamento.add(menuItemOperador);
 
-        menuItemGerenciamentoAssunto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuItemGerenciamentoAssunto.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         menuItemGerenciamentoAssunto.setText("Gerenciamento De Assunto");
         menuItemGerenciamentoAssunto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,7 +303,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuGerenciamento.add(menuItemGerenciamentoAssunto);
 
-        gerenciadorExemplar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        gerenciadorExemplar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         gerenciadorExemplar.setText("Gerenciamento De Exemplar");
         gerenciadorExemplar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -319,6 +319,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         menuMovimentacoes.setToolTipText("Clique para realizar um novo empréstimo");
         menuMovimentacoes.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
 
+        jMenuItem2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jMenuItem2.setText("Empréstimo");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,6 +328,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuMovimentacoes.add(jMenuItem2);
 
+        menuDevolucao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         menuDevolucao.setText("Devolução");
         menuDevolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
