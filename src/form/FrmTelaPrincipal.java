@@ -76,6 +76,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         btGerenciarObra = new javax.swing.JButton();
         btEmprestimo = new javax.swing.JButton();
         btDevolução = new javax.swing.JButton();
+        btReserva = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btSair = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -91,6 +92,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         menuMovimentacoes = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         menuDevolucao = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         menuRelatorio = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -176,6 +178,15 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
             }
         });
 
+        btReserva.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Things-Book-icon.png"))); // NOI18N
+        btReserva.setText("Reserva");
+        btReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btReservaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -186,11 +197,12 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
                     .addComponent(btGerenciarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btGerenciarObra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btEmprestimo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btDevolução, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btDevolução, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btReserva))
+                .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btDevolução, btEmprestimo, btGerenciarObra, btGerenciarUsuario});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btDevolução, btEmprestimo, btGerenciarObra, btGerenciarUsuario, btReserva});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,10 +215,12 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
                 .addComponent(btEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btDevolução, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(btReserva)
+                .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btDevolução, btEmprestimo, btGerenciarObra, btGerenciarUsuario});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btDevolução, btEmprestimo, btGerenciarObra, btGerenciarUsuario, btReserva});
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
@@ -337,6 +351,10 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuMovimentacoes.add(menuDevolucao);
 
+        jMenuItem6.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenuItem6.setText("Reserva");
+        menuMovimentacoes.add(jMenuItem6);
+
         jMenuBar1.add(menuMovimentacoes);
 
         menuRelatorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
@@ -412,7 +430,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,12 +439,13 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)))
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -540,6 +559,10 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         new DialogGerenciadorEmprestimo(this, true).setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void btReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btReservaActionPerformed
+        
+    }//GEN-LAST:event_btReservaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -574,6 +597,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JButton btEmprestimo;
     private javax.swing.JButton btGerenciarObra;
     private javax.swing.JButton btGerenciarUsuario;
+    private javax.swing.JButton btReserva;
     private javax.swing.JButton btSair;
     private javax.swing.JMenuItem gerenciadorExemplar;
     private javax.swing.JLabel jLabel2;
@@ -587,6 +611,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
