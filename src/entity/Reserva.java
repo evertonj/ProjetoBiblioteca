@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 /**
@@ -12,9 +13,10 @@ import java.util.Calendar;
  * @author Everton
  */
 public class Reserva {
+    private int id;
     private Usuario usuario;
     private Obra obra;
-    private Calendar dataReserva;
+    private LocalDate dataReserva;
 
     /**
      * @return the usuario
@@ -47,14 +49,28 @@ public class Reserva {
     /**
      * @return the dataReserva
      */
-    public Calendar getDataReserva() {
+    public LocalDate getDataReserva() {
         return dataReserva;
     }
 
     /**
      * @param dataReserva the dataReserva to set
      */
-    public void setDataReserva(Calendar dataReserva) {
+    public void setDataReserva(LocalDate dataReserva) {
         this.dataReserva = dataReserva;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 }

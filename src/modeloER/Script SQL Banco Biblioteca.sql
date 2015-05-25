@@ -260,6 +260,30 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`devolucao` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `biblioteca`.`reserva`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`reserva` (
+  `idreserva` INT NOT NULL AUTO_INCREMENT,
+  `data_reserva` DATE NULL,
+  `usuario_id` INT(11) NOT NULL,
+  `obra_id` INT(11) NOT NULL,
+  PRIMARY KEY (`idreserva`),
+  INDEX `fk_reserva_usuario1_idx` (`usuario_id` ASC),
+  INDEX `fk_reserva_obra1_idx` (`obra_id` ASC),
+  CONSTRAINT `fk_reserva_usuario1`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `biblioteca`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reserva_obra1`
+    FOREIGN KEY (`obra_id`)
+    REFERENCES `biblioteca`.`obra` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

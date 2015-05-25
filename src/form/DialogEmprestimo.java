@@ -398,6 +398,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     }//GEN-LAST:event_spDiasStateChanged
 
     private void btSelecionarObraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarObraActionPerformed
+        DialogSelecionarObra.user = usuario;
         new DialogSelecionarObra(new javax.swing.JFrame(), true).setVisible(true);
     }//GEN-LAST:event_btSelecionarObraActionPerformed
 
