@@ -6,7 +6,6 @@
 package entity;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 /**
  *
@@ -14,6 +13,7 @@ import java.util.Calendar;
  */
 public class Reserva {
     private int id;
+    private int posicao;
     private Usuario usuario;
     private Obra obra;
     private LocalDate dataReserva;
@@ -72,5 +72,19 @@ public class Reserva {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * @return the posicao
+     */
+    public int getPosicao() {
+        return posicao;
+    }
+
+    /**
+     * @param posicao the posicao to set
+     */
+    public void setPosicao(int posicao) {
+        this.posicao = posicao;
     }
 }

@@ -40,11 +40,11 @@ public class ReservaColumnModel extends DefaultTableColumnModel{
         int letra = fm.stringWidth("M");
         addColumn(criaColuna(0, 6 * letra, fm, true, "Posição"));
         addColumn(criaColuna(1, 6 * letra, fm, true, "Data Reserva"));
-        addColumn(criaColuna(2, 6 * letra, fm, true, "Usuário"));
-        addColumn(criaColuna(3, 19 * letra, fm, true, "Telefone"));
-        addColumn(criaColuna(4, 16 * letra, fm, true, "Email"));
-        addColumn(criaColuna(5, 10 * letra, fm, true, "Título"));
-        addColumn(criaColuna(5, 10 * letra, fm, true, "Assunto"));
-        addColumn(criaColuna(5, 10 * letra, fm, true, "Edição"));
+        addColumn(criaColuna(2, 15* letra, fm, true, "Usuário"));
+        addColumn(criaColuna(3, 8 * letra, fm, true, "Telefone"));
+        addColumn(criaColuna(4, 20 * letra, fm, true, "Email"));
+        addColumn(criaColuna(5, 15 * letra, fm, true, "Título"));
+        addColumn(criaColuna(6, 10 * letra, fm, true, "Assunto"));
+        addColumn(criaColuna(7, 10 * letra, fm, true, "Edição"));
     } 
 }

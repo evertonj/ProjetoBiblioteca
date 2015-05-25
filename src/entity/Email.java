@@ -10,6 +10,7 @@ package entity;
  * @author Everton Spindola
  */
 public class Email {
+
     private int id;
     private String email;
 
@@ -17,8 +18,6 @@ public class Email {
     public String toString() {
         return email;
     }
-    
-    
 
     /**
      * @return the id
@@ -45,6 +44,10 @@ public class Email {
      * @param email the email to set
      */
     public void setEmail(String email) {
-        this.email = email;
+        if (email == null) {
+            this.email = "";
+        } else {
+            this.email = email;
+        }
     }
 }

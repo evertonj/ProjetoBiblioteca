@@ -5,53 +5,44 @@
  */
 package form;
 
-import dao.ExemplarObraDAO;
 import dao.ReservaDAO;
-import entity.EnumSituacaoExemplar;
-import entity.ExemplarEmprestimo;
 import entity.Reserva;
-import entity.Usuario;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.text.DefaultStyledDocument;
-import table.ExemplarEmprestimoTableModel;
-import table.ExemplarObraColumnModel;
+import table.ReservaColumnModel;
+import table.ReservaTableModel;
 import validadorDeTextField.SomenteNumero;
 
 /**
  *
  * @author Alex
  */
-public class DialogSelecionarObra extends javax.swing.JDialog {
+public class DialogExcluirReserva extends javax.swing.JDialog {
 
-    ExemplarObraDAO dao = new ExemplarObraDAO();
-    List<ExemplarEmprestimo> listaDeObra = new ArrayList<>();
-    public static Usuario user;
+    ReservaDAO daoReserva = new ReservaDAO();
+    List<Reserva> listaDeReserva = new ArrayList<>();
 
     public void DefineDadosEAjustesNajTable() {
-        tbAtualizarObra.setAutoCreateColumnsFromModel(false);
-        java.awt.FontMetrics fm = tbAtualizarObra.getFontMetrics(tbAtualizarObra.getFont());
-        tbAtualizarObra.setColumnModel(new ExemplarObraColumnModel(fm));
-        tbAtualizarObra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tbAtualizarObra.setModel(new ExemplarEmprestimoTableModel(listaDeObra));
+        tbAtualizarReserva.setAutoCreateColumnsFromModel(false);
+        java.awt.FontMetrics fm = tbAtualizarReserva.getFontMetrics(tbAtualizarReserva.getFont());
+        tbAtualizarReserva.setColumnModel(new ReservaColumnModel(fm));
+        tbAtualizarReserva.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tbAtualizarReserva.setModel(new ReservaTableModel(listaDeReserva));
     }
 
     /**
-     * Creates new form DialogAtualizarObra
+     * Creates new form DialogAtualizarReserva
      */
-    public DialogSelecionarObra(java.awt.Frame parent, boolean modal) {
+    public DialogExcluirReserva(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         tfTitulo.requestFocus();
     }
-    ExemplarEmprestimo exemplarEmprestimo;
+    Reserva reserva;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,20 +57,20 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         tfTitulo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbAtualizarObra = new javax.swing.JTable();
+        tbAtualizarReserva = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
-        btAtualizar = new javax.swing.JButton();
         btVoltar = new javax.swing.JButton();
+        btExcluir = new javax.swing.JButton();
         cbOpcaoPesquisa = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Exemplares para Emprestimo");
+        setTitle("Excluir Reserva");
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Consultar por:");
+        jLabel2.setText("Excluir reserva por:");
 
         tfTitulo.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         tfTitulo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -88,7 +79,7 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
             }
         });
 
-        tbAtualizarObra.setModel(new javax.swing.table.DefaultTableModel(
+        tbAtualizarReserva.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -99,24 +90,14 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
 
             }
         ));
-        tbAtualizarObra.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbAtualizarReserva.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbAtualizarObraMouseClicked(evt);
+                tbAtualizarReservaMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbAtualizarObra);
+        jScrollPane1.setViewportView(tbAtualizarReserva);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btAtualizar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btAtualizar.setForeground(new java.awt.Color(0, 102, 204));
-        btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Book-icon.png"))); // NOI18N
-        btAtualizar.setText("Selecionar Obra");
-        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAtualizarActionPerformed(evt);
-            }
-        });
 
         btVoltar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
@@ -127,34 +108,38 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
             }
         });
 
+        btExcluir.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
+        btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        jPanel6Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btAtualizar, btVoltar});
-
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btAtualizar)
-                    .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanel6Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btAtualizar, btVoltar});
-
         cbOpcaoPesquisa.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cbOpcaoPesquisa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TITULO", "AUTOR", "ISBN", "CÓDIGO", "ASSUNTO" }));
+        cbOpcaoPesquisa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TÍTULO", "USUÁRIO" }));
         cbOpcaoPesquisa.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbOpcaoPesquisaItemStateChanged(evt);
@@ -168,7 +153,7 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 952, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -187,7 +172,7 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(cbOpcaoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -208,8 +193,8 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -219,103 +204,43 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
         dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
-    int contador = 0;
-    private void tbAtualizarObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarObraMouseClicked
+    int cont = 0;
+    private void tbAtualizarReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtualizarReservaMouseClicked
+        cont++;
         try {
-            int rowIndex = tbAtualizarObra.getSelectedRow();
+            int rowIndex = tbAtualizarReserva.getSelectedRow();
             if (rowIndex == -1) {
-                JOptionPane.showMessageDialog(this, "Selecione a Obra a ser Atualizada!!!");
+                JOptionPane.showMessageDialog(this, "Selecione a reserva a ser excluída.");
                 return;
             }
-            exemplarEmprestimo = new ExemplarEmprestimoTableModel(listaDeObra).get(rowIndex);
+            reserva = new ReservaTableModel(listaDeReserva).get(rowIndex);
+            if (reserva != null && cont == 2) {
+                cont = 0;
+                int opcao = JOptionPane.showConfirmDialog(this, "Deseja excluir está reserva", "Selecione uma opção", JOptionPane.YES_NO_OPTION);
+                if (opcao == 0) {
+                    ReservaDAO reservaDAO = new ReservaDAO();
+                    try {
+                        reservaDAO.excluirReserva(reserva.getId());
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(this, "falha na exclusão. Erro: " + ex.getMessage());
+                        limparCampos();
+                    }
+                    JOptionPane.showMessageDialog(this, "Reserva excluída com sucesso.");
+                    limparCampos();
+                }
+            }
         } catch (IndexOutOfBoundsException e) {
             DefineDadosEAjustesNajTable();
         }
-        contador++;
-        if (contador == 2) {
-            atualizar();
-            tfTitulo.requestFocus();
-            contador = 0;
-        }
-    }//GEN-LAST:event_tbAtualizarObraMouseClicked
-
-    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        atualizar();
-    }//GEN-LAST:event_btAtualizarActionPerformed
-
-    private void atualizar() {
-        int disponivel = 0;
-        int rowIndex = tbAtualizarObra.getSelectedRow();
-        if (rowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione a obra a ser atualizada.");
-            return;
-        }
-        exemplarEmprestimo = new ExemplarEmprestimoTableModel(listaDeObra).get(rowIndex);
-        if (exemplarEmprestimo.getExemplar().getSituacao() == EnumSituacaoExemplar.EMPRESTADO) {
-            for (ExemplarEmprestimo exemplar : listaDeObra) {
-                if (exemplar.getExemplar().getSituacao() == EnumSituacaoExemplar.DISPONIVEL) {
-                    disponivel++;
-                }
-            }
-            if (disponivel > 0) {
-                JOptionPane.showMessageDialog(this, "Selecione um exemplar disponivel");
-                return;
-            } else {
-                int opcao = JOptionPane.showConfirmDialog(this, "Deseja reservar este exemplar", "Selecione uma opção", JOptionPane.YES_NO_OPTION);
-                System.out.println(opcao);
-                if(opcao == 0) {
-                    Reserva reserva = new Reserva();
-                    ReservaDAO reservaDAO = new ReservaDAO();
-                    List<Reserva> lista = reservaDAO.ListaReserva(0, exemplarEmprestimo.getObra().getTitulo());
-                    int posicao = 0, aux = 0;
-                    for (Reserva item : lista) {
-                        if(item.getUsuario().getNome().equals(user.getNome()) && item.getUsuario().getListEmail().get(0).getEmail().equals(item.getUsuario().getListEmail().get(0).getEmail())){
-                            JOptionPane.showMessageDialog(this, "Este usuário já possui reserva");
-                            return;
-                        }
-                        if(item.getObra().getId() == exemplarEmprestimo.getObra().getId()){
-                            posicao = item.getPosicao();
-                            if(posicao > aux){
-                                aux = posicao;
-                            }
-                        }
-                    }
-                    reserva.setPosicao(++aux);
-                    reserva.setDataReserva(LocalDate.now());
-                    System.out.println("Data: "+LocalDate.now());
-                    reserva.setObra(exemplarEmprestimo.getObra());
-                    reserva.setUsuario(this.user);
-                    ReservaDAO daoReserva = new ReservaDAO();
-                    daoReserva.FazerReserva(reserva);
-                    JOptionPane.showMessageDialog(this, "Reserva realizada com sucesso.");
-                    dispose();
-                }
-                return;
-            }
-            
-        }
-        if (exemplarEmprestimo.getExemplar().getSituacao() == EnumSituacaoExemplar.DISPONIVEL) {
-            if (DialogEmprestimo.setObraNaLista(exemplarEmprestimo)) {
-                JOptionPane.showMessageDialog(this, "Um exemplar com este título, já foi adicionado.");
-                return;
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Só é possível emprestar exemplar com situação disponível.");
-            contador = 0;
-            return;
-        }
-        dispose();
-    }
+    }//GEN-LAST:event_tbAtualizarReservaMouseClicked
 
     private void tfTituloKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTituloKeyReleased
-        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
-            if (!tfTitulo.getText().isEmpty()) {
-                this.pesquisa();
-                DefineDadosEAjustesNajTable();
-            } else {
-                listaDeObra.clear();
-                tbAtualizarObra.setModel(new ExemplarEmprestimoTableModel(listaDeObra));
-            }
+        if (!tfTitulo.getText().isEmpty()) {
+            this.pesquisa();
+            DefineDadosEAjustesNajTable();
+        } else {
+            listaDeReserva.clear();
+            tbAtualizarReserva.setModel(new ReservaTableModel(listaDeReserva));
         }
     }//GEN-LAST:event_tfTituloKeyReleased
 
@@ -328,53 +253,66 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_cbOpcaoPesquisaItemStateChanged
 
-    private boolean pesquisa() {
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         try {
-            if (tfTitulo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Digite sua pesquisa.");
-                return false;
+            int rowIndex = tbAtualizarReserva.getSelectedRow();
+            if (rowIndex == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione a reserva a ser excluída.");
+                return;
             }
-            switch (cbOpcaoPesquisa.getSelectedIndex()) {
-                case 0:
-                    listaDeObra = dao.consulta(tfTitulo.getText());
-                    return verifica(listaDeObra);
-
-                case 1:
-                    listaDeObra = dao.consultaAutor(tfTitulo.getText());
-                    return verifica(listaDeObra);
-
-                case 2:
-                    listaDeObra = dao.consultaIsbn(tfTitulo.getText());
-                    return verifica(listaDeObra);
-
-                case 3:
+            reserva = new ReservaTableModel(listaDeReserva).get(rowIndex);
+            if (reserva != null) {
+                int opcao = JOptionPane.showConfirmDialog(this, "Deseja excluir está reserva", "Selecione uma opção", JOptionPane.YES_NO_OPTION);
+                if (opcao == 0) {
+                    ReservaDAO reservaDAO = new ReservaDAO();
                     try {
-                        listaDeObra = dao.consultaPorCodigo(Integer.parseInt(tfTitulo.getText()));
-                    } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(this, "Favor digite somente números.");
-                        return false;
+                        reservaDAO.excluirReserva(reserva.getId());
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(this, "falha na exclusão. Erro: " + ex.getMessage());
+                        limparCampos();
                     }
-                    return verifica(listaDeObra);
-
-                case 4:
-                    listaDeObra = dao.consultaAssunto(tfTitulo.getText());
-                    return verifica(listaDeObra);
-
+                    JOptionPane.showMessageDialog(this, "Reserva excluída com sucesso.");
+                    limparCampos();
+                }
             }
-        } catch (SQLException ex) {
-            return false;
+        } catch (IndexOutOfBoundsException e) {
+            DefineDadosEAjustesNajTable();
+        }
+    }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void limparCampos() {
+        tfTitulo.setText("");
+        listaDeReserva.clear();
+        DefineDadosEAjustesNajTable();
+    }
+    
+    private boolean pesquisa() {
+//            if (tfTitulo.getText().isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Digite sua pesquisa.");
+//                return false;
+//            }
+        switch (cbOpcaoPesquisa.getSelectedIndex()) {
+            case 0:
+                //0 filtra por titulo
+                listaDeReserva = daoReserva.ListaReserva(0, tfTitulo.getText());
+//                    return verifica(listaDeReserva);
+                break;
+            case 1:
+                //1 filtra por usuario
+                listaDeReserva = daoReserva.ListaReserva(1, tfTitulo.getText());
+//                    return verifica(listaDeReserva);
+                break;
         }
         return false;
     }
 
-    private boolean verifica(List<ExemplarEmprestimo> lista) {
-        if (lista.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "A busca não encontrou nenhum resultado.");
-            return false;
-        }
-        return true;
-    }
-
+//    private boolean verifica(List<Reserva> lista) {
+//        if (lista.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "A busca não encontrou nenhum resultado.");
+//            return false;
+//        }
+//        return true;
+//    }
     /**
      * @param args the command line arguments
      */
@@ -392,21 +330,23 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogSelecionarObra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogExcluirReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogSelecionarObra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogExcluirReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogSelecionarObra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogExcluirReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogSelecionarObra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogExcluirReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogSelecionarObra dialog = new DialogSelecionarObra(new javax.swing.JFrame(), true);
+                DialogExcluirReserva dialog = new DialogExcluirReserva(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -419,14 +359,14 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAtualizar;
+    private javax.swing.JButton btExcluir;
     private javax.swing.JButton btVoltar;
     private javax.swing.JComboBox cbOpcaoPesquisa;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbAtualizarObra;
+    private javax.swing.JTable tbAtualizarReserva;
     private javax.swing.JTextField tfTitulo;
     // End of variables declaration//GEN-END:variables
 }

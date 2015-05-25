@@ -266,6 +266,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `biblioteca`.`reserva` (
   `idreserva` INT NOT NULL AUTO_INCREMENT,
   `data_reserva` DATE NULL,
+  `posicao` INT NOT NULL,
   `usuario_id` INT(11) NOT NULL,
   `obra_id` INT(11) NOT NULL,
   PRIMARY KEY (`idreserva`),

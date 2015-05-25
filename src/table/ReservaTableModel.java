@@ -49,7 +49,7 @@ public class ReservaTableModel extends AbstractTableModel {
             case 5:
                 return reserva.getObra().getTitulo();
             case 6:
-                return reserva.getObra().getAssunto();
+                return reserva.getObra().getAssunto().getNome();
             case 7:
                 return reserva.getObra().getEdicao();
         }

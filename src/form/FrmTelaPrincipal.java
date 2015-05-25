@@ -92,7 +92,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         menuMovimentacoes = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         menuDevolucao = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuReserva = new javax.swing.JMenuItem();
         menuRelatorio = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -351,9 +351,14 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuMovimentacoes.add(menuDevolucao);
 
-        jMenuItem6.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jMenuItem6.setText("Reserva");
-        menuMovimentacoes.add(jMenuItem6);
+        jMenuReserva.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenuReserva.setText("Reserva");
+        jMenuReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuReservaActionPerformed(evt);
+            }
+        });
+        menuMovimentacoes.add(jMenuReserva);
 
         jMenuBar1.add(menuMovimentacoes);
 
@@ -560,8 +565,12 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void btReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btReservaActionPerformed
-        
+        new DialogGerenciadorReserva(this, true).setVisible(true);
     }//GEN-LAST:event_btReservaActionPerformed
+
+    private void jMenuReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuReservaActionPerformed
+        new DialogGerenciadorReserva(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuReservaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -611,7 +620,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuReserva;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
