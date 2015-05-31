@@ -6,6 +6,7 @@
 package form;
 
 import controller.OperadorController;
+import email.Send;
 import entity.Operador;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
@@ -21,6 +22,7 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
     public FrmRealizarLogin() {
         initComponents();
 //        DBConnection.createTable();
+        Send.email("evertonspindola@hotmail.com", "Java Como Programar", "Everton Spindola");
     }
 
     /**
