@@ -80,7 +80,7 @@ public class FrmConsultarUsuario extends javax.swing.JDialog {
         });
 
         cbPesquisa.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        cbPesquisa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aluno", "Série" }));
+        cbPesquisa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nome", "Série" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
