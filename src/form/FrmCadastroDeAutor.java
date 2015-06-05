@@ -82,12 +82,18 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
         jLabel1.setText("Nome");
 
         tfNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tfNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfNomeKeyTyped(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
 
         btSalvar.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/insert.png"))); // NOI18N
         btSalvar.setText("Salvar");
+        btSalvar.setEnabled(false);
         btSalvar.setMaximumSize(new java.awt.Dimension(70, 20));
         btSalvar.setMinimumSize(new java.awt.Dimension(70, 20));
         btSalvar.setPreferredSize(new java.awt.Dimension(95, 30));
@@ -124,9 +130,9 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                    .addComponent(btEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -275,6 +281,14 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
     private void tfISBN3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfISBN3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfISBN3ActionPerformed
+
+    private void tfNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNomeKeyTyped
+       if(!tfNome.getText().equals("")){
+           btSalvar.setEnabled(true);
+       }else{
+           btSalvar.setEnabled(false);
+       }
+    }//GEN-LAST:event_tfNomeKeyTyped
 
     /**
      * @param args the command line arguments

@@ -33,7 +33,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biblioteca`.`autor` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(80) NULL DEFAULT NULL,
+  `autor_nome` VARCHAR(80) NULL DEFAULT NULL,
   `sobrenome` VARCHAR(80) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
@@ -45,7 +45,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biblioteca`.`editora` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(80) NULL DEFAULT NULL,
+  `editora_nome` VARCHAR(80) NULL DEFAULT NULL,
   `telefone` VARCHAR(80) NULL DEFAULT NULL,
   `email` VARCHAR(80) NULL DEFAULT NULL,
   `cidade` VARCHAR(80) NULL DEFAULT NULL,

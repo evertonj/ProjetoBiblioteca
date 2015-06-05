@@ -24,11 +24,11 @@ import java.util.logging.Logger;
  */
 public class AutorDAO implements IAutorDAO {
 
-    private static final String SQL_INSERT = "insert into autor (nome, sobrenome) values (?,?);";
-    private static final String SQL_UPDATE = "update autor set nome = ?, sobrenome= ? where id = ?;";
+    private static final String SQL_INSERT = "insert into autor (autor_nome, sobrenome) values (?,?);";
+    private static final String SQL_UPDATE = "update autor set autor_nome = ?, sobrenome= ? where id = ?;";
     private static final String SQL_REMOVE = "delete from autor where id = ?;";
     private static final String SQL_FIND_ALL = "select * from autor;";
-    private static final String SQL_ORDER_TABLE = "select * from autor order by nome;";
+    private static final String SQL_ORDER_TABLE = "select * from autor order by autor_nome;";
 
     @Override
     public int save(Autor autor) {
@@ -116,13 +116,13 @@ public class AutorDAO implements IAutorDAO {
         List<Autor> lista = new ArrayList();
         ResultSet rs = null;
         try {
-            PreparedStatement comando = conn.prepareStatement("select * from autor where nome like '%" + nome + "%';");
+            PreparedStatement comando = conn.prepareStatement("select * from autor where autor_nome like '%" + nome + "%';");
             rs = comando.executeQuery();
             while (rs.next()) {
                 // pega todos os atributos da pessoa  
                 Autor autor;
                 autor = new Autor(rs.getInt("id"),
-                        rs.getString("nome"),
+                        rs.getString("autor_nome"),
                         rs.getString("sobrenome"));
                 lista.add(autor);
             }
@@ -153,7 +153,7 @@ public class AutorDAO implements IAutorDAO {
 
                 Autor autor;
                 autor = new Autor(rs.getInt("id"),
-                        rs.getString("nome"),
+                        rs.getString("autor_nome"),
                         rs.getString("sobrenome"));
                 autors.add(autor);
 

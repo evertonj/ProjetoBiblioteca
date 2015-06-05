@@ -41,7 +41,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
             + "`operador_idoperador`) "
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    String queryBuscaDadosEmprestimo = "select u.id, u.nome, ex.id, o.titulo, a.nome, a.sobrenome, o.edicao, o.ano, edit.nome "
+    String queryBuscaDadosEmprestimo = "select u.id, u.nome, ex.id, o.titulo, a.autor_nome, a.sobrenome, o.edicao, o.ano, edit.editora_nome "
             + "from usuario u, obra o, editora edit, emprestimo e, autor a, obra_autor oa, exemplar ex "
             + "where o.id = oa.idobra and oa.idobra = e.obra_id  and a.id = oa.idautor and oa.idautor = e.autor_id and edit.id = o.id_editora  and ex.id_obra = o.id and e.foi_devolvido = 0 and e.exemplar_id = ex.id  and e.usuario_id = u.id and u.nome like ?";
 
@@ -128,13 +128,13 @@ public class EmprestimoDAO implements IEmprestimoDAO {
                 exEmp.setIdUsuario(rs.getInt("u.id"));
                 exEmp.setIdExemplar(rs.getInt("ex.id"));
                 exEmp.setAno(rs.getString("o.ano"));
-                String nome = rs.getString("a.nome");
+                String nome = rs.getString("a.autor_nome");
                 String sobrenome = rs.getString("a.sobrenome");
                 exEmp.setAutor(nome + " " + sobrenome);
                 exEmp.setEdicao(rs.getString("o.edicao"));
                 exEmp.setTitulo(rs.getString("o.titulo"));
                 exEmp.setUsuario(rs.getString("u.nome"));
-                exEmp.setEditora(rs.getString("edit.nome"));
+                exEmp.setEditora(rs.getString("edit.editora_nome"));
                 exEmp.setEmprestimo(getEmprestimo(rs.getInt("u.id"), rs.getInt("ex.id")));
                 lista.add(exEmp);
             }

@@ -24,11 +24,11 @@ import java.util.logging.Logger;
  */
 public class EditoraDAO implements IEditoraDAO {
 
-    private static final String SQL_INSERT = "insert into EDITORA (NOME, TELEFONE, EMAIL, CIDADE , RUA ,BAIRRO ,NUMERO) VALUES (?,?,?,?,?,?,?);";
-    private static final String SQL_UPDATE = "update EDITORA set NOME = ?,TELEFONE = ?, EMAIL = ?,CIDADE = ?,   Rua = ?, Cidade = ?,NUMERO = ? WHERE ID = ?;";
+    private static final String SQL_INSERT = "insert into EDITORA (editora_NOME, TELEFONE, EMAIL, CIDADE , RUA ,BAIRRO ,NUMERO) VALUES (?,?,?,?,?,?,?);";
+    private static final String SQL_UPDATE = "update EDITORA set editora_NOME = ?,TELEFONE = ?, EMAIL = ?,CIDADE = ?,   Rua = ?, Cidade = ?,NUMERO = ? WHERE ID = ?;";
     private static final String SQL_REMOVE = "delete from EDITORA where ID = ?;";
     private static final String SQL_FIND_ALL = "select * from EDITORA;";
-    private static final String SQL_ORDER_TABLE = "select * from editora order by nome;";
+    private static final String SQL_ORDER_TABLE = "select * from editora order by editora_nome;";
 
     @Override
     public int save(Editora editora) {
@@ -127,7 +127,7 @@ public class EditoraDAO implements IEditoraDAO {
       
       ResultSet rs=null;  
       try {  
-           PreparedStatement comando = conn.prepareStatement("SELECT * FROM EDITORA WHERE Nome LIKE '%"+nome+"%';" );
+           PreparedStatement comando = conn.prepareStatement("SELECT * FROM EDITORA WHERE editora_Nome LIKE '%"+nome+"%';" );
        
          rs = comando.executeQuery();
          while (rs.next()) {  
@@ -136,7 +136,7 @@ public class EditoraDAO implements IEditoraDAO {
              Editora editora;
                try {
                    editora = new Editora( rs.getInt("ID"),
-                           rs.getString("NOME"),
+                           rs.getString("editora_NOME"),
                            rs.getString("TELEFONE"),
                            rs.getString("EMAIL"),
                            rs.getString("CIDADE"),
@@ -176,7 +176,7 @@ System.out.println("teste");
                 Editora editora;
                 try {
                     editora = new Editora( rs.getInt("ID"),
-                            rs.getString("NOME"),
+                            rs.getString("editora_NOME"),
                             rs.getString("TELEFONE"),
                             rs.getString("EMAIL"),
                             rs.getString("CIDADE"),

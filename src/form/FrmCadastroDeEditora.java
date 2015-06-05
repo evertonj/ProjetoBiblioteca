@@ -29,10 +29,10 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
     public FrmCadastroDeEditora(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-       
+
         this.enableFields(true);
     }
-    
+
     List<Editora> editoraList;
     int idEditora;
     EditoraDAO daoEditora = new EditoraDAO();
@@ -52,7 +52,6 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         tfNome = new javax.swing.JTextField();
         tfRua = new javax.swing.JTextField();
         tfCidade = new javax.swing.JTextField();
@@ -67,6 +66,7 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         btSalvar = new javax.swing.JButton();
         btEditar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         tfISBN2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
@@ -91,27 +91,49 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Bairro");
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setText("Cidade");
-
         tfNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tfNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfNomeKeyTyped(evt);
+            }
+        });
 
         tfRua.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tfRua.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfRuaKeyTyped(evt);
+            }
+        });
 
         tfCidade.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tfCidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfCidadeKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Telefone");
 
         tfTelefone.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tfTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfTelefoneKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Email");
 
         tfEmail.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tfEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfEmailKeyTyped(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setText("Rua");
+        jLabel6.setText("Endereço");
 
         tfBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -125,6 +147,7 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
         btSalvar.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/insert.png"))); // NOI18N
         btSalvar.setText("Salvar");
+        btSalvar.setEnabled(false);
         btSalvar.setMaximumSize(new java.awt.Dimension(70, 20));
         btSalvar.setMinimumSize(new java.awt.Dimension(70, 20));
         btSalvar.setPreferredSize(new java.awt.Dimension(95, 30));
@@ -163,7 +186,7 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -172,38 +195,40 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btEditar, btSalvar});
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel3.setText("Cidade");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel6)
                             .addComponent(jLabel3)
+                            .addComponent(jLabel6)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
                             .addComponent(tfCidade)
-                            .addComponent(tfRua)
                             .addComponent(tfEmail)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tfNome)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel8)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(tfRua))
+                            .addComponent(tfNome))))
+                .addGap(24, 24, 24))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {tfBairro, tfNumero});
@@ -226,24 +251,22 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
                     .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(tfRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(tfCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))))
-                .addGap(18, 18, 18)
+                    .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(tfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addGap(24, 24, 24))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {tfBairro, tfNumero});
@@ -271,12 +294,12 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void refreshTable() {
-      
+
         editoraList = new EditoraController().finAll();
         System.out.println(editoraList.get(0).getNome());
         if (editoraList != null) {
             //tbObra.setModel(new EditoraTableModel(editoraList));
-           // tbObra.setDefaultRenderer(Object.class, new EditoraCellRenderer());
+            // tbObra.setDefaultRenderer(Object.class, new EditoraCellRenderer());
         }
     }
 
@@ -302,38 +325,38 @@ public class FrmCadastroDeEditora extends javax.swing.JDialog {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
         int result;
-            Editora editora = null;
-            try {
-                editora = new Editora(tfNome.getText(), tfTelefone.getText(), tfEmail.getText(), tfCidade.getText(), tfRua.getText(),tfBairro.getText(),tfNumero.getText());
-            } catch (NameException ex) {
-                Logger.getLogger(FrmCadastroDeEditora.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-    
-            if (idEditora == 0) {
-                result = new EditoraController().addEditora(editora);
-            } else {
-                editora.setId(idEditora);
-                result = new EditoraController().alterarEditora(editora);
-                idEditora = 0;
-            }
-            if (result == 1) {
-                JOptionPane.showMessageDialog(this, "Editora inserida com Sucesso!");
-                this.refreshTable();
-                onCancelar();
-                
-            } else {
-                JOptionPane.showMessageDialog(this, "Tente novamente!");
-            }
+        Editora editora = null;
+        try {
+            editora = new Editora(tfNome.getText(), tfTelefone.getText(), tfEmail.getText(), tfCidade.getText(), tfRua.getText(), tfBairro.getText(), tfNumero.getText());
+        } catch (NameException ex) {
+            Logger.getLogger(FrmCadastroDeEditora.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-            List<Editora> listaEditora = daoEditora.finAll();
-                cbEditora.setModel(new DefaultComboBoxModel(listaEditora.toArray()));
-                cbEditora.getModel().setSelectedItem(editora);
-                int indice = listaEditora.indexOf(editora);
-                cbEditora.setSelectedIndex(indice);
+        if (idEditora == 0) {
+            result = new EditoraController().addEditora(editora);
+        } else {
+            editora.setId(idEditora);
+            result = new EditoraController().alterarEditora(editora);
+            idEditora = 0;
+        }
+        if (result == 1) {
+            JOptionPane.showMessageDialog(this, "Editora inserida com Sucesso!");
+            this.refreshTable();
+            onCancelar();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Tente novamente!");
+        }
+
+        List<Editora> listaEditora = daoEditora.finAll();
+        cbEditora.setModel(new DefaultComboBoxModel(listaEditora.toArray()));
+        cbEditora.getModel().setSelectedItem(editora);
+        int indice = listaEditora.indexOf(editora);
+        cbEditora.setSelectedIndex(indice);
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-this.dispose();
+        this.dispose();
         //int rowIndex = tbObra.getSelectedRow();
 //        if (rowIndex == -1) {
 //            JOptionPane.showMessageDialog(this, "Selecione o livro a ser Alterado!!!");
@@ -352,6 +375,33 @@ this.dispose();
     private void tfISBN3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfISBN3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfISBN3ActionPerformed
+
+    private void tfNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNomeKeyTyped
+        verificaCampos();
+    }//GEN-LAST:event_tfNomeKeyTyped
+
+    private void tfTelefoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTelefoneKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTelefoneKeyTyped
+
+    private void tfEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfEmailKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfEmailKeyTyped
+
+    private void tfRuaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfRuaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfRuaKeyTyped
+
+    private void tfCidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCidadeKeyTyped
+        verificaCampos();
+    }//GEN-LAST:event_tfCidadeKeyTyped
+    void verificaCampos() {
+        if(!tfNome.getText().equals("")&&!tfCidade.getText().equals("")){
+            btSalvar.setEnabled(true);
+        }else{
+            btSalvar.setEnabled(false);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -383,7 +433,7 @@ this.dispose();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               FrmCadastroDeEditora dialog = new FrmCadastroDeEditora(new javax.swing.JFrame(), true);
+                FrmCadastroDeEditora dialog = new FrmCadastroDeEditora(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
