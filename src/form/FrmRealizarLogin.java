@@ -12,6 +12,10 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 
 public class FrmRealizarLogin extends javax.swing.JFrame {
@@ -22,7 +26,7 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
     public FrmRealizarLogin() {
         initComponents();
 //        DBConnection.createTable();
-        Send.email("evertonspindola@hotmail.com", "Java Como Programar", "Everton Spindola");
+        
     }
 
     /**

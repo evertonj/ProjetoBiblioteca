@@ -14,9 +14,7 @@ import entity.Usuario;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -285,6 +283,7 @@ public class DialogSelecionarObra extends javax.swing.JDialog {
                     System.out.println("Data: "+LocalDate.now());
                     reserva.setObra(exemplarEmprestimo.getObra());
                     reserva.setUsuario(this.user);
+                    reserva.setIdExemplar(exemplarEmprestimo.getExemplar().getId());
                     ReservaDAO daoReserva = new ReservaDAO();
                     daoReserva.FazerReserva(reserva);
                     JOptionPane.showMessageDialog(this, "Reserva realizada com sucesso.");

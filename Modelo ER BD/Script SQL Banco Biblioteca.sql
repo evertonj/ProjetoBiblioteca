@@ -10,6 +10,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema biblioteca
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `biblioteca` ;
 
 -- -----------------------------------------------------
 -- Schema biblioteca
@@ -33,75 +34,8 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biblioteca`.`autor` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(80) NULL DEFAULT NULL,
+  `autor_nome` VARCHAR(80) NULL DEFAULT NULL,
   `sobrenome` VARCHAR(80) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `biblioteca`.`editora`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `biblioteca`.`editora` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(80) NULL DEFAULT NULL,
-  `telefone` VARCHAR(80) NULL DEFAULT NULL,
-  `email` VARCHAR(80) NULL DEFAULT NULL,
-  `cidade` VARCHAR(80) NULL DEFAULT NULL,
-  `rua` VARCHAR(80) NULL DEFAULT NULL,
-  `bairro` VARCHAR(80) NULL DEFAULT NULL,
-  `numero` VARCHAR(80) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `biblioteca`.`usuario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `biblioteca`.`usuario` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(80) NULL DEFAULT NULL,
-  `serie` VARCHAR(80) NULL DEFAULT NULL,
-  `foto` LONGBLOB NULL DEFAULT NULL,
-  `DataCadastro` DATE NULL DEFAULT NULL,
-  `situacao` ENUM('ATIVO','INATIVO','SUSPENSO') NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 3
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `biblioteca`.`email_usuario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `biblioteca`.`email_usuario` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(50) NULL DEFAULT NULL,
-  `idUsuario` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `idUsuario` (`idUsuario` ASC),
-  CONSTRAINT `email_usuario_ibfk_1`
-    FOREIGN KEY (`idUsuario`)
-    REFERENCES `biblioteca`.`usuario` (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 3
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `biblioteca`.`obra`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `biblioteca`.`obra` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(80) NULL DEFAULT NULL,
-  `edicao` VARCHAR(80) NULL DEFAULT NULL,
-  `ano` SMALLINT(6) NULL DEFAULT NULL,
-  `isbn` VARCHAR(60) NULL DEFAULT NULL,
-  `foto` LONGBLOB NULL DEFAULT NULL,
-  `id_editora` INT(11) NULL DEFAULT NULL,
-  `idassunto` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -134,6 +68,103 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`operador` (
   PRIMARY KEY (`idoperador`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `biblioteca`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`usuario` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(80) NULL DEFAULT NULL,
+  `serie` VARCHAR(80) NULL DEFAULT NULL,
+  `foto` LONGBLOB NULL DEFAULT NULL,
+  `DataCadastro` DATE NULL DEFAULT NULL,
+  `situacao` ENUM('ATIVO','INATIVO','SUSPENSO') NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `biblioteca`.`devolucao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`devolucao` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `exemplar_id` INT(11) NOT NULL,
+  `usuario_id` INT(11) NOT NULL,
+  `data_devolucao` DATE NOT NULL,
+  `operador_idoperador` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_devolucao_exemplar1_idx` (`exemplar_id` ASC),
+  INDEX `fk_devolucao_usuario1_idx` (`usuario_id` ASC),
+  INDEX `fk_devolucao_operador1_idx` (`operador_idoperador` ASC),
+  CONSTRAINT `fk_devolucao_exemplar1`
+    FOREIGN KEY (`exemplar_id`)
+    REFERENCES `biblioteca`.`exemplar` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_devolucao_operador1`
+    FOREIGN KEY (`operador_idoperador`)
+    REFERENCES `biblioteca`.`operador` (`idoperador`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_devolucao_usuario1`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `biblioteca`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `biblioteca`.`editora`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`editora` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `editora_nome` VARCHAR(80) NULL DEFAULT NULL,
+  `telefone` VARCHAR(80) NULL DEFAULT NULL,
+  `email` VARCHAR(80) NULL DEFAULT NULL,
+  `cidade` VARCHAR(80) NULL DEFAULT NULL,
+  `rua` VARCHAR(80) NULL DEFAULT NULL,
+  `bairro` VARCHAR(80) NULL DEFAULT NULL,
+  `numero` VARCHAR(80) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `biblioteca`.`email_usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`email_usuario` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(50) NULL DEFAULT NULL,
+  `idUsuario` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `idUsuario` (`idUsuario` ASC),
+  CONSTRAINT `email_usuario_ibfk_1`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `biblioteca`.`usuario` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `biblioteca`.`obra`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`obra` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(80) NULL DEFAULT NULL,
+  `edicao` VARCHAR(80) NULL DEFAULT NULL,
+  `ano` SMALLINT(6) NULL DEFAULT NULL,
+  `isbn` VARCHAR(60) NULL DEFAULT NULL,
+  `foto` LONGBLOB NULL DEFAULT NULL,
+  `id_editora` INT(11) NULL DEFAULT NULL,
+  `idassunto` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -173,6 +204,11 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`emprestimo` (
     REFERENCES `biblioteca`.`obra` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  CONSTRAINT `fk_emprestimo_operador1`
+    FOREIGN KEY (`operador_idoperador`)
+    REFERENCES `biblioteca`.`operador` (`idoperador`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_exemplar_has_exemplar_id`
     FOREIGN KEY (`exemplar_id`)
     REFERENCES `biblioteca`.`exemplar` (`id`)
@@ -181,11 +217,6 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`emprestimo` (
   CONSTRAINT `fk_obra_has_usuario_usuario1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `biblioteca`.`usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_emprestimo_operador1`
-    FOREIGN KEY (`operador_idoperador`)
-    REFERENCES `biblioteca`.`operador` (`idoperador`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -213,6 +244,39 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `biblioteca`.`reserva`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`reserva` (
+  `idreserva` INT(11) NOT NULL AUTO_INCREMENT,
+  `data_reserva` DATE NULL DEFAULT NULL,
+  `posicao` INT(11) NOT NULL,
+  `usuario_id` INT(11) NOT NULL,
+  `obra_id` INT(11) NOT NULL,
+  `exemplar_id` INT(11) NOT NULL,
+  PRIMARY KEY (`idreserva`),
+  INDEX `fk_reserva_usuario1_idx` (`usuario_id` ASC),
+  INDEX `fk_reserva_obra1_idx` (`obra_id` ASC),
+  INDEX `fk_reserva_exemplar1_idx` (`exemplar_id` ASC),
+  CONSTRAINT `fk_reserva_obra1`
+    FOREIGN KEY (`obra_id`)
+    REFERENCES `biblioteca`.`obra` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reserva_usuario1`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `biblioteca`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reserva_exemplar1`
+    FOREIGN KEY (`exemplar_id`)
+    REFERENCES `biblioteca`.`exemplar` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `biblioteca`.`telefone_usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biblioteca`.`telefone_usuario` (
@@ -225,64 +289,7 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`telefone_usuario` (
     FOREIGN KEY (`idUsuario`)
     REFERENCES `biblioteca`.`usuario` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `biblioteca`.`devolucao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `biblioteca`.`devolucao` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `exemplar_id` INT(11) NOT NULL,
-  `usuario_id` INT(11) NOT NULL,
-  `data_devolucao` DATE NOT NULL,
-  `operador_idoperador` INT(11) NOT NULL,
-  INDEX `fk_devolucao_exemplar1_idx` (`exemplar_id` ASC),
-  INDEX `fk_devolucao_usuario1_idx` (`usuario_id` ASC),
-  INDEX `fk_devolucao_operador1_idx` (`operador_idoperador` ASC),
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_devolucao_exemplar1`
-    FOREIGN KEY (`exemplar_id`)
-    REFERENCES `biblioteca`.`exemplar` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_devolucao_usuario1`
-    FOREIGN KEY (`usuario_id`)
-    REFERENCES `biblioteca`.`usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_devolucao_operador1`
-    FOREIGN KEY (`operador_idoperador`)
-    REFERENCES `biblioteca`.`operador` (`idoperador`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `biblioteca`.`reserva`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `biblioteca`.`reserva` (
-  `idreserva` INT NOT NULL AUTO_INCREMENT,
-  `data_reserva` DATE NULL,
-  `posicao` INT NOT NULL,
-  `usuario_id` INT(11) NOT NULL,
-  `obra_id` INT(11) NOT NULL,
-  PRIMARY KEY (`idreserva`),
-  INDEX `fk_reserva_usuario1_idx` (`usuario_id` ASC),
-  INDEX `fk_reserva_obra1_idx` (`obra_id` ASC),
-  CONSTRAINT `fk_reserva_usuario1`
-    FOREIGN KEY (`usuario_id`)
-    REFERENCES `biblioteca`.`usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_reserva_obra1`
-    FOREIGN KEY (`obra_id`)
-    REFERENCES `biblioteca`.`obra` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
