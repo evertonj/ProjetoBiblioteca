@@ -17,6 +17,7 @@ public class Reserva {
     private Usuario usuario;
     private Obra obra;
     private LocalDate dataReserva;
+    private int idExemplar;
 
     /**
      * @return the usuario
@@ -86,5 +87,16 @@ public class Reserva {
      */
     public void setPosicao(int posicao) {
         this.posicao = posicao;
+    }
+
+    public void setIdExemplar(int id) {
+        this.idExemplar = id;
+    }
+
+    /**
+     * @return the idExemplar
+     */
+    public int getIdExemplar() {
+        return idExemplar;
     }
 }

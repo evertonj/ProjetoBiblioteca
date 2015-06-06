@@ -8,11 +8,16 @@ package form;
 import dao.DevolucaoDAO;
 import dao.EmprestimoDAO;
 import dao.OperadorDAO;
+import dao.ReservaDAO;
+import email.Send;
+import entity.Email;
 import entity.ExcluirEmprestimo;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import table.ExcluirEmprestimoColumnModel;
@@ -32,7 +37,9 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
         initComponents();
         tfBuscaUsuario.requestFocus();
     }
-
+    
+    ReservaDAO reservaDAO = new ReservaDAO();
+    
     public void DefineDadosEAjustesNajTable() {
         tbExcluirEmprestimo.setAutoCreateColumnsFromModel(false);
         java.awt.FontMetrics fm = tbExcluirEmprestimo.getFontMetrics(tbExcluirEmprestimo.getFont());
@@ -231,18 +238,32 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
 
     private void excluir() throws HeadlessException {
         ExcluirEmprestimo empexcluso;
-            int indice = tbExcluirEmprestimo.getSelectedRow();
-            if (indice > -1) {
-                empexcluso = listaDeExclusao.remove(indice);
-                DefineDadosEAjustesNajTable();
-                new EmprestimoDAO().excluirEmprestimo(empexcluso.getEmprestimo());
-                DevolucaoDAO devolucao = new DevolucaoDAO();
-                devolucao.salvarDevolucao(empexcluso.getEmprestimo().getUsuario_id(), empexcluso.getEmprestimo().getExemplar_id(), OperadorDAO.operador.getId(), LocalDateTime.now());
-                JOptionPane.showMessageDialog(this, "Devolução realizada com sucesso.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Selecione um empréstimo para realizar a devolução");
+        int indice = tbExcluirEmprestimo.getSelectedRow();
+        if (indice > -1) {
+            empexcluso = listaDeExclusao.remove(indice);
+            DefineDadosEAjustesNajTable();
+            new EmprestimoDAO().excluirEmprestimo(empexcluso.getEmprestimo());
+            DevolucaoDAO devolucao = new DevolucaoDAO();
+            devolucao.salvarDevolucao(empexcluso.getEmprestimo().getUsuario_id(), empexcluso.getEmprestimo().getExemplar_id(), OperadorDAO.operador.getId(), LocalDateTime.now());
+            JOptionPane.showMessageDialog(this, "Devolução realizada com sucesso.");
+            if(reservaDAO.verificaSeExisteReserva(empexcluso.getIdExemplar())){
+            try {
+                List<Email> emails = reservaDAO.returnEmails(empexcluso.getIdUsuario());
+                for (Email email : emails) {
+                    Send.email(email.getEmail(), empexcluso.getTitulo(), empexcluso.getUsuario());
+                }
+            } catch (RuntimeException | MessagingException e) {
+                Throwable tro = e.getCause().getCause();
+                boolean teste = tro instanceof UnknownHostException;
+                if (teste) {
+                    JOptionPane.showMessageDialog(this, "Não foi possível enviar o e-mail, devido a falta de conexão com a internet.");
+                }
             }
-
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um empréstimo para realizar a devolução");
+        }
+            
         tfBuscaUsuario.requestFocus();
     }
 

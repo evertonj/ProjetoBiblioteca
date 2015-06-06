@@ -20,7 +20,15 @@ import javax.mail.internet.MimeMessage;
  */
 public class Send {
 
-    public static boolean email(String para, String titulo, String usuario) {
+    /**
+     *
+     * @param para
+     * @param titulo
+     * @param usuario
+     * @return
+     * @throws javax.mail.MessagingException
+     */
+    public static boolean email(String para, String titulo, String usuario) throws MessagingException{
         final String username = "bibliotecaslages@gmail.com";
         final String password = "projetodeextensao";
         
@@ -53,6 +61,5 @@ public class Send {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-        
     }
 }

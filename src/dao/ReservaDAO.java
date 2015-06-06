@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class ReservaDAO {
     
-    private static final String sqlReserva = "insert into reserva(data_reserva, posicao, usuario_id, obra_id) values(?, ?, ?, ?)";
+    private static final String sqlReserva = "insert into reserva(data_reserva, posicao, usuario_id, obra_id, exemplar_id) values(?, ?, ?, ?, ?)";
     private static String sqlListaReserva;
     private static String sqlObra = "select * from obra where id = ?";
     private static String sqlAssunto = "select * from assunto where id = ?";
@@ -37,6 +37,7 @@ public class ReservaDAO {
     private static String sqlEmails = "select * from email_usuario where idUsuario = ?";
     private static String sqlTelefones = "select * from telefone_usuario where idUsuario = ?";
     private static String sqlExcluirReserva = "delete from reserva where idreserva = ?";
+    private static String sqlConsultaReserva = "";
     
     public void FazerReserva(Reserva reserva) {
         Connection con = DBConnection.getConnection();
@@ -46,6 +47,7 @@ public class ReservaDAO {
             pstm.setInt(2, reserva.getPosicao());
             pstm.setInt(3, reserva.getUsuario().getId());
             pstm.setInt(4, reserva.getObra().getId());
+            pstm.setInt(5, reserva.getIdExemplar());
             pstm.execute();
         } catch (SQLException ex) {
             Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,7 +143,7 @@ public class ReservaDAO {
         return assunto;
     }
 
-    private List<Email> returnEmails(int id) {
+    public List<Email> returnEmails(int id) {
         List<Email> emails = new ArrayList<>();
         Connection con =  DBConnection.getConnection();
         try {
@@ -184,5 +186,15 @@ public class ReservaDAO {
             PreparedStatement pstm = con.prepareStatement(sqlExcluirReserva);
             pstm.setInt(1, id);
             pstm.execute();
+    }
+
+    public boolean verificaSeExisteReserva(int idExemplar) {
+        Connection con = DBConnection.getConnection();
+        try {
+            PreparedStatement pstm = con.prepareStatement(sqlConsultaReserva);
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
