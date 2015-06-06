@@ -360,6 +360,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             rsTelefone = pstmT.executeQuery();
             pstmE = conn.prepareStatement(sqlEmail);
             rsEmail = pstmE.executeQuery();
+            usuario.setDataCadastro(rs.getDate("datacadastro"));
             usuario.setListTelefone(telefones(rsTelefone));
             usuario.setFoto(rs.getBytes("Foto"));
 

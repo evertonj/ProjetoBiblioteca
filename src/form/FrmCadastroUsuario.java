@@ -553,7 +553,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Email inválido");
         }
-
+        verificaCampos();
     }//GEN-LAST:event_btAddEmailActionPerformed
 
     private void btRemoveEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoveEmailActionPerformed
@@ -575,6 +575,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Tente novamente!");
         }
+        verificaCampos();
     }//GEN-LAST:event_btRemoveEmailActionPerformed
 
     private void btAddTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddTelefoneActionPerformed
@@ -587,7 +588,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Telefone já cadastrado");
         }
-
+        verificaCampos();
     }//GEN-LAST:event_btAddTelefoneActionPerformed
 
     private void btRemoverTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverTelefoneActionPerformed
@@ -623,6 +624,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         } catch (NullPointerException n) {
             return;
         }
+        verificaCampos();
     }//GEN-LAST:event_btEscolherFotoActionPerformed
 
     private void tfEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfEmailKeyTyped
@@ -638,6 +640,7 @@ verificaCampos();
        }else{
            evt.consume();
        }
+       verificaCampos();
     }//GEN-LAST:event_tfSerieKeyTyped
 
     private void tfTelefoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTelefoneKeyTyped
@@ -680,7 +683,7 @@ verificaCampos();
         return icon;
     }
  void verificaCampos(){
-     if(!tfEmail.getText().equals("")&&!tfNome.getText().equals("")&&!tfSerie.getText().equals("")&&!tfTelefone.getText().equals("")){
+     if(tbEmail.getRowCount() > 0 &&!tfNome.getText().equals("")&&!tfSerie.getText().equals("")&&tbTelefone.getRowCount() > 0){
          btSalvar.setEnabled(true);
      }else{
          btSalvar.setEnabled(false);
