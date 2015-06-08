@@ -6,14 +6,12 @@
 package form;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -36,8 +34,8 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
 
     public FrmTelaPrincipal() {
         //super(parent , true);
-        setExtendedState(MAXIMIZED_BOTH);
-        setUndecorated(true);
+        //setExtendedState(MAXIMIZED_HORIZ);
+        //setUndecorated(true);
         timer = new Timer(500, this);
         timer.setRepeats(true);
         timer.start();
@@ -109,9 +107,9 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenu5.setText("Edit");
         jMenuBar2.add(jMenu5);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tela Principal");
-        setResizable(false);
+        setExtendedState(6);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -596,6 +594,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
 
        FrmTelaPrincipal login = new FrmTelaPrincipal();
         login.setLocationRelativeTo(null);
+        login.setExtendedState(JFrame.MAXIMIZED_BOTH);
         login.setVisible(true);
     }
     

@@ -120,7 +120,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         Connection con = DBConnection.getConnection();
         try {
             PreparedStatement pstm = con.prepareStatement(queryBuscaDadosEmprestimo);
-            pstm.setString(1, usuario + "%");
+            pstm.setString(1,  "%"+usuario + "%");
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 ExcluirEmprestimo exEmp = new ExcluirEmprestimo();

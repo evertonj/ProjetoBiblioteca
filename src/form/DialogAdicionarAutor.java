@@ -29,6 +29,8 @@ public class DialogAdicionarAutor extends javax.swing.JDialog {
             for (Autor object : listaDeAutores) {
                 cbAutor.addItem(object);
             }
+        }else {
+            cbAutor.addItem("Ainda não existem autores cadastrados.");
         }
     }
 

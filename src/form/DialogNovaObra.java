@@ -35,8 +35,8 @@ public class DialogNovaObra extends javax.swing.JDialog {
     public DialogNovaObra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-       cbAssunto.setModel(new DefaultComboBoxModel(daoAssunto.finAll().toArray()));
-       cbEditora.setModel(new DefaultComboBoxModel(daoEditora.finAll().toArray()));
+        cbAssunto.setModel(new DefaultComboBoxModel(daoAssunto.finAll().toArray()));
+        cbEditora.setModel(new DefaultComboBoxModel(daoEditora.finAll().toArray()));
         cbAssunto.setSelectedIndex(-1);
         cbEditora.setSelectedIndex(-1);
         obraStatica = null;
@@ -448,7 +448,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
         try {
             obra = new Obra();
             String titulo = tfTitulo.getText();
-            if(titulo.isEmpty()) {
+            if (titulo.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Digite o Titulo!!!");
                 tfTitulo.setText(null);
                 tfTitulo.requestFocus();
@@ -557,7 +557,7 @@ public class DialogNovaObra extends javax.swing.JDialog {
     }//GEN-LAST:event_btRemoverActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        if(!this.getDados()) {
+        if (!this.getDados()) {
             return;
         }
         int result;
@@ -579,7 +579,10 @@ public class DialogNovaObra extends javax.swing.JDialog {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
-        dispose();
+        int opcao = JOptionPane.showConfirmDialog(this, "Deseja realmente sair?\nOs dados digitados serão perdidos", "Sair", JOptionPane.YES_NO_OPTION);
+        if (opcao == 0) {
+            dispose();
+        }
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btNovoAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoAutorActionPerformed

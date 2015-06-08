@@ -42,7 +42,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         initComponents();
         onCancelar();
     }
-    
+
     UsuarioDAO dao = new UsuarioDAO();
 
     private void refreshTableEmail() {
@@ -507,7 +507,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         int result, atualizar = 0;
-        if(tfNome.getText().isEmpty() || tfSerie.getText().isEmpty() || emails.isEmpty() || telefones.isEmpty()) {
+        if (tfNome.getText().isEmpty() || tfSerie.getText().isEmpty() || emails.isEmpty() || telefones.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos os campos são obrigatórios, exceto a foto");
             return;
         }
@@ -522,21 +522,25 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         }
         if (result == 1) {
             if (atualizar == 1) {
-                JOptionPane.showMessageDialog(this, "Usuario Atualizado com Sucesso!");
+                JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso.");
             } else {
-                JOptionPane.showMessageDialog(this, "Usuario inserido com Sucesso!");
+                JOptionPane.showMessageDialog(this, "Usuário inserido com sucesso.");
             }
             onCancelar();
             emails.clear();
             telefones.clear();
+            dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Tente novamente!");
+            JOptionPane.showMessageDialog(this, "Tente novamente.");
         }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
-        onCancelar();
-        this.dispose();
+        int opcao = JOptionPane.showConfirmDialog(this, "Deseja realmente sair?\nOs dados digitados serão perdidos", "Sair", JOptionPane.YES_NO_OPTION);
+        if (opcao == 0) {
+            onCancelar();
+            dispose();
+        }
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btAddEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddEmailActionPerformed
@@ -559,7 +563,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     private void btRemoveEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoveEmailActionPerformed
         int rowIndex = tbEmail.getSelectedRow();
         if (rowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione o Email a ser Removido!!!");
+            JOptionPane.showMessageDialog(this, "Selecione o email a ser removido.");
             return;
         }
         Email email = new EmailTableModel(emails).get(rowIndex);
@@ -567,13 +571,13 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
         if (confirm != 0) {
             return;
         }
-        
+
         if (emails.remove(email)) {
             dao.removerEmail(email);
-            JOptionPane.showMessageDialog(this, "Email removido com Sucesso!");
+            JOptionPane.showMessageDialog(this, "Email removido com sucesso.");
             this.refreshTableEmail();
         } else {
-            JOptionPane.showMessageDialog(this, "Tente novamente!");
+            JOptionPane.showMessageDialog(this, "Tente novamente.");
         }
         verificaCampos();
     }//GEN-LAST:event_btRemoveEmailActionPerformed
@@ -593,7 +597,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
 
     private void btRemoverTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverTelefoneActionPerformed
         int rowIndex = tbTelefone.getSelectedRow();
-        if (rowIndex == -1) { 
+        if (rowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Selecione o Telefone a ser Removido!!!");
             return;
         }
@@ -615,7 +619,7 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     private void btEscolherFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEscolherFotoActionPerformed
         try {
             JFileChooser fc = new JFileChooser("C:\\Users\\Alex\\Desktop");
-            fc.addChoosableFileFilter(new FileNameExtensionFilter("Arquivos de Imagem", "jpg", "png", "gif", "icon", "bmp", "tif"));
+            fc.addChoosableFileFilter(new FileNameExtensionFilter("Arquivos de Imagem", "jpg", "png", "gif", "bmp", "tif"));
             fc.setAcceptAllFileFilterUsed(false);
             fc.showDialog(this, "Adicionar");
             foto = getBytes(fc.getSelectedFile());
@@ -628,29 +632,29 @@ public class FrmCadastroUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btEscolherFotoActionPerformed
 
     private void tfEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfEmailKeyTyped
-      
-verificaCampos();
-         
+
+        verificaCampos();
+
     }//GEN-LAST:event_tfEmailKeyTyped
 
     private void tfSerieKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSerieKeyTyped
-        String caracteres="0987654321-";
-       if(caracteres.contains(evt.getKeyChar()+"")){
-           
-       }else{
-           evt.consume();
-       }
-       verificaCampos();
+        String caracteres = "0987654321-";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+
+        } else {
+            evt.consume();
+        }
+        verificaCampos();
     }//GEN-LAST:event_tfSerieKeyTyped
 
     private void tfTelefoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTelefoneKeyTyped
-      String caracteres="0987654321-";
-       if(caracteres.contains(evt.getKeyChar()+"")){
-           
-       }else{
-           evt.consume();
-       }
-       verificaCampos();
+        String caracteres = "0987654321-";
+        if (caracteres.contains(evt.getKeyChar() + "")) {
+
+        } else {
+            evt.consume();
+        }
+        verificaCampos();
     }//GEN-LAST:event_tfTelefoneKeyTyped
 
     private void tfNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNomeKeyTyped
@@ -682,13 +686,15 @@ verificaCampos();
         icon.setImage(icon.getImage().getScaledInstance((int) larguraFinal, (int) alturaFinal, 100));
         return icon;
     }
- void verificaCampos(){
-     if(tbEmail.getRowCount() > 0 &&!tfNome.getText().equals("")&&!tfSerie.getText().equals("")&&tbTelefone.getRowCount() > 0){
-         btSalvar.setEnabled(true);
-     }else{
-         btSalvar.setEnabled(false);
-     }
- }
+
+    void verificaCampos() {
+        if (tbEmail.getRowCount() > 0 && !tfNome.getText().equals("") && !tfSerie.getText().equals("") && tbTelefone.getRowCount() > 0) {
+            btSalvar.setEnabled(true);
+        } else {
+            btSalvar.setEnabled(false);
+        }
+    }
+
     /**
      * @param args the command line arg uments
      */
@@ -787,6 +793,5 @@ verificaCampos();
             String erro = e.toString();
         }
         idUsuario = usuario.getId();
-
     }
 }
