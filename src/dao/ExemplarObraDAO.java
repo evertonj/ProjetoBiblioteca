@@ -273,7 +273,7 @@ public class ExemplarObraDAO implements IExemplarObraDAO {
         try {
             if (autor.getId() > 0) {
                 System.out.println("ID do AUTOR: " + autor.getId());
-                pstm = conn.prepareStatement("update autor a set a.nome = ?, a.sobrenome = ? where a.id = ?");
+                pstm = conn.prepareStatement("update autor a set a.autor_nome = ?, a.sobrenome = ? where a.id = ?");
                 pstm.setString(1, autor.getNome());
                 pstm.setString(2, autor.getSobrenome());
                 pstm.setInt(3, autor.getId());
@@ -449,7 +449,7 @@ public class ExemplarObraDAO implements IExemplarObraDAO {
     private List<Autor> autores(ResultSet rs) throws NameException, SQLException {
         List<Autor> listaDeAutores = new ArrayList<>();
         while (rs.next()) {
-            Autor autor = new Autor(rs.getInt("a.id"), rs.getString("a.nome"),
+            Autor autor = new Autor(rs.getInt("a.id"), rs.getString("a.autor_nome"),
                     rs.getString("a.sobrenome"));
             contador++;
             System.out.println("Contador de Autores: " + contador);
@@ -498,7 +498,7 @@ public class ExemplarObraDAO implements IExemplarObraDAO {
         try {
             if (rs.next()) {
                 editora = new Editora(rs.getInt("ID"),
-                        rs.getString("NOME"),
+                        rs.getString("EDITORA_NOME"),
                         rs.getString("TELEFONE"),
                         rs.getString("EMAIL"),
                         rs.getString("CIDADE"),
@@ -550,7 +550,7 @@ public class ExemplarObraDAO implements IExemplarObraDAO {
                 while (rsAutores.next()) {
                     try {
                         autor = new Autor(rsAutores.getInt("id"),
-                                rsAutores.getString("nome"),
+                                rsAutores.getString("autor_nome"),
                                 rsAutores.getString("sobrenome"));
                     } catch (NameException ex) {
                         Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -627,7 +627,7 @@ public class ExemplarObraDAO implements IExemplarObraDAO {
                 while (rsAutores.next()) {
                     try {
                         autor = new Autor(rsAutores.getInt("id"),
-                                rsAutores.getString("nome"),
+                                rsAutores.getString("autor_nome"),
                                 rsAutores.getString("sobrenome"));
                     } catch (NameException ex) {
                         Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -704,7 +704,7 @@ public class ExemplarObraDAO implements IExemplarObraDAO {
                 while (rsAutores.next()) {
                     try {
                         autor = new Autor(rsAutores.getInt("id"),
-                                rsAutores.getString("nome"),
+                                rsAutores.getString("autor_nome"),
                                 rsAutores.getString("sobrenome"));
                     } catch (NameException ex) {
                         Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -781,7 +781,7 @@ public class ExemplarObraDAO implements IExemplarObraDAO {
                 while (rsAutores.next()) {
                     try {
                         autor = new Autor(rsAutores.getInt("id"),
-                                rsAutores.getString("nome"),
+                                rsAutores.getString("autor_nome"),
                                 rsAutores.getString("sobrenome"));
                     } catch (NameException ex) {
                         Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -859,7 +859,7 @@ public class ExemplarObraDAO implements IExemplarObraDAO {
                 while (rsAutores.next()) {
                     try {
                         autor = new Autor(rsAutores.getInt("id"),
-                                rsAutores.getString("nome"),
+                                rsAutores.getString("autor_nome"),
                                 rsAutores.getString("sobrenome"));
                     } catch (NameException ex) {
                         Logger.getLogger(ExemplarObraDAO.class.getName()).log(Level.SEVERE, null, ex);

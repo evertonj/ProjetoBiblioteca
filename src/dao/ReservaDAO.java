@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * @author Everton
  */
 public class ReservaDAO {
-    
+
     private static final String sqlReserva = "insert into reserva(data_reserva, posicao, usuario_id, obra_id, exemplar_id) values(?, ?, ?, ?, ?)";
     private static String sqlListaReserva;
     private static String sqlObra = "select * from obra where id = ?";
@@ -37,12 +37,12 @@ public class ReservaDAO {
     private static String sqlEmails = "select * from email_usuario where idUsuario = ?";
     private static String sqlTelefones = "select * from telefone_usuario where idUsuario = ?";
     private static String sqlExcluirReserva = "delete from reserva where idreserva = ?";
-    private static String sqlConsultaReserva = "";
-    
+    private static String sqlConsultaReserva = "select * from reserva where exemplar_id = ?";
+
     public void FazerReserva(Reserva reserva) {
         Connection con = DBConnection.getConnection();
         try {
-            PreparedStatement pstm  = con.prepareStatement(sqlReserva);
+            PreparedStatement pstm = con.prepareStatement(sqlReserva);
             pstm.setDate(1, new java.sql.Date(System.currentTimeMillis()));
             pstm.setInt(2, reserva.getPosicao());
             pstm.setInt(3, reserva.getUsuario().getId());
@@ -53,20 +53,20 @@ public class ReservaDAO {
             Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public List<Reserva> ListaReserva(int usuarioOuObra, String pesquisa){
+
+    public List<Reserva> ListaReserva(int usuarioOuObra, String pesquisa) {
         List<Reserva> listaReserva = new ArrayList<>();
         Connection con = DBConnection.getConnection();
-        if(usuarioOuObra == 0){
+        if (usuarioOuObra == 0) {
             sqlListaReserva = "SELECT * FROM reserva r, obra o, usuario u WHERE o.titulo like ? and r.obra_id = o.id and r.usuario_id = u.id";
-        }else {
+        } else {
             sqlListaReserva = "SELECT * FROM reserva r, obra o, usuario u WHERE u.nome like ? and r.obra_id = o.id and r.usuario_id = u.id";
         }
         try {
             PreparedStatement pstm = con.prepareStatement(sqlListaReserva);
-            pstm.setString(1, pesquisa+"%");
+            pstm.setString(1, pesquisa + "%");
             ResultSet rs = pstm.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 Reserva reserva = new Reserva();
                 reserva.setId(rs.getInt("idreserva"));
                 reserva.setPosicao(rs.getInt("posicao"));
@@ -78,20 +78,19 @@ public class ReservaDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return listaReserva;
     }
-    
-    
-    private Obra retornObra(int id){
+
+    private Obra retornObra(int id) {
         Obra obra = new Obra();
         Connection con = DBConnection.getConnection();
         PreparedStatement pstm;
         try {
             pstm = con.prepareStatement(sqlObra);
             pstm.setInt(1, id);
-            ResultSet  rs = pstm.executeQuery();
-            if(rs.first()) {
+            ResultSet rs = pstm.executeQuery();
+            if (rs.first()) {
                 obra.setAno(rs.getShort("ano"));
                 obra.setAssunto(returnAssunto(rs.getInt("idassunto")));
                 obra.setEdicao(rs.getString("edicao"));
@@ -103,15 +102,15 @@ public class ReservaDAO {
         }
         return obra;
     }
-    
-    private Usuario returnUsuario(int id){
-       Usuario usuario = new Usuario();
-       Connection con = DBConnection.getConnection();
+
+    private Usuario returnUsuario(int id) {
+        Usuario usuario = new Usuario();
+        Connection con = DBConnection.getConnection();
         try {
             PreparedStatement pstm = con.prepareStatement(sqlUsuario);
             pstm.setInt(1, id);
             ResultSet rs = pstm.executeQuery();
-            if(rs.first()){
+            if (rs.first()) {
                 usuario.setDataCadastro(new Date(rs.getDate("DataCadastro").getTime()));
                 usuario.setSituacao(EnumSituacaoUsuario.getSituacao(rs.getString("situacao")));
                 usuario.setSerie(rs.getString("serie"));
@@ -125,7 +124,7 @@ public class ReservaDAO {
         }
         return usuario;
     }
-    
+
     private Assunto returnAssunto(int id) {
         Assunto assunto = new Assunto();
         Connection con = DBConnection.getConnection();
@@ -133,7 +132,7 @@ public class ReservaDAO {
             PreparedStatement pstm = con.prepareStatement(sqlAssunto);
             pstm.setInt(1, id);
             ResultSet rs = pstm.executeQuery();
-            if(rs.first()){
+            if (rs.first()) {
                 assunto.setId(id);
                 assunto.setNome(rs.getString("nome"));
             }
@@ -145,12 +144,12 @@ public class ReservaDAO {
 
     public List<Email> returnEmails(int id) {
         List<Email> emails = new ArrayList<>();
-        Connection con =  DBConnection.getConnection();
+        Connection con = DBConnection.getConnection();
         try {
             PreparedStatement pstm = con.prepareStatement(sqlEmails);
             pstm.setInt(1, id);
             ResultSet rs = pstm.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 Email email = new Email();
                 email.setId(rs.getInt("id"));
                 email.setEmail(rs.getString("email"));
@@ -161,15 +160,15 @@ public class ReservaDAO {
         }
         return emails;
     }
-    
+
     private List<Telefone> returnTelefones(int id) {
         List<Telefone> telefones = new ArrayList<>();
-        Connection con =  DBConnection.getConnection();
+        Connection con = DBConnection.getConnection();
         try {
             PreparedStatement pstm = con.prepareStatement(sqlTelefones);
             pstm.setInt(1, id);
             ResultSet rs = pstm.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 Telefone telefone = new Telefone();
                 telefone.setId(rs.getInt("id"));
                 telefone.setTelefone(rs.getString("numero"));
@@ -182,19 +181,56 @@ public class ReservaDAO {
     }
 
     public void excluirReserva(int id) throws SQLException {
-        Connection con =  DBConnection.getConnection();
-            PreparedStatement pstm = con.prepareStatement(sqlExcluirReserva);
-            pstm.setInt(1, id);
-            pstm.execute();
+        Connection con = DBConnection.getConnection();
+        PreparedStatement pstm = con.prepareStatement(sqlExcluirReserva);
+        pstm.setInt(1, id);
+        pstm.execute();
     }
 
     public boolean verificaSeExisteReserva(int idExemplar) {
         Connection con = DBConnection.getConnection();
         try {
             PreparedStatement pstm = con.prepareStatement(sqlConsultaReserva);
+            pstm.setInt(1, idExemplar);
+            ResultSet rs = pstm.executeQuery();
+            return rs.first();
         } catch (SQLException ex) {
             Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    public String buscaEmaileTelefone(int idUsuario) {
+        String sqlTelefone = "select numero from telefone_usuario where idUsuario = ?";
+        String sqlEmail = "select email from email_usuario where idUsuario = ?";
+        List<String> emails = new ArrayList<>();
+        List<String> telefones = new ArrayList<>();
+        Connection con = DBConnection.getConnection();
+        PreparedStatement pstm;
+        try {
+            pstm = con.prepareStatement(sqlEmail);
+            pstm.setInt(1, idUsuario);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                emails.add(rs.getString("email"));
+            }
+            pstm = con.prepareStatement(sqlTelefone);
+            pstm.setInt(1, idUsuario);
+            rs = pstm.executeQuery();
+            while (rs.next()) {
+                telefones.add(rs.getString("numero"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String dadosDoAluno = "Telefone(s): ";
+        for (String telefone : telefones) {
+            dadosDoAluno += telefone + "\n";
+        }
+        dadosDoAluno = "E-mail(s): ";
+        for (String email : emails) {
+            dadosDoAluno += email + "\n";
+        }
+        return dadosDoAluno;
     }
 }
