@@ -70,7 +70,7 @@ public class Relatorio {
             setStringRel("/relatorios/RelatorioUsuarioSerie.jasper");
             return true;
         } else if (tipo.equals("AutorNome")) {
-            setStringConnect("select * from autor order by nome;");
+            setStringConnect("select * from autor order by autor_nome;");
             setStringRel("/relatorios/RelatorioAutorNome.jasper");
             return true;
         } else if (tipo.equals("AutorSobrenome")) {
@@ -78,7 +78,7 @@ public class Relatorio {
             setStringRel("/relatorios/RelatorioAutorSobrenome.jasper");
             return true;
         } else if (tipo.equals("EditorasNome")) {
-            setStringConnect("select  * from editora order by nome;");
+            setStringConnect("select  * from editora order by editora_nome;");
             setStringRel("/relatorios/RelatorioEditorasNome.jasper");
             return true;
         } else if (tipo.equals("EditorasCidade")) {

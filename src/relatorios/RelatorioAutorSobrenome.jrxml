@@ -9,7 +9,7 @@
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="nome" class="java.lang.String">
+	<field name="autor_nome" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="sobrenome" class="java.lang.String">
@@ -20,17 +20,17 @@
 	</background>
 	<title>
 		<band height="161" splitType="Stretch">
-			<staticText>
-				<reportElement x="167" y="16" width="370" height="48" uuid="0c7dd65c-8c4a-4762-9213-c010d810f1de"/>
-				<textElement>
-					<font fontName="Charlemagne Std" size="24"/>
-				</textElement>
-				<text><![CDATA[Relatório de Autores]]></text>
-			</staticText>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
 				<reportElement x="15" y="141" width="100" height="20" uuid="7439831d-f23c-434a-982f-7bccbc9bb393"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="214" y="24" width="286" height="48" uuid="bd8e2b05-9ee1-4aa1-8c1a-8c50429d28aa"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="36"/>
+				</textElement>
+				<text><![CDATA[Relatório de Autores]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -71,12 +71,12 @@
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="214" y="0" width="100" height="20" uuid="15871b3e-e1a7-487c-a547-b5b7e5fc1734"/>
-				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="352" y="0" width="100" height="20" uuid="84b6951b-4d7f-49a0-b788-c64d898b0503"/>
 				<textFieldExpression><![CDATA[$F{sobrenome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="214" y="0" width="100" height="20" uuid="f3d9ab08-95ce-4004-bf9c-8a3b73860d56"/>
+				<textFieldExpression><![CDATA[$F{autor_nome}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
