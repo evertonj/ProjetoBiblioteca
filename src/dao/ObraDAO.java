@@ -448,7 +448,7 @@ public class ObraDAO implements IObraDAO {
     private List<Autor> autores(ResultSet rs) throws NameException, SQLException {
         List<Autor> listaDeAutores = new ArrayList<>();
         while (rs.next()) {
-            Autor autor = new Autor(rs.getInt("a.id"), rs.getString("a.nome"),
+            Autor autor = new Autor(rs.getInt("a.id"), rs.getString("a.autor_nome"),
                     rs.getString("a.sobrenome"));
             contador++;
             System.out.println("Contador de Autores: " + contador);
@@ -497,7 +497,7 @@ public class ObraDAO implements IObraDAO {
         try {
             if (rs.next()) {
                 editora = new Editora(rs.getInt("ID"),
-                        rs.getString("NOME"),
+                        rs.getString("EDITORA_NOME"),
                         rs.getString("TELEFONE"),
                         rs.getString("EMAIL"),
                         rs.getString("CIDADE"),
@@ -520,14 +520,16 @@ public class ObraDAO implements IObraDAO {
         ResultSet rs, rsEditora, rsExterno;
         List<Obra> listaDeObra = new ArrayList<>();
         String sqlEditora = "select * from editora, obra where obra.id_editora = editora.id;";
-        String sqlObra = "select * from obra where titulo like " + "'%" + titulo + "%';";
+        String sqlObra = "select * from obra where titulo like ?";
         try {
             conn = DBConnection.getConnection();
             pstmO = conn.prepareStatement(sqlObra);
+            pstmO.setString(1, "%"+titulo+"%");
             rs = pstmO.executeQuery();
             pstmE = conn.prepareStatement(sqlEditora);
             rsEditora = pstmE.executeQuery();
             pstm4 = conn.prepareStatement(sqlObra);
+            pstm4.setString(1, "%"+titulo+"%");
             rsExterno = pstm4.executeQuery();
             while (rsExterno.next()) {
                 obra = obra(rs, rsEditora);

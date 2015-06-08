@@ -9,7 +9,6 @@ import connection.DBConnection;
 import entity.Emprestimo;
 import entity.ExcluirEmprestimo;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,8 +51,8 @@ public class EmprestimoDAO implements IEmprestimoDAO {
             PreparedStatement pstm = con.prepareStatement(sql);
             pstm.setInt(1, emprestimo.getExemplar_id());
             pstm.setInt(2, emprestimo.getUsuario_id());
-            pstm.setDate(3, new Date(emprestimo.getData_emprestimo().toEpochDay()));
-            pstm.setDate(4, new Date(emprestimo.getData_devolucao().plusDays(emprestimo.getDiasParaDevolucao()).toEpochDay()));
+            pstm.setTimestamp(3, new java.sql.Timestamp(emprestimo.getData_emprestimo().toEpochDay()));
+            pstm.setTimestamp(4, new java.sql.Timestamp(emprestimo.getData_devolucao().plusDays(emprestimo.getDiasParaDevolucao()).toEpochDay()));
             pstm.setBoolean(5, false);
             pstm.setInt(6, emprestimo.getAutor_id());
             pstm.setInt(7, emprestimo.getEditora_id());
@@ -121,7 +120,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         Connection con = DBConnection.getConnection();
         try {
             PreparedStatement pstm = con.prepareStatement(queryBuscaDadosEmprestimo);
-            pstm.setString(1, usuario + "%");
+            pstm.setString(1,  "%"+usuario + "%");
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 ExcluirEmprestimo exEmp = new ExcluirEmprestimo();

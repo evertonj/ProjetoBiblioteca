@@ -16,6 +16,7 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class FrmRealizarLogin extends javax.swing.JFrame {
@@ -172,6 +173,7 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
 
         if (operador != null) {
             FrmTelaPrincipal telaPrincipal = new FrmTelaPrincipal();
+            telaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
             telaPrincipal.setVisible(true);
             dispose();
             return false;
