@@ -13,20 +13,33 @@
 	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-     telefone_usuario.`numero` AS telefone_usuario_numero,
-     usuario.`nome` AS usuario_nome,
-     usuario.`serie` AS usuario_serie,
+     email_usuario.`id` AS email_usuario_id,
      email_usuario.`email` AS email_usuario_email,
+     email_usuario.`idUsuario` AS email_usuario_idUsuario,
+     telefone_usuario.`id` AS telefone_usuario_id,
+     telefone_usuario.`numero` AS telefone_usuario_numero,
+     telefone_usuario.`idUsuario` AS telefone_usuario_idUsuario,
+     usuario.`id` AS usuario_id,
+     usuario.`uruario_nome` AS usuario_uruario_nome,
+     usuario.`serie` AS usuario_serie,
+     usuario.`foto` AS usuario_foto,
      usuario.`DataCadastro` AS usuario_DataCadastro,
      usuario.`situacao` AS usuario_situacao
+
 FROM
      `usuario` usuario INNER JOIN `telefone_usuario` telefone_usuario ON usuario.`id` = telefone_usuario.`idUsuario`
      INNER JOIN `email_usuario` email_usuario ON usuario.`id` = email_usuario.`idUsuario` WHERE usuario.`situacao` =  $P{situacao}  group by usuario.`id` order by $P{tipo}]]>
 	</queryString>
-	<field name="telefone_usuario_numero" class="java.lang.String"/>
-	<field name="usuario_nome" class="java.lang.String"/>
-	<field name="usuario_serie" class="java.lang.String"/>
+	<field name="email_usuario_id" class="java.lang.Integer"/>
 	<field name="email_usuario_email" class="java.lang.String"/>
+	<field name="email_usuario_idUsuario" class="java.lang.Integer"/>
+	<field name="telefone_usuario_id" class="java.lang.Integer"/>
+	<field name="telefone_usuario_numero" class="java.lang.String"/>
+	<field name="telefone_usuario_idUsuario" class="java.lang.Integer"/>
+	<field name="usuario_id" class="java.lang.Integer"/>
+	<field name="usuario_uruario_nome" class="java.lang.String"/>
+	<field name="usuario_serie" class="java.lang.String"/>
+	<field name="usuario_foto" class="java.lang.Object"/>
 	<field name="usuario_DataCadastro" class="java.sql.Date"/>
 	<field name="usuario_situacao" class="java.lang.String"/>
 	<background>
@@ -34,17 +47,17 @@ FROM
 	</background>
 	<title>
 		<band height="163" splitType="Stretch">
-			<staticText>
-				<reportElement x="185" y="42" width="370" height="48" uuid="0cbfe581-9810-4e37-8c01-2a62f6dcdcb4"/>
-				<textElement>
-					<font fontName="Charlemagne Std" size="24"/>
-				</textElement>
-				<text><![CDATA[Relatório DE Usuários]]></text>
-			</staticText>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
 				<reportElement x="32" y="128" width="100" height="20" uuid="ee94d898-01b8-4d5f-97db-236ab527fc59"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="264" y="46" width="291" height="48" uuid="650ea112-cae6-4f61-87dc-3d50552bd6d1"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="36"/>
+				</textElement>
+				<text><![CDATA[Relatório de Usuários]]></text>
+			</staticText>
 		</band>
 	</title>
 	<columnHeader>

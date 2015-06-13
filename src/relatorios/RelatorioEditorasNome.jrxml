@@ -4,12 +4,12 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[select  * from editora order by nome]]>
+		<![CDATA[select  * from editora order by editora_nome]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="nome" class="java.lang.String">
+	<field name="editora_nome" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="telefone" class="java.lang.String">
@@ -36,11 +36,11 @@
 	<title>
 		<band height="168" splitType="Stretch">
 			<staticText>
-				<reportElement x="177" y="26" width="370" height="48" uuid="cb8bb512-8042-4e2b-b024-66e89e135208"/>
+				<reportElement x="208" y="53" width="279" height="48" uuid="cb8bb512-8042-4e2b-b024-66e89e135208"/>
 				<textElement>
-					<font fontName="Charlemagne Std" size="24"/>
+					<font fontName="Arial Narrow" size="36"/>
 				</textElement>
-				<text><![CDATA[Relatório DE EDitoras]]></text>
+				<text><![CDATA[Relatório de Editoras]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
 				<reportElement x="24" y="138" width="100" height="20" uuid="c0dcc5a8-e353-45e4-b304-f1c4e0f01918"/>
@@ -87,14 +87,10 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="28" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<textField>
 				<reportElement x="124" y="0" width="100" height="20" uuid="5e9dab98-9528-46aa-a13a-ae05db4d21f7"/>
 				<textFieldExpression><![CDATA[$F{telefone}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="fc253fee-bedb-46ce-9e73-c289e0c17889"/>
-				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="405" y="0" width="100" height="20" uuid="6bb6580d-d332-44de-a273-c7d59cfe8ff5"/>
@@ -104,10 +100,18 @@
 				<reportElement x="256" y="0" width="100" height="20" uuid="12b0c2b4-e70b-4212-a520-1015ebabba5c"/>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="2f730c66-dcf5-4d5b-9305-52455f35e9f9"/>
+				<textFieldExpression><![CDATA[$F{editora_nome}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement x="-24" y="-9" width="577" height="1" uuid="b6ef439d-d004-4454-92b2-779924de67c7"/>
+			</line>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">

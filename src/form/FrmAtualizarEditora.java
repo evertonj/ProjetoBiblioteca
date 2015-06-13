@@ -98,7 +98,7 @@ public class FrmAtualizarEditora extends javax.swing.JDialog {
         jLabel2.setText("Bairro");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setText("Cidade");
+        jLabel3.setText("Endereco");
 
         tfNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 

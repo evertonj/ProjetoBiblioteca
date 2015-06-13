@@ -227,7 +227,7 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
               
                 Autor autor = new Autor(tfNome.getText(),tfSobreNome.getText());
                
-                        
+                   
                 if (idAutor == null) {
                     result = new AutorController().addAutor(autor);
                 } else {
