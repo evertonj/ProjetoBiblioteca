@@ -70,6 +70,9 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         checkLetra = new javax.swing.JCheckBox();
         checkSituacao = new javax.swing.JCheckBox();
         cbSituacao = new javax.swing.JComboBox();
+        checkData = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        cbData = new javax.swing.JComboBox();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -119,7 +122,7 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btGerar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,6 +176,26 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
             }
         });
 
+        checkData.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        checkData.setText("Data de cadastro");
+        checkData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkDataActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel1.setText("(Dias)");
+
+        cbData.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        cbData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30", "60", "90", "sempre" }));
+        cbData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbDataActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -182,12 +205,18 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(checkTipo)
                     .addComponent(checkLetra)
-                    .addComponent(checkSituacao))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 32, Short.MAX_VALUE)
+                    .addComponent(checkSituacao)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(checkData)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbTipo, 0, 125, Short.MAX_VALUE)
-                    .addComponent(tfLetra)
-                    .addComponent(cbSituacao, 0, 1, Short.MAX_VALUE))
+                    .addComponent(cbData, 0, 125, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cbTipo, 0, 125, Short.MAX_VALUE)
+                        .addComponent(tfLetra)
+                        .addComponent(cbSituacao, 0, 1, Short.MAX_VALUE)))
                 .addGap(24, 24, 24))
         );
         jPanel4Layout.setVerticalGroup(
@@ -205,7 +234,12 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkSituacao)
                     .addComponent(cbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkData)
+                    .addComponent(jLabel1)
+                    .addComponent(cbData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -213,7 +247,7 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -251,15 +285,15 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
     private void btGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerarActionPerformed
        // try {
 
-            if (checkTipo.isSelected() && !checkSituacao.isSelected()) {
-                if (relatorio.defineStringConnect("Usuario" + cbTipo.getSelectedItem().toString())) {
-                    chamaRelatorio();
-                }
+            if (checkTipo.isSelected() && !checkSituacao.isSelected() && !checkData.isSelected()) {
+               
+                    relatorioTipo(cbTipo.getSelectedItem().toString());
+                
             }
-            if(checkTipo.isSelected()&& checkSituacao.isSelected()){
+            if(checkTipo.isSelected()&& checkSituacao.isSelected()&& !checkData.isSelected()){
                 relatorioTipoSituacao();
             }
-            if (checkLetra.isSelected() && !checkSituacao.isSelected()) {
+            if (checkLetra.isSelected() && !checkSituacao.isSelected()&& !checkData.isSelected()) {
                 if(tfLetra.getText().equals("")){
                     JOptionPane.showMessageDialog(this, "Campo letra nao pode ser vazio");
                 }else{
@@ -325,6 +359,14 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
             desabilitaCampos();
         }
     }//GEN-LAST:event_checkTipoActionPerformed
+
+    private void checkDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkDataActionPerformed
+
+    private void cbDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbDataActionPerformed
     public void desabilitaCampos() {
         tfLetra.setEnabled(false);
 
@@ -438,13 +480,11 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
      public void relatorioLetra () {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioUsuario.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraLetra.jasper");
             HashMap map = new HashMap();
             String nome = tfLetra.getText();
-            map.put("nome", nome);
-            ImageIcon gto = new ImageIcon(getClass().getResource("/icon/logo2.jpg"));  
-            
-            map.put("Logo", gto.getImage());
+            map.put("titulo", nome);
+           
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
             JasperViewer viewer = new JasperViewer(rel, false);
             viewer.setLocationRelativeTo(null);
@@ -516,17 +556,53 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
         }
      }
+        private void relatorioTipo(String tipo) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraOrdenacao.jasper");
+            HashMap map = new HashMap();
+           
+           
+            map.put("tipo", tipo);
+            
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+          
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+    }
 
+        private String getTipo(String tipo){
+        switch (tipo) {
+            case "Editora":
+                return "ed.editora_nome";
+            case "Autor":
+                return "a.autor_nome";
+            case "Titulo":
+                return "titulo";
+            default:
+                return null;
+        }
+       
+        }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGerar;
     private javax.swing.JButton btVoltar;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox cbData;
     private javax.swing.JComboBox cbSituacao;
     private javax.swing.JComboBox cbTipo;
+    private javax.swing.JCheckBox checkData;
     private javax.swing.JCheckBox checkLetra;
     private javax.swing.JCheckBox checkSituacao;
     private javax.swing.JCheckBox checkTipo;
     private javax.swing.JColorChooser jColorChooser1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -534,4 +610,6 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JTextField tfLetra;
     // End of variables declaration//GEN-END:variables
+
+   
 }
