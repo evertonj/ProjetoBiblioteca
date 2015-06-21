@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
+import org.joda.time.DateTime;
 import relatorios.Relatorio;
 
 /**
@@ -41,6 +42,7 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         initComponents();
         desabilitaCampos();
         cbSituacao.setEnabled(false);
+
     }
     private String stringConnect, stringRel;
     private Cursor cursor;
@@ -90,7 +92,7 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatórios");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 4, true), "Relatório de Usuários"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 255), 4, true), "Relatório de Obras"));
         jPanel1.setAutoscrolls(true);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
@@ -120,9 +122,9 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btGerar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,6 +192,7 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
 
         cbData.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         cbData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30", "60", "90", "sempre" }));
+        cbData.setEnabled(false);
         cbData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbDataActionPerformed(evt);
@@ -210,13 +213,12 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
                         .addComponent(checkData)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbData, 0, 125, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(cbTipo, 0, 125, Short.MAX_VALUE)
-                        .addComponent(tfLetra)
-                        .addComponent(cbSituacao, 0, 1, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbSituacao, 0, 1, Short.MAX_VALUE)
+                    .addComponent(tfLetra)
+                    .addComponent(cbTipo, 0, 124, Short.MAX_VALUE)
+                    .addComponent(cbData, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
         );
         jPanel4Layout.setVerticalGroup(
@@ -249,9 +251,9 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,41 +285,40 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
     }//GEN-LAST:event_cbTipoActionPerformed
 
     private void btGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerarActionPerformed
-       // try {
+        // try {
 
-            if (checkTipo.isSelected() && !checkSituacao.isSelected() && !checkData.isSelected()) {
-               
-                    relatorioTipo(cbTipo.getSelectedItem().toString());
-                
+        if (checkTipo.isSelected() && !checkSituacao.isSelected() && !checkData.isSelected()) {
+
+            relatorioTipo(getTipo(cbTipo.getSelectedItem().toString()));
+
+        }
+        if (checkTipo.isSelected() && checkSituacao.isSelected()) {
+            relatorioTipoSituacao(getTipo(cbTipo.getSelectedItem().toString()));
+        }
+        if (checkLetra.isSelected() && !checkSituacao.isSelected() && !checkData.isSelected()) {
+            if (tfLetra.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Campo letra nao pode ser vazio");
+            } else {
+                relatorioLetra();
             }
-            if(checkTipo.isSelected()&& checkSituacao.isSelected()&& !checkData.isSelected()){
-                relatorioTipoSituacao();
+
+        }
+        if (checkLetra.isSelected() && checkSituacao.isSelected()) {
+            if (tfLetra.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Campo letra nao pode ser vazio");
+            } else {
+                relatorioLetraSituacao();
             }
-            if (checkLetra.isSelected() && !checkSituacao.isSelected()&& !checkData.isSelected()) {
-                if(tfLetra.getText().equals("")){
-                    JOptionPane.showMessageDialog(this, "Campo letra nao pode ser vazio");
-                }else{
-                    relatorioLetra();
-                }
-             
-            }
-            if(checkLetra.isSelected() && checkSituacao.isSelected()){
-                if(tfLetra.getText().equals("")){
-                    JOptionPane.showMessageDialog(this, "Campo letra nao pode ser vazio");
-                }else{
-                    relatorioLetraSituacao();
-                }
-            }
-            if(checkSituacao.isSelected() && !checkLetra.isSelected() && !checkTipo.isSelected()){
-                relatorioSituacao();
-            }
-           
+        }
+        if (checkSituacao.isSelected() && !checkLetra.isSelected() && !checkTipo.isSelected()) {
+            relatorioSituacao();
+        }
+
         //} catch (NullPointerException e) {
-          //  JOptionPane.showMessageDialog(this, "Nenhum dado cadastrado");
+        //  JOptionPane.showMessageDialog(this, "Nenhum dado cadastrado");
         //} catch (Exception e) {
-           // JOptionPane.showMessageDialog(this, "Ocorreu um erro");
+        // JOptionPane.showMessageDialog(this, "Ocorreu um erro");
         //}
-
 
     }//GEN-LAST:event_btGerarActionPerformed
 
@@ -329,6 +330,8 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         if (checkLetra.isSelected()) {
             checkTipo.setSelected(false);
             cbTipo.setEnabled(false);
+            checkData.setSelected(false);
+            cbData.setEnabled(false);
 
             tfLetra.setEnabled(true);
         } else {
@@ -340,6 +343,8 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
     private void checkSituacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSituacaoActionPerformed
         if (checkSituacao.isSelected()) {
             cbSituacao.setEnabled(true);
+            checkData.setSelected(false);
+            cbData.setEnabled(false);
 
         } else {
             cbSituacao.setEnabled(false);
@@ -354,6 +359,9 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         if (checkTipo.isSelected()) {
             checkLetra.setSelected(false);
             tfLetra.setEnabled(false);
+            checkData.setSelected(false);
+            cbData.setEnabled(false);
+
             cbTipo.setEnabled(true);
         } else {
             desabilitaCampos();
@@ -361,7 +369,16 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
     }//GEN-LAST:event_checkTipoActionPerformed
 
     private void checkDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDataActionPerformed
-        // TODO add your handling code here:
+        if (checkData.isSelected()) {
+            checkLetra.setSelected(false);
+            checkSituacao.setSelected(false);
+            checkTipo.setSelected(false);
+            cbTipo.setEnabled(false);
+            cbData.setEnabled(true);
+            cbSituacao.setEnabled(false);
+        } else {
+            desabilitaCampos();
+        }
     }//GEN-LAST:event_checkDataActionPerformed
 
     private void cbDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDataActionPerformed
@@ -371,6 +388,8 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         tfLetra.setEnabled(false);
 
         cbTipo.setEnabled(false);
+        cbData.setEnabled(false);
+
     }
 
     /**
@@ -473,102 +492,19 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
             setCursor(cursor);
         }
     }
-    
-    
-   
-    
-     public void relatorioLetra () {
+
+    public void relatorioLetra() {
         try {
             Connection conn = DBConnection.getConnection();
             InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraLetra.jasper");
             HashMap map = new HashMap();
             String nome = tfLetra.getText();
             map.put("titulo", nome);
-           
+
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
             JasperViewer viewer = new JasperViewer(rel, false);
             viewer.setLocationRelativeTo(null);
-          
-            viewer.setVisible(true);
-            viewer.setZoomRatio((float) 1);
-            viewer.toFront();
-        } catch (JRException erro) {
-            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
-        }
-     }
-     public void relatorioLetraSituacao () {
-        try {
-            Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioUsuarioLetraSituacao.jasper");
-            HashMap map = new HashMap();
-            String nome = tfLetra.getText();
-            map.put("nome", nome);
-            map.put("situacao", cbSituacao.getSelectedItem().toString());
-            
-            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
-            JasperViewer viewer = new JasperViewer(rel, false);
-            viewer.setLocationRelativeTo(null);
-          
-            viewer.setVisible(true);
-            viewer.setZoomRatio((float) 1);
-            viewer.toFront();
-        } catch (JRException erro) {
-            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
-        }
-     }
-      public void relatorioTipoSituacao () {
-        try {
-            Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioUsuarioTipoSituacao.jasper");
-            HashMap map = new HashMap();
-            String tipo = cbTipo.getSelectedItem().toString();
-            map.put("tipo", tipo);
-            map.put("situacao", cbSituacao.getSelectedItem().toString());
-            
-            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
-            JasperViewer viewer = new JasperViewer(rel, false);
-            viewer.setLocationRelativeTo(null);
-          
-            viewer.setVisible(true);
-            viewer.setZoomRatio((float) 1);
-            viewer.toFront();
-        } catch (JRException erro) {
-            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
-        }
-     }
-       public void relatorioSituacao () {
-        try {
-            Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioUsuarioSituacao.jasper");
-            HashMap map = new HashMap();
-           
-           
-            map.put("situacao", cbSituacao.getSelectedItem().toString());
-            
-            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
-            JasperViewer viewer = new JasperViewer(rel, false);
-            viewer.setLocationRelativeTo(null);
-          
-            viewer.setVisible(true);
-            viewer.setZoomRatio((float) 1);
-            viewer.toFront();
-        } catch (JRException erro) {
-            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
-        }
-     }
-        private void relatorioTipo(String tipo) {
-        try {
-            Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraOrdenacao.jasper");
-            HashMap map = new HashMap();
-           
-           
-            map.put("tipo", tipo);
-            
-            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
-            JasperViewer viewer = new JasperViewer(rel, false);
-            viewer.setLocationRelativeTo(null);
-          
+
             viewer.setVisible(true);
             viewer.setZoomRatio((float) 1);
             viewer.toFront();
@@ -577,7 +513,113 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         }
     }
 
-        private String getTipo(String tipo){
+    public void relatorioLetraSituacao() {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraLetraSituacao.jasper");
+            HashMap map = new HashMap();
+            String nome = tfLetra.getText();
+            map.put("titulo", nome);
+            map.put("situacao", cbSituacao.getSelectedItem().toString());
+
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+    }
+
+    public void relatorioTipoSituacao(String tipo) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraTipoSituacao.jasper");
+            HashMap map = new HashMap();
+
+            map.put("tipo", tipo);
+            map.put("situacao", cbSituacao.getSelectedItem().toString());
+
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+    }
+
+    public void relatorioSituacao() {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraSituacao.jasper");
+            HashMap map = new HashMap();
+
+            map.put("situacao", cbSituacao.getSelectedItem().toString());
+
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+    }
+
+    private void relatorioTipo(String tipo) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraOrdenacao.jasper");
+            HashMap map = new HashMap();
+
+            map.put("tipo", tipo);
+            System.out.println(map);
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+    }
+
+    private void relatorioData() {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraOrdenacao.jasper");
+            HashMap map = new HashMap();
+
+            Calendar calendar = Calendar.getInstance(); //data e hora atual
+
+            int dias = Integer.parseInt(cbData.getSelectedItem().toString());
+            calendar.add(-dias, Calendar.DAY_OF_YEAR); //removento dois dias
+                
+            map.put("data", calendar);
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+    }
+
+    private String getTipo(String tipo) {
         switch (tipo) {
             case "Editora":
                 return "ed.editora_nome";
@@ -586,10 +628,10 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
             case "Titulo":
                 return "titulo";
             default:
-                return null;
+                return "titulo";
         }
-       
-        }
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGerar;
     private javax.swing.JButton btVoltar;
@@ -611,5 +653,4 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
     private javax.swing.JTextField tfLetra;
     // End of variables declaration//GEN-END:variables
 
-   
 }
