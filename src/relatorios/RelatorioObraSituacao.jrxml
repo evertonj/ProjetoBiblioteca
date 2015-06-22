@@ -144,7 +144,7 @@
 				<text><![CDATA[Titulo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="483" y="38" width="78" height="20" uuid="b0527bb8-0340-4918-a4d8-c4dad062da7f"/>
+				<reportElement x="503" y="38" width="78" height="20" uuid="b0527bb8-0340-4918-a4d8-c4dad062da7f"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -185,11 +185,11 @@
 				<textFieldExpression><![CDATA[$F{numero_sequencial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="401" y="3" width="78" height="20" uuid="116b40aa-802e-4b92-83f3-fb29b351ec86"/>
+				<reportElement x="401" y="3" width="102" height="20" uuid="116b40aa-802e-4b92-83f3-fb29b351ec86"/>
 				<textFieldExpression><![CDATA[$F{situacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="483" y="3" width="61" height="20" uuid="fb2c8937-f011-438a-ae0e-557e6445d623"/>
+				<reportElement x="504" y="2" width="51" height="20" uuid="fb2c8937-f011-438a-ae0e-557e6445d623"/>
 				<textFieldExpression><![CDATA[$F{dataDeCadastro}]]></textFieldExpression>
 			</textField>
 			<textField>

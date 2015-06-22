@@ -95,6 +95,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuObra = new javax.swing.JMenuItem();
         menuSobre = new javax.swing.JMenu();
 
         jMenu3.setText("jMenu3");
@@ -401,6 +402,15 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuRelatorio.add(jMenuItem3);
 
+        jMenuObra.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jMenuObra.setText("Obra");
+        jMenuObra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuObraActionPerformed(evt);
+            }
+        });
+        menuRelatorio.add(jMenuObra);
+
         jMenuBar1.add(menuRelatorio);
 
         menuSobre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
@@ -570,6 +580,10 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         new DialogGerenciadorReserva(this, true).setVisible(true);
     }//GEN-LAST:event_jMenuReservaActionPerformed
 
+    private void jMenuObraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObraActionPerformed
+       new DialogRelatorioObra(this,false).setVisible(true);
+    }//GEN-LAST:event_jMenuObraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -619,6 +633,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuObra;
     private javax.swing.JMenuItem jMenuReserva;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
