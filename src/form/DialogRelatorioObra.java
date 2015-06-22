@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -191,7 +193,7 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         jLabel1.setText("(Dias)");
 
         cbData.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        cbData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30", "60", "90", "sempre" }));
+        cbData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30", "60", "90", "Sempre" }));
         cbData.setEnabled(false);
         cbData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,6 +314,13 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         }
         if (checkSituacao.isSelected() && !checkLetra.isSelected() && !checkTipo.isSelected()) {
             relatorioSituacao();
+        }
+        if(checkData.isSelected()){
+            if(cbData.getSelectedItem().toString().equals("Sempre")){
+                relatorioTipo(getTipo(cbTipo.getSelectedItem().toString()));
+            }else{
+                relatorioData();
+            }
         }
 
         //} catch (NullPointerException e) {
@@ -598,15 +607,23 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
     private void relatorioData() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraOrdenacao.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraData.jasper");
             HashMap map = new HashMap();
 
-            Calendar calendar = Calendar.getInstance(); //data e hora atual
-
+           
+            Calendar data = Calendar.getInstance();
             int dias = Integer.parseInt(cbData.getSelectedItem().toString());
-            calendar.add(-dias, Calendar.DAY_OF_YEAR); //removento dois dias
-                
-            map.put("data", calendar);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            data.add(Calendar.DAY_OF_YEAR, -dias);
+            Date teste = data.getTime();
+               String dataFinal =  dateFormat.format(teste);
+          
+            
+            
+            System.out.println(dataFinal);
+            
+            map.put("Data",teste);
+            System.out.println(map);
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
             JasperViewer viewer = new JasperViewer(rel, false);
             viewer.setLocationRelativeTo(null);

@@ -340,7 +340,7 @@
                     <StringItem index="0" value="30"/>
                     <StringItem index="1" value="60"/>
                     <StringItem index="2" value="90"/>
-                    <StringItem index="3" value="sempre"/>
+                    <StringItem index="3" value="Sempre"/>
                   </StringArray>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>
