@@ -12,12 +12,15 @@ import dao.ReservaDAO;
 import email.Send;
 import entity.Email;
 import entity.ExcluirEmprestimo;
+import entity.Usuario;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.mail.MessagingException;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import table.ExcluirEmprestimoColumnModel;
@@ -69,7 +72,7 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
         tbExcluirEmprestimo = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Excluir Empréstimo");
+        setTitle("Devolução");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 204), 4));
         jPanel1.setForeground(new java.awt.Color(0, 102, 204));
@@ -246,21 +249,27 @@ public class DialogExcluirEmprestimo extends javax.swing.JDialog {
             DevolucaoDAO devolucao = new DevolucaoDAO();
             devolucao.salvarDevolucao(empexcluso.getEmprestimo().getUsuario_id(), empexcluso.getEmprestimo().getExemplar_id(), OperadorDAO.operador.getId(), LocalDateTime.now());
             JOptionPane.showMessageDialog(this, "Devolução realizada com sucesso.");
-            if (reservaDAO.verificaSeExisteReserva(empexcluso.getIdExemplar())) {
+            if (reservaDAO.verificaSeExisteReserva(empexcluso.getEmprestimo().getObra_id())) {
+                Usuario user = reservaDAO.returnUsuarioPelaObra(empexcluso.getEmprestimo().getObra_id());
                 try {
-                    List<Email> emails = reservaDAO.returnEmails(empexcluso.getIdUsuario());
+                    List<Email> emails = reservaDAO.returnEmails(empexcluso.getEmprestimo().getObra_id());
+                    JDialogEnviandoEmail dialog = new JDialogEnviandoEmail(new javax.swing.JFrame(), true);
                     for (Email email : emails) {
-                        Send.email(email.getEmail(), empexcluso.getTitulo(), empexcluso.getUsuario());
+                        Send.email(email.getEmail(), empexcluso.getTitulo(), user.getNome());
                     }
+                    dialog.dispose();
+                    JOptionPane.showMessageDialog(this, "E-mail enviado com sucesso para: " + user.getNome() + "\n"
+                            + reservaDAO.buscaEmaileTelefone(user.getId()));
                 } catch (RuntimeException | MessagingException e) {
                     Throwable tro = e.getCause().getCause();
                     boolean teste = tro instanceof UnknownHostException;
                     if (teste) {
                         JOptionPane.showMessageDialog(this, "Não foi possível enviar o e-mail, devido a falta de conexão com a internet.");
                     }
-                    JOptionPane.showMessageDialog(this, "Entre em contato com o aluno: " + empexcluso.getUsuario() + "\n"
-                            + reservaDAO.buscaEmaileTelefone(empexcluso.getIdUsuario()));
+                    JOptionPane.showMessageDialog(this, "Entre em contato com o usuário: " + user.getNome() + "\n"
+                            + reservaDAO.buscaEmaileTelefone(user.getId()));
                 }
+                reservaDAO.adicionaPrioridadeDeEmprestimo(empexcluso);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um empréstimo para realizar a devolução");

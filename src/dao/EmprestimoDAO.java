@@ -12,6 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLType;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -40,6 +43,8 @@ public class EmprestimoDAO implements IEmprestimoDAO {
             + "`operador_idoperador`) "
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+    String sqlSemAutor = "select u.id, u.nome, ex.id, o.titulo, o.edicao, o.ano, edit.editora_nome from usuario u, obra o, editora edit, emprestimo e, exemplar ex where edit.id = o.id_editora  and ex.id_obra = o.id and e.foi_devolvido = 0 and e.exemplar_id = ex.id  and e.usuario_id = u.id and u.nome like ?";
+
     String queryBuscaDadosEmprestimo = "select u.id, u.nome, ex.id, o.titulo, a.autor_nome, a.sobrenome, o.edicao, o.ano, edit.editora_nome "
             + "from usuario u, obra o, editora edit, emprestimo e, autor a, obra_autor oa, exemplar ex "
             + "where o.id = oa.idobra and oa.idobra = e.obra_id  and a.id = oa.idautor and oa.idautor = e.autor_id and edit.id = o.id_editora  and ex.id_obra = o.id and e.foi_devolvido = 0 and e.exemplar_id = ex.id  and e.usuario_id = u.id and u.nome like ?";
@@ -51,10 +56,16 @@ public class EmprestimoDAO implements IEmprestimoDAO {
             PreparedStatement pstm = con.prepareStatement(sql);
             pstm.setInt(1, emprestimo.getExemplar_id());
             pstm.setInt(2, emprestimo.getUsuario_id());
-            pstm.setTimestamp(3, new java.sql.Timestamp(emprestimo.getData_emprestimo().toEpochDay()));
-            pstm.setTimestamp(4, new java.sql.Timestamp(emprestimo.getData_devolucao().plusDays(emprestimo.getDiasParaDevolucao()).toEpochDay()));
+            Instant dateEmp = emprestimo.getData_emprestimo().atStartOfDay().toInstant(ZoneOffset.UTC);
+            Instant dateDevo = emprestimo.getData_devolucao().atStartOfDay().toInstant(ZoneOffset.UTC);
+            pstm.setTimestamp(3, new java.sql.Timestamp(dateEmp.toEpochMilli()));
+            pstm.setTimestamp(4, new java.sql.Timestamp(dateDevo.toEpochMilli()));
             pstm.setBoolean(5, false);
-            pstm.setInt(6, emprestimo.getAutor_id());
+            if (emprestimo.getAutor_id() != 0) {
+                pstm.setInt(6, emprestimo.getAutor_id());
+            } else {
+                pstm.setNull(6, Integer.BYTES);
+            }
             pstm.setInt(7, emprestimo.getEditora_id());
             pstm.setInt(8, emprestimo.getDiasParaDevolucao());
             pstm.setInt(9, emprestimo.getObra_id());
@@ -81,38 +92,37 @@ public class EmprestimoDAO implements IEmprestimoDAO {
 
     }
 
-    public List<Integer> consultarSeJaPussuiAlgoEmprestado(int idUsuario) {
+    public int consultarSeJaPussuiAlgoEmprestado(int idUsuario) {
         Connection con = DBConnection.getConnection();
-        List<Integer> lista = new ArrayList<>();
+        int exemplar_id = 0;
         try {
-            PreparedStatement pstm = con.prepareStatement("select exemplar_id from emprestimo where usuario_id = ? and foi_devolvido = 0");
+            PreparedStatement pstm = con.prepareStatement("select obra_id from emprestimo where usuario_id = ? and foi_devolvido = 0");
             pstm.setInt(1, idUsuario);
             ResultSet rs = pstm.executeQuery();
-            while (rs.next()) {
-                int exemplar_id = rs.getInt("exemplar_id");
-                lista.add(exemplar_id);
+            if (rs.first()) {
+                exemplar_id = rs.getInt("obra_id");
             }
         } catch (SQLException ex) {
             Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return lista;
+        return exemplar_id;
     }
 
-    public String consultarTituloDoExemplar(int exemplar_id) {
+    public int consultarTituloDoExemplar(int exemplar_id) {
         Connection con = DBConnection.getConnection();
-        String titulo = null;
+        int id = 0;
         try {
             PreparedStatement pstm = con.prepareStatement("select titulo from obra o, exemplar e where e.id = ? and o.id = id_obra");
             pstm.setInt(1, exemplar_id);
             ResultSet rs = pstm.executeQuery();
             if (rs.first()) {
-                titulo = rs.getString("titulo");
+                id = rs.getInt("o.id");
             }
         } catch (SQLException ex) {
             Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return titulo;
+        return id;
     }
 
     public List<ExcluirEmprestimo> ConsultarPorNomeParaExcluir(String usuario) {
@@ -120,16 +130,27 @@ public class EmprestimoDAO implements IEmprestimoDAO {
         Connection con = DBConnection.getConnection();
         try {
             PreparedStatement pstm = con.prepareStatement(queryBuscaDadosEmprestimo);
-            pstm.setString(1,  "%"+usuario + "%");
+            pstm.setString(1, "%" + usuario + "%");
             ResultSet rs = pstm.executeQuery();
+            boolean semAutor = true;
+            if (rs.first()) {
+                rs = pstm.executeQuery();
+            } else {
+                pstm = con.prepareStatement(sqlSemAutor);
+                pstm.setString(1, "%" + usuario + "%");
+                rs = pstm.executeQuery();
+                semAutor = false;
+            }
             while (rs.next()) {
                 ExcluirEmprestimo exEmp = new ExcluirEmprestimo();
                 exEmp.setIdUsuario(rs.getInt("u.id"));
                 exEmp.setIdExemplar(rs.getInt("ex.id"));
                 exEmp.setAno(rs.getString("o.ano"));
-                String nome = rs.getString("a.autor_nome");
-                String sobrenome = rs.getString("a.sobrenome");
-                exEmp.setAutor(nome + " " + sobrenome);
+                if (semAutor) {
+                    String nome = rs.getString("a.autor_nome");
+                    String sobrenome = rs.getString("a.sobrenome");
+                    exEmp.setAutor(nome + " " + sobrenome);
+                }
                 exEmp.setEdicao(rs.getString("o.edicao"));
                 exEmp.setTitulo(rs.getString("o.titulo"));
                 exEmp.setUsuario(rs.getString("u.nome"));
@@ -137,6 +158,7 @@ public class EmprestimoDAO implements IEmprestimoDAO {
                 exEmp.setEmprestimo(getEmprestimo(rs.getInt("u.id"), rs.getInt("ex.id")));
                 lista.add(exEmp);
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

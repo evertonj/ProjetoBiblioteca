@@ -8,6 +8,7 @@ package form;
 import controller.EmprestimoController;
 import dao.EmprestimoDAO;
 import dao.OperadorDAO;
+import dao.ReservaDAO;
 import entity.Emprestimo;
 import entity.ExemplarEmprestimo;
 import entity.Usuario;
@@ -15,7 +16,6 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -30,7 +30,7 @@ import table.ExemplarObraColumnModel;
  */
 public class DialogEmprestimo extends javax.swing.JDialog {
 
-    static List<ExemplarEmprestimo> listaDeObra = new ArrayList<>();
+   public static List<ExemplarEmprestimo> listaDeObra = new ArrayList<>();
 
     public static void DefineDadosEAjustesNajTable() {
         tbAtualizarObra.setAutoCreateColumnsFromModel(false);
@@ -54,7 +54,7 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     }
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
+
     public static boolean setObraNaLista(ExemplarEmprestimo obra) {
         boolean contem = listaDeObra.contains(obra);
         if (!contem) {
@@ -447,26 +447,26 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tbAtualizarObraMouseClicked
 
-    private boolean consultaSeUsuarioJaPossuiExemplarComMesmoTitulo(Usuario usuario, List<ExemplarEmprestimo> listaDeObra) {
-        EmprestimoDAO emp = new EmprestimoDAO();
-        String exemplaresParaRemover = "";
-        List<String> titulos = new ArrayList<>();
-        for (Integer exemplar_id : emp.consultarSeJaPussuiAlgoEmprestado(usuario.getId())) {
-            titulos.add(emp.consultarTituloDoExemplar(exemplar_id));
-        }
-        for (int i = 0; i < listaDeObra.size(); i++) {
-            for (int j = 0; j < titulos.size(); j++) {
-                if (listaDeObra.get(i).getObra().getTitulo().equals(titulos.get(j))) {
-                    exemplaresParaRemover += titulos.get(j) + ",\n";
-                }
-            }
-        }
-        if (exemplaresParaRemover.isEmpty()) {
-            return true;
-        }
-        JOptionPane.showMessageDialog(this, "Remova: " + exemplaresParaRemover + "\n"
-                + "Pois este Usuário, já possuí exemplares com o mesmo titulo emprestado.");
-        return false;
+    public boolean consultaSeUsuarioJaPossuiExemplarComMesmoTitulo(Usuario usuario, List<ExemplarEmprestimo> listaDeObra) {
+//        EmprestimoDAO emp = new EmprestimoDAO();
+//        String exemplaresParaRemover = "";
+//        List<String> titulos = new ArrayList<>();
+//        for (Integer exemplar_id : emp.consultarSeJaPussuiAlgoEmprestado(usuario.getId())) {
+//            titulos.add(emp.consultarTituloDoExemplar(exemplar_id));
+//        }
+//        for (int i = 0; i < listaDeObra.size(); i++) {
+//            for (int j = 0; j < titulos.size(); j++) {
+//                if (listaDeObra.get(i).getObra().getTitulo().equals(titulos.get(j))) {
+//                    exemplaresParaRemover += titulos.get(j) + ",\n";
+//                }
+//            }
+//        }
+//        if (exemplaresParaRemover.isEmpty()) {
+//            return true;
+//        }
+//        JOptionPane.showMessageDialog(this, "Remova: " + exemplaresParaRemover + "\n"
+//                + "Pois este Usuário, já possuí exemplares com o mesmo titulo emprestado.");
+        return true;
     }
 
     private void realizarEmprestimo(List<ExemplarEmprestimo> listaDeObra, Usuario usuario, int idOperador) {
@@ -478,14 +478,19 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             emprestimo.setExemplar_id(listaDeObra.get(i).getExemplar().getId());
             emprestimo.setObra_id(listaDeObra.get(i).getObra().getId());
             emprestimo.setEditora_id(listaDeObra.get(i).getObra().getEditora().getId());
-            emprestimo.setAutor_id(listaDeObra.get(i).getObra().getAutores().get(0).getId());
-            emprestimo.setDiasParaDevolucao((int)spDias.getValue());
+            if (listaDeObra.get(i).getObra().getAutores().isEmpty()) {
+                emprestimo.setAutor_id(0);
+            } else {
+                emprestimo.setAutor_id(listaDeObra.get(i).getObra().getAutores().get(0).getId());
+            }
+            emprestimo.setDiasParaDevolucao((int) spDias.getValue());
             emprestimo.setOperador_id(idOperador);
             new EmprestimoController().emprestimo(emprestimo);
         }
 
         JOptionPane.showMessageDialog(this, "Empréstimo concluído");
-
+        ReservaDAO dao = new ReservaDAO();
+        dao.deletaPrioridadeReserva(usuario.getId());
     }
 
     private static ImageIcon redimensionaImageIcon(ImageIcon icon) {
