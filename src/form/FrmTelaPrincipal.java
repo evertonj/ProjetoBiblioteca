@@ -7,10 +7,14 @@ package form;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,7 +45,14 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         timer.start();
         UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
         initComponents();
+        carregarIcone();
         
+    }
+    private void carregarIcone(){
+        URL url = this.getClass().getResource("/icon/biblioteca.png");
+        Image image = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(image);
+        new ImageIcon(getClass().getResource("/icon/biblioteca.png"));
     }
 
     @Override
@@ -96,6 +107,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuObra = new javax.swing.JMenuItem();
+        menuRelatorioEmprestimo1 = new javax.swing.JMenuItem();
         menuSobre = new javax.swing.JMenu();
 
         jMenu3.setText("jMenu3");
@@ -411,6 +423,15 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuRelatorio.add(jMenuObra);
 
+        menuRelatorioEmprestimo1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        menuRelatorioEmprestimo1.setText("Empréstimo");
+        menuRelatorioEmprestimo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRelatorioEmprestimo1ActionPerformed(evt);
+            }
+        });
+        menuRelatorio.add(menuRelatorioEmprestimo1);
+
         jMenuBar1.add(menuRelatorio);
 
         menuSobre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
@@ -584,6 +605,10 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
        new DialogRelatorioObra(this,false).setVisible(true);
     }//GEN-LAST:event_jMenuObraActionPerformed
 
+    private void menuRelatorioEmprestimo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRelatorioEmprestimo1ActionPerformed
+        new DialogRelatorioEmprestimo(new javax.swing.JFrame(), false).setVisible(true);
+    }//GEN-LAST:event_menuRelatorioEmprestimo1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -648,6 +673,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     private javax.swing.JMenuItem menuItemUsuario;
     private javax.swing.JMenu menuMovimentacoes;
     private javax.swing.JMenu menuRelatorio;
+    private javax.swing.JMenuItem menuRelatorioEmprestimo1;
     private javax.swing.JMenu menuSobre;
     private javax.swing.JLabel relogioDigital;
     // End of variables declaration//GEN-END:variables

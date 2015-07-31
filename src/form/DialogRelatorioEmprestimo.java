@@ -45,7 +45,6 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         desabilitaCampos();
-       
 
     }
     private String stringConnect, stringRel;
@@ -71,16 +70,19 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         btGerar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         cbTipo = new javax.swing.JComboBox();
-        tfLetra = new javax.swing.JTextField();
+        tfTitulo = new javax.swing.JTextField();
         checkTipo = new javax.swing.JCheckBox();
-        checkLetra = new javax.swing.JCheckBox();
-        checkData = new javax.swing.JCheckBox();
+        checkTitulo = new javax.swing.JCheckBox();
+        checkUsuario = new javax.swing.JCheckBox();
+        tfUsuario = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
         jDateInicial = new com.toedter.calendar.JDateChooser();
-        jDateFinal = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        checkLetra1 = new javax.swing.JCheckBox();
-        tfLetra1 = new javax.swing.JTextField();
+        jDateFinal = new com.toedter.calendar.JDateChooser();
+        checkEmprestimo = new javax.swing.JCheckBox();
+        checkDevolucao = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -145,7 +147,7 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
 
         cbTipo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Titulo", "Autor", "Editora" }));
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Titulo", "Usuário", "Emprestimo" }));
         cbTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTipoActionPerformed(evt);
@@ -160,35 +162,29 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
             }
         });
 
-        checkLetra.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        checkLetra.setText("Por Titulo");
-        checkLetra.addActionListener(new java.awt.event.ActionListener() {
+        checkTitulo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        checkTitulo.setText("Por Titulo");
+        checkTitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkLetraActionPerformed(evt);
+                checkTituloActionPerformed(evt);
             }
         });
 
-        checkData.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        checkData.setText("Entre datas");
-        checkData.addActionListener(new java.awt.event.ActionListener() {
+        checkUsuario.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        checkUsuario.setText("Por usuário");
+        checkUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkDataActionPerformed(evt);
+                checkUsuarioActionPerformed(evt);
             }
         });
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 255), 3), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(102, 102, 255))); // NOI18N
 
         jDateInicial.setDate(new Date());
         jDateInicial.setEnabled(false);
         jDateInicial.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jDateInicialPropertyChange(evt);
-            }
-        });
-
-        jDateFinal.setDate( new Date());
-        jDateFinal.setEnabled(false);
-        jDateFinal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jDateFinalPropertyChange(evt);
             }
         });
 
@@ -200,13 +196,60 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         jLabel3.setForeground(new java.awt.Color(204, 0, 0));
         jLabel3.setText("Final");
 
-        checkLetra1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        checkLetra1.setText("Por usuário");
-        checkLetra1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkLetra1ActionPerformed(evt);
+        jDateFinal.setDate( new Date());
+        jDateFinal.setEnabled(false);
+        jDateFinal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateFinalPropertyChange(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 19, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jDateInicial, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                    .addComponent(jDateFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        checkEmprestimo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        checkEmprestimo.setText("Emprestimo");
+        checkEmprestimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkEmprestimoActionPerformed(evt);
+            }
+        });
+
+        checkDevolucao.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        checkDevolucao.setText("Devolução");
+        checkDevolucao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkDevolucaoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Por datas");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -215,29 +258,28 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(checkTipo)
-                                .addComponent(checkLetra)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                    .addComponent(checkData)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel2)))
-                            .addGap(8, 8, 8))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(checkLetra1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfLetra)
-                    .addComponent(cbTipo, 0, 135, Short.MAX_VALUE)
-                    .addComponent(jDateInicial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfLetra1))
-                .addGap(24, 24, 24))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkTipo)
+                            .addComponent(checkTitulo)
+                            .addComponent(checkUsuario))
+                        .addGap(100, 100, 100)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tfTitulo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfUsuario, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(24, 24, 24))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkEmprestimo)
+                            .addComponent(checkDevolucao))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(134, 134, 134)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,25 +290,23 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
                     .addComponent(checkTipo))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfLetra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkLetra))
+                    .addComponent(tfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkTitulo))
                 .addGap(3, 3, 3)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfLetra1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkLetra1))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(checkData)
-                    .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkUsuario))
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(checkEmprestimo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                        .addComponent(checkDevolucao)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -274,10 +314,10 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -298,12 +338,8 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        jPanel1.getAccessibleContext().setAccessibleName("Relatório de Empréstimos");
 
         pack();
         setLocationRelativeTo(null);
@@ -316,34 +352,40 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
     private void btGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerarActionPerformed
         // try {
 
-        if (checkTipo.isSelected()  && !checkData.isSelected()) {
-
-            relatorioTipo(getTipo(cbTipo.getSelectedItem().toString()));
-
-        }
-        if (checkTipo.isSelected() ) {
-            relatorioTipoSituacao(getTipo(cbTipo.getSelectedItem().toString()));
-        }
-       
-            if (tfLetra.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Campo letra nao pode ser vazio");
-            } else {
-                relatorioLetra();
+        if (checkTipo.isSelected()) {
+            if (cbTipo.getSelectedItem().toString().equals("Titulo")) {
+                relatorioPorTitulo();
             }
 
-        
-       
-            if (tfLetra.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Campo letra nao pode ser vazio");
-            } else {
-                relatorioLetraSituacao();
+            if (cbTipo.getSelectedItem().toString().equals("Usuário")) {
+                relatorioPorNome();
             }
-        
-       
-        if (checkData.isSelected()) {
 
-            relatorioData();
+            if (cbTipo.getSelectedItem().toString().equals("Emprestimo")) {
+                relatorioPorEmprestimo();
+            }
 
+        } else if (checkTitulo.isSelected()) {
+
+            if (tfTitulo.getText().equals("")) {
+
+                JOptionPane.showMessageDialog(this, "Campo nao pode ser vazio");
+            } else {
+
+                relatorioTitulo();
+            }
+        } else if (checkUsuario.isSelected()) {
+            if (tfUsuario.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Campo nao pode ser vazio");
+
+            } else {
+                System.out.println("teste");
+                relatorioNome();
+            }
+        } else if (checkEmprestimo.isSelected()) {
+            relatorioDataEmprestimo();
+        } else if (checkDevolucao.isSelected()){
+            relatorioDataDevolucao();
         }
 
         //} catch (NullPointerException e) {
@@ -358,26 +400,32 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
-    private void checkLetraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkLetraActionPerformed
-        if (checkLetra.isSelected()) {
+    private void checkTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTituloActionPerformed
+        desabilitaCampos();
+        if (checkTitulo.isSelected()) {
+
+            checkDevolucao.setSelected(false);
+            checkEmprestimo.setSelected(false);
+            checkUsuario.setSelected(false);
             checkTipo.setSelected(false);
             cbTipo.setEnabled(false);
-            checkData.setSelected(false);
             jDateFinal.setEnabled(false);
             jDateInicial.setEnabled(false);
-
-            tfLetra.setEnabled(true);
+            tfTitulo.setEnabled(true);
         } else {
             desabilitaCampos();
         }
 
-    }//GEN-LAST:event_checkLetraActionPerformed
+    }//GEN-LAST:event_checkTituloActionPerformed
 
     private void checkTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTipoActionPerformed
+        desabilitaCampos();
         if (checkTipo.isSelected()) {
-            checkLetra.setSelected(false);
-            tfLetra.setEnabled(false);
-            checkData.setSelected(false);
+            checkTitulo.setSelected(false);
+            tfTitulo.setEnabled(false);
+            checkDevolucao.setSelected(false);
+            checkEmprestimo.setSelected(false);
+            checkUsuario.setSelected(false);
             jDateFinal.setEnabled(false);
             jDateInicial.setEnabled(false);
 
@@ -387,49 +435,74 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_checkTipoActionPerformed
 
-    private void checkDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDataActionPerformed
-        if (checkData.isSelected()) {
-            checkLetra.setSelected(false);
-           
-            checkTipo.setSelected(false);
-            cbTipo.setEnabled(false);
-            jDateFinal.setEnabled(true);
-            jDateInicial.setEnabled(true);
-          
-        } else {
-            desabilitaCampos();
-        }
-    }//GEN-LAST:event_checkDataActionPerformed
-
     private void jDateFinalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateFinalPropertyChange
         Date dataAtual = new Date();
         Date dateFinal = jDateFinal.getDate();//data do objeto jDateChooser   
-
+        if(checkEmprestimo.isSelected()){
         if (dateFinal.after(dataAtual)) {
             JOptionPane.showMessageDialog(this, "Data final não pode ser maior que a data atual");
             jDateInicial.setDate(dataAtual);
+        }
         }
     }//GEN-LAST:event_jDateFinalPropertyChange
 
     private void jDateInicialPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateInicialPropertyChange
         Date dataAtual = new Date();
         Date dateInicial = jDateInicial.getDate();
-
+        if(checkEmprestimo.isSelected()){
         if (dateInicial.after(dataAtual)) {
             JOptionPane.showMessageDialog(this, "Data inicial não pode ser maior que a data atual");
             jDateFinal.setDate(dataAtual);
         }
+        }
     }//GEN-LAST:event_jDateInicialPropertyChange
 
-    private void checkLetra1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkLetra1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkLetra1ActionPerformed
+    private void checkUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkUsuarioActionPerformed
+        desabilitaCampos();
+        if (checkUsuario.isSelected()) {
+            checkDevolucao.setSelected(false);
+            checkEmprestimo.setSelected(false);
+            checkTitulo.setSelected(false);
+            checkTipo.setEnabled(true);
+            tfUsuario.setEnabled(true);
+            jDateFinal.setEnabled(false);
+            jDateInicial.setEnabled(false);
+
+        } else {
+
+            desabilitaCampos();
+        }
+    }//GEN-LAST:event_checkUsuarioActionPerformed
+
+    private void checkEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkEmprestimoActionPerformed
+        tfUsuario.setEnabled(false);
+        limpaCheckList();
+        checkEmprestimo.setSelected(true);
+        jDateFinal.setEnabled(true);
+        jDateInicial.setEnabled(true);
+    }//GEN-LAST:event_checkEmprestimoActionPerformed
+
+    private void checkDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDevolucaoActionPerformed
+        tfUsuario.setEnabled(false);
+        limpaCheckList();
+        checkDevolucao.setSelected(true);
+        jDateFinal.setEnabled(true);
+        jDateInicial.setEnabled(true);
+    }//GEN-LAST:event_checkDevolucaoActionPerformed
     public void desabilitaCampos() {
-        tfLetra.setEnabled(false);
-
+        tfTitulo.setEnabled(false);
+        tfUsuario.setEnabled(false);
         cbTipo.setEnabled(false);
-//        cbData.setEnabled(false);
+        tfTitulo.setEnabled(false);
 
+    }
+
+    void limpaCheckList() {
+        checkDevolucao.setSelected(false);
+        checkEmprestimo.setSelected(false);
+        checkTipo.setSelected(false);
+        checkTitulo.setSelected(false);
+        checkUsuario.setSelected(false);
     }
 
     public boolean verificavencimento(Date emissao, Date vencimento) {
@@ -580,13 +653,13 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         }
     }
 
-    public void relatorioLetra() {
+    public void relatorioTitulo() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraLetra.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoLetraTitulo.jasper");
             HashMap map = new HashMap();
-            String nome = tfLetra.getText();
-            map.put("titulo", nome);
+            String titulo = tfTitulo.getText();
+            map.put("Titulo", titulo);
 
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
             JasperViewer viewer = new JasperViewer(rel, false);
@@ -600,14 +673,13 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         }
     }
 
-    public void relatorioLetraSituacao() {
+    public void relatorioNome() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraLetraSituacao.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoLetraNome.jasper");
             HashMap map = new HashMap();
-            String nome = tfLetra.getText();
-            map.put("titulo", nome);
-           
+            String nome = tfUsuario.getText();
+            map.put("Nome", nome);
 
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
             JasperViewer viewer = new JasperViewer(rel, false);
@@ -621,15 +693,13 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         }
     }
 
-    public void relatorioTipoSituacao(String tipo) {
+    public void relatorioPorNome() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream(getTipo(cbTipo.getSelectedItem().toString()));
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoNome.jasper");
             HashMap map = new HashMap();
+            String titulo = tfTitulo.getText();
 
-           
-           
-            System.out.println(getTipo(cbTipo.getSelectedItem().toString()));
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
             JasperViewer viewer = new JasperViewer(rel, false);
             viewer.setLocationRelativeTo(null);
@@ -642,13 +712,12 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         }
     }
 
-    public void relatorioSituacao() {
+    public void relatorioPorTitulo() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraSituacao.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoTitulo.jasper");
             HashMap map = new HashMap();
 
-           
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
             JasperViewer viewer = new JasperViewer(rel, false);
             viewer.setLocationRelativeTo(null);
@@ -661,14 +730,12 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         }
     }
 
-    private void relatorioTipo(String tipo) {
+    public void relatorioPorEmprestimo() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraOrdenacao.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoData.jasper");
             HashMap map = new HashMap();
 
-            map.put("tipo", tipo);
-            System.out.println(map);
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
             JasperViewer viewer = new JasperViewer(rel, false);
             viewer.setLocationRelativeTo(null);
@@ -681,19 +748,18 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         }
     }
 
-    private void relatorioData() {
+    private void relatorioDataEmprestimo() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraData.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoDataEmprestimo.jasper");
             HashMap map = new HashMap();
-          
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
             Date dataInicial = jDateInicial.getDate();
             Date dataFinal = jDateFinal.getDate();
             String strDataInicial = df.format(dataInicial);
             String strDataFinal = df.format(dataFinal);
-        
+
             map.put("DataInicial", strDataInicial);
             map.put("DataFinal", strDataFinal);
 
@@ -707,7 +773,34 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
             viewer.toFront();
         } catch (JRException erro) {
             JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
-        } 
+        }
+    }
+    private void relatorioDataDevolucao() {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoDataEmprestimo.jasper");
+            HashMap map = new HashMap();
+
+            SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+            Date dataInicial = jDateInicial.getDate();
+            Date dataFinal = jDateFinal.getDate();
+            String strDataInicial = df.format(dataInicial);
+            String strDataFinal = df.format(dataFinal);
+
+            map.put("DataInicial", strDataInicial);
+            map.put("DataFinal", strDataFinal);
+
+            System.out.println(map);
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
     }
 
     private String getTipo(String tipo) {
@@ -728,22 +821,25 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
     private javax.swing.JButton btVoltar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cbTipo;
-    private javax.swing.JCheckBox checkData;
-    private javax.swing.JCheckBox checkLetra;
-    private javax.swing.JCheckBox checkLetra1;
+    private javax.swing.JCheckBox checkDevolucao;
+    private javax.swing.JCheckBox checkEmprestimo;
     private javax.swing.JCheckBox checkTipo;
+    private javax.swing.JCheckBox checkTitulo;
+    private javax.swing.JCheckBox checkUsuario;
     private javax.swing.JColorChooser jColorChooser1;
     private com.toedter.calendar.JDateChooser jDateFinal;
     private com.toedter.calendar.JDateChooser jDateInicial;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JTextField tfLetra;
-    private javax.swing.JTextField tfLetra1;
+    private javax.swing.JTextField tfTitulo;
+    private javax.swing.JTextField tfUsuario;
     // End of variables declaration//GEN-END:variables
 
 }

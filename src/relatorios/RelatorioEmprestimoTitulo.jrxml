@@ -4,11 +4,8 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
-	<parameter name="Nome" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
-		<![CDATA[select u.id, u.nome,tu.numero,e.data_devolucao,e.data_Emprestimo, ex.id, o.titulo, a.autor_nome, a.sobrenome, o.edicao, o.ano, edit.editora_nome from usuario u, obra o, editora edit, emprestimo e, autor a, obra_autor oa, exemplar ex,telefone_usuario tu where u.id = tu.idUsuario and o.id = oa.idobra and oa.idobra = e.obra_id  and a.id = oa.idautor and oa.idautor = e.autor_id and edit.id = o.id_editora  and ex.id_obra = o.id and e.foi_devolvido = 0 and e.exemplar_id = ex.id  and e.usuario_id = u.id and u.nome like "$P!{Nome}%"]]>
+		<![CDATA[select u.id, u.nome,tu.numero,e.data_devolucao,e.data_Emprestimo, ex.id, o.titulo, a.autor_nome, a.sobrenome, o.edicao, o.ano, edit.editora_nome from usuario u, obra o, editora edit, emprestimo e, autor a, obra_autor oa, exemplar ex,telefone_usuario tu where u.id = tu.idUsuario and o.id = oa.idobra and oa.idobra = e.obra_id  and a.id = oa.idautor and oa.idautor = e.autor_id and edit.id = o.id_editora  and ex.id_obra = o.id and e.foi_devolvido = 0 and e.exemplar_id = ex.id  and e.usuario_id = u.id order by o.titulo]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>

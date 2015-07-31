@@ -4,11 +4,14 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
-	<parameter name="Nome" class="java.lang.String">
+	<parameter name="DataInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DataFinal" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select u.id, u.nome,tu.numero,e.data_devolucao,e.data_Emprestimo, ex.id, o.titulo, a.autor_nome, a.sobrenome, o.edicao, o.ano, edit.editora_nome from usuario u, obra o, editora edit, emprestimo e, autor a, obra_autor oa, exemplar ex,telefone_usuario tu where u.id = tu.idUsuario and o.id = oa.idobra and oa.idobra = e.obra_id  and a.id = oa.idautor and oa.idautor = e.autor_id and edit.id = o.id_editora  and ex.id_obra = o.id and e.foi_devolvido = 0 and e.exemplar_id = ex.id  and e.usuario_id = u.id and u.nome like "$P!{Nome}%"]]>
+		<![CDATA[select u.id, u.nome,tu.numero,e.data_devolucao,e.data_Emprestimo, ex.id, o.titulo, a.autor_nome, a.sobrenome, o.edicao, o.ano, edit.editora_nome from usuario u, obra o, editora edit, emprestimo e, autor a, obra_autor oa, exemplar ex,telefone_usuario tu where u.id = tu.idUsuario and o.id = oa.idobra and oa.idobra = e.obra_id  and a.id = oa.idautor and oa.idautor = e.autor_id and edit.id = o.id_editora  and ex.id_obra = o.id and e.foi_devolvido = 0 and e.exemplar_id = ex.id  and e.usuario_id = u.id and e.Data_devolucao between '$P!{DataInicial}' and '$P!{DataFinal}']]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -53,12 +56,34 @@
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="222" y="56" width="333" height="48" uuid="82039279-46c5-41b3-9943-ec8f1b7a5388"/>
+				<reportElement x="222" y="17" width="333" height="48" uuid="82039279-46c5-41b3-9943-ec8f1b7a5388"/>
 				<textElement>
 					<font fontName="Arial Narrow" size="36"/>
 				</textElement>
 				<text><![CDATA[Relatório de Empréstimo]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="122" y="95" width="100" height="20" uuid="7d829e81-d3e3-4804-94f8-5cdfd767508a"/>
+				<textFieldExpression><![CDATA[$P{DataInicial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="222" y="95" width="15" height="20" uuid="9122c8be-4dd5-4528-aa2d-2ef6db492b61"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[e]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="95" width="100" height="20" uuid="12a67e61-e182-4849-86b0-85bd711e819a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Devolução entre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="237" y="95" width="100" height="20" uuid="edc40247-e55c-4a52-aa02-945bb02eca06"/>
+				<textFieldExpression><![CDATA[$P{DataFinal}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<columnHeader>

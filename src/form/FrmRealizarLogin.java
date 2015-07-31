@@ -10,12 +10,15 @@ import email.Send;
 import entity.Operador;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -27,6 +30,7 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
     public FrmRealizarLogin() {
         initComponents();
 //        DBConnection.createTable();
+        carregarIcone();
         
     }
 
@@ -220,6 +224,13 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
     private Dimension redimensionarTela() {
         return (new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
     }
+    private void carregarIcone(){
+        URL url = this.getClass().getResource("/icon/biblioteca.png");
+        Image image = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(image);
+        new ImageIcon(getClass().getResource("/icon/biblioteca.png"));
+    }
+
 
     /**
      * @param args the command line arguments
@@ -227,8 +238,10 @@ public class FrmRealizarLogin extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    
                     break;
                 }
             }
