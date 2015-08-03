@@ -5,7 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
 	<queryString>
-		<![CDATA[select u.id, u.nome,tu.numero,e.data_devolucao,e.data_Emprestimo, ex.id, o.titulo, a.autor_nome, a.sobrenome, o.edicao, o.ano, edit.editora_nome from usuario u, obra o, editora edit, emprestimo e, autor a, obra_autor oa, exemplar ex,telefone_usuario tu where u.id = tu.idUsuario and o.id = oa.idobra and oa.idobra = e.obra_id  and a.id = oa.idautor and oa.idautor = e.autor_id and edit.id = o.id_editora  and ex.id_obra = o.id and e.foi_devolvido = 0 and e.exemplar_id = ex.id  and e.usuario_id = u.id order by e.data_Emprestimo]]>
+		<![CDATA[select u.id, u.nome,tu.numero,e.data_devolucao,e.data_Emprestimo,ex.numero_sequencial, ex.id, o.titulo, a.autor_nome, a.sobrenome, o.edicao, o.ano, edit.editora_nome from usuario u, obra o, editora edit, emprestimo e, autor a, obra_autor oa, exemplar ex,telefone_usuario tu where u.id = tu.idUsuario and o.id = oa.idobra and oa.idobra = e.obra_id  and a.id = oa.idautor and oa.idautor = e.autor_id and edit.id = o.id_editora  and ex.id_obra = o.id and e.foi_devolvido = 0 and e.exemplar_id = ex.id  and e.usuario_id = u.id order by e.data_emprestimo]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -20,6 +20,9 @@
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="data_Emprestimo" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_sequencial" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="titulo" class="java.lang.String">
@@ -64,7 +67,7 @@
 				<reportElement x="-53" y="67" width="634" height="1" uuid="f220adc8-02d2-4070-8465-3ac35369b041"/>
 			</line>
 			<staticText>
-				<reportElement x="453" y="47" width="100" height="20" uuid="b4c930bb-0e86-4789-86e5-e455d50ed66f"/>
+				<reportElement x="491" y="47" width="64" height="20" uuid="b4c930bb-0e86-4789-86e5-e455d50ed66f"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -78,14 +81,14 @@
 				<text><![CDATA[Título]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="292" y="47" width="61" height="20" uuid="bebb4239-1801-4e7a-8d28-c822c700d872"/>
+				<reportElement x="353" y="47" width="61" height="20" uuid="bebb4239-1801-4e7a-8d28-c822c700d872"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Editora]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="48" width="74" height="20" uuid="7aaf14c7-31e2-4106-94c6-0e21caf92bd9"/>
+				<reportElement x="410" y="47" width="74" height="20" uuid="7aaf14c7-31e2-4106-94c6-0e21caf92bd9"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -98,6 +101,13 @@
 				</textElement>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="288" y="47" width="61" height="20" uuid="ef5d93ff-ad8b-4bd1-879f-4676a4c39a23"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Exemplar]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -106,15 +116,15 @@
 				<reportElement x="-22" y="22" width="603" height="1" uuid="597295fa-cdb3-4fc7-9502-6c0380e8dd01"/>
 			</line>
 			<textField>
-				<reportElement x="292" y="2" width="61" height="20" uuid="960391c8-4fb6-41e6-8cbb-b9c27cfc54e5"/>
+				<reportElement x="349" y="2" width="61" height="20" uuid="960391c8-4fb6-41e6-8cbb-b9c27cfc54e5"/>
 				<textFieldExpression><![CDATA[$F{editora_nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="367" y="3" width="43" height="20" uuid="014072d9-80c1-4b13-8fec-1fd353794b64"/>
+				<reportElement x="410" y="2" width="43" height="20" uuid="014072d9-80c1-4b13-8fec-1fd353794b64"/>
 				<textFieldExpression><![CDATA[$F{data_Emprestimo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="453" y="3" width="40" height="20" uuid="199ad8fc-6eee-4f66-9670-ec3ddf93391a"/>
+				<reportElement x="491" y="0" width="40" height="20" uuid="199ad8fc-6eee-4f66-9670-ec3ddf93391a"/>
 				<textFieldExpression><![CDATA[$F{data_devolucao}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -124,6 +134,10 @@
 			<textField>
 				<reportElement x="122" y="2" width="170" height="20" uuid="fd960362-6195-45ab-9f80-8e1a4c3abfb2"/>
 				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="292" y="3" width="57" height="20" uuid="fe4b2dcd-4824-4e9a-b930-e19337dcb442"/>
+				<textFieldExpression><![CDATA[$F{numero_sequencial}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

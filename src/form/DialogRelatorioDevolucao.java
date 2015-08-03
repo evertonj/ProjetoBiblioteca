@@ -36,12 +36,12 @@ import relatorios.Relatorio;
  *
  * @author Thiago
  */
-public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
+public class DialogRelatorioDevolucao extends javax.swing.JDialog {
 
     /**
      * Creates new form DialogRelatorio
      */
-    public DialogRelatorioEmprestimo(java.awt.Frame parent, boolean modal) {
+    public DialogRelatorioDevolucao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         desabilitaCampos();
@@ -80,7 +80,6 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jDateFinal = new com.toedter.calendar.JDateChooser();
-        checkEmprestimo = new javax.swing.JCheckBox();
         checkDevolucao = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
 
@@ -147,7 +146,7 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
 
         cbTipo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Titulo", "Usuário", "Emprestimo" }));
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Titulo", "Usuário", "Devolução" }));
         cbTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTipoActionPerformed(evt);
@@ -232,14 +231,6 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        checkEmprestimo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        checkEmprestimo.setText("Emprestimo");
-        checkEmprestimo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkEmprestimoActionPerformed(evt);
-            }
-        });
-
         checkDevolucao.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         checkDevolucao.setText("Devolução");
         checkDevolucao.addActionListener(new java.awt.event.ActionListener() {
@@ -270,15 +261,13 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
                             .addComponent(tfUsuario, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkEmprestimo)
-                            .addComponent(checkDevolucao))
+                            .addComponent(checkDevolucao)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(134, 134, 134)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,16 +284,16 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(checkUsuario))
-                .addGap(17, 17, 17)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(checkEmprestimo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(41, 41, 41)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
                         .addComponent(checkDevolucao)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(28, 28, 28))
         );
 
@@ -360,7 +349,7 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
                 relatorioPorNome();
             }
 
-            if (cbTipo.getSelectedItem().toString().equals("Emprestimo")) {
+            if (cbTipo.getSelectedItem().toString().equals("Devolução")) {
                 relatorioPorEmprestimo();
             }
 
@@ -381,8 +370,7 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
                 System.out.println("teste");
                 relatorioNome();
             }
-        } else if (checkEmprestimo.isSelected()) {
-            relatorioDataEmprestimo();
+        
         } else if (checkDevolucao.isSelected()){
             relatorioDataDevolucao();
         }
@@ -404,7 +392,7 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         if (checkTitulo.isSelected()) {
 
             checkDevolucao.setSelected(false);
-            checkEmprestimo.setSelected(false);
+           
             checkUsuario.setSelected(false);
             checkTipo.setSelected(false);
             cbTipo.setEnabled(false);
@@ -423,7 +411,7 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
             checkTitulo.setSelected(false);
             tfTitulo.setEnabled(false);
             checkDevolucao.setSelected(false);
-            checkEmprestimo.setSelected(false);
+            
             checkUsuario.setSelected(false);
             jDateFinal.setEnabled(false);
             jDateInicial.setEnabled(false);
@@ -437,30 +425,30 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
     private void jDateFinalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateFinalPropertyChange
         Date dataAtual = new Date();
         Date dateFinal = jDateFinal.getDate();//data do objeto jDateChooser   
-        if(checkEmprestimo.isSelected()){
+       
         if (dateFinal.after(dataAtual)) {
             JOptionPane.showMessageDialog(this, "Data final não pode ser maior que a data atual");
             jDateInicial.setDate(dataAtual);
         }
-        }
+        
     }//GEN-LAST:event_jDateFinalPropertyChange
 
     private void jDateInicialPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateInicialPropertyChange
         Date dataAtual = new Date();
         Date dateInicial = jDateInicial.getDate();
-        if(checkEmprestimo.isSelected()){
+       
         if (dateInicial.after(dataAtual)) {
             JOptionPane.showMessageDialog(this, "Data inicial não pode ser maior que a data atual");
             jDateFinal.setDate(dataAtual);
         }
-        }
+        
     }//GEN-LAST:event_jDateInicialPropertyChange
 
     private void checkUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkUsuarioActionPerformed
         desabilitaCampos();
         if (checkUsuario.isSelected()) {
             checkDevolucao.setSelected(false);
-            checkEmprestimo.setSelected(false);
+           
             checkTitulo.setSelected(false);
             checkTipo.setEnabled(true);
             tfUsuario.setEnabled(true);
@@ -472,14 +460,6 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
             desabilitaCampos();
         }
     }//GEN-LAST:event_checkUsuarioActionPerformed
-
-    private void checkEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkEmprestimoActionPerformed
-        tfUsuario.setEnabled(false);
-        limpaCheckList();
-        checkEmprestimo.setSelected(true);
-        jDateFinal.setEnabled(true);
-        jDateInicial.setEnabled(true);
-    }//GEN-LAST:event_checkEmprestimoActionPerformed
 
     private void checkDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDevolucaoActionPerformed
         tfUsuario.setEnabled(false);
@@ -498,7 +478,7 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
 
     void limpaCheckList() {
         checkDevolucao.setSelected(false);
-        checkEmprestimo.setSelected(false);
+       
         checkTipo.setSelected(false);
         checkTitulo.setSelected(false);
         checkUsuario.setSelected(false);
@@ -536,14 +516,78 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogRelatorioEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogRelatorioDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogRelatorioEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogRelatorioDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogRelatorioEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogRelatorioDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogRelatorioEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogRelatorioDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -612,7 +656,7 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogRelatorioEmprestimo dialog = new DialogRelatorioEmprestimo(new javax.swing.JFrame(), true);
+                DialogRelatorioDevolucao dialog = new DialogRelatorioDevolucao(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -643,9 +687,9 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
             jv.setVisible(true);
             jv.toFront();
         } catch (JRException ex) {
-            Logger.getLogger(DialogRelatorioEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DialogRelatorioDevolucao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(DialogRelatorioEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DialogRelatorioDevolucao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             cursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
             setCursor(cursor);
@@ -821,7 +865,6 @@ public class DialogRelatorioEmprestimo extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cbTipo;
     private javax.swing.JCheckBox checkDevolucao;
-    private javax.swing.JCheckBox checkEmprestimo;
     private javax.swing.JCheckBox checkTipo;
     private javax.swing.JCheckBox checkTitulo;
     private javax.swing.JCheckBox checkUsuario;
