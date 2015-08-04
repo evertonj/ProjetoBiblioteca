@@ -176,8 +176,11 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
         int result;
-        try {
-            {
+
+        {
+            if (new AssuntoController().buscar(tfNome.getText()) != null) {
+                JOptionPane.showMessageDialog(this, "Assunto já cadastrado");
+            } else {
 
                 Assunto assunto = new Assunto();
                 assunto.setNome(tfNome.getText());
@@ -204,8 +207,6 @@ public class FrmCadastroDeAssunto extends javax.swing.JDialog {
                 cbAssunto.setSelectedIndex(indice);
             }
 
-        } catch (NullPointerException ex) {
-            JOptionPane.showMessageDialog(this, "");
         }
 
 

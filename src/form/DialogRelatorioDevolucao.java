@@ -699,7 +699,7 @@ public class DialogRelatorioDevolucao extends javax.swing.JDialog {
     public void relatorioTitulo() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoLetraTitulo.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioDevolucaoTituloLetra.jasper");
             HashMap map = new HashMap();
             String titulo = tfTitulo.getText();
             map.put("Titulo", titulo);
@@ -719,7 +719,7 @@ public class DialogRelatorioDevolucao extends javax.swing.JDialog {
     public void relatorioNome() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoLetraNome.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioDevolucaoNomeLetra.jasper");
             HashMap map = new HashMap();
             String nome = tfUsuario.getText();
             map.put("Nome", nome);
@@ -739,7 +739,7 @@ public class DialogRelatorioDevolucao extends javax.swing.JDialog {
     public void relatorioPorNome() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoNome.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioDevolucaoNome.jasper");
             HashMap map = new HashMap();
             String titulo = tfTitulo.getText();
 
@@ -758,7 +758,7 @@ public class DialogRelatorioDevolucao extends javax.swing.JDialog {
     public void relatorioPorTitulo() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoTitulo.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioDevolucaoTitulo.jasper");
             HashMap map = new HashMap();
 
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
@@ -776,7 +776,7 @@ public class DialogRelatorioDevolucao extends javax.swing.JDialog {
     public void relatorioPorEmprestimo() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoData.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioDevolucaoData.jasper");
             HashMap map = new HashMap();
 
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
@@ -791,37 +791,11 @@ public class DialogRelatorioDevolucao extends javax.swing.JDialog {
         }
     }
 
-    private void relatorioDataEmprestimo() {
-        try {
-            Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoDataEmprestimo.jasper");
-            HashMap map = new HashMap();
-
-            SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-            Date dataInicial = jDateInicial.getDate();
-            Date dataFinal = jDateFinal.getDate();
-            String strDataInicial = df.format(dataInicial);
-            String strDataFinal = df.format(dataFinal);
-
-            map.put("DataInicial", strDataInicial);
-            map.put("DataFinal", strDataFinal);
-
-            System.out.println(map);
-            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
-            JasperViewer viewer = new JasperViewer(rel, false);
-            viewer.setLocationRelativeTo(null);
-
-            viewer.setVisible(true);
-            viewer.setZoomRatio((float) 1);
-            viewer.toFront();
-        } catch (JRException erro) {
-            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
-        }
-    }
+    
     private void relatorioDataDevolucao() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioEmprestimoDataEmprestimo.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioDevolucaoDataDevolucao.jasper");
             HashMap map = new HashMap();
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
@@ -846,19 +820,7 @@ public class DialogRelatorioDevolucao extends javax.swing.JDialog {
         }
     }
 
-    private String getTipo(String tipo) {
-        switch (tipo) {
-            case "Editora":
-                return "/relatorios/RelatorioObraEditoraSituacao.jasper";
-            case "Autor":
-                return "/relatorios/RelatorioObraAutorSituacao.jasper";
-            case "Titulo":
-                return "/relatorios/RelatorioObraTipoSituacao.jasper";
-            default:
-                return "/relatorios/RelatorioObraTipoSituacao.jasper";
-        }
-
-    }
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btGerar;
     private javax.swing.JButton btVoltar;

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2f3c14cf-5275-441c-95cf-43eaeb0756c1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
+	<parameter name="DataInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DataFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select u.nome as nomeUsuario, u.serie as serieUsuario, e.numero_sequencial as numeroSequencial, ob.titulo as titulo, d.data_devolucao as dataDevolucao, o.nome as nomeOperador from  devolucao d, exemplar e, operador o, usuario u, obra ob where d.exemplar_id = e.id and d.usuario_id = u.id and o.idoperador = d.operador_idoperador and ob.id = e.id_obra and d.data_devolucao between '$P!{DataInicial}' and '$P!{DataFinal}']]>
+	</queryString>
+	<field name="nomeUsuario" class="java.lang.String"/>
+	<field name="serieUsuario" class="java.lang.String"/>
+	<field name="numeroSequencial" class="java.lang.Integer"/>
+	<field name="titulo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataDevolucao" class="java.sql.Date"/>
+	<field name="nomeOperador" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="154" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="32" y="128" width="99" height="20" uuid="ee94d898-01b8-4d5f-97db-236ab527fc59"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="222" y="56" width="333" height="48" uuid="82039279-46c5-41b3-9943-ec8f1b7a5388"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="36"/>
+				</textElement>
+				<text><![CDATA[Relatório de Devolução]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="48" width="100" height="20" uuid="6d868edd-bdf0-44d9-a0a7-a1e2911ea35d"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Título]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="48" width="100" height="20" uuid="fc75560a-c486-4861-8aca-c75c91cd6374"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="48" width="100" height="20" uuid="42b016ab-3821-4f08-a5bb-97122236951e"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Série]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="48" width="75" height="20" uuid="29f2e4f6-2123-450b-9e59-b27131914235"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Devolução]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="48" width="100" height="20" uuid="cdcdda5a-c6e5-428c-a208-7001932b051d"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Título]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="481" y="48" width="100" height="20" uuid="8acf323d-63a4-4537-822c-86d1e603e4ab"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Operador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="48" width="86" height="20" uuid="17bc8f3b-121a-49ee-bcec-39cc2fc33bd1"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Exemplar]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<line>
+				<reportElement x="-22" y="22" width="603" height="1" uuid="597295fa-cdb3-4fc7-9502-6c0380e8dd01"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="3" width="100" height="20" uuid="6d3eb43d-389d-46e7-9094-80e4b648efe8"/>
+				<textFieldExpression><![CDATA[$F{nomeUsuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="5" width="100" height="20" uuid="ee1af547-08d6-4c1d-9319-78ef7ad6f136"/>
+				<textFieldExpression><![CDATA[$F{serieUsuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="5" width="100" height="20" uuid="59d67920-78e5-4d73-ba63-a875701e1eff"/>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="396" y="3" width="54" height="20" uuid="f9e56c0d-ef09-4141-bf90-02758f0d145b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{dataDevolucao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="481" y="3" width="87" height="20" uuid="3210f226-be66-410d-a88b-4a3379461bb8"/>
+				<textFieldExpression><![CDATA[$F{nomeOperador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="5" width="86" height="20" uuid="c0d8c7ed-a957-4ca2-a444-bc1977cfeeeb"/>
+				<textFieldExpression><![CDATA[$F{numeroSequencial}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="71" splitType="Stretch">
+			<textField>
+				<reportElement x="493" y="34" width="100" height="20" uuid="de433346-a6ba-467d-bcd1-d036a2cdc2c9"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-22" y="33" width="603" height="1" uuid="78800d75-3efb-4aa5-a7b1-0aae5e66b2e1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

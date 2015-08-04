@@ -108,6 +108,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuObra = new javax.swing.JMenuItem();
         menuRelatorioEmprestimo1 = new javax.swing.JMenuItem();
+        MenuRelatorioDevolucao = new javax.swing.JMenuItem();
         menuSobre = new javax.swing.JMenu();
 
         jMenu3.setText("jMenu3");
@@ -432,6 +433,15 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
         });
         menuRelatorio.add(menuRelatorioEmprestimo1);
 
+        MenuRelatorioDevolucao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        MenuRelatorioDevolucao.setText("Devolução");
+        MenuRelatorioDevolucao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuRelatorioDevolucaoActionPerformed(evt);
+            }
+        });
+        menuRelatorio.add(MenuRelatorioDevolucao);
+
         jMenuBar1.add(menuRelatorio);
 
         menuSobre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2));
@@ -488,12 +498,12 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }// </editor-fold>//GEN-END:initComponents
 
     private void btGerenciarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarUsuarioActionPerformed
-        DialogGerenciadorUsuario telaUsuario = new DialogGerenciadorUsuario(null, true);
+        DialogGerenciadorUsuario telaUsuario = new DialogGerenciadorUsuario(this, true);
         telaUsuario.setVisible(true);
     }//GEN-LAST:event_btGerenciarUsuarioActionPerformed
 
     private void btGerenciarObraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGerenciarObraActionPerformed
-        DialogGerenciadorObra telaObra = new DialogGerenciadorObra(new javax.swing.JFrame(), true);
+        DialogGerenciadorObra telaObra = new DialogGerenciadorObra(this, true);
         telaObra.setVisible(true);
     }//GEN-LAST:event_btGerenciarObraActionPerformed
 
@@ -502,27 +512,27 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_btSairActionPerformed
 
     private void menuItemUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemUsuarioActionPerformed
-        DialogGerenciadorUsuario telaUsuario = new DialogGerenciadorUsuario(null, true);
+        DialogGerenciadorUsuario telaUsuario = new DialogGerenciadorUsuario(this, true);
         telaUsuario.setVisible(true);
     }//GEN-LAST:event_menuItemUsuarioActionPerformed
 
     private void menuItemObraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemObraActionPerformed
-        DialogGerenciadorObra telaObra = new DialogGerenciadorObra(new javax.swing.JFrame(), true);
+        DialogGerenciadorObra telaObra = new DialogGerenciadorObra(this, true);
         telaObra.setVisible(true);
     }//GEN-LAST:event_menuItemObraActionPerformed
 
     private void menuItemEditoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEditoraActionPerformed
-        DialogGerenciadorEditora telaEditora = new DialogGerenciadorEditora(null, false);
+        DialogGerenciadorEditora telaEditora = new DialogGerenciadorEditora(this, false);
         telaEditora.setVisible(true);
     }//GEN-LAST:event_menuItemEditoraActionPerformed
 
     private void menuItemAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAutorActionPerformed
-        DialogGerenciadorAutor telaAutor = new DialogGerenciadorAutor(new javax.swing.JFrame(), true);
+        DialogGerenciadorAutor telaAutor = new DialogGerenciadorAutor(this, true);
         telaAutor.setVisible(true);
     }//GEN-LAST:event_menuItemAutorActionPerformed
 
     private void menuItemOperadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemOperadorActionPerformed
-        DialogGerenciadorOperador telaOperador = new DialogGerenciadorOperador(new javax.swing.JFrame(), true);
+        DialogGerenciadorOperador telaOperador = new DialogGerenciadorOperador(this, true);
         telaOperador.setVisible(true);
     }//GEN-LAST:event_menuItemOperadorActionPerformed
 
@@ -533,7 +543,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_menuSobreMouseClicked
 
     private void menuItemGerenciamentoAssuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGerenciamentoAssuntoActionPerformed
-        DialogGerenciadorAssunto telaAssunto = new DialogGerenciadorAssunto(new javax.swing.JFrame(), true);
+        DialogGerenciadorAssunto telaAssunto = new DialogGerenciadorAssunto(this, true);
         telaAssunto.setVisible(true);
     }//GEN-LAST:event_menuItemGerenciamentoAssuntoActionPerformed
 
@@ -582,7 +592,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }                                              
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-         new DialogRelatorioUsuario(new javax.swing.JFrame(), false).setVisible(true);
+         new DialogRelatorioUsuario(this, false).setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void menuDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -606,8 +616,12 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
     }//GEN-LAST:event_jMenuObraActionPerformed
 
     private void menuRelatorioEmprestimo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRelatorioEmprestimo1ActionPerformed
-        new DialogRelatorioEmprestimo(new javax.swing.JFrame(), false).setVisible(true);
+        new DialogRelatorioEmprestimo(this, false).setVisible(true);
     }//GEN-LAST:event_menuRelatorioEmprestimo1ActionPerformed
+
+    private void MenuRelatorioDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuRelatorioDevolucaoActionPerformed
+        new DialogRelatorioDevolucao(this, false).setVisible(true);
+    }//GEN-LAST:event_MenuRelatorioDevolucaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -640,6 +654,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame implements ActionListen
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MenuRelatorioDevolucao;
     private javax.swing.JButton btDevolução;
     private javax.swing.JButton btEmprestimo;
     private javax.swing.JButton btGerenciarObra;
