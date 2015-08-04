@@ -21,6 +21,11 @@ public class AutorController{
     public AutorController() {
         this.facade = new AutorFacade();
     }
+    public Autor buscaNomeSobrenome(String nome, String sobrenome){
+       return facade.buscaNomeSobrenome(nome, sobrenome);
+        
+    
+}
 
     public int addAutor(Autor autor) {
         return facade.save(autor);

@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package form;
 
 import controller.UsuarioController;
 import dao.UsuarioDAO;
 import entity.Usuario;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import table.UsuarioTableModel;
 
@@ -24,16 +27,24 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
      */
     public FrmExcluirUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
-        initComponents();
 
+        initComponents();
+        carregarIcone();
+    }
+
+    private void carregarIcone() {
+        URL url = this.getClass().getResource("/icon/biblioteca.png");
+        Image image = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(image);
+        new ImageIcon(getClass().getResource("/icon/biblioteca.png"));
     }
     UsuarioDAO dao = new UsuarioDAO();
-     List<Usuario> usuarioList;
+    List<Usuario> usuarioList;
+
     private void refreshTable() {
         usuarioList = dao.buscaPorNome(tfNome.getText());
         if (usuarioList != null) {
-           tbUsuario.setModel(new UsuarioTableModel(usuarioList));
+            tbUsuario.setModel(new UsuarioTableModel(usuarioList));
         }
     }
 
@@ -182,12 +193,12 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         int rowIndex = tbUsuario.getSelectedRow();
+        int rowIndex = tbUsuario.getSelectedRow();
         if (rowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Selecione o usuário a ser Removido!!!");
             return;
         }
-       Usuario usuario = new UsuarioTableModel(usuarioList).get(rowIndex);
+        Usuario usuario = new UsuarioTableModel(usuarioList).get(rowIndex);
         int confirm = JOptionPane.showConfirmDialog(this, "Confirmar exclusão ?", "Excluir Usuario", JOptionPane.YES_NO_OPTION);
         if (confirm != 0) {
             return;
@@ -237,7 +248,7 @@ public class FrmExcluirUsuario extends javax.swing.JDialog {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                 FrmExcluirUsuario dialogExcluir = new FrmExcluirUsuario(new javax.swing.JFrame(), true);
+                FrmExcluirUsuario dialogExcluir = new FrmExcluirUsuario(new javax.swing.JFrame(), true);
                 dialogExcluir.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

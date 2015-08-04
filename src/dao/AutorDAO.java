@@ -135,6 +135,32 @@ public class AutorDAO implements IAutorDAO {
         }
         return null;
     }
+    @Override
+     public Autor buscaNomeSobrenome(String nome, String sobrenome) {
+        Connection conn = DBConnection.getConnection();
+       Autor autor = null;
+        ResultSet rs = null;
+        try {
+            PreparedStatement comando = conn.prepareStatement("select * from autor where autor_nome = '" + nome + "'and sobrenome ='"+sobrenome+"'");
+            rs = comando.executeQuery();
+            while (rs.next()) {
+                // pega todos os atributos da pessoa  
+                
+                autor = new Autor(rs.getInt("id"),
+                        rs.getString("autor_nome"),
+                        rs.getString("sobrenome"));
+               
+              
+            }
+            return autor;
+
+        } catch (SQLException e) {
+            return null;
+        } catch (NameException ex) {
+            Logger.getLogger(AutorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     @Override
     public List<Autor> finAll() {
@@ -177,5 +203,7 @@ public class AutorDAO implements IAutorDAO {
         }
         return autors;
     }
+
+    
 
 }

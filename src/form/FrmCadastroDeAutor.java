@@ -222,6 +222,9 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
 
         int result;
         boolean atualizou = false;
+        if(new AutorController().buscaNomeSobrenome(tfNome.getText(), tfSobreNome.getText())!=null){
+            JOptionPane.showMessageDialog(this, "Autor já cadastrado");
+        }else{
         try {
             {             
               
@@ -256,7 +259,7 @@ public class FrmCadastroDeAutor extends javax.swing.JDialog {
             return;
 
         }
-
+        }
         
 
     }//GEN-LAST:event_btSalvarActionPerformed

@@ -7,10 +7,14 @@ package form;
 
 import controller.OperadorController;
 import entity.Operador;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.security.MessageDigest;
 import table.OperadorCellRenderer;
 import table.OperadorTableModel;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -28,6 +32,13 @@ public class FrmExcluirOperador extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         //refreshTable();
+        carregarIcone();
+    }
+    private void carregarIcone(){
+        URL url = this.getClass().getResource("/icon/biblioteca.png");
+        Image image = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(image);
+        new ImageIcon(getClass().getResource("/icon/biblioteca.png"));
     }
 
     List<Operador> operadorList;

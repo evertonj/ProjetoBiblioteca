@@ -29,7 +29,9 @@ public class AutorFacade {
     public int update(Autor autor) {
         return dao.update(autor);
     }
-
+    public Autor buscaNomeSobrenome(String nome,String sobrenome){
+       return dao.buscaNomeSobrenome(nome, sobrenome);
+    }
     public int remove(long id) {
         return dao.remove(id);
     }

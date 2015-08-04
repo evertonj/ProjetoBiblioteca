@@ -8,9 +8,13 @@ package form;
 import connection.DBConnection;
 import controller.OperadorController;
 import entity.Operador;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import table.OperadorCellRenderer;
 import table.OperadorTableModel;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,6 +31,13 @@ public class FrmBuscaOperador extends javax.swing.JDialog {
         initComponents();
         DBConnection.getConnection();
         refreshTable();
+        carregarIcone();
+    }
+    private void carregarIcone(){
+        URL url = this.getClass().getResource("/icon/biblioteca.png");
+        Image image = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(image);
+        new ImageIcon(getClass().getResource("/icon/biblioteca.png"));
     }
 
     /**
@@ -74,7 +85,7 @@ public class FrmBuscaOperador extends javax.swing.JDialog {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Busca de editora");
+        setTitle("Busca de Operador");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 

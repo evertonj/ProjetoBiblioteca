@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package form;
 
 import controller.EditoraController;
 import entity.Editora;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import table.EditoraTableModel;
 import table.EditoraCellRenderer;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,16 +29,26 @@ public class FrmExcluirEditora extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         refreshTable();
+        carregarIcone();
     }
-     List<Editora> editoraList;
-private void refreshTable() {
-      
+
+    private void carregarIcone() {
+        URL url = this.getClass().getResource("/icon/biblioteca.png");
+        Image image = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(image);
+        new ImageIcon(getClass().getResource("/icon/biblioteca.png"));
+    }
+    List<Editora> editoraList;
+
+    private void refreshTable() {
+
         editoraList = new EditoraController().finAll();
         if (editoraList != null) {
-           tbEditora.setModel(new EditoraTableModel(editoraList));
+            tbEditora.setModel(new EditoraTableModel(editoraList));
             tbEditora.setDefaultRenderer(Object.class, new EditoraCellRenderer());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -193,11 +206,11 @@ private void refreshTable() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-     this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-       int rowIndex = tbEditora.getSelectedRow();
+        int rowIndex = tbEditora.getSelectedRow();
         if (rowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Selecione a Editora a ser Removida!!!");
             return;
@@ -218,11 +231,11 @@ private void refreshTable() {
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-   if( new EditoraController().buscar(tfNome.getText()) != null){
-        JOptionPane.showMessageDialog(this, "Nome encontrado");
-    }else{
-            JOptionPane.showMessageDialog(this,"Nome nao encontrado");
-            }
+        if (new EditoraController().buscar(tfNome.getText()) != null) {
+            JOptionPane.showMessageDialog(this, "Nome encontrado");
+        } else {
+            JOptionPane.showMessageDialog(this, "Nome nao encontrado");
+        }
     }//GEN-LAST:event_btBuscarActionPerformed
 
     /**
