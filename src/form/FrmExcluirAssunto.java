@@ -8,9 +8,13 @@ package form;
 
 import controller.AssuntoController;
 import entity.Assunto;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import table.AssuntoTableModel;
 import table.AssuntoCellRenderer;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,6 +30,13 @@ public class FrmExcluirAssunto extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         refreshTable();
+        carregarIcone();
+    }
+     private void carregarIcone(){
+        URL url = this.getClass().getResource("/icon/biblioteca.png");
+        Image image = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(image);
+        new ImageIcon(getClass().getResource("/icon/biblioteca.png"));
     }
      List<Assunto> assuntoList;
 private void refreshTable() {

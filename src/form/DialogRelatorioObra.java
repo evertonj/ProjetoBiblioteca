@@ -145,7 +145,7 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 4));
 
         cbTipo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Titulo", "Autor", "Editora" }));
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Título", "Autor", "Editora" }));
         cbTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTipoActionPerformed(evt);
@@ -321,7 +321,18 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
 
         if (checkTipo.isSelected() && !checkSituacao.isSelected() && !checkData.isSelected()) {
 
-            relatorioTipo(getTipo(cbTipo.getSelectedItem().toString()));
+            if(cbTipo.getSelectedItem().toString().equals("Título")){
+                relatorioOrdenacaoTitulo();
+                System.out.println("Titulo");
+            }
+            if(cbTipo.getSelectedItem().toString().equals("Editora")){
+                relatorioOrdenacaoEditora();
+                System.out.println("Editora");
+            }
+            if(cbTipo.getSelectedItem().toString().equals("Autor")){
+                relatorioOrdenacaoAutor();
+                System.out.println("Autor");
+            }
 
         }
         if (checkTipo.isSelected() && checkSituacao.isSelected()) {
@@ -647,13 +658,13 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
         }
     }
 
-    private void relatorioTipo(String tipo) {
+    private void relatorioOrdenacaoTitulo() {
         try {
             Connection conn = DBConnection.getConnection();
-            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraOrdenacao.jasper");
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraOrdenacaoTitulo.jasper");
             HashMap map = new HashMap();
 
-            map.put("tipo", tipo);
+            
             System.out.println(map);
             JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
             JasperViewer viewer = new JasperViewer(rel, false);
@@ -666,6 +677,45 @@ public class DialogRelatorioObra extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
         }
     }
+     private void relatorioOrdenacaoEditora() {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraOrdenacaoEditora.jasper");
+            HashMap map = new HashMap();
+
+            
+            System.out.println(map);
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+    }
+      private void relatorioOrdenacaoAutor() {
+        try {
+            Connection conn = DBConnection.getConnection();
+            InputStream is = getClass().getResourceAsStream("/relatorios/RelatorioObraOrdenacaoAutor.jasper");
+            HashMap map = new HashMap();
+
+            
+            System.out.println(map);
+            JasperPrint rel = JasperFillManager.fillReport(is, map, conn);
+            JasperViewer viewer = new JasperViewer(rel, false);
+            viewer.setLocationRelativeTo(null);
+
+            viewer.setVisible(true);
+            viewer.setZoomRatio((float) 1);
+            viewer.toFront();
+        } catch (JRException erro) {
+            JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+        }
+    }
+    
 
     private void relatorioData() {
         try {

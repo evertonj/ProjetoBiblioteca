@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2f3c14cf-5275-441c-95cf-43eaeb0756c1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
+	<parameter name="tipo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM exemplar e, obra o,autor a, obra_autor oa,editora ed WHERE  e.id_obra = o.id and o.id_editora = ed.id and oa.idobra = o.id and oa.idautor = a.id and oa.idobra = o.id  group by e.id order by a.autor_nome]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataDeCadastro" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fornecedor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataDeAquisicao" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_sequencial" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="situacao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_obra" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="titulo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="edicao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ano" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isbn" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="foto" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_editora" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idassunto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="autor_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sobrenome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idobra" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idautor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="editora_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rua" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="154" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="32" y="128" width="100" height="20" uuid="ee94d898-01b8-4d5f-97db-236ab527fc59"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="274" y="56" width="291" height="48" uuid="82039279-46c5-41b3-9943-ec8f1b7a5388"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="36"/>
+				</textElement>
+				<text><![CDATA[Relatório de Obra]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="174" y="38" width="113" height="20" uuid="0a8ac5a2-2a9e-4aed-a2fc-2c21174e9b08"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Autor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="38" width="70" height="20" uuid="55131163-2bd7-4e28-9e1b-d11df49828e0"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Editora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="38" width="69" height="20" uuid="13e06f80-712a-4890-a715-cc90c25b8730"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero exemplar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="38" width="78" height="20" uuid="4a72f1c1-9ef7-46f0-998f-c3d2d63f9366"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Situação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="38" width="100" height="20" uuid="86599fe8-758d-41e9-b0dc-03ec764fdf55"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Titulo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="503" y="38" width="78" height="20" uuid="b0527bb8-0340-4918-a4d8-c4dad062da7f"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cadastro]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-53" y="67" width="647" height="1" uuid="f220adc8-02d2-4070-8465-3ac35369b041"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="176" y="3" width="58" height="20" uuid="5fa4db0b-4e95-4b6d-96a4-3537a77c417c"/>
+				<textFieldExpression><![CDATA[$F{autor_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="3" width="70" height="20" uuid="f11b4104-9399-4c1c-b085-98214cbf6135"/>
+				<textFieldExpression><![CDATA[$F{editora_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="3" width="68" height="20" uuid="f055f73f-e888-4d65-9a14-6a55353f80f6"/>
+				<textFieldExpression><![CDATA[$F{sobrenome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="3" width="59" height="20" uuid="feb55d9e-e363-4d7a-befa-9c44c6522f2f"/>
+				<textFieldExpression><![CDATA[$F{numero_sequencial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="401" y="3" width="102" height="20" uuid="116b40aa-802e-4b92-83f3-fb29b351ec86"/>
+				<textFieldExpression><![CDATA[$F{situacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="508" y="2" width="47" height="20" uuid="fb2c8937-f011-438a-ae0e-557e6445d623"/>
+				<textFieldExpression><![CDATA[$F{dataDeCadastro}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-22" y="22" width="603" height="1" uuid="597295fa-cdb3-4fc7-9502-6c0380e8dd01"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="3" width="163" height="20" uuid="24874b84-fde5-4260-bfbb-4fddcbc984ef"/>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="493" y="34" width="100" height="20" uuid="de433346-a6ba-467d-bcd1-d036a2cdc2c9"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-22" y="33" width="603" height="1" uuid="78800d75-3efb-4aa5-a7b1-0aae5e66b2e1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
